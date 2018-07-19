@@ -1,6 +1,6 @@
 {
   "name": "MyHR",
-  "app_id": "f820fcd5",
+  "app_id": "",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

@@ -1,0 +1,33 @@
+<ion-content padding>
+  <ion-grid>
+        
+    <ion-row>
+        <!-- <img src="./assets/icon/logo.png" class="logo"/> -->
+        <img src="./assets/icon/logo.jpg" class="logo"/>
+      <ion-col col-12>
+          <button (click)="invokeAdapter()" ion-button full>Google</button>
+          <h3 style="text-align:center">-----OR-----</h3>
+        <ion-list no-lines>
+          <!-- <form [formGroup]="data"> -->
+          <ion-item class="employee_id">
+            <ion-icon class="iconPerson" item-right name="ios-card-outline"></ion-icon>
+            <ion-input [(ngModel)]="employee_id" type="text" autocapitalize="characters"  placeholder="Employee Id"></ion-input>
+          </ion-item>
+          <!-- <p class="restriction" *ngIf="!data.controls.employee_id.valid && (data.controls.employee_id.dirty || submitAtttempt)"><span>* </span>should be a valid 'ID'</p>       -->
+          <ion-item class="password">
+              <ion-icon (click)="viewPassword()" class="iconPassword" item-right name="ios-lock-outline"></ion-icon>
+              <ion-input [(ngModel)]="password" type="password"  placeholder="Password" maxlength="20"></ion-input>
+          </ion-item>
+          <!-- <p class="restriction" *ngIf="!data.controls.password.valid && (data.controls.password.dirty || submitAtttempt)"><span>* </span>password length must be valuable</p>  -->
+          <!-- <ion-item *ngIf="edited" class="employeeOptions">
+            <ion-label>You need employee options?</ion-label>
+            <ion-checkbox [(ngModel)]="empOptions" formControlName="empOptions" (ionChange)="updateEmpOptions()"></ion-checkbox>
+          </ion-item>  -->
+          <button (click)="home()" ion-button full>Sign in</button>
+          <!-- </form> -->
+
+            </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

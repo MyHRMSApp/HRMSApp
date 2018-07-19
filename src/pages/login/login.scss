@@ -1,0 +1,44 @@
+page-login {
+
+    
+    ion-content{
+
+       .scroll-content{
+         padding-bottom: 0px !important;
+       }
+
+       .logo{
+           width: 45%;
+           margin-left:27%;
+           height: 20%;
+       }
+
+       .col{
+        margin-top: 10%;
+       }
+
+       .skeinId{
+           margin-top:15% !important;
+           .iconPerson{
+            z-index: 999;
+           }
+       }
+
+       .password{
+           margin-top:5% !important;
+           .iconPassword{
+             z-index: 999;   
+           }
+      
+        ion-item{
+            padding-left: 0px !important
+        }
+      
+          button{
+              border-radius: 20px;
+              margin-top: 10% !important;
+          }
+      }
+   }
+
+}

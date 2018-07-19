@@ -1,18 +1,74 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
+    <ion-navbar color="header">
+      <button class="menu">
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-navbar>
+  </ion-header>
+
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+    <ion-grid> 
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+    <div class="userImageDiv">
+        <img class="userImage" [src]="photos" height="100px" width="100px" />
+    </div>
+    <ion-fab (click)="changeImage()" style="margin-left:48%; margin-top: 15%;">
+        <button ion-fab mini icon-only clear>
+            <ion-icon style="text-align:center" name="camera"></ion-icon>
+        </button>
+    </ion-fab>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+    <p><b>Vivek</b></p>
+
+    </ion-grid>
+
+    <ion-card-content>
+      <p>Hi.. Happy to see you here!</p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col col-6>
+      <ion-card>
+          <ion-avatar class="gridImageDiv">
+              <img class="userImage" [src]="cal" height="30px" width="30px" />
+          </ion-avatar>
+              <p>Attendance</p>
+
+      </ion-card>
+      </ion-col>
+      <ion-col col-6>
+          <ion-card>
+              <ion-avatar class="gridImageDiv">
+              <img class="userImage" [src]="cal" height="30px" width="30px" />
+              </ion-avatar>
+                  <p>Leaves</p>
+          </ion-card>
+          </ion-col>
+        <ion-col col-6>
+            <ion-card>
+                <ion-avatar class="gridImageDiv">
+                    <img class="userImage" [src]="cal" height="30px" width="30px" />
+                </ion-avatar>
+                    <p>Coupons</p>
+            </ion-card>
+            </ion-col>
+        <ion-col col-6>
+          <ion-card>
+              <ion-avatar class="gridImageDiv">
+                  <img class="userImage" [src]="cal" height="30px" width="30px" />
+              </ion-avatar>
+                  <p>My Request</p>
+          </ion-card>
+          </ion-col>
+        <ion-col col-6>
+            <ion-card>
+                <ion-avatar class="gridImageDiv">
+                    <img class="userImage" [src]="cal" height="30px" width="30px" />
+                </ion-avatar>
+                    <p>My Task</p>
+            </ion-card>
+            </ion-col>
+    </ion-row>
+
 </ion-content>
