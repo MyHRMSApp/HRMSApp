@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-navbar color="header">
+    <ion-buttons end>
+      <button end (click)="openMenu()" class="menu">
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      </ion-buttons>
+      <ion-title>Coupons</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-row>
+        <ion-col col-6 (click)="attendance()"> 
+        <ion-card>
+            <ion-avatar class="gridImageDiv">
+                <img class="userImage" [src]="cal" height="30px" width="30px" />
+            </ion-avatar>
+                <p>Watches</p>
+  
+        </ion-card>
+        </ion-col>
+        <ion-col col-6>
+            <ion-card>
+                <ion-avatar class="gridImageDiv">
+                <img class="userImage" [src]="cal" height="30px" width="30px" />
+                </ion-avatar>
+                    <p>Jewellery</p>
+            </ion-card>
+            </ion-col>
+          <ion-col col-6>
+              <ion-card>
+                  <ion-avatar class="gridImageDiv">
+                      <img class="userImage" [src]="cal" height="30px" width="30px" />
+                  </ion-avatar>
+                      <p>Eye Wear</p>
+              </ion-card>
+              </ion-col>
+          <ion-col col-6>
+            <ion-card>
+                <ion-avatar class="gridImageDiv">
+                    <img class="userImage" [src]="cal" height="30px" width="30px" />
+                </ion-avatar>
+                    <p>Taneira</p>
+            </ion-card>
+            </ion-col>
+      </ion-row>
+
+</ion-content>

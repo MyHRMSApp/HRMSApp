@@ -1,18 +1,67 @@
-<!--
-  Generated template for the AttendanceViewPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>attendanceView</ion-title>
-  </ion-navbar>
-
+    <ion-navbar color="header">
+    <ion-buttons end>
+      <button style="background-color:white" end (click)="openMenu()" class="menu">
+        <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon>
+      </button>
+      </ion-buttons>
+      <ion-title>Attendance</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content >
+    <ion-calendar [(ngModel)]="dateRange"
+        [options]="optionsRange"
+        [type]="type"
+        [format]="'YYYY-MM-DD'">
+    </ion-calendar>
+
+    <ion-grid>
+      <ion-card>
+        <ion-row>
+          <ion-col col-4> <span class="clrBox approved"></span> <div class="clrBoxLabel">Approved</div></ion-col>
+          <ion-col col-4> <span class="clrBox Unautharized"></span> <div class="clrBoxLabel">Unauthorized leave</div></ion-col>
+          <ion-col col-4> <span class="clrBox Normal"></span> <div class="clrBoxLabel">Normal Punch</div></ion-col>
+          <ion-col col-4> <span class="clrBox RequestRaised"></span> <div class="clrBoxLabel">Request Raised</div></ion-col>
+          <ion-col col-4> <span class="clrBox HolidayWeekoff"></span> <div class="clrBoxLabel">Holiday/Week off</div></ion-col>
+        </ion-row>
+      </ion-card>
+
+      <ion-list>
+          <ion-item>
+            <ion-thumbnail item-start>
+              <p class="dateBox">08</p>
+              <p class="dateBox">JUN</p>
+            </ion-thumbnail>
+            <ion-row>
+              <ion-col col-4><span class="label-time label-bold">IN : 09:45</span></ion-col>
+              <ion-col col-4><span class="label-time label-bold">OUT : 09:45</span></ion-col>
+              <ion-col col-4><span class="label-time">log : 8:30 hrs</span></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-6><span class="label-time">MID-IN : 09:45</span></ion-col>
+              <ion-col col-6><span class="label-time">MID-OUT : 09:45</span></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12><span class="label-time label-bold">Normal Punch</span></ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+
+        <ion-card class="attanance-btn-layout">
+          <ion-row>
+            <ion-col col-4><button ion-button block class="btn-clr">Apply <br>leave</button></ion-col>
+            <ion-col col-4><button ion-button block class="btn-clr">Apply <br>OD</button></ion-col>
+            <ion-col col-4><button ion-button block class="btn-clr">Apply <br>FTP</button></ion-col>
+          </ion-row>
+        </ion-card>
+
+    </ion-grid>
 
 </ion-content>
+
+<ion-footer style="height:3em">
+        <ion-icon class="home" color="light" name="ios-home-outline"></ion-icon>
+</ion-footer>
+

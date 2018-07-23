@@ -11,32 +11,92 @@ page-login {
            width: 45%;
            margin-left:27%;
            height: 20%;
+           margin-top: 8%;
+       }
+
+       .item-inner {
+        margin-left: 0px !important
        }
 
        .col{
         margin-top: 10%;
        }
 
-       .skeinId{
-           margin-top:15% !important;
+       .rememberMeCol {
+        margin-top: 0% !important;
+        padding: 0px !important;
+         .rememberMeItem{
+             padding-left: 0px !important;
+         }
+       }
+
+       .checkbox{
+        margin: 9px 5px 9px 0px !important;
+       }
+
+       .needHelp{
+        margin-top: 0% !important;
+        p{
+            position: absolute !important;
+            right: 0px !important;
+            font-size: 1.2rem !important;
+            margin-top:10% !important;
+        }
+       }
+
+       ion-item{
+        font-size: 1.2rem !important
+       }
+
+       .employee_id{
+           padding-left:0px !important;
+           border-radius: 5px !important;
+           border: 1px solid #b9c9ca !important;
+           height: 1em !important;
+           font-size: 1.2rem !important;
            .iconPerson{
             z-index: 999;
            }
+           .text-input{
+            margin: 0px 8px 0px 0px !important;
+           }
+           ion-icon{
+            width: 10% !important;
+            height: 100% !important;
+            background-color: #0d4858 !important;
+            padding: 11px 0px 0px 0px !important;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+            font-size: 2rem !important;
+          }
        }
 
        .password{
+           padding-left:0px !important;
            margin-top:5% !important;
+           border-radius: 5px !important;
+           border: 1px solid #b9c9ca !important;
+           height: 1em !important;
+           font-size: 1.2rem !important;
            .iconPassword{
              z-index: 999;   
            }
-      
-        ion-item{
-            padding-left: 0px !important
-        }
-      
-          button{
-              border-radius: 20px;
-              margin-top: 10% !important;
+           .text-input{
+            margin: 0px 8px 0px 0px !important;
+           }
+          .signIn {
+              border-radius: 5px !important;
+              margin-top: 5% !important;
+          }
+
+          ion-icon{
+            width: 10% !important;
+            height: 100% !important;
+            background-color: #0d4858 !important;
+            padding: 11px 0px 0px 0px !important;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+            font-size: 2rem !important;
           }
       }
    }

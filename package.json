@@ -34,6 +34,8 @@
         "cordova-plugin-ionic-keyboard": "^2.0.5",
         "cordova-plugin-ionic-webview": "^1.1.19",
         "cordova-plugin-mfp": "^8.0.2018070216",
+        "cordova-plugin-mfp-jsonstore": "^8.0.2018070216",
+        "cordova-plugin-mfp-push": "^8.0.2018040410",
         "cordova-plugin-network-information": "^2.0.1",
         "cordova-plugin-okhttp": "^2.0.0",
         "cordova-plugin-splashscreen": "^5.0.2",
@@ -58,7 +60,9 @@
             "cordova-plugin-ionic-keyboard": {},
             "cordova-plugin-mfp": {},
             "cordova-plugin-camera": {},
-            "cordova-plugin-network-information": {}
+            "cordova-plugin-network-information": {},
+            "cordova-plugin-mfp-jsonstore": {},
+            "cordova-plugin-mfp-push": {}
         },
         "platforms": [
             "android"

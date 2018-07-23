@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { StorageProvider } from '../providers/storage/storage';
+
+import { CalendarModule } from 'ion2-calendar';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
     HttpClientModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    CalendarModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,7 +36,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
     Camera,
     Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ServiceProvider
+    ServiceProvider,
+    StorageProvider
   ]
 })
 export class AppModule {}
