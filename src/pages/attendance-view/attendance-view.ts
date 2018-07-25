@@ -76,6 +76,13 @@ export class AttendanceViewPage {
     this.menu.toggle();
   }
 
+  home() {
+    /**
+    Method for pushing 
+    */
+    this.navCtrl.setRoot("HomePage");
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad AttendanceViewPage');
   }

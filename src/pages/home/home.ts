@@ -21,16 +21,20 @@ import { StorageProvider } from '../../providers/storage/storage';
 export class HomePage {
 
   public photos: any;
+  public defaultAvatar: any;
   public cal:any;
   public cameraPhoto: any;
   public base64Image: any;
   public imageOne: any;
+  jsondata: any;
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider) {
+    
+    this.photos = ("./assets/icon/viv.jpg");
   }
   
 openMenu() {
@@ -56,26 +60,36 @@ coupons() {
   
 ionViewCanEnter() {
   /**
-  * Method for Initializing JSONStore
-  */
-  this.storage.jsonstoreInitialize();
-  /**
   * Method for reading  json data from local jsonstore
   */
-  this.storage.jsonstoreReadAll("userData").then((jsonData:any)=>{
+ this.storage.jsonstoreInitialize().then(()=>{
+   
+  this.storage.jsonstoreReadAll("userImage").then((jsonData:any)=>{
     if(jsonData){
+      this.jsondata = jsonData;
       console.log("Data readed from jsonstore", jsonData);
     };
   }, (error)=>{
     console.log("Data readed from jsonstore error",error);
   });
-    
-}
+
+  });
+
+  setTimeout(()=>{
+  if(this.jsondata.length == 0) {
+  this.photos = ("./assets/icon/viv.jpg");
+  }
+  else{
+  this.photos = this.jsondata[0].json.value;
+  console.log("JSON data has image");
+  }
+  }, 2000);
+
+ }
 
 ionViewDidLoad() {   
   console.log('ionViewDidLoad HomePage');
-  this.photos= ("./assets/icon/viv.jpg");
-  this.cal = ("./assets/icon/cal.png")
+  this.cal = ("./assets/icon/cal.png");
 }
 
 /**
@@ -140,15 +154,24 @@ uploadPhoto() {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   }).then((imageData) => {
-    this.base64Image = 'data:image/jpeg;base64,' + imageData;
-    this.photos = this.base64Image;
-    this.storage.jsonstoreAdd("userData", this.photos).then((response:any)=>{
-      if(response){
-        console.log("data added sucessfully");
-      }
-    },(error)=>{
-      console.log("data added  from jsonstore error",error);
-    });
+    setTimeout(()=>{
+      if(imageData){
+        console.log("getting into if condition",imageData);
+        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.photos = this.base64Image;
+        this.storage.jsonstoreInitialize().then(()=>{
+          this.storage.jsonstoreAdd("userImage", this.photos).then((response:any)=>{
+            if(response){
+              console.log("data added sucessfully");
+            }
+          },(error)=>{
+            console.log("data added from jsonstore error",error);
+          });
+        });
+      }else{
+        console.log("Image data not yet recieved");
+      } 
+    },1000); 
   }, 
   (err) => {
     console.log(err);

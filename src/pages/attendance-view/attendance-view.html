@@ -20,11 +20,11 @@
     <ion-grid>
       <ion-card>
         <ion-row>
-          <ion-col col-4> <span class="clrBox approved"></span> <div class="clrBoxLabel">Approved</div></ion-col>
-          <ion-col col-4> <span class="clrBox Unautharized"></span> <div class="clrBoxLabel">Unauthorized leave</div></ion-col>
-          <ion-col col-4> <span class="clrBox Normal"></span> <div class="clrBoxLabel">Normal Punch</div></ion-col>
-          <ion-col col-4> <span class="clrBox RequestRaised"></span> <div class="clrBoxLabel">Request Raised</div></ion-col>
-          <ion-col col-4> <span class="clrBox HolidayWeekoff"></span> <div class="clrBoxLabel">Holiday/Week off</div></ion-col>
+          <ion-col style="padding: 5px 0px 5px 5px" col-4> <span class="clrBox approved"></span> <div class="clrBoxLabel">Approved</div></ion-col>
+          <ion-col style="padding: 5px 0px 5px 0px" col-4> <span class="clrBox Unautharized"></span> <div class="clrBoxLabel">Unauthorized absence</div></ion-col>
+          <ion-col style="padding: 5px 0px 5px 0px" col-4> <span class="clrBox Normal"></span> <div class="clrBoxLabel">Normal Punch</div></ion-col>
+          <ion-col style="padding: 5px 0px 5px 5px" col-4> <span class="clrBox RequestRaised"></span> <div class="clrBoxLabel">Request Raised</div></ion-col>
+          <ion-col style="padding: 5px 0px 5px 0px" col-4> <span class="clrBox HolidayWeekoff"></span> <div class="clrBoxLabel">Holiday/Weekly off</div></ion-col>
         </ion-row>
       </ion-card>
 
@@ -35,33 +35,33 @@
               <p class="dateBox">JUN</p>
             </ion-thumbnail>
             <ion-row>
-              <ion-col col-4><span class="label-time label-bold">IN : 09:45</span></ion-col>
-              <ion-col col-4><span class="label-time label-bold">OUT : 09:45</span></ion-col>
-              <ion-col col-4><span class="label-time">log : 8:30 hrs</span></ion-col>
+              <ion-col col-12><span class="label-time"><pre><b>Log</b>:08:30 hrs</pre></span></ion-col>
+              <ion-col col-6><span class="label-time"><pre><b>IN</b> :09:45</pre></span></ion-col>
+              <ion-col col-4><span class="label-time"><pre><b>MID-IN</b> :09:45</pre></span></ion-col>
             </ion-row>
             <ion-row>
-              <ion-col col-6><span class="label-time">MID-IN : 09:45</span></ion-col>
-              <ion-col col-6><span class="label-time">MID-OUT : 09:45</span></ion-col>
+              <ion-col col-6><span class="label-time"><pre><b>OUT</b>:09:45</pre></span></ion-col>
+              <ion-col col-4><span class="label-time"><pre><b>MID-OUT</b>:09:45</pre></span></ion-col>
             </ion-row>
             <ion-row>
-              <ion-col col-12><span class="label-time label-bold">Normal Punch</span></ion-col>
+              <ion-col col-12><span class="label-time"><pre><b>Normal Punch</b></pre></span></ion-col>
             </ion-row>
           </ion-item>
         </ion-list>
 
-        <ion-card class="attanance-btn-layout">
-          <ion-row>
-            <ion-col col-4><button ion-button block class="btn-clr">Apply <br>leave</button></ion-col>
-            <ion-col col-4><button ion-button block class="btn-clr">Apply <br>OD</button></ion-col>
-            <ion-col col-4><button ion-button block class="btn-clr">Apply <br>FTP</button></ion-col>
-          </ion-row>
-        </ion-card>
 
+      <ion-card class="attendance-btn-layout">
+        <ion-row>
+          <ion-col col-4><button ion-button block class="btn-clr">Apply <br>leave</button></ion-col>
+          <ion-col col-4><button ion-button block class="btn-clr">Apply <br>OD</button></ion-col>
+          <ion-col col-4><button ion-button block class="btn-clr">Apply <br>FTP</button></ion-col>
+        </ion-row>
+      </ion-card>
+      
     </ion-grid>
-
 </ion-content>
 
-<ion-footer style="height:3em">
-        <ion-icon class="home" color="light" name="ios-home-outline"></ion-icon>
+<ion-footer style="height:3.5em">
+        <ion-icon (click)="home()" class="home" color="light" name="ios-home-outline"></ion-icon>
 </ion-footer>
 

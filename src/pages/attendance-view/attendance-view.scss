@@ -5,6 +5,8 @@ page-attendance-view {
 
     ion-calendar{
       padding: unset;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
     }
 
     .header::after{
@@ -146,6 +148,10 @@ page-attendance-view {
     color: #000 !important;
   }
 
+  ion-calendar-month .days .on-selected p {
+    font-size: 1.2em !important;
+  }
+
   // .todayClass{
   //   background: unset;
   //   border: 1px solid #000;
@@ -158,12 +164,24 @@ page-attendance-view {
     padding: unset;
   }
 
-  .card-md{
+  pre{
+    font-size: 0.8em !important;
+    margin: 0.5px !important;
+  }
+
+  ion-thumbnail {
+    min-width: 70px !important;
+    min-height: 70px !important;
+  }
+
+  .card{
     margin: unset;
     width: 100%;
     background: transparent;
     color: #fff;
     font-size: 0.85rem;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
 
   .clrBox{
@@ -190,6 +208,7 @@ page-attendance-view {
 
   .clrBoxLabel{
     padding: 2% 0%;
+    margin-top: 2%;
   }
   
   .list-md{
@@ -206,13 +225,15 @@ page-attendance-view {
     background: #23FF01
   }
   ion-list{
-    .item-md{
-      padding-left: unset;
+    .item{
+      padding-left: 4px;
+      border: 3px solid #10586B;
+      margin-top: 1%;
       .dateBox{
         display: block;
-        font-size: 1.5em;
+        font-size: 1.4em;
         text-align: center;
-        padding-top: 4%;
+        padding-top: 8%;
       }
       ion-thumbnail{
         height: unset;
@@ -232,12 +253,12 @@ page-attendance-view {
     }
   }
 
-  .attanance-btn-layout{
+  .attendance-btn-layout{
     box-shadow: unset !important;
     ion-col{
       //padding: 5%;
       text-align: -webkit-center !important;
-      margin-top: 2%;
+      margin-top: 0%;
       button{
         font-size: 1.3em;
         line-height: 1.3em;
@@ -252,12 +273,17 @@ page-attendance-view {
 
 ion-footer{
   .home{
-    font-size: 2.2em;
-     display: block;
-     margin-left: auto;
-     margin-right: auto;
-     width: 8%;
-     margin-top: 1%;
+    font-size: 1.5em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 11%;
+    height: 85%;
+    padding-left: 3%;
+    padding-top: 2.5%;
+    border: 1px solid white;
+    border-radius: 50%;
+    margin-top: 1%;
  }
 }
 

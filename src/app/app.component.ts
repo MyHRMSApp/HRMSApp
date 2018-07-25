@@ -2,9 +2,9 @@ import { Component, ViewChild, Renderer } from '@angular/core';
 import { Nav, Platform,AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
+import { StorageProvider } from '../providers/storage/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,14 +15,16 @@ export class MyApp {
   rootPage: any = "LoginPage";
 
   pages: Array<{title: string, component: any}>;
+  jsondata: any;
+  public photos: any;
 
   constructor(    public platform: Platform,
     public statusBar: StatusBar,
     public render:Renderer,
+    public storage:StorageProvider,
     public alert:AlertController,
     public splashScreen: SplashScreen) {
     this.initializeApp();
-
   }
 
   initializeApp() {
@@ -36,7 +38,6 @@ export class MyApp {
         var wlEvent = new CustomEvent("wlInitFinished");
         console.log("dispatch starting wlInitFinished event");
         document.dispatchEvent(wlEvent);
-      
     });
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
@@ -47,6 +48,7 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+    this.storage.jsonstoreInitialize();
   }
 
   logout(){

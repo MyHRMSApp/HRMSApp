@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 
 declare var WL;
 var collections = {
-  userData:{},
+  userImage:{},
 };
 
 var options = {};
@@ -34,9 +34,10 @@ jsonstoreInitialize() {
  * @param CollectionName
  */
 jsonstoreAdd(CollectionName,data) {
-  console.log('Storing CollectionName and Data,', { data, CollectionName });
-  (typeof data == "object" ? JSON.stringify(data) : data)
-  let dataValue = {"value": data};
+  console.log('Storing CollectionName and Data',CollectionName,data);
+  let dataToStore = (typeof data == "object") ? JSON.stringify(data) : data;
+  let dataValue = {'value':dataToStore};
+  console.log('value,', dataValue);
   return new Promise((resolve,reject)=> {
     WL.JSONStore.get(CollectionName).add(dataValue, options).then((Response) => {
       console.log("Data Added to "+CollectionName+"is Successful",dataValue);

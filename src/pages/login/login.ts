@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { MyApp } from '../../app/app.component';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 
 
@@ -23,8 +22,12 @@ public AuthHandler: any;
 public employee_id: any;
 public password: any;
 public isChallenged: boolean = false;
+  jsondata: any;
+  storage: any;
+  photos: string;
 
-constructor(public alert:AlertController, public service:ServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+constructor(public alert:AlertController, public service:ServiceProvider, public navCtrl: NavController, 
+  public navParams: NavParams, public loadingCtrl: LoadingController) {
  
 }
 
@@ -40,7 +43,9 @@ ionViewCanEnter() {
   setTimeout(() => {
   this.mfpAuthInit();
 }, 2000);
+
 }
+
 /**
  * Method to handle the userlogin security check
  * It is scope restricted
