@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
+import { StorageProvider } from '../../providers/storage/storage';
 
 
 /**
@@ -23,11 +24,11 @@ public employee_id: any;
 public password: any;
 public isChallenged: boolean = false;
   jsondata: any;
-  storage: any;
+  //storage: any;
   photos: string;
 
 constructor(public alert:AlertController, public service:ServiceProvider, public navCtrl: NavController, 
-  public navParams: NavParams, public loadingCtrl: LoadingController) {
+  public navParams: NavParams, public loadingCtrl: LoadingController, public storage:StorageProvider) {
  
 }
 
@@ -43,6 +44,35 @@ ionViewCanEnter() {
   setTimeout(() => {
   this.mfpAuthInit();
 }, 2000);
+
+}
+
+ionViewDidLoad() {
+  /**
+  * Method for reading  json data from local jsonstore
+  */
+
+  setTimeout(()=>{
+  this.storage.jsonstoreInitialize().then(()=>{ 
+  this.storage.jsonstoreReadAll("userImage").then((jsonData:any)=>{
+    if(jsonData){
+          if(jsonData.length == 0) {
+          this.photos = ("./assets/icon/avatar.png");
+          localStorage.setItem("userPicture", this.photos);
+          }
+          else{
+          this.photos = jsonData.json.value;
+          localStorage.setItem("userPicture", this.photos);
+          //console.log("JSON data has image");
+          }
+    };
+  }, (error)=>{
+    console.log("Data readed from jsonstore error",error);
+  });
+
+  });
+
+  }, 2000);
 
 }
 
