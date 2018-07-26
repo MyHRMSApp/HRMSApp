@@ -7,7 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
 import { CalendarComponentOptions } from 'ion2-calendar';
-
+import { ServiceProvider } from '../../providers/service/service';
 
 @IonicPage()
 @Component({
@@ -66,7 +66,7 @@ export class AttendanceViewPage {
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider) {
+    public navParams: NavParams, public storage:StorageProvider, public serviceProvide: ServiceProvider) {
   }
 
   openMenu() {
@@ -90,5 +90,7 @@ export class AttendanceViewPage {
   onChange($event) {
     console.log($event);
   }
+
+
 
 }
