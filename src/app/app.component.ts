@@ -42,6 +42,7 @@ export class MyApp {
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
     });
+
   }
 
   openPage(page) {

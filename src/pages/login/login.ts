@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { StorageProvider } from '../../providers/storage/storage';
+import { GooglePlus } from '@ionic-native/google-plus';
+// import { AngularFireModule } from 'angularfire2';
+import firebase from 'firebase';
 
 
 /**
@@ -28,22 +31,56 @@ public isChallenged: boolean = false;
   photos: string;
 
 constructor(public alert:AlertController, public service:ServiceProvider, public navCtrl: NavController, 
-  public navParams: NavParams, public loadingCtrl: LoadingController, public storage:StorageProvider) {
+  public navParams: NavParams, public loadingCtrl: LoadingController, public storage:StorageProvider,
+  private googlePlus: GooglePlus) {
  
 }
 
+// google() {
+//   console.log("google");
+
+//   this.googlePlus.login({
+//      'webClientId': '609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg.apps.googleusercontent.com',
+//      'offline': true
+//   }).then(res => {
+//       firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+//       .then(success =>{
+//         console.log("Login Successfully");
+//       }).catch(failure => 
+//         console.log("Login Failure"));
+//   })
+//   .catch(err => console.error(err));
+// }
+
+google() {
+  console.log("google");
+
+  this.googlePlus.login({
+     'webClientId': '609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg.apps.googleusercontent.com',
+     'offline': true
+  }).then( res => {
+    const googleCredential = firebase.auth.GoogleAuthProvider
+        .credential(res.idToken);
+
+    firebase.auth().signInWithCredential(googleCredential)
+  .then( response => {
+      console.log("Firebase success: " + JSON.stringify(response));
+  });
+}), err => {
+console.error("Error: ", err)
+}
+}
+
 invokeAdapter() {
-  /**
-  Method for pushing 
-  */
   this.navCtrl.setRoot("HomePage");
 }
 
 ionViewCanEnter() {
+
   console.log('ionViewCanEnter HomePage');
   setTimeout(() => {
   this.mfpAuthInit();
-}, 2000);
+  }, 2000);
 
 }
 

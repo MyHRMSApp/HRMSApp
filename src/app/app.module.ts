@@ -1,9 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
-import { MyApp } from './app.component';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ServiceProvider } from '../providers/service/service';
@@ -14,6 +11,22 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { StorageProvider } from '../providers/storage/storage';
 
 import { CalendarModule } from 'ion2-calendar';
+import { GooglePlus } from '@ionic-native/google-plus';
+// import { AngularFireModule } from 'angularfire2';
+import firebase from 'firebase';
+
+import { MyApp } from './app.component';
+
+// export const firebaseConfig = {
+//   apiKey: "AIzaSyAiXhrXqGqPMW025LuYVGTnlYsZb6GkcLs",
+//   authDomain: "myhr-da310.firebaseapp.com",
+//   databaseURL: "https://myhr-da310.firebaseio.com",
+//   projectId: "myhr-da310",
+//   storageBucket: "myhr-da310.appspot.com",
+//   messagingSenderId: "609753179467"
+// }
+// firebase.initializeApp(firebaseConfig)
+
 
 @NgModule({
   declarations: [
@@ -24,7 +37,8 @@ import { CalendarModule } from 'ion2-calendar';
     HttpClientModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    CalendarModule
+    CalendarModule,
+    // AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,6 +49,7 @@ import { CalendarModule } from 'ion2-calendar';
     SplashScreen,
     Camera,
     Network,
+    GooglePlus,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServiceProvider,
     StorageProvider
