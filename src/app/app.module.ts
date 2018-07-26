@@ -12,20 +12,20 @@ import { StorageProvider } from '../providers/storage/storage';
 
 import { CalendarModule } from 'ion2-calendar';
 import { GooglePlus } from '@ionic-native/google-plus';
-// import { AngularFireModule } from 'angularfire2';
-import firebase from 'firebase';
+//import { AngularFireModule } from 'angularfire2';
+import * as firebase from 'firebase';
 
 import { MyApp } from './app.component';
 
-// export const firebaseConfig = {
-//   apiKey: "AIzaSyAiXhrXqGqPMW025LuYVGTnlYsZb6GkcLs",
-//   authDomain: "myhr-da310.firebaseapp.com",
-//   databaseURL: "https://myhr-da310.firebaseio.com",
-//   projectId: "myhr-da310",
-//   storageBucket: "myhr-da310.appspot.com",
-//   messagingSenderId: "609753179467"
-// }
-// firebase.initializeApp(firebaseConfig)
+export const firebaseConfig = {
+  apiKey: "AIzaSyAiXhrXqGqPMW025LuYVGTnlYsZb6GkcLs",
+  authDomain: "myhr-da310.firebaseapp.com",
+  databaseURL: "https://myhr-da310.firebaseio.com",
+  projectId: "myhr-da310",
+  storageBucket: "myhr-da310.appspot.com",
+  messagingSenderId: "609753179467"
+}
+firebase.initializeApp(firebaseConfig)
 
 
 @NgModule({
@@ -38,7 +38,7 @@ import { MyApp } from './app.component';
     HttpModule,
     IonicModule.forRoot(MyApp),
     CalendarModule,
-    // AngularFireModule.initializeApp(firebaseConfig)
+    //AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

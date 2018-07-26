@@ -4,7 +4,7 @@ import { ServiceProvider } from '../../providers/service/service';
 import { StorageProvider } from '../../providers/storage/storage';
 import { GooglePlus } from '@ionic-native/google-plus';
 // import { AngularFireModule } from 'angularfire2';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 
 /**
@@ -14,7 +14,6 @@ import firebase from 'firebase';
 
 declare var WL;
 declare var WLAuthorizationManager;
-declare var WLResourceRequest;
 
 @IonicPage()
 @Component({
@@ -30,43 +29,20 @@ public isChallenged: boolean = false;
   jsondata: any;
   //storage: any;
   photos: string;
-  IP_BEGDA:any = "20180601";
-  IP_ENDDA:any = "20180605";
-  IP_PERNR:any = "00477072";
 
-<<<<<<< HEAD
 constructor(public alert:AlertController, public service:ServiceProvider, public navCtrl: NavController, 
   public navParams: NavParams, public loadingCtrl: LoadingController, public storage:StorageProvider,
   private googlePlus: GooglePlus) {
-=======
-constructor(public alert:AlertController, public serviceProvide:ServiceProvider, public navCtrl: NavController, 
-  public navParams: NavParams, public loadingCtrl: LoadingController, public storage:StorageProvider) {
->>>>>>> edc40a72c392c31803f5b0b1d936ae283ea733f2
  
 }
 
-// google() {
-//   console.log("google");
 
-//   this.googlePlus.login({
-//      'webClientId': '609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg.apps.googleusercontent.com',
-//      'offline': true
-//   }).then(res => {
-//       firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-//       .then(success =>{
-//         console.log("Login Successfully");
-//       }).catch(failure => 
-//         console.log("Login Failure"));
-//   })
-//   .catch(err => console.error(err));
-// }
-
-google() {
+googlePlusAuthentication() {
   console.log("google");
 
   this.googlePlus.login({
-     'webClientId': '609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg.apps.googleusercontent.com',
-     'offline': true
+      'webClientId': '609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg.apps.googleusercontent.com',
+      'offline': true
   }).then( res => {
     const googleCredential = firebase.auth.GoogleAuthProvider
         .credential(res.idToken);
@@ -74,41 +50,23 @@ google() {
     firebase.auth().signInWithCredential(googleCredential)
   .then( response => {
       console.log("Firebase success: " + JSON.stringify(response));
+      this.navCtrl.setRoot("HomePage");
   });
-}), err => {
-console.error("Error: ", err)
-}
+  }), err => {
+      console.error("Error: ", err)
+  }
 }
 
 invokeAdapter() {
-<<<<<<< HEAD
-=======
-  /**
-  Method for pushing 
-  */
- let dataRequest = new WLResourceRequest("/adapters/attananceRequest/getAttananceData", WLResourceRequest.POST, 3000);
- dataRequest.setHeader("Content-Type","application/json");
- dataRequest.setQueryParameter("IP_BEGDA", "20180601");
- dataRequest.setQueryParameter("IP_ENDDA", "20180605");
- dataRequest.setQueryParameter("IP_PERNR", "00477072");
- dataRequest.send().then(
-   (response) => {
-     console.log('--> MyWardDataProvider: Upload successful:\n', response);
-   }, (failure) => {
-     console.log('--> MyWardDataProvider: Upload failed:\n', failure);
-   });
-
-
->>>>>>> edc40a72c392c31803f5b0b1d936ae283ea733f2
   this.navCtrl.setRoot("HomePage");
 }
 
 ionViewCanEnter() {
 
   console.log('ionViewCanEnter HomePage');
-  setTimeout(() => {
-  this.mfpAuthInit();
-  }, 2000);
+  // setTimeout(() => {
+  // this.mfpAuthInit();
+  // }, 2000);
 
 }
 

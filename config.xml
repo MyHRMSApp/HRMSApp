@@ -78,8 +78,8 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
     <mfp:android>
-        <mfp:sdkChecksum>60114320</mfp:sdkChecksum>
-        <mfp:appChecksum>3286367424</mfp:appChecksum>
+        <mfp:sdkChecksum>3727668345</mfp:sdkChecksum>
+        <mfp:appChecksum>1467507116</mfp:appChecksum>
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
@@ -112,22 +112,23 @@
         </mfp:windows10>
         <mfp:appChecksum>0</mfp:appChecksum>
     </mfp:windows>
-    <mfp:platformVersion>8.0.0.00-20180717-120036</mfp:platformVersion>
+    <mfp:platformVersion>8.0.0.00-20180630-023429</mfp:platformVersion>
     <mfp:clientCustomInit enabled="false" />
     <mfp:server runtime="mfp" url="http://192.168.43.139:9080" />
     <mfp:directUpdateAuthenticityPublicKey />
     <mfp:languagePreferences>en</mfp:languagePreferences>
+    <engine name="android" spec="^7.0.0" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
-    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.2.1" />
-    <plugin name="cordova-plugin-mfp" spec="^8.0.2018071703" />
-    <plugin name="cordova-plugin-mfp-jsonstore" spec="^8.0.2018071703" />
+    <plugin name="cordova-plugin-googleplus" spec="^5.2.1">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg" />
+    </plugin>
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.19" />
+    <plugin name="cordova-plugin-mfp" spec="^8.0.2018070216" />
+    <plugin name="cordova-plugin-mfp-jsonstore" spec="^8.0.2018070216" />
+    <plugin name="cordova-plugin-mfp-push" spec="^8.0.2018040410" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
-    <plugin name="cordova-plugin-googleplus" spec="~5.3.0">
-        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg" />
-    </plugin>
-    <engine name="android" spec="~7.0.0" />
 </widget>
