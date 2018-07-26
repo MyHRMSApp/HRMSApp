@@ -14,6 +14,7 @@ import firebase from 'firebase';
 
 declare var WL;
 declare var WLAuthorizationManager;
+declare var WLResourceRequest;
 
 @IonicPage()
 @Component({
@@ -29,10 +30,18 @@ public isChallenged: boolean = false;
   jsondata: any;
   //storage: any;
   photos: string;
+  IP_BEGDA:any = "20180601";
+  IP_ENDDA:any = "20180605";
+  IP_PERNR:any = "00477072";
 
+<<<<<<< HEAD
 constructor(public alert:AlertController, public service:ServiceProvider, public navCtrl: NavController, 
   public navParams: NavParams, public loadingCtrl: LoadingController, public storage:StorageProvider,
   private googlePlus: GooglePlus) {
+=======
+constructor(public alert:AlertController, public serviceProvide:ServiceProvider, public navCtrl: NavController, 
+  public navParams: NavParams, public loadingCtrl: LoadingController, public storage:StorageProvider) {
+>>>>>>> edc40a72c392c31803f5b0b1d936ae283ea733f2
  
 }
 
@@ -72,6 +81,25 @@ console.error("Error: ", err)
 }
 
 invokeAdapter() {
+<<<<<<< HEAD
+=======
+  /**
+  Method for pushing 
+  */
+ let dataRequest = new WLResourceRequest("/adapters/attananceRequest/getAttananceData", WLResourceRequest.POST, 3000);
+ dataRequest.setHeader("Content-Type","application/json");
+ dataRequest.setQueryParameter("IP_BEGDA", "20180601");
+ dataRequest.setQueryParameter("IP_ENDDA", "20180605");
+ dataRequest.setQueryParameter("IP_PERNR", "00477072");
+ dataRequest.send().then(
+   (response) => {
+     console.log('--> MyWardDataProvider: Upload successful:\n', response);
+   }, (failure) => {
+     console.log('--> MyWardDataProvider: Upload failed:\n', failure);
+   });
+
+
+>>>>>>> edc40a72c392c31803f5b0b1d936ae283ea733f2
   this.navCtrl.setRoot("HomePage");
 }
 

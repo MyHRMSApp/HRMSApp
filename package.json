@@ -32,12 +32,19 @@
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-dialogs": "^2.0.1",
         "cordova-plugin-globalization": "^1.11.0",
+<<<<<<< HEAD
         "cordova-plugin-googleplus": "^5.3.0",
         "cordova-plugin-ionic-keyboard": "^2.0.5",
         "cordova-plugin-ionic-webview": "^1.1.19",
         "cordova-plugin-mfp": "^8.0.2018070216",
         "cordova-plugin-mfp-jsonstore": "^8.0.2018070216",
         "cordova-plugin-mfp-push": "^8.0.2018040410",
+=======
+        "cordova-plugin-ionic-keyboard": "^2.1.2",
+        "cordova-plugin-ionic-webview": "^1.2.1",
+        "cordova-plugin-mfp": "^8.0.2018071703",
+        "cordova-plugin-mfp-jsonstore": "^8.0.2018071703",
+>>>>>>> edc40a72c392c31803f5b0b1d936ae283ea733f2
         "cordova-plugin-network-information": "^2.0.1",
         "cordova-plugin-okhttp": "^2.0.0",
         "cordova-plugin-splashscreen": "^5.0.2",
@@ -64,11 +71,15 @@
             "cordova-plugin-mfp": {},
             "cordova-plugin-camera": {},
             "cordova-plugin-network-information": {},
+<<<<<<< HEAD
             "cordova-plugin-mfp-jsonstore": {},
             "cordova-plugin-mfp-push": {},
             "cordova-plugin-googleplus": {
                 "REVERSED_CLIENT_ID": "com.googleusercontent.apps.609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg"
             }
+=======
+            "cordova-plugin-mfp-jsonstore": {}
+>>>>>>> edc40a72c392c31803f5b0b1d936ae283ea733f2
         },
         "platforms": [
             "android"
