@@ -1,6 +1,6 @@
-import {
-  Component
-} from '@angular/core';
+import { UtilsProvider } from './../../providers/utils/utils';
+import { Component,Renderer } from '@angular/core';
+import { HomePage } from './../home/home';
 import {
   IonicPage,
   NavController,
@@ -8,6 +8,7 @@ import {
   AlertController,
   LoadingController
 } from 'ionic-angular';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   ServiceProvider
 } from '../../providers/service/service';
@@ -19,6 +20,7 @@ import {
 } from '@ionic-native/google-plus';
 //import { AngularFireModule } from 'angularfire2';
 import * as firebase from 'firebase';
+import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
 
 
 /**
@@ -37,6 +39,7 @@ declare var WLAuthorizationManager;
 export class LoginPage {
   public adapterResult: any = "";
   public AuthHandler: any;
+  AuthHandlerMessage:String="";
   public gmailHandler: any;
   public employee_id: any;
   public password: any;
@@ -44,38 +47,91 @@ export class LoginPage {
   jsondata: any;
   //storage: any;
   photos: string;
+  form;
+  loader: any;
 
   constructor(public alert: AlertController, public service: ServiceProvider, public navCtrl: NavController,
     public navParams: NavParams, public loadingCtrl: LoadingController, public storage: StorageProvider,
-    private googlePlus: GooglePlus) {
-      console.log("Hello from login page");
+    private googlePlus: GooglePlus,public utils:UtilsProvider,public authHandler:AuthHandlerProvider,
+    public render:Renderer) {
+    
+      this.form = new FormGroup({
+        username: new FormControl("", Validators.required),
+        password: new FormControl("", Validators.required)
+      });
+  
+      this.authHandler.setLoginFailureCallback((error) => {
+        this.loader.dismiss();
+        if (error !== null) {
+          this.showAlert('Login Failure', error);
+        } else {
+          this.showAlert('Login Failure', 'Failed to login.');
+        }
+      });
+      this.authHandler.setLoginSuccessCallback(() => {
+        let view = this.navCtrl.getActive();
+        if (!(view.instance instanceof HomePage)) {
+          this.navCtrl.setRoot("HomePage");
+        }
+      });
+      this.authHandler.setHandleChallengeCallback(() => {
+        this.navCtrl.setRoot("LoginPage");
+      });
   }
+
+  processForm() {
+    let username = this.form.value.username;
+    let password = this.form.value.password;
+    let credentials = {
+      "username":username,
+      "password":password
+    };
+    if (username === "" || password === "") {
+      this.showAlert('Login Failure', 'Username and password are required');
+      return;
+    }
+    console.log('--> Sign-in with user: ', username);
+    this.loader = this.loadingCtrl.create({
+      content: 'Signining in. Please wait ...',
+      dismissOnPageChange: true
+    });
+    this.loader.present().then(() => {
+      sessionStorage.setItem("securityName","UserLogin");
+      this.authHandler.login(credentials,"UserLogin");
+    });
+  }
+
+  
+
   /**
-   * Method for handling functionalities before entering into the page
+   * Method for reading  json data from local jsonstore
    */
-  ionViewCanEnter(){
-    //Initialize the auth handlers before getting into the codes
+  ionViewDidLoad() {
     setTimeout(()=>{
-      this.initAuthHanlder("UserLogin");
-      this.initAuthHanlder("socialLogin");
-    },2000);
+    this.storage.jsonstoreInitialize().then(()=>{ 
+    this.storage.jsonstoreReadAll("userImage").then((jsonData:any)=>{
+      if(jsonData){
+            if(jsonData.length == 0) {
+            this.photos = ("./assets/icon/avatar.png");
+            localStorage.setItem("userPicture", this.photos);
+            }
+            else{
+            this.photos = jsonData.json.value;
+            localStorage.setItem("userPicture", this.photos);
+            //console.log("JSON data has image");
+            }
+      };
+    }, (error)=>{
+      console.log("Data readed from jsonstore error",error);
+    });
+  
+    });
+  
+    }, 2000);
+  
   }
   
-  /**
-   * Method for submitting login details to security check handler
-   */
-  loginUser(){
-    let errorIndex = [null,"",undefined];
-    let userData = {
-      "username": this.employee_id,
-      "password": this.password
-    }
-    if(errorIndex.indexOf(this.employee_id) == -1 && errorIndex.indexOf(this.password) == -1){
-      this.authorizeUserCredentials(userData,"UserLogin");
-    }else{
-      console.log("invalid credentials");
-    }
-  }
+  
   /**
    * Method to handle user login via google plus option
    */
@@ -88,55 +144,25 @@ export class LoginPage {
         "vendor": "google",
         "token": res.idToken
       };
-      this.authorizeUserCredentials(inputParams,"socialLogin");
-      //Enable the firebse authentication if need
-      //const googleCredential = firebase.auth.GoogleAuthProvider.credential(res.idToken);
-      //console.log("res.idToken", res.idToken);
-      /*firebase.auth().signInWithCredential(googleCredential).then((response) => {
-        console.log("Firebase success: " + JSON.stringify(response));
-      }, (err) => {
-        console.error("Error: ", err);
-      });*/
+      this.loader = this.loadingCtrl.create({
+        content: 'Signining in. Please wait ...',
+        dismissOnPageChange: true
+      });
+      this.loader.present().then(() => {
+        sessionStorage.setItem("securityName","socialLogin");
+        this.authHandler.login(inputParams,"socialLogin");
+      });
     });
-  }
-  /**
-   * Method for initializing authorization handlers commonly
-   * @param handlerName 
-   */
-  initAuthHanlder(handlerName){
-    console.log("given security check hanlder name is", handlerName)
-    this.AuthHandler = WL.Client.createSecurityCheckChallengeHandler(handlerName);
-    this.AuthHandler.handleChallenge = ((response)=>{
-      console.log("getting into challenge handler method");
-      if(response.errorMsg){
-        var msg = response.errorMsg+"<br>";
-        msg+="Remaining Attempts : "+response.remainingAttempts;
-      }
-    });
-  }
-  /**
-   * Method for authorizing user credentials with security checks
-   * @param userData 
-   * @param hanlderName
-   */
-  authorizeUserCredentials(userData,hanlderName){
-    console.log("passing input credentials are",userData,hanlderName);
-    //this.AuthHandler.submitChallengeAnswer(userData)
-    if (this.isChallenged == false) {
-    WLAuthorizationManager.login(hanlderName,userData)
-    .then ((success)=>{
-      console.log("WLAuthorizationManager success for "+hanlderName);
-      sessionStorage.setItem("tempCredentials",JSON.stringify({"userData":userData,"loginCheckName":hanlderName}));
-      this.navCtrl.setRoot("HomePage");
-      this.isChallenged = false;
-    },(error)=>{
-      console.log("Uhhoh, i am facing error in WLAuthorizationManager"+ hanlderName);
-    });
-    }
-    else{
-      this.AuthHandler.submitChallengeAnswer(userData);
-    }
   }
 
-
+  showAlert(alertTitle, alertMessage) {
+    let prompt = this.alert.create({
+      title: alertTitle,
+      message: alertMessage,
+      buttons: [{
+        text: 'Ok',
+      }]
+    });
+    prompt.present();
+  }
 }

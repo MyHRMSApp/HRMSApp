@@ -5,30 +5,30 @@
         <img src="./assets/icon/logo.png" class="logo"/>
       <ion-col col-12>
         <ion-list no-lines>
-          <!-- <form [formGroup]="data"> -->
-          <ion-item class="employee_id">
-            <ion-icon color="light" class="iconPerson" item-left name="ios-card-outline"></ion-icon>
-            <ion-input [(ngModel)]="employee_id" type="text" autocapitalize="characters"  placeholder="Employee Id"></ion-input>
-          </ion-item>
-          <!-- <p class="restriction" *ngIf="!data.controls.employee_id.valid && (data.controls.employee_id.dirty || submitAtttempt)"><span>* </span>should be a valid 'ID'</p>       -->
-          <ion-item class="password">
-              <ion-icon color="light" (click)="viewPassword()" class="iconPassword" item-left name="ios-lock-outline"></ion-icon>
-              <ion-input [(ngModel)]="password" type="password"  placeholder="Password" maxlength="20"></ion-input>
-          </ion-item>
-          <!-- <p class="restriction" *ngIf="!data.controls.password.valid && (data.controls.password.dirty || submitAtttempt)"><span>* </span>password length must be valuable</p>  -->
-          <button class="signIn" color="loginButton" (click)="loginUser()" ion-button full>LOGIN</button>
+          <form (submit)="processForm()" [formGroup]="form">
+            <ion-list>
+              <ion-item class="employee_id">
+                <ion-icon color="light" class="iconPerson" item-left name="ios-card-outline"></ion-icon>
+                <ion-input formControlName="username" placeholder="Employee Id" type="text"></ion-input>
+              </ion-item>
+              <ion-item class="password">
+                <ion-icon color="light" class="iconPassword" item-left name="ios-lock-outline"></ion-icon>
+                <ion-input formControlName="password" placeholder="Password" type="password"></ion-input>
+              </ion-item>
+            </ion-list>
+              <button class="signIn" color="loginButton" ion-button full type="submit">Login</button>
+          </form>
           <ion-row>
-          <ion-col class="rememberMeCol" col-8>
-          <ion-item class="rememberMeItem">
-            <ion-label>Remember me</ion-label>
-            <ion-checkbox [(ngModel)]="rememberMe"></ion-checkbox>
-          </ion-item>
-          </ion-col>
-          <ion-col class="needHelp" col-4>
-            <p>Need help</p>
-          </ion-col> 
-          </ion-row>
-          <!-- </form> -->
+            <ion-col class="rememberMeCol" col-8>
+            <ion-item class="rememberMeItem">
+              <ion-label>Remember me</ion-label>
+              <ion-checkbox [(ngModel)]="rememberMe"></ion-checkbox>
+            </ion-item>
+            </ion-col>
+            <ion-col class="needHelp" col-4>
+              <p>Need help</p>
+            </ion-col> 
+            </ion-row>
           <p class="or">or</p>
           <button class="googlePlusButton" color="googlePlus" (tap)="userLoginViagooglePlus()" ion-button full>
           <ion-icon class="googlePlusIcon" item-start color="light" item-left name="logo-googleplus"></ion-icon>

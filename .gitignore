@@ -33,3 +33,9 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+
+mobilefirst/
+
+resources/
+
+src\.zip

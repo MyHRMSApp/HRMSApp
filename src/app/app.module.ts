@@ -16,6 +16,8 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import * as firebase from 'firebase';
 
 import { MyApp } from './app.component';
+import { UtilsProvider } from '../providers/utils/utils';
+import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAiXhrXqGqPMW025LuYVGTnlYsZb6GkcLs",
@@ -52,7 +54,9 @@ firebase.initializeApp(firebaseConfig)
     GooglePlus,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServiceProvider,
-    StorageProvider
+    StorageProvider,
+    UtilsProvider,
+    AuthHandlerProvider
   ]
 })
 export class AppModule {}

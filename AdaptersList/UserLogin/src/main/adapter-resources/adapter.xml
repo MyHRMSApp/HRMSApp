@@ -14,7 +14,7 @@
 	<description>UserLogin</description>
 
 	<securityCheckDefinition name="UserLogin" class="com.sample.UserLoginSecurityCheck">
-		<property name="maxAttempts" defaultValue="3" displayName="How many attempts are allowed"/>
+		<property name="maxAttempts" defaultValue="1" displayName="How many attempts are allowed"/>
 		<property name="blockedStateExpirationSec" defaultValue="10" displayName="How long before the client can try again (seconds)"/>
 		<property name="successStateExpirationSec" defaultValue="60" displayName="How long is a successful state valid for (seconds)"/>
 	</securityCheckDefinition>
