@@ -6,6 +6,8 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { StorageProvider } from '../providers/storage/storage';
 
+declare var WL;
+declare var WLAuthorizationManager;
 @Component({
   templateUrl: 'app.html'
 })
@@ -42,17 +44,28 @@ export class MyApp {
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
     });
-
   }
-
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
     this.storage.jsonstoreInitialize();
   }
-
+  /**
+   * Method for logging out user from app and MFP Server
+   */
   logout(){
-    this.nav.push("LoginPage");
+    let hanlderName = sessionStorage.getItem("tempCredentials");
+    let authData = JSON.parse(hanlderName);
+    console.log("saved auth data is",authData);
+    WLAuthorizationManager.logout(authData.loginCheckName)
+    .then ((data)=>{
+      console.log("WLAuthorizationManager Logout success for "+hanlderName,data);
+      sessionStorage.clear();
+      this.nav.setRoot("LoginPage");
+    },(error)=>{
+      console.log("Uhhoh, WLAuthorizationManager Logout Error"+hanlderName,error);
+      return;
+    });
   }
 }

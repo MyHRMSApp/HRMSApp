@@ -84,10 +84,6 @@ page-login {
            .text-input{
             margin: 0px 8px 0px 0px !important;
            }
-          .signIn {
-              border-radius: 5px !important;
-              margin-top: 5% !important;
-          }
 
           ion-icon{
             width: 10% !important;
@@ -98,6 +94,26 @@ page-login {
             margin-bottom: 0px !important;
             font-size: 2rem !important;
           }
+      }
+      .or{
+        text-align:center !important;
+        color:grey !important;
+        margin-top: 0px !important;
+      }
+      .googlePlusButton{
+        height: 4rem !important;
+        border-radius:5px !important;
+        text-transform: inherit !important;
+      }
+      .signIn {
+        height: 4rem !important;
+        border-radius:5px !important;
+        margin-top:8% !important;
+    }
+      .googlePlusIcon{
+        left: 7px !important;
+        position: absolute !important;
+        font-size:2rem !important;
       }
    }
 
