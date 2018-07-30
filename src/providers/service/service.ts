@@ -15,16 +15,25 @@ export class ServiceProvider {
    * @param adaptername
    * @param adaptermethodname
    * @param payload
+   * @param method
    */
   invokeAdapterCall(adaptername, adaptermethodname, method, payload){
     var methodVal = (method == 'get')?WLResourceRequest.GET : WLResourceRequest.POST;
+    var resourceRequest = new WLResourceRequest(
+      "/adapters/"+adaptername+"/"+adaptermethodname,
+      methodVal
+    );
+    if(payload.payload == true){
+      for(var i=0; i<payload.length; i++){
+        var key = Object.keys(payload.payloadData)[i];
+        var value = payload.payloadData[key];
+        console.log(key+"----"+value)
+        resourceRequest.setQueryParameter(key, value);
+      }
+    }
+    resourceRequest.setHeaders("Content-Type","application/json");
+    
     return new Promise((resolve,reject)=>{
-      var resourceRequest = new WLResourceRequest(
-        "/adapters/"+adaptername+"/"+adaptermethodname,
-        methodVal
-      );
-      //resourceRequest.setQueryParameter("parameterName", payload);
-      resourceRequest.setHeaders("Content-Type","application/json");
       resourceRequest.send().then((responseData:any)=>{
         if(responseData.responseJSON){
           resolve(responseData.responseJSON);

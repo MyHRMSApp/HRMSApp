@@ -1,5 +1,5 @@
 {
-    "name": "MyHR",
+    "name": "myhr",
     "version": "0.0.1",
     "author": "Ionic Framework",
     "homepage": "http://ionicframework.com/",
@@ -51,6 +51,7 @@
     },
     "devDependencies": {
         "@ionic/app-scripts": "3.1.11",
+        "ts-node": "^7.0.0",
         "typescript": "~2.6.2"
     },
     "description": "An Ionic project",
@@ -67,11 +68,21 @@
             "cordova-plugin-mfp-jsonstore": {},
             "cordova-plugin-mfp-push": {},
             "cordova-plugin-googleplus": {
-                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg"
+                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg",
+                "WEB_APPLICATION_CLIENT_ID": "609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg.apps.googleusercontent.com"
             }
         },
         "platforms": [
             "android"
         ]
+    },
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MyHRMSApp/HRMSApp.git"
+    },
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/MyHRMSApp/HRMSApp/issues"
     }
 }

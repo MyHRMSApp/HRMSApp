@@ -18,6 +18,7 @@ import {
 import {
   GooglePlus
 } from '@ionic-native/google-plus';
+import { MyApp } from '../../app/app.component'
 //import { AngularFireModule } from 'angularfire2';
 import * as firebase from 'firebase';
 import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
@@ -53,7 +54,7 @@ export class LoginPage {
   constructor(public alert: AlertController, public service: ServiceProvider, public navCtrl: NavController,
     public navParams: NavParams, public loadingCtrl: LoadingController, public storage: StorageProvider,
     private googlePlus: GooglePlus,public utils:UtilsProvider,public authHandler:AuthHandlerProvider,
-    public render:Renderer) {
+    public render:Renderer, public mainService: MyApp) {
     
       this.form = new FormGroup({
         username: new FormControl("", Validators.required),
@@ -71,6 +72,9 @@ export class LoginPage {
       this.authHandler.setLoginSuccessCallback(() => {
         let view = this.navCtrl.getActive();
         if (!(view.instance instanceof HomePage)) {
+          console.log("invoke Home Page----->>>");
+          this.mainService.attanancePageData = this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": "20180601","IP_ENDDA": "20180731","IP_PERNR": "00477072"}});
+          console.log(this.mainService.attanancePageData);
           this.navCtrl.setRoot("HomePage");
         }
       });

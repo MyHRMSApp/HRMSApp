@@ -38,7 +38,7 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      white,
-  dark:       #222,
+  dark:       white,
   googlePlus: #dd4c39,
   loginButton:#0d4858
 );
@@ -88,3 +88,13 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+
+@font-face{
+  font-family: CenturyGothic;
+  src: url('../assets/fonts/CenturyGothic.ttf') format('ttf');
+  }
+   
+  *{
+  font-family: CenturyGothic;
+  }

@@ -123,7 +123,7 @@ export class AuthHandlerProvider {
       .then(
         (success) => {
           console.log('--> AuthHandler: login success');
-          self.loginSuccessCallback(success);        
+          // self.loginSuccessCallback(success);        
         },
         (failure) => {
           console.log('--> AuthHandler: login failure: ' + JSON.stringify(failure));

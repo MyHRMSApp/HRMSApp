@@ -73,7 +73,6 @@ public class AttananceRequestResource {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/getAttananceData")
 	@OAuthSecurity(enabled = false)
 	public String getAttananceData(	@QueryParam("IP_BEGDA") String IP_BEGDA,
 									@QueryParam("IP_ENDDA") String IP_ENDDA,
@@ -626,6 +625,19 @@ public class AttananceRequestResource {
 					resultJSON.put("Holiday", false);
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", true);
+				}else{
+					resultJSON.put("cssClass", "");
+					resultJSON.put("LDATE", LDATE);
+					resultJSON.put("PUN_P10", PUNIN);
+					resultJSON.put("PUN_P15", MIDOUT);
+					resultJSON.put("PUN_P20", PUNOUT);
+					resultJSON.put("PUN_P25", MIDIN);
+					resultJSON.put("ATT", ATT);
+					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
+					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("Holiday", false);
+					resultJSON.put("Absence", false);
+					resultJSON.put("RequestState", false);
 				}
 
 				resultJSONarrlist.add(resultJSON);

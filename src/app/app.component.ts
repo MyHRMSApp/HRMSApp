@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { StorageProvider } from '../providers/storage/storage';
-import { SecondloginPage } from '../pages/secondlogin/secondlogin';
+// import { SecondloginPage } from '../pages/secondlogin/secondlogin';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 
 declare var WL;
@@ -21,6 +21,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   jsondata: any;
   public photos: any;
+  public attanancePageData: any;
 
   constructor(    public platform: Platform,
     public statusBar: StatusBar,

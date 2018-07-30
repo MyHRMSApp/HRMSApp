@@ -7,6 +7,11 @@ page-attendance-view {
       padding: unset;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
+      background: url('../../assets/imgs/Calendar-BG.png');
+      color: #fff !important;
+      width: 92%;
+      display: block;
+      margin: 0 auto;
     }
 
     .header::after{
@@ -28,137 +33,508 @@ page-attendance-view {
     }
  
 
-  .yellow{
-    //border-radius: 36px !important;
-    width: 25px !important;
+  .ATT1_Pending_ATT2_Pending{
+    border-radius: 2px !important;
+    width: 20px !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 16% auto !important;
     padding: 0 !important;
-    height: 25px !important;
-    background-color: #FEF130 !important;
+    height: 20px !important;
+    background-color: #e5da28 !important;
     position: relative !important;
     z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
 
-  .green{
-    //border-radius: 36px !important;
-    width: 25px !important;
-    display: block !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    height: 25px !important;
-    background-color: #23FF01 !important;
-    position: relative !important;
-    z-index: 2 !important;
+  .HollydayClass, .ATT1_Holliday_ATT2_Holliday{
+    // border-radius: 2px !important;
+    // width: 20px !important;
+    // display: block !important;
+    // margin: 16% auto !important;
+    // padding: 0 !important;
+    // height: 20px !important;
+    // background-color: #136571 !important;
+    // position: relative !important;
+    // z-index: 2 !important;
+    // font-size: 0.7em;
+
+    border-radius: unset;
+    display: unset;
+    margin: unset;
+    padding: unset;
+    position: unset;
+    z-index: unset;
+
+    background-color: #136571 !important;
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
 
-  .red{
-    //border-radius: 36px !important;
-    width: 25px !important;
+  .ATT1_Approved_ATT2_Approved{
+    border-radius: 2px !important;
+    width: 20px !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 16% auto !important;
     padding: 0 !important;
-    height: 25px !important;
-    background-color: #FE0000 !important;
+    height: 20px !important;
+    background-color: #4de835 !important;
     position: relative !important;
     z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
 
-  .cls{
-    //border-radius: 36px !important;
-    width: 25px !important;
+  .ATT1_UA_ATT2_UA{
+    border-radius: 2px !important;
+    width: 20px !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 16% auto !important;
     padding: 0 !important;
-    height: 25px !important;
-    background-color: yellow !important;
+    height: 20px !important;
+    background-color: #fe4543 !important;
     position: relative !important;
     z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
 
-  .holiday{
-    //border-radius: unset !important;
-    width: 25px !important;
+
+  .ATT1_Approved_ATT2_Pending{
+    border-radius: 2px !important;
+    width: 20px !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 16% auto !important;
     padding: 0 !important;
-    height: 25px !important;
-    background-color: #C1E6FE !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #4de835 50%,#e5da28 50%) !important;
     position: relative !important;
     z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
 
-  .greenyellow{
-    //border-radius: 36px !important;
-    width: 25px !important;
+  .ATT1_Approved_ATT2_Holliday{
+    border-radius: 2px !important;
+    width: 20px !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 16% auto !important;
     padding: 0 !important;
-    height: 25px !important;
-    background: linear-gradient(to bottom, #23FF01 50%,#FEF130 50%) !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #4de835 50%, #136571 50%) !important;
     position: relative !important;
     z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
 
-  .greentran{
-    //border-radius: 36px !important;
-    width: 25px !important;
+  .ATT1_Approved_ATT2_NormalPunch{
+    border-radius: 2px !important;
+    width: 20px !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 16% auto !important;
     padding: 0 !important;
-    height: 25px !important;
-    background: linear-gradient(to bottom, #23FF01 50%, rgba(255, 255, 255, 0) 50%) !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #4de835 50%, rgba(0, 0, 0, 0) 50%) !important;
     position: relative !important;
     z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
 
-  .cls{
-    //border-radius: 36px !important;
-    width: 25px !important;
+  .ATT1_Approved_ATT2_UA{
+    border-radius: 2px !important;
+    width: 20px !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 16% auto !important;
     padding: 0 !important;
-    height: 25px !important;
-    background-color: yellow !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #4de835 50%, #fe4543 50%) !important;
     position: relative !important;
     z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
 
-  .cls{
-    //border-radius: 36px !important;
-    width: 25px !important;
+  .ATT1_UA_ATT2_Holliday{
+    border-radius: 2px !important;
+    width: 20px !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 16% auto !important;
     padding: 0 !important;
-    height: 25px !important;
-    background-color: yellow !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #fe4543 50%, #136571 50%) !important;
     position: relative !important;
     z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
   }
+
+  .ATT1_UA_ATT2_NormalPunch{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #fe4543 50%, rgba(0, 0, 0, 0) 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_UA_ATT2_Approved{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #fe4543 50%, #4de835 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_UA_ATT2_Pending{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #fe4543 50%, #e5da28 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_Pending_ATT2_Holliday{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #e5da28 50%, #136571 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_Pending_ATT2_NormalPunch{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #e5da28 50%, rgba(0, 0, 0, 0) 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_Pending_ATT2_UA{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #e5da28 50%, #fe4543 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_Pending_ATT2_Approved{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #e5da28 50%, #4de835 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_Holliday_ATT2_Pending{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #136571 50%, #e5da28 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_Holliday_ATT2_NormalPunch{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #136571 50%, rgba(0, 0, 0, 0) 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_Holliday_ATT2_UA{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, #136571 50%, #fe4543 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_Holliday_ATT2_Approved{
+     border-radius: 2px !important;
+     width: 20px !important;
+     display: block !important;
+     margin: 16% auto !important;
+     padding: 0 !important;
+     height: 20px !important;
+     background: linear-gradient(to bottom, #136571 50%, #4de835 50%) !important;
+     position: relative !important;
+     z-index: 2 !important;
+     font-size: 0.7em;
+     p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_NormalPunch_ATT2_Holliday{
+     border-radius: 2px !important;
+     width: 20px !important;
+     display: block !important;
+     margin: 16% auto !important;
+     padding: 0 !important;
+     height: 20px !important;
+     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #136571 50%) !important;
+     position: relative !important;
+     z-index: 2 !important;
+     font-size: 0.7em;
+     p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_NomalPunch_ATT2_NormalPunch{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_NormalPunch_ATT2_UA{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_NormalPunch_ATT2_Pending{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #e5da28 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+  .ATT1_NormalPunch_ATT2_Approved{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #4de835 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    font-size: 0.7em;
+    p{
+      margin-top: 15%;
+    }
+  }
+
+.Cur_ATT1_Approved_ATT2_Holliday{background: linear-gradient(to bottom, #4de835 50%, #136571 50%) !important; color: #fff;}
+.Cur_ATT1_Approved_ATT2_NormalPunch{background: linear-gradient(to bottom, #4de835 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
+.Cur_ATT1_Approved_ATT2_UA{background: linear-gradient(to bottom, #4de835 50%, #fe4543 50%) !important; color: #fff;}
+.Cur_ATT1_Approved_ATT2_Pending{background: linear-gradient(to bottom, #4de835 50%,#e5da28 50%) !important; color: #fff;}
+.Cur_ATT1_Approved_ATT2_Approved{background-color: #4de835 !important; color: #fff;}
+.Cur_ATT1_UA_ATT2_Holliday{background: linear-gradient(to bottom, #fe4543 50%, #136571 50%) !important; color: #fff;}
+.Cur_ATT1_UA_ATT2_NormalPunch{background: linear-gradient(to bottom, #fe4543 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
+.Cur_ATT1_UA_ATT2_UA{background-color: #fe4543 !important; color: #fff;}
+.Cur_ATT1_UA_ATT2_Approved{background: linear-gradient(to bottom, #fe4543 50%, #4de835 50%) !important; color: #fff;}
+.Cur_ATT1_UA_ATT2_Pending{background: linear-gradient(to bottom, #fe4543 50%, #e5da28 50%) !important; color: #fff;}
+.Cur_ATT1_Pending_ATT2_Pending{background-color: #e5da28 !important; color: #fff;}
+.Cur_ATT1_Pending_ATT2_Holliday{background: linear-gradient(to bottom, #e5da28 50%, #136571 50%) !important; color: #fff;}
+.Cur_ATT1_Pending_ATT2_NormalPunch{background: linear-gradient(to bottom, #e5da28 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
+.Cur_ATT1_Pending_ATT2_UA{background: linear-gradient(to bottom, #e5da28 50%, #fe4543 50%) !important; color: #fff;}
+.Cur_ATT1_Pending_ATT2_Approved{background: linear-gradient(to bottom, #e5da28 50%, #4de835 50%) !important; color: #fff;}
+.Cur_ATT1_Holliday_ATT2_Pending{background: linear-gradient(to bottom, #136571 50%, #e5da28 50%) !important; color: #fff;}
+.Cur_ATT1_Holliday_ATT2_Holliday, .Cur_HollydayClass{background-color: #136571 !important; color: #fff;}
+.Cur_ATT1_Holliday_ATT2_NormalPunch{background: linear-gradient(to bottom, #136571 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
+.Cur_ATT1_Holliday_ATT2_UA{background: linear-gradient(to bottom, #136571 50%, #fe4543 50%) !important; color: #fff;}
+.Cur_ATT1_Holliday_ATT2_Approved{background: linear-gradient(to bottom, #136571 50%, #4de835 50%) !important; color: #fff;}
+.Cur_ATT1_NormalPunch_ATT2_Holliday{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #136571 50%) !important; color: #fff;}
+.Cur_ATT1_NomalPunch_ATT2_NormalPunch{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
+.Cur_ATT1_NormalPunch_ATT2_UA{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important; color: #fff;}
+.Cur_ATT1_NormalPunch_ATT2_Pending{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #e5da28 50%) !important; color: #fff;}
+.Cur_ATT1_NormalPunch_ATT2_Approved{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #4de835 50%) !important; color: #fff;}
 
 
   ion-calendar-month .danger .days .on-selected{
-    background: unset;
-    // color: #000 !important;
-    border: 1px solid #000;
-    border-radius: 10%;
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    position: relative !important;
+    z-index: 2 !important;
+    border: 1px solid #fff;
+    font-size: 0.7em;
   }
+
+  ion-calendar-week .week-title.transparent{
+    padding: 5px 0;
+    height: 28px;
+    color: #ffffff;
+  }
+
+  ion-calendar-week .week-toolbar.toolbar-md{
+    min-height: 28px;
+  }
+
 
   ion-calendar-month .danger .days .on-selected p{
-    color: #000 !important;
+    color: #fff;
+    margin-top: 22%;
   }
 
-  ion-calendar-month .days .on-selected p {
-    font-size: 1.2em !important;
+
+  ion-calendar-month button.days-btn{
+    width: 100%;
+    display: block;
+    padding: 0;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    font-size: 0.7em;
+  p{
+      color: #fff;
+    }
   }
 
-  // .todayClass{
-  //   background: unset;
-  //   border: 1px solid #000;
-  //   ion-calendar-month .danger .days .on-selected p{
-  //     color: #000 !important;
-  //   }
-  // }
+  ion-calendar-month .danger .days small{
+    display: block;
+    font-size: 0.5em;
+    margin-top: -20%;
+  }
+
+  ion-calendar-month .days {
+    width: 14%;
+    float: left;
+    text-align: center;
+    height: 36px;
+    margin-bottom: unset;
+    border: 1px solid #134958;
+}
+
+  .todayClass{
+    // margin-top: 10% !important;
+  }
 
   .grid{
     padding: unset;
@@ -191,19 +567,19 @@ page-attendance-view {
     border-radius: 10%;
   }
   .approved{
-    background: #23FF01;
+    background: #4de835;
   }
   .Unautharized{
-    background: #FE0000;
+    background: #fe4543;
   }
   .Normal{
     background: #ffffff;
   }
   .RequestRaised{
-    background: #FEF130;
+    background: #e5da28;
   }
   .HolidayWeekoff{
-    background: #C1E6FE;
+    background: #136571;
   }
 
   .clrBoxLabel{
@@ -222,7 +598,7 @@ page-attendance-view {
   }
   .item-md ion-thumbnail[item-start] {
     margin: 0%;
-    background: #23FF01
+    // background: #4de835
   }
   ion-list{
     .item{

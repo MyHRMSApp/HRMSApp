@@ -37,12 +37,13 @@ public class UserLoginSecurityCheck extends UserAuthenticationSecurityCheck {
             }
             else {
                 errorMsg = "Wrong Credentials";
+                return false;
             }
         }
         else{
             errorMsg = "Credentials not set properly";
+            return false;
         }
-        return false;
     }
 
     /**
