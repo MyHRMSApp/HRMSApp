@@ -90,5 +90,14 @@ export class AttendanceViewPage {
   onChange($event) {
     console.log($event);
   }
-
+  
+  applyLeave() {
+    this.navCtrl.push("ApplyLeavePage");
+  }
+  applyOD(){
+    this.navCtrl.push("ApplyOdPage");
+  }
+  applyFTP(){
+    this.navCtrl.push("ApplyFtpPage");
+  }
 }

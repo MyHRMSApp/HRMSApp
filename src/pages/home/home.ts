@@ -27,6 +27,11 @@ export class HomePage {
   public base64Image: any;
   public imageOne: any;
   jsondata: any;
+  attendanceIcon: string;
+  couponsIcon: any;
+  leavesIcon: any;
+  my_requestIcon: any;
+  my_taskIcon: any;
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -61,7 +66,11 @@ coupons() {
 
 ionViewDidLoad() {   
   console.log('ionViewDidLoad HomePage');
-  this.cal = ("./assets/icon/cal.png");
+  this.attendanceIcon = ("./assets/homePageIcons/attendance.png");
+  this.couponsIcon = ("./assets/homePageIcons/coupons.png");
+  this.leavesIcon = ("./assets/homePageIcons/leaves.png");
+  this.my_requestIcon = ("./assets/homePageIcons/my_request.png");
+  this.my_taskIcon = ("./assets/homePageIcons/my_task.png");
 }
 
 /**

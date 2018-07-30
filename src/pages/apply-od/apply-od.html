@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar color="header">
+  <ion-buttons end>
+    <button style="background-color:white" end (click)="openMenu()" class="menu">
+      <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon>
+    </button>
+    </ion-buttons>
+    <ion-title>Apply OD</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-row>
+        <ion-col col-6>
+            <ion-card>
+                <p>START DATE</p>
+                <ion-avatar class="gridImageDiv">
+                    <img class="userImage" [src]="attendanceIcon" height="30px" width="30px" />
+                </ion-avatar>
+                <p>Balance - 40</p>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6>
+            <ion-card>
+                <p>END DATE</p>
+                <ion-avatar class="gridImageDiv">
+                    <img class="userImage" [src]="attendanceIcon" height="30px" width="30px" />
+                </ion-avatar>
+                <p>Balance - 40</p>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6>
+            <ion-card>
+                <p>IN</p>
+                <p>00:00</p>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6>
+            <ion-card>
+                <p>OUT</p>
+                <p>00:00</p>
+            </ion-card>
+          </ion-col>
+          <ion-col col-12>
+            <ion-card>
+                <h3>LEAVE ENCASHMENT</h3>
+            </ion-card>
+          </ion-col>
+    </ion-row>
+
+      <ion-item (click)="home()" class="home" color="light">Apply</ion-item>
+  
+  </ion-content>
+  
+  <ion-footer style="height:3.5em">
+      <ion-icon (click)="home()" class="home" color="light" name="ios-home-outline"></ion-icon>
+  </ion-footer>

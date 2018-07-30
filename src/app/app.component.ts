@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { StorageProvider } from '../providers/storage/storage';
-import { SecondloginPage } from '../pages/secondlogin/secondlogin';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 
 declare var WL;
@@ -39,12 +38,12 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       
-      
       console.log("Wlcommoninit success");
         var wlEvent = new CustomEvent("wlInitFinished");
         console.log("dispatch starting wlInitFinished event");
         document.dispatchEvent(wlEvent);
     });
+
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
       this.authHandler.init();
@@ -60,10 +59,18 @@ export class MyApp {
   /**
    * Method for logging out user from app and MFP Server
    */
-  logout(){
+  logout() {
     let checkName = sessionStorage.getItem("securityName");
     this.authHandler.logout(checkName).then((resp)=>{
       (resp) ? this.nav.setRoot("LoginPage") : console.log("logout failure");
     });
+  }
+
+  profile() {
+    this.nav.push("ProfilePage");
+  }
+
+  helpline() {
+    this.nav.push("HrHelplinePage");
   }
 }

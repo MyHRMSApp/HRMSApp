@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="header">
+  <ion-buttons end>
+    <button style="background-color:white" end (click)="openMenu()" class="menu">
+      <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon>
+    </button>
+    </ion-buttons>
+    <ion-title>Apply Leave</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-row>
+      <ion-col (click)="privilegeLeave()" col-6>
+          <ion-card>
+              <h3>PL</h3>
+              <p>Balance - 40</p>
+          </ion-card>
+        </ion-col>
+        <ion-col (click)="sickLeave()" col-6>
+          <ion-card>
+              <h3>SL</h3>
+              <p>Balance - 40</p>
+          </ion-card>
+        </ion-col>
+        <ion-col (click)="generalLeave()" col-6>
+          <ion-card>
+              <h3>GL</h3>
+              <p>Balance - 40</p>
+          </ion-card>
+        </ion-col>
+        <ion-col (click)="casualLeave()" col-6>
+          <ion-card>
+              <h3>CL</h3>
+              <p>Balance - 40</p>
+          </ion-card>
+        </ion-col>
+        <ion-col (click)="leaveEncashment()" col-12>
+          <ion-card>
+              <h3>LEAVE ENCASHMENT</h3>
+              <p>Balance - 40</p>
+          </ion-card>
+        </ion-col>
+  </ion-row>
+
+</ion-content>
+
+<ion-footer style="height:3.5em">
+    <ion-icon (click)="home()" class="home" color="light" name="ios-home-outline"></ion-icon>
+</ion-footer>

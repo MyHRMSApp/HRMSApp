@@ -1,6 +1,7 @@
 /// <reference path="../../../plugins/cordova-plugin-mfp/typings/worklight.d.ts" />
 import { Injectable } from '@angular/core';
 
+
 @Injectable()
 export class AuthHandlerProvider {
   securityCheckName = 'UserLogin';
@@ -18,26 +19,25 @@ export class AuthHandlerProvider {
   }
 
   init() {
-    console.log('--> gmailAuthInit'); 
+    console.log('--> userAuthInit'); 
     if (this.initialized) {
       return;
     }
     this.initialized = true;
     console.log('--> AuthHandler init() called');
     this.userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("UserLogin");
-    //this.userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("socialLogin");
     this.userLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.userLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
     this.userLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
   }
 
-  gmailAuthInit(){
+  gmailAuthInit() {
     console.log('--> gmailAuthInit'); 
     if (this.initialized) {
       return;
     }
     this.initialized = true;
-    console.log('--> AuthHandler init() called');
+    console.log('--> gmailAuthInit init() called');
     this.gmailLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("socialLogin");
     this.gmailLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.gmailLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
@@ -123,7 +123,7 @@ export class AuthHandlerProvider {
       .then(
         (success) => {
           console.log('--> AuthHandler: login success');
-          self.loginSuccessCallback(success);        
+          //self.loginSuccessCallback(success);        
         },
         (failure) => {
           console.log('--> AuthHandler: login failure: ' + JSON.stringify(failure));
