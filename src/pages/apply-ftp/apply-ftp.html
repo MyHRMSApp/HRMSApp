@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar color="header">
+  <ion-buttons end>
+    <button style="background-color:white" end (click)="openMenu()" class="menu">
+      <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon>
+    </button>
+    </ion-buttons>
+    <ion-title>Apply FTP</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-row>
+        <ion-item>
+            <p>DATE</p>
+            <p>30-07-2018</p>
+        </ion-item>
+        <ion-col col-6>
+            <ion-card>
+                <p>FORGOT TO PUNCH</p>
+                <P>IN</P>
+                <p>09:30</p>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6>
+            <ion-card>
+                <p>FORGOT TO PUNCH</p>
+                <P>OUT</P>
+                <p>09:30</p>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6>
+            <ion-card>
+                <p>FORGOT TO PUNCH</p>
+                <P>MID-IN</P>
+                <p>09:30</p>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6>
+            <ion-card>
+                <p>FORGOT TO PUNCH</p>
+                <P>MID-OUT</P>
+                <p>09:30</p>
+            </ion-card>
+          </ion-col>
+    </ion-row>
+
+          <ion-item (click)="home()" class="home" color="light">Apply</ion-item> 
+  
+  </ion-content>
+  
+  <ion-footer style="height:3.5em">
+      <ion-icon (click)="home()" class="home" color="light" name="ios-home-outline"></ion-icon>
+  </ion-footer>

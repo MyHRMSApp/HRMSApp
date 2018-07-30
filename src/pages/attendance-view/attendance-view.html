@@ -51,15 +51,15 @@
       </ion-list>
 
 
-    <ion-card class="attendance-btn-layout">
-      <ion-row>
-        <ion-col col-4><button ion-button block class="btn-clr">Apply <br>leave</button></ion-col>
-        <ion-col col-4><button ion-button block class="btn-clr">Apply <br>OD</button></ion-col>
-        <ion-col col-4><button ion-button block class="btn-clr">Apply <br>FTP</button></ion-col>
-      </ion-row>
-    </ion-card>
-    
-  </ion-grid>
+      <ion-card class="attendance-btn-layout">
+        <ion-row>
+          <ion-col (click)="applyLeave()" col-4><button ion-button block class="btn-clr">Apply <br>leave</button></ion-col>
+          <ion-col (click)="applyOD()" col-4><button ion-button block class="btn-clr">Apply <br>OD</button></ion-col>
+          <ion-col (click)="applyFTP()" col-4><button ion-button block class="btn-clr">Apply <br>FTP</button></ion-col>
+        </ion-row>
+      </ion-card>
+      
+    </ion-grid>
 </ion-content>
 
 <ion-footer style="height:3.5em">

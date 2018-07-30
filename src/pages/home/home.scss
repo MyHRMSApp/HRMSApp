@@ -1,7 +1,7 @@
 page-home {
     
     .scroll-content{
-        background-color: #0f5362 !important;
+        background-image: url('../assets/homePageIcons/background.jpg');
         padding: 0px !important
     }
 
@@ -11,8 +11,8 @@ page-home {
 
     ion-grid{
         border-bottom: 2px solid #3e8198;
-       // border-bottom-left-radius: 50% !important;
-       // border-bottom-right-radius: 50% !important;
+      //border-bottom-left-radius: 50% !important;
+      //border-bottom-right-radius: 50% !important;
         height: 4em;
     }
 
@@ -36,7 +36,6 @@ page-home {
         .userImage{
         border-radius: 50%;
         margin-top: 0%;
-        border: 3px solid white;
         width: 100px;
      }
      }
@@ -53,9 +52,8 @@ page-home {
         border-radius: 50%;
         
         .userImage{
-        margin-top: 30%;
-        border: 3px solid white;
-        width: 30px;
+        margin-top: 23%;
+        width: 40px;
        // margin-left: 25%;
      }
      }
@@ -84,6 +82,7 @@ page-home {
         border-radius: 50% !important;
         width: 75px !important;
         height: 75px;
+        background: transparent !important;
         p{
             text-align: center;
             font-size: 1rem !important;

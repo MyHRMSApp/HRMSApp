@@ -1,0 +1,81 @@
+<ion-header>
+    <ion-navbar color="header">
+    <ion-buttons end>
+      <button style="background-color:white" end (click)="openMenu()" class="menu">
+        <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon>
+      </button>
+      </ion-buttons>
+      <ion-title>General Leave</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+
+  <ion-content padding>
+      <ion-row>
+    
+        <ion-col col-5>
+              <ion-list>
+                  <ion-item>Available balance</ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col col-7>
+           <ion-item>
+           40
+           </ion-item>
+    
+          </ion-col>
+    
+        <ion-col col-5>
+              <ion-list>
+                  <ion-item>Availed Occasions</ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col col-7>
+           <ion-item> 
+          20
+           </ion-item>
+          </ion-col>
+    
+        <ion-col col-5>
+              <ion-list>
+                  <ion-item>From</ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col class="cal_date" col-7>
+           <ion-item>
+            <ion-datetime displayFormat="DD-MM-YYYY" formControlName="date">
+            </ion-datetime>
+           </ion-item>
+           <ion-icon class="cal" name="ios-calendar"></ion-icon>
+          </ion-col>
+        
+        <ion-col col-5>
+              <ion-list>
+                  <ion-item>To</ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col class="cal_date" col-7>
+           <ion-item>
+            <ion-datetime displayFormat="DD-MM-YYYY" formControlName="date">
+            </ion-datetime>
+           </ion-item>
+           <ion-icon class="cal" name="ios-calendar"></ion-icon>
+          </ion-col>
+    
+    
+        <ion-col col-12>
+        <p>REASON:</p>
+        <ion-item>
+          <ion-textarea type="text" placeholder="Reasons"></ion-textarea>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-item (click)="home()" class="home" color="light">Confirm</ion-item>
+    
+    </ion-content>
+    
+    <ion-footer style="height:3.5em">
+        <ion-icon (click)="home()" class="home" color="light" name="ios-home-outline"></ion-icon>
+    </ion-footer>
+    

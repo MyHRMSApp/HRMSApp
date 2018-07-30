@@ -128,4 +128,13 @@ export class AttendanceViewPage {
   }
   
 
+  applyLeave() {
+    this.navCtrl.push("ApplyLeavePage");
+  }
+  applyOD(){
+    this.navCtrl.push("ApplyOdPage");
+  }
+  applyFTP(){
+    this.navCtrl.push("ApplyFtpPage");
+  }
 }
