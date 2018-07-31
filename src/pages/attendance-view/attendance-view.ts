@@ -35,6 +35,7 @@ export class AttendanceViewPage {
   public currentCssClass:any;
   public requests_ATT_1:any;
   public requests_ATT_2:any;
+  homeIcon: string;
   
 
   // dateRange: string[] = ['2018-07-021', '2018-01-02', '2018-01-05'];
@@ -61,6 +62,7 @@ export class AttendanceViewPage {
   }
 
   ionViewDidLoad() {
+    this.homeIcon = ("./assets/homePageIcons/Home.svg");
     console.log('ionViewDidLoad AttendanceViewPage');
   }
 

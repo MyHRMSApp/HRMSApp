@@ -32,6 +32,7 @@ export class HomePage {
   leavesIcon: any;
   my_requestIcon: any;
   my_taskIcon: any;
+  hamburger: string;
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -66,11 +67,12 @@ coupons() {
 
 ionViewDidLoad() {   
   console.log('ionViewDidLoad HomePage');
-  this.attendanceIcon = ("./assets/homePageIcons/attendance.png");
-  this.couponsIcon = ("./assets/homePageIcons/coupons.png");
-  this.leavesIcon = ("./assets/homePageIcons/leaves.png");
-  this.my_requestIcon = ("./assets/homePageIcons/my_request.png");
-  this.my_taskIcon = ("./assets/homePageIcons/my_task.png");
+  this.attendanceIcon = ("./assets/homePageIcons/attendance.svg");
+  this.couponsIcon = ("./assets/homePageIcons/coupon.svg");
+  this.leavesIcon = ("./assets/homePageIcons/leave.svg");
+  this.my_requestIcon = ("./assets/homePageIcons/my_request.svg");
+  this.my_taskIcon = ("./assets/homePageIcons/my_task.svg");
+  this.hamburger = ("./assets/homePageIcons/hamburger-01.svg");
 }
 
 /**
@@ -178,8 +180,9 @@ uploadPhoto() {
     console.log(err);
   });
 }
-    
- 
-        
-       
+          
+applyLeave() {
+  this.navCtrl.push("ApplyLeavePage");
+}
+     
 }

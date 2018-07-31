@@ -13,6 +13,8 @@ import { StorageProvider } from '../../providers/storage/storage';
   templateUrl: 'apply-leave.html',
 })
 export class ApplyLeavePage {
+  homeIcon: string;
+  hamburger: string;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -47,6 +49,8 @@ export class ApplyLeavePage {
   }
 
   ionViewDidLoad() {
+    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
+    this.homeIcon = ("./assets/homePageIcons/Home.svg");
     console.log('ionViewDidLoad ApplyLeavePage');
   }
 

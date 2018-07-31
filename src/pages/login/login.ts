@@ -149,7 +149,7 @@ export class LoginPage {
         "token": res.idToken
       };
       this.loader = this.loadingCtrl.create({
-        content: 'Signining in. Please wait ...',
+        content: 'Signning in ...',
         dismissOnPageChange: true
       });
       this.loader.present().then(() => {
