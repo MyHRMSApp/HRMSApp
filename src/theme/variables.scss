@@ -90,11 +90,14 @@ $colors: (
 @import "noto-sans";
 
 
-@font-face{
-  font-family: CenturyGothic;
-  src: url('../assets/fonts/CenturyGothic.ttf') format('ttf');
-  }
-   
-  *{
-  font-family: CenturyGothic;
-  }
+@font-face {
+  font-family: 'Century Gothic';
+  src:url('../assets/fonts/CenturyGothic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+ }
+ $font-family-base: "Century Gothic";
+ $font-family-ios-base: $font-family-base;
+ $font-family-md-base: $font-family-base;
+ $font-family-wp-base: $font-family-base;
+

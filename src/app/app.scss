@@ -1,11 +1,6 @@
-@font-face {
-    font-family: "Century Gothic";
-    src: url("CenturyGothic.ttf") format('truetype');
-}
-
 ion-nav{
-    font-family: 'Century Gothic' !important;
-    ion-content{
-    font-family: 'Century Gothic' !important;
+    font-family: $font-family-base !important;
+    ion-content, ion-header{
+    font-family: $font-family-base !important;
     }
  }

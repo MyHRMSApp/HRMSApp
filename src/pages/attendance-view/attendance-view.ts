@@ -78,7 +78,7 @@ export class AttendanceViewPage {
     this.currentCssClass = "Cur_"+currentDayData.map.cssClass;
     this.totalHoursWorked = currentDayData.map.ATT;
     this.requests_ATT_1 = (currentDayData.map.RS_ATT1)?currentDayData.map.RS_ATT1:null;
-    this.requests_ATT_2 = (currentDayData.map.RS_ATT2)?currentDayData.map.RS_ATT1:null;
+    this.requests_ATT_2 = (currentDayData.map.RS_ATT2)?currentDayData.map.RS_ATT2:null;
     console.log(currentDayData);
   }
 
@@ -103,7 +103,7 @@ export class AttendanceViewPage {
         this.currentCssClass = "Cur_"+this.mainService.attanancePageData[i].map.cssClass;
         this.totalHoursWorked = this.mainService.attanancePageData[i].map.ATT;
         this.requests_ATT_1 = (this.mainService.attanancePageData[i].map.RS_ATT1)?this.mainService.attanancePageData[i].map.RS_ATT1:null;
-        this.requests_ATT_2 = (this.mainService.attanancePageData[i].map.RS_ATT2)?this.mainService.attanancePageData[i].map.RS_ATT1:null;
+        this.requests_ATT_2 = (this.mainService.attanancePageData[i].map.RS_ATT2)?this.mainService.attanancePageData[i].map.RS_ATT2:null;
       }
       jsonArr.push({
         date: this.mainService.attanancePageData[i].map.LDATE,
