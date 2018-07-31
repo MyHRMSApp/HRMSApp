@@ -5,13 +5,26 @@ page-attendance-view {
 
     ion-calendar{
       padding: unset;
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      background: url('../../assets/imgs/Calendar-BG.png');
+      background: url('assets/imgs/Calendar-BG.png');
       color: #fff !important;
-      width: 92%;
+      width: 100%;
       display: block;
       margin: 0 auto;
+      margin-bottom: 1em;
+      border-radius: 10px 10px 10px 10px;
+      box-shadow: 0px 6px 16px 4px rgba(0,0,0,0.4);
+    }
+
+    .firstHalf{
+      content: url("../assets/imgs/First-Half.svg");
+      display: inline-block;
+      width:15%;
+    }
+
+    .secondHalf{
+      content: url("../assets/imgs/Second-Half.svg");
+      display: inline-block;
+      width:15%;
     }
 
     .header::after{
@@ -45,7 +58,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -73,7 +86,7 @@ page-attendance-view {
     height: 100% !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -89,7 +102,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -105,7 +118,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -138,7 +151,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -154,7 +167,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -170,7 +183,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -186,7 +199,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -202,7 +215,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -218,7 +231,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -234,7 +247,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -250,7 +263,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -266,7 +279,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -282,7 +295,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -298,7 +311,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -314,7 +327,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -330,7 +343,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -346,7 +359,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -362,7 +375,7 @@ page-attendance-view {
      z-index: 2 !important;
      font-size: 0.7em;
      p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -378,7 +391,7 @@ page-attendance-view {
      z-index: 2 !important;
      font-size: 0.7em;
      p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -394,7 +407,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -410,7 +423,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -426,7 +439,7 @@ page-attendance-view {
     z-index: 2 !important;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -443,7 +456,7 @@ page-attendance-view {
     font-size: 0.7em;
     font-size: 0.7em;
     p{
-      margin-top: 15%;
+      //margin-top: 15%;
     }
   }
 
@@ -500,7 +513,7 @@ page-attendance-view {
 
   ion-calendar-month .danger .days .on-selected p{
     color: #fff;
-    margin-top: 22%;
+    // margin-top: 22%;
   }
 
 
@@ -533,7 +546,7 @@ page-attendance-view {
 }
 
   .todayClass{
-    // margin-top: 10% !important;
+    margin-top: -10%;
   }
 
   .grid{
@@ -547,7 +560,7 @@ page-attendance-view {
 
   ion-thumbnail {
     min-width: 70px !important;
-    min-height: 70px !important;
+    min-height: 90px !important;
   }
 
   .card{
@@ -567,24 +580,42 @@ page-attendance-view {
     border-radius: 10%;
   }
   .approved{
-    background: #4de835;
+    color: #4de835;
   }
   .Unautharized{
-    background: #fe4543;
+    color: #fe4543;
   }
   .Normal{
-    background: #ffffff;
+    color: #ffffff;
   }
   .RequestRaised{
-    background: #e5da28;
+    color: #e5da28;
   }
   .HolidayWeekoff{
+    color: #136571;
+  }
+
+  .approvedbg{
+    background: #4de835;
+  }
+  .Unautharizedbg{
+    background: #fe4543;
+  }
+  .Normalbg{
+    background: transparent;
+    border: 1px solid #000;
+  }
+  .RequestRaisedbg{
+    background: #e5da28;
+  }
+  .HolidayWeekoffbg{
     background: #136571;
   }
 
   .clrBoxLabel{
     padding: 2% 0%;
-    margin-top: 2%;
+    margin-top: 1%;
+    font-size: 0.8em;
   }
   
   .list-md{
@@ -604,12 +635,22 @@ page-attendance-view {
     .item{
       padding-left: 4px;
       border: 3px solid #10586B;
+      border-radius: 6px;
       margin-top: 1%;
       .dateBox{
-        display: block;
-        font-size: 1.4em;
-        text-align: center;
-        padding-top: 8%;
+        border-radius: 6px;
+        .currentDate{
+          display: block;
+          font-size: 1.4em;
+          text-align: center;
+          padding-top: 15%;
+        }
+        .currentMonth{
+          display: block;
+          font-size: 1.4em;
+          text-align: center;
+        }
+        
       }
       ion-thumbnail{
         height: unset;
