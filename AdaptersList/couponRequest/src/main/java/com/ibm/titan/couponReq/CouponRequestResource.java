@@ -5,7 +5,7 @@
  *    disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
  */
 
-package com.ibm.titan.leaveRequest;
+package com.ibm.titan.couponReq;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,18 +46,18 @@ import com.ibm.mfp.adapter.api.OAuthSecurity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-@Api(value = "LeaveReuest Adapter Resource")
+@Api(value = "CouponRequest Adapter Resource")
 @Path("/resource")
-public class LeaveRequestResource {
+public class CouponRequestResource {
 	/*
 	 * For more info on JAX-RS see
 	 * https://jax-rs-spec.java.net/nonav/2.0-rev-a/apidocs/index.html
 	 */
 
 	// Define logger (Standard java.util.Logger)
-	static Logger logger = Logger.getLogger(LeaveRequestResource.class.getName());
+	static Logger logger = Logger.getLogger(CouponRequestResource.class.getName());
 	String authString = "HCM_SERV_USR" + ":" + "HCM_SERV_USR@123";
-	String getLeaveBalanceURL = "http://pirdev.titan.co.in:50400/RESTAdapter/GetLeaveBalance";
+	String getLeaveBalanceURL = "http://pirdev.titan.co.in:50400/RESTAdapter/GetCouponDetail";
 
 	// Inject the MFP configuration API:
 	@Context
@@ -65,17 +65,21 @@ public class LeaveRequestResource {
 
 	/*
 	 * Path for method:
+	 * "<server address>/mfp/api/adapters/couponRequest/resource"
+	 */
+
+/*
+	 * Path for method:
 	 * "<server address>/mfp/api/adapters/leaveRequest/resource/unprotected"
 	 */
 
 	@POST
-	@Path("/getLeaveBalance")
+	@Path("/getCoupons")
 	@Produces(MediaType.APPLICATION_JSON)
 	@OAuthSecurity(enabled = false)
-	public String getLeaveBalance(	@QueryParam("IP_EMPTYP") String IP_EMPTYP,
-									@QueryParam("IP_PERNR") String IP_PERNR	) throws IOException {
+	public String getCoupons( @QueryParam("IV_PERNR") String IV_PERNR	) throws IOException {
 
-		String input = "{\"IP_EMPTYP\":\""+IP_EMPTYP+"\",\"IP_PERNR\":\""+IP_PERNR+"\"}";
+		String input = "{\"IV_PERNR\":\""+IV_PERNR+"\"}";
 		String  serverResJSON = null;
 		JSONObject resultJSON = new JSONObject();
 

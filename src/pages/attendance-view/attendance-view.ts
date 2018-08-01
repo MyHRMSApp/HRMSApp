@@ -35,6 +35,8 @@ export class AttendanceViewPage {
   public currentCssClass:any;
   public requests_ATT_1:any;
   public requests_ATT_2:any;
+  public calStartDate:any;
+  public calEndDate:any;
   homeIcon: string;
   
 
@@ -69,26 +71,48 @@ export class AttendanceViewPage {
   onChange($event) {
     console.log(moment($event._d).format("YYYY-MM-DD"));
     var currentDayData = this.mainService.attanancePageData.find(x=>x.map.LDATE == moment($event._d).format("YYYY-MM-DD"));
-    this.currentDate = moment(currentDayData.map.LDATE).format("DD").toString();
-    this.currentMonth = moment(currentDayData.map.LDATE).format("MMM").toString();
-    this.punchIN = currentDayData.map.PUN_P10;
-    this.punchOUT = currentDayData.map.PUN_P20;
-    this.midIN = currentDayData.map.PUN_P25;
-    this.midOUT = currentDayData.map.PUN_P15;
-    this.currentCssClass = "Cur_"+currentDayData.map.cssClass;
-    this.totalHoursWorked = currentDayData.map.ATT;
-    this.requests_ATT_1 = (currentDayData.map.RS_ATT1)?currentDayData.map.RS_ATT1:null;
-    this.requests_ATT_2 = (currentDayData.map.RS_ATT2)?currentDayData.map.RS_ATT2:null;
-    console.log(currentDayData);
+    if(currentDayData){
+      this.currentDate = moment(currentDayData.map.LDATE).format("DD").toString();
+      this.currentMonth = moment(currentDayData.map.LDATE).format("MMM").toString();
+      this.punchIN = currentDayData.map.PUN_P10;
+      this.punchOUT = currentDayData.map.PUN_P20;
+      this.midIN = currentDayData.map.PUN_P25;
+      this.midOUT = currentDayData.map.PUN_P15;
+      this.currentCssClass = "Cur_"+currentDayData.map.cssClass;
+      this.totalHoursWorked = currentDayData.map.ATT;
+      this.requests_ATT_1 = (currentDayData.map.RS_ATT1)?currentDayData.map.RS_ATT1:null;
+      this.requests_ATT_2 = (currentDayData.map.RS_ATT2)?currentDayData.map.RS_ATT2:null;
+      console.log(currentDayData);
+    }else{
+      this.currentDate = moment().format("DD").toString();
+      this.currentMonth = moment().format("MMM").toString();
+      this.punchIN = "00:00:00";
+      this.punchOUT = "00:00:00";
+      this.midIN = "00:00:00";
+      this.midOUT = "00:00:00";
+      this.currentCssClass = "Cur_ATT1_NomalPunch_ATT2_NormalPunch";
+      this.totalHoursWorked = "0";
+      this.requests_ATT_1 = null;
+      this.requests_ATT_2 = null;
+    }
+    
   }
 
   ionViewCanEnter() {
 
     console.log('ionViewCanEnter HomePage');
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+
+    var firstDay = new Date(y, m - 2, 1);
+    var lastDay = new Date(y, m + 3, 0);
+
+    this.calStartDate = moment(firstDay).format("YYYY, MM, DD").toString();
+    this.calEndDate = moment(lastDay).format("YYYY, MM, DD").toString();
+
     // setTimeout(() => {
     // this.mfpAuthInit();
     // }, 2000);
-    this.mainService.attanancePageData = this.mainService.attanancePageData.__zone_symbol__value;
+    // this.mainService.attanancePageData = this.mainService.attanancePageData.__zone_symbol__value;
     console.log(this.mainService.attanancePageData.length);
     var jsonArr = [];
     for (var i = 0; i < this.mainService.attanancePageData.length; i++) {
@@ -115,8 +139,8 @@ export class AttendanceViewPage {
   console.log(jsonArr);
     var tempoptionsRange : CalendarComponentOptions = {
       color : 'danger',
-      from: new Date(2018, 4, 1),
-      to: new Date(2018, 8, 30),
+      from: this.calStartDate,
+      to: this.calEndDate,
       daysConfig: jsonArr,
       showMonthPicker: false,
       weekStart: 1

@@ -73,7 +73,8 @@ export class LoginPage {
         let view = this.navCtrl.getActive();
         if (!(view.instance instanceof HomePage)) {
           console.log("invoke Home Page----->>>");
-          this.mainService.attanancePageData = this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": "20180601","IP_ENDDA": "20180731","IP_PERNR": "00477072"}});
+          var tempResponceData:any = this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": "20180601","IP_ENDDA": "20180731","IP_PERNR": "00477072"}});
+          this.mainService.attanancePageData = tempResponceData.__zone_symbol__value;
           console.log(this.mainService.attanancePageData);
           this.navCtrl.setRoot("HomePage");
         }
