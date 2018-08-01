@@ -1,0 +1,59 @@
+page-share-coupons {
+
+    .toolbar-background {
+        background: transparent !important;
+    }
+    .back-button {
+        color: white !important;
+    }
+    .toolbar-title{
+        color: white !important;
+        font-size: 1.4rem !important;
+    }
+    .toolbar-content{
+        text-align: center;
+    }
+    .header::after{
+        background-image: unset !important;
+    }
+
+    ion-content{
+        background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 100%;
+        overflow: hidden;
+    
+        .scroll-content{
+            padding: 0px !important;
+
+        }
+        ion-row{
+            padding: 0px;
+        }
+        ion-card {
+        background: transparent !important;
+        box-shadow: unset !important;
+
+           .col {
+            background-color: #115a6a;
+            padding:0px !important;
+           }
+        .one {
+            background: radial-gradient(circle at 0 100%, transparent 0px, #115a6a 0px) bottom left, radial-gradient(circle at 100% 100%, transparent 6px, #115a6a 7px) bottom right, radial-gradient(circle at 100% 0, transparent 6px, #115a6a 7px) top right, radial-gradient(circle at 0 0, transparent 0px, #115a6a 0px) top left;
+            background-size: 50% 50%;
+            background-repeat: no-repeat;
+           }
+           .two {
+            background: radial-gradient(circle at 0 100%, transparent 6px, #115a6a 7px) bottom left, radial-gradient(circle at 100% 100%, transparent 0px, #115a6a 0px) bottom right, radial-gradient(circle at 100% 0, transparent 0px, #115a6a 0px) top right, radial-gradient(circle at 0 0, transparent 6px, #115a6a 7px) top left;
+            background-size: 50% 50%;
+            background-repeat: no-repeat;
+        }
+        [col-2]{
+            padding: 20px !important;
+        }
+        }
+}
+}

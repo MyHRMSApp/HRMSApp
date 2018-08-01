@@ -1,7 +1,34 @@
 page-attendance-view {
 
+  
+  .toolbar-background {
+    background: transparent !important;
+  }
+  .back-button {
+      color: white !important;
+  }
+  .toolbar-title{
+    color: white !important;
+    font-size: 1.4rem !important;
+  }
+  .toolbar-content{
+    text-align: center;
+  }
+  .header::after{
+      background-image: unset !important;
+  }
+  .menu{
+    background-color: transparent !important;
+  }
+
   ion-content{
-    background: #10586B !important;
+    background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
 
     ion-calendar{
       padding: unset;
@@ -11,8 +38,8 @@ page-attendance-view {
       display: block;
       margin: 0 auto;
       margin-bottom: 1em;
-      border-radius: 10px 10px 10px 10px;
-      box-shadow: 0px 6px 16px 4px rgba(0,0,0,0.4);
+      border-radius: 0px 0px 10px 10px;
+      box-shadow: 0px 6px 13px 15px rgba(0,0,0,0.4);
     }
 
     .firstHalf{
@@ -32,7 +59,7 @@ page-attendance-view {
   }
 
     ion-calendar .title, ion-calendar .title .switch-btn,ion-calendar .title .back, ion-calendar .title .forward{
-      background: #10586B !important;
+      background: transparent !important;
       color: #fff;
     }
 
@@ -44,6 +71,16 @@ page-attendance-view {
     .button-md{
       text-transform: unset;
     }
+
+    ion-calendar .title .back {
+      left: 20px !important;
+      width: 40px;
+    }
+
+  ion-calendar .title .forward {
+    right: 20px !important;
+    width: 40px;
+  }
  
 
   .ATT1_Pending_ATT2_Pending{

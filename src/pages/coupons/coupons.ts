@@ -20,7 +20,12 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class CouponsPage {
 
-  public cal:any;
+  hamburger: string;
+  homeIcon: string;
+  watches: string;
+  jewelleries: string;
+  saree: string;
+  eyeWears: string;
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
   private http: Http, private toast: ToastController, private network: Network, 
@@ -31,7 +36,13 @@ constructor(public menu: MenuController, public events: Events, private camera: 
 
 ionViewDidLoad() {
   console.log('ionViewDidLoad CouponsPage');
-  this.cal = ("./assets/icon/cal.png")
+  this.hamburger = ("./assets/homePageIcons/hamburger.svg");
+  this.homeIcon = ("./assets/homePageIcons/Home.svg");
+  this.watches = ("./assets/couponsImages/watch.svg");
+  this.jewelleries = ("./assets/couponsImages/jewellery.svg");
+  this.saree = ("./assets/couponsImages/saree.svg");
+  this.eyeWears = ("./assets/couponsImages/glass.svg");
+
 }
 
 openMenu() {
@@ -43,6 +54,22 @@ openMenu() {
   
 back(){
   this.navCtrl.pop();
+}
+
+watch(){
+  this.navCtrl.push("ShareCouponsPage");
+}
+
+jewellery(){
+  this.navCtrl.push("ShareCouponsPage");
+}
+
+eyewear() {
+  this.navCtrl.push("ShareCouponsPage");
+}
+
+taneira() {
+  this.navCtrl.push("ShareCouponsPage");
 }
 
 }
