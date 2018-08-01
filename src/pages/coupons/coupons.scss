@@ -1,44 +1,79 @@
 page-coupons {
     
-        .scroll-content{
-            padding: 0px !important
-        }
-    
-         .gridImageDiv{
-            width: 100%;
-            //height: 100%;
-            border-radius: 10px;
-            
-            .userImage{
-            margin-top: 20%;
-            border: 3px solid white;
-            width: 30px;
-           // margin-left: 25%;
-         }
-         }
-         ion-card-content{
-            p{
-                padding: 5px 5px !important;
-                text-align: left !important;
-             }
-         }
-       
-         p{
-            text-align:center;
-         }
-    
-         ion-col {
-            text-align: -webkit-center;
-         }
-    
-         ion-card {
-            border-radius: 50% !important;
-            width: 75px !important;
-            height: 75px;
-            p{
-                text-align: center;
-                font-size: 1rem !important;
-             }
-         }
-    
+    .toolbar-background {
+        background: transparent !important;
     }
+    .back-button {
+        color: white !important;
+    }
+    .toolbar-title{
+        color: white !important;
+        font-size: 1.4rem !important;
+    }
+    .toolbar-content{
+        text-align: center;
+    }
+    .header::after{
+        background-image: unset !important;
+    }
+
+    ion-content{
+        background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 100%;
+        overflow: hidden;
+    
+        .scroll-content{
+            padding: 0px !important;
+
+        }
+    ion-card{
+        margin: 10px 10px 0px 10px !important;
+        background: #21687b !important;
+        p{
+            color:white !important;
+            margin: 0px;
+            display: table-cell;
+            vertical-align: middle;
+            padding: 20px;
+            height: 78px;
+        }
+        img {
+            width: 100%;
+            border: 3px solid #21687b !important;
+        }
+    }
+
+    .col{
+        padding: 0px !important;
+        text-align: -webkit-center;
+    }
+    .couponCounts {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: normal;
+        line-height: 1.5;
+        background-color: #105366 !important;
+        border: 2px solid #105366;
+        border-radius: 50%;
+        height: 34px;
+        width: 34px;
+        margin-left: 25px;
+        z-index: 999;
+        position: absolute;
+        margin-top: 33px;
+        p{
+            height: 30px;
+            width: 30px;
+            border: 1px solid white;
+            border-radius: 50%;
+            margin:0;
+            color:#22d5a9 !important;
+        }
+    }
+  }
+
+} 

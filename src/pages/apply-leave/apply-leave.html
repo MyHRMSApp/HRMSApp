@@ -6,7 +6,7 @@
       <img [src]="hamburger" height="30px" width="30px" />
       </button>
       </ion-buttons>
-      <ion-title>Apply Leave</ion-title>
+      <ion-title>LEAVES</ion-title>
     </ion-navbar>
     </ion-header>
 
@@ -16,38 +16,73 @@
   <ion-row>
       <ion-col (click)="privilegeLeave()" col-6>
           <ion-card>
-              <h3>PL</h3>
-              <p>Balance - 40</p>
+                <ion-row>
+                <ion-col col-10>
+                <h1>PL</h1>
+                <p>Balance - 40</p>
+                </ion-col>
+                <ion-col col-2>
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+                </ion-col>
+                </ion-row>
           </ion-card>
         </ion-col>
         <ion-col (click)="sickLeave()" col-6>
           <ion-card>
-              <h3>SL</h3>
+              <ion-row>
+              <ion-col col-10>
+              <h1>SL</h1>
               <p>Balance - 40</p>
+              </ion-col>
+              <ion-col col-2>
+              <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+              </ion-col>
+              </ion-row>
           </ion-card>
         </ion-col>
         <ion-col (click)="generalLeave()" col-6>
           <ion-card>
-              <h3>GL</h3>
-              <p>Balance - 40</p>
+                <ion-row>
+                <ion-col col-10>
+                <h1>GL</h1>
+                <p>Balance - 40</p>
+                </ion-col>
+                <ion-col col-2>
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+                </ion-col>
+                </ion-row>
           </ion-card>
         </ion-col>
         <ion-col (click)="casualLeave()" col-6>
           <ion-card>
-              <h3>CL</h3>
-              <p>Balance - 40</p>
+                <ion-row>
+                <ion-col col-10>
+                <h1>CL</h1>
+                <p>Balance - 40</p>
+                </ion-col>
+                <ion-col col-2>
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+                </ion-col>
+                </ion-row>
           </ion-card>
         </ion-col>
         <ion-col (click)="leaveEncashment()" col-12>
           <ion-card>
-              <h3>LEAVE ENCASHMENT</h3>
-              <p>Balance - 40</p>
+                <ion-row>
+                <ion-col col-11>
+                <h1>LEAVE ENCASHMENT</h1>
+                <p>Balance - 40</p>
+                </ion-col>
+                <ion-col col-1>
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+                </ion-col>
+                </ion-row>
           </ion-card>
         </ion-col>
   </ion-row>
 
 </ion-content>
 
-<ion-footer style="height:3.5em; text-align: center ">
+<ion-footer style="height:3.5em; text-align: center; background-color:#135c6d ">
     <img style="margin-top:2%" [src]="homeIcon" height="35px" width="35px" />
 </ion-footer>

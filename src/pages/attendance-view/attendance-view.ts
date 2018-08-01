@@ -38,6 +38,7 @@ export class AttendanceViewPage {
   public calStartDate:any;
   public calEndDate:any;
   homeIcon: string;
+  hamburger: string;
   
 
   // dateRange: string[] = ['2018-07-021', '2018-01-02', '2018-01-05'];
@@ -64,6 +65,7 @@ export class AttendanceViewPage {
   }
 
   ionViewDidLoad() {
+    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
     console.log('ionViewDidLoad AttendanceViewPage');
   }
