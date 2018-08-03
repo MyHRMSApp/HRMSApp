@@ -28,32 +28,82 @@ page-share-coupons {
     
         .scroll-content{
             padding: 0px !important;
+        }
 
+        .col {
+            text-align: center;
         }
-        ion-row{
-            padding: 0px;
-        }
+
         ion-card {
-        background: transparent !important;
-        box-shadow: unset !important;
-
+            background-color: transparent !important;
+            box-shadow: unset !important; 
+            ion-row {
+                top: 0%;
+                width: 100%;
+            
+            .couponNumber {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: white;
+            }
+            .couponDesignation {
+                font-size: 1.3rem;
+                font-weight: normal;
+                bottom: 3px;
+                position: absolute;
+                color:white;
+            }
+            .item{
+                width: 80%;
+                padding-left: 8px;
+                background-color: transparent;
+            }
+            .checkbox-icon {
+                border-radius: 50% !important;
+                position: relative !important;
+                width: 20px !important;
+                height: 20px !important;
+                border-color: white !important;
+                background-color: transparent !important; 
+                border-width: 1px !important;  
+            }
+            .checkbox-checked .checkbox-inner {
+                left: 6px !important;
+                top: 1px !important;
+                width: 7px !important;
+                height: 14px !important;
+            }
            .col {
-            background-color: #115a6a;
-            padding:0px !important;
-           }
-        .one {
-            background: radial-gradient(circle at 0 100%, transparent 0px, #115a6a 0px) bottom left, radial-gradient(circle at 100% 100%, transparent 6px, #115a6a 7px) bottom right, radial-gradient(circle at 100% 0, transparent 6px, #115a6a 7px) top right, radial-gradient(circle at 0 0, transparent 0px, #115a6a 0px) top left;
-            background-size: 50% 50%;
-            background-repeat: no-repeat;
-           }
-           .two {
-            background: radial-gradient(circle at 0 100%, transparent 6px, #115a6a 7px) bottom left, radial-gradient(circle at 100% 100%, transparent 0px, #115a6a 0px) bottom right, radial-gradient(circle at 100% 0, transparent 0px, #115a6a 0px) top right, radial-gradient(circle at 0 0, transparent 6px, #115a6a 7px) top left;
-            background-size: 50% 50%;
-            background-repeat: no-repeat;
+            background-color: transparent;
+             }
+            [col-2] {
+                padding: 7px !important;
+            }
         }
-        [col-2]{
-            padding: 20px !important;
+    }
+
+    .shareCard{
+        bottom: 0px;
+        left: 0px;
+        position: absolute;
+        background-color: white !important;
+        border-radius: 20px !important;
+        .col {
+            background-color: white;
+            }
+        .shareVia{
+            p{
+                color: lightgray;
+            }
         }
+        .cancel{
+            border-top: 2px solid #115a6a;
+            p{
+                color: black;
+            }
         }
+    }
 }
+
+
 }

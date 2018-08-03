@@ -10,10 +10,9 @@
 
   </ion-header>
 <ion-content padding>
-    <ion-grid>
+    <ion-grid responsive-sm responsive-md responsive-lg>
 
-    </ion-grid>
-    <div style="width: 100%;text-align:center">
+    <!-- <div style="width: 100%;text-align:center">
             <div class="userImageDiv">
                 <img class="userImage" [src]="photos" height="90px" width="90px" />
                 </div>
@@ -23,54 +22,66 @@
                     </button>
                 </ion-fab>
                 <p style="color:white;margin-top: 5px;"><b>Vivek</b></p>
+    </div> -->
+
+    <div style="width: 100%;text-align:center">
+    <ion-avatar>
+            <img class="userImage" [src]="photos" height="90px" width="90px" />
+    </ion-avatar>
+    <ion-fab (click)="changeImage()" style="margin-left:4%; margin-top:-13%;">
+            <button ion-fab mini icon-only clear>
+                <ion-icon style="text-align:center" name="ios-camera-outline"></ion-icon>
+            </button>
+        </ion-fab>
+        <p style="color:white;margin-top: 10px;"><b>Vivek</b>
     </div>
+
     <ion-card-content>
       <p style="background-color: white">Hi.. Happy to see you here!</p>
     </ion-card-content>
-
+    
     <ion-row>
       <ion-col col-6 (click)="attendance()">
-      <!-- <div style="background-color: #0f313a;width: 75%; margin-top: 0%;">     -->
       <ion-card>
           <ion-avatar class="gridImageDiv">
               <img class="userImage" [src]="attendanceIcon" height="80px" width="80px" />
           </ion-avatar>
           <p>Attendance</p>
       </ion-card>
-      <!-- </div> -->
       </ion-col>
       <ion-col col-6 (click)="applyLeave()">
           <ion-card>
-              <ion-avatar class="gridImageDiv">
-              <img class="userImage" [src]="leavesIcon" height="80px" width="80px" />
-              </ion-avatar>
-              <p>Leaves</p>
+            <ion-avatar class="gridImageDiv">
+            <img class="userImage" [src]="leavesIcon" height="80px" width="80px" />
+            </ion-avatar>
+            <p>Leaves</p>
         </ion-card>
         </ion-col>
         <ion-col col-6 (click)="coupons()">
             <ion-card>
-                <ion-avatar class="gridImageDiv">
-                    <img class="userImage" [src]="couponsIcon" height="80px" width="80px" />
-                </ion-avatar>
-                <p>Coupons</p>
+            <ion-avatar class="gridImageDiv">
+                <img class="userImage" [src]="couponsIcon" height="80px" width="80px" />
+            </ion-avatar>
+            <p>Coupons</p>
         </ion-card>
         </ion-col>
         <ion-col col-6>
           <ion-card>
-              <ion-avatar class="gridImageDiv">
-                  <img class="userImage" [src]="my_requestIcon" height="80px" width="80px" />
-              </ion-avatar>
-              <p>My Request</p>
+            <ion-avatar class="gridImageDiv">
+                <img class="userImage" [src]="my_requestIcon" height="80px" width="80px" />
+            </ion-avatar>
+            <p>My Request</p>
         </ion-card>
         </ion-col>
         <ion-col col-6>
-            <ion-card>
-                <ion-avatar class="gridImageDiv">
-                    <img class="userImage" [src]="my_taskIcon" height="80px" width="80px" />
-                </ion-avatar>
-                <p>My Task</p>
+        <ion-card>
+            <ion-avatar class="gridImageDiv">
+                <img class="userImage" [src]="my_taskIcon" height="80px" width="80px" />
+            </ion-avatar>
+            <p>My Task</p>
         </ion-card>
         </ion-col>
     </ion-row>
+    </ion-grid>
 
 </ion-content>

@@ -21,6 +21,7 @@ export class MyApp {
   jsondata: any;
   public photos: any;
   public attanancePageData: any;
+  public couponPageData: any;
 
   constructor(    public platform: Platform,
     public statusBar: StatusBar,

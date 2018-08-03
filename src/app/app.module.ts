@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { StorageProvider } from '../providers/storage/storage';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { CalendarModule } from 'ion2-calendar';
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -52,6 +53,7 @@ firebase.initializeApp(firebaseConfig)
     Camera,
     Network,
     GooglePlus,
+    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServiceProvider,
     StorageProvider,
