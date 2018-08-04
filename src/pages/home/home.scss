@@ -15,19 +15,13 @@ page-home {
         background-size: cover;
         height: 100%;
         overflow: hidden;
+        background-attachment: fixed;
     
         .scroll-content{
             padding: 0px !important;
 
         }
 
-
-    
-    ion-grid{
-      //border-bottom-left-radius: 50% !important;
-      //border-bottom-right-radius: 50% !important;
-        height: 4em;
-    }
 
     ion-row {
         padding: 0px 22px 22px 22px;
@@ -41,18 +35,23 @@ page-home {
     }
     }
 
-    .userImageDiv{
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
+    // .userImageDiv{
+    //     width: 100%;
+    //     height: 100%;
+    //     border-radius: 50%;
         
-        .userImage{
-        border-radius: 50%;
-        margin-top: 0%;
-        width: 90px;
-        border: 2px solid white;
-     }
-     }
+    //     .userImage{
+    //     border-radius: 50%;
+    //     margin-top: 11%;
+    //     width: 90px;
+    //     border: 2px solid white;
+    //  }
+    //  }
+
+    .userImage {
+        display: inline;
+        margin-top: 2%;
+    }
 
      .fab{
         background-color: white !important;

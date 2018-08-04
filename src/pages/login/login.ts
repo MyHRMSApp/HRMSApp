@@ -84,6 +84,10 @@ export class LoginPage {
       });
   }
 
+  sampleLogin() {
+    this.navCtrl.setRoot("HomePage");
+  }
+
   processForm() {
     let username = this.form.value.username;
     let password = this.form.value.password;
