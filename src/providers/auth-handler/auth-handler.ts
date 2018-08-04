@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AuthHandlerProvider {
-  securityCheckName = 'UserLogin';
+  securityCheckName = 'titan_UserLogin';
   userLoginChallengeHandler;
   gmailLoginChallengeHandler;
   initialized = false;
@@ -25,7 +25,7 @@ export class AuthHandlerProvider {
     }
     this.initialized = true;
     console.log('--> AuthHandler init() called');
-    this.userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("UserLogin");
+    this.userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("titan_UserLogin");
     this.userLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.userLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
     this.userLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);

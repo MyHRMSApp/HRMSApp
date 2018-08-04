@@ -58,6 +58,7 @@ public class LeaveRequestResource {
 	static Logger logger = Logger.getLogger(LeaveRequestResource.class.getName());
 	String authString = "HCM_SERV_USR" + ":" + "HCM_SERV_USR@123";
 	String getLeaveBalanceURL = "http://pirdev.titan.co.in:50400/RESTAdapter/GetLeaveBalance";
+	String validateLeaveBalanceURL = "http://pirdev.titan.co.in:50400/RESTAdapter/GetLeaveBalance";
 
 	// Inject the MFP configuration API:
 	@Context
@@ -83,6 +84,37 @@ public class LeaveRequestResource {
 			String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes("utf-8"));
 			Client client = Client.create();
 			WebResource webResource = client.resource(getLeaveBalanceURL);
+			ClientResponse response = webResource.type("application/json").header("Authorization", "Basic " + authStringEnc).post(ClientResponse.class, input);
+			resultJSON = new JSONObject(response.getEntity(String.class));
+			serverResJSON = resultJSON.toString();
+		} catch (Exception e) {
+			System.out.println("-->"+ e);
+		}
+
+		return serverResJSON;
+
+	}
+
+
+	@POST
+	@Path("/validateLeaveBalance")
+	@Produces(MediaType.APPLICATION_JSON)
+	@OAuthSecurity(enabled = false)
+	public String validateLeaveBalance(	@QueryParam("IP_EMPTYP") String IP_EMPTYP,
+										@QueryParam("IP_LTYP") String IP_LTYP,
+										@QueryParam("IP_FDATE") String IP_FDATE,
+										@QueryParam("IP_TDATE") String IP_TDATE,
+										@QueryParam("IP_FHALF") String IP_FHALF,
+										@QueryParam("IP_SHALF") String IP_SHALF	) throws IOException {
+
+		String input = "{\"IP_EMPTYP\":\""+IP_EMPTYP+"\",\"IP_LTYP\":\""+IP_LTYP+"\",\"IP_FDATE\":\""+IP_FDATE+"\",\"IP_TDATE\":\""+IP_TDATE+"\",\"IP_FHALF\":\""+IP_FHALF+"\",\"IP_SHALF\":\""+IP_SHALF+"\"}";
+		String  serverResJSON = null;
+		JSONObject resultJSON = new JSONObject();
+
+		try {
+			String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes("utf-8"));
+			Client client = Client.create();
+			WebResource webResource = client.resource(validateLeaveBalanceURL);
 			ClientResponse response = webResource.type("application/json").header("Authorization", "Basic " + authStringEnc).post(ClientResponse.class, input);
 			resultJSON = new JSONObject(response.getEntity(String.class));
 			serverResJSON = resultJSON.toString();
