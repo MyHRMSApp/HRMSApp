@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AuthHandlerProvider {
-  securityCheckName = 'titan_UserLogin';
+  securityCheckName = 'UserLogin';
   userLoginChallengeHandler;
   gmailLoginChallengeHandler;
   initialized = false;
@@ -25,7 +25,7 @@ export class AuthHandlerProvider {
     }
     this.initialized = true;
     console.log('--> AuthHandler init() called');
-    this.userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("titan_UserLogin");
+    this.userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("UserLogin");
     this.userLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.userLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
     this.userLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
@@ -98,7 +98,7 @@ export class AuthHandlerProvider {
     WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
     .then(
       (accessToken) => {
-        console.log('--> AuthHandler: obtainAccessToken onSuccess');
+        console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));

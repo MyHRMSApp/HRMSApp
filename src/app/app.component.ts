@@ -23,7 +23,7 @@ export class MyApp {
   public attanancePageData: any;
   public couponPageData: any;
 
-  constructor(    public platform: Platform,
+  constructor(public platform: Platform,
     public statusBar: StatusBar,
     public render:Renderer,
     private authHandler: AuthHandlerProvider,
@@ -52,12 +52,14 @@ export class MyApp {
       this.authHandler.gmailAuthInit();
     });
   }
+
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
     this.storage.jsonstoreInitialize();
   }
+
   /**
    * Method for logging out user from app and MFP Server
    */

@@ -3,7 +3,6 @@ import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ServiceProvider } from '../../providers/service/service';
@@ -29,7 +28,7 @@ export class CouponsPage {
   saree: string;
   eyeWears: string;
 
-constructor(public menu: MenuController, public events: Events, private camera: Camera, 
+constructor(public menu: MenuController, public events: Events,
   private http: Http, private toast: ToastController, private network: Network, 
   public loadingCtrl: LoadingController, public platform: Platform, public mainService: MyApp, 
   public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
@@ -47,10 +46,10 @@ ionViewDidLoad() {
 
 }
 
+/**
+Method for Menu Toggle
+*/
 openMenu() {
-  /**
-  Method for Menu Toggle
-  */
   this.menu.toggle();
 } 
   
@@ -60,9 +59,9 @@ back(){
 
 watch(){
   this.navCtrl.push("ShareCouponsPage");
-  var tempResponseData:any = this.service.invokeAdapterCall('couponRequest', 'getCoupons', 'post', {payload : true,length: 1,payloadData: {"IV_PERNR": "0063169"}});
-  this.mainService.couponPageData = tempResponseData;
-  console.log(tempResponseData);
+  //var tempResponseData:any = this.service.invokeAdapterCall('couponRequest', 'getCoupons', 'post', {payload : true,length: 1,payloadData: {"IV_PERNR": "0063169"}});
+  //this.mainService.couponPageData = tempResponseData;
+  //console.log(tempResponseData);
 }
 
 jewellery() {
