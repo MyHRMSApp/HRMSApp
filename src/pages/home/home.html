@@ -1,18 +1,80 @@
 <ion-header>
-    <ion-navbar color="header">
+  <ion-navbar color="header">
     <ion-buttons end>
       <button style="background-color:transparent" end (click)="openMenu()" class="menu">
         <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
-      <img [src]="hamburger" height="30px" width="30px" />
+        <img [src]="hamburger" height="30px" width="30px" />
       </button>
-      </ion-buttons>
-    </ion-navbar>
+    </ion-buttons>
+  </ion-navbar>
 
-  </ion-header>
-<ion-content padding>
-    <ion-grid responsive-sm responsive-md responsive-lg>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row style="height:40%;">
+      <ion-col padding col-12>
+        <ion-avatar>
+          <img class="userImage" [src]="photos" height="100px" width="100px" />
+        </ion-avatar>
+        <ion-fab (click)="changeImage()" style="margin-left:4%; margin-top:-13%;">
+          <button ion-fab mini icon-only clear>
+            <ion-icon style="text-align:center" name="ios-camera-outline"></ion-icon>
+          </button>
+        </ion-fab>
+        <p style="color:white;margin-top: 10px;margin-bottom: 0px;">
+          <b>Vivek</b>
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row style="height:60%;padding:0px 25px 25px 25px">
+          <ion-card-content>
+              <p style="background-color: white">Hi.. Happy to see you here!</p>
+          </ion-card-content>
+      <ion-col col-6 (click)="attendance()">
+        <ion-card>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage option-img" [src]="attendanceIcon" />
+          </ion-avatar>
+          <p>Attendance</p>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 (click)="applyLeave()">
+        <ion-card>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage option-img" [src]="leavesIcon" />
+          </ion-avatar>
+          <p>Leaves</p>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 (click)="coupons()">
+        <ion-card>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage option-img" [src]="couponsIcon" />
+          </ion-avatar>
+          <p>Coupons</p>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage option-img" [src]="my_requestIcon" />
+          </ion-avatar>
+          <p>My Request</p>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage option-img" [src]="my_taskIcon" />
+          </ion-avatar>
+          <p>My Task</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--<ion-grid>
 
-    <!-- <div style="width: 100%;text-align:center">
+     <div style="width: 100%;text-align:center">
             <div class="userImageDiv">
                 <img class="userImage" [src]="photos" height="90px" width="90px" />
                 </div>
@@ -22,66 +84,68 @@
                     </button>
                 </ion-fab>
                 <p style="color:white;margin-top: 5px;"><b>Vivek</b></p>
-    </div> -->
+    </div> 
 
     <div style="width: 100%;text-align:center">
-    <ion-avatar>
-            <img class="userImage" [src]="photos" height="90px" width="90px" />
-    </ion-avatar>
-    <ion-fab (click)="changeImage()" style="margin-left:4%; margin-top:-13%;">
-            <button ion-fab mini icon-only clear>
-                <ion-icon style="text-align:center" name="ios-camera-outline"></ion-icon>
-            </button>
-        </ion-fab>
-        <p style="color:white;margin-top: 10px;"><b>Vivek</b>
+      <ion-avatar>
+        <img class="userImage" [src]="photos" height="90px" width="90px" />
+      </ion-avatar>
+      <ion-fab (click)="changeImage()" style="margin-left:4%; margin-top:-13%;">
+        <button ion-fab mini icon-only clear>
+          <ion-icon style="text-align:center" name="ios-camera-outline"></ion-icon>
+        </button>
+      </ion-fab>
+      <p style="color:white;margin-top: 10px;">
+        <b>Vivek</b>
+      </p>
     </div>
 
     <ion-card-content>
       <p style="background-color: white">Hi.. Happy to see you here!</p>
     </ion-card-content>
-    
+
     <ion-row>
       <ion-col col-6 (click)="attendance()">
-      <ion-card>
+        <ion-card>
           <ion-avatar class="gridImageDiv">
-              <img class="userImage" [src]="attendanceIcon" height="80px" width="80px" />
+            <img class="userImage" [src]="attendanceIcon" height="80px" width="80px" />
           </ion-avatar>
           <p>Attendance</p>
-      </ion-card>
+        </ion-card>
       </ion-col>
       <ion-col col-6 (click)="applyLeave()">
-          <ion-card>
-            <ion-avatar class="gridImageDiv">
-            <img class="userImage" [src]="leavesIcon" height="80px" width="80px" />
-            </ion-avatar>
-            <p>Leaves</p>
-        </ion-card>
-        </ion-col>
-        <ion-col col-6 (click)="coupons()">
-            <ion-card>
-            <ion-avatar class="gridImageDiv">
-                <img class="userImage" [src]="couponsIcon" height="80px" width="80px" />
-            </ion-avatar>
-            <p>Coupons</p>
-        </ion-card>
-        </ion-col>
-        <ion-col col-6>
-          <ion-card>
-            <ion-avatar class="gridImageDiv">
-                <img class="userImage" [src]="my_requestIcon" height="80px" width="80px" />
-            </ion-avatar>
-            <p>My Request</p>
-        </ion-card>
-        </ion-col>
-        <ion-col col-6>
         <ion-card>
-            <ion-avatar class="gridImageDiv">
-                <img class="userImage" [src]="my_taskIcon" height="80px" width="80px" />
-            </ion-avatar>
-            <p>My Task</p>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage" [src]="leavesIcon" height="80px" width="80px" />
+          </ion-avatar>
+          <p>Leaves</p>
         </ion-card>
-        </ion-col>
+      </ion-col>
+      <ion-col col-6 (click)="coupons()">
+        <ion-card>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage" [src]="couponsIcon" height="80px" width="80px" />
+          </ion-avatar>
+          <p>Coupons</p>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage" [src]="my_requestIcon" height="80px" width="80px" />
+          </ion-avatar>
+          <p>My Request</p>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card>
+          <ion-avatar class="gridImageDiv">
+            <img class="userImage" [src]="my_taskIcon" height="80px" width="80px" />
+          </ion-avatar>
+          <p>My Task</p>
+        </ion-card>
+      </ion-col>
     </ion-row>
-    </ion-grid>
+  </ion-grid>-->
 
 </ion-content>
