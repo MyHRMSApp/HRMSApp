@@ -53,7 +53,7 @@ export class AttendanceViewPage {
   /**
   *Method for Menu Toggle
   */
-  openMenu() {
+ openMenu() {
     this.menu.toggle();
   }
 

@@ -13,6 +13,8 @@ import { StorageProvider } from '../../providers/storage/storage';
   templateUrl: 'all-leaves.html',
 })
 export class AllLeavesPage {
+  hamburger: string;
+  homeIcon: string;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -22,6 +24,8 @@ export class AllLeavesPage {
   }
 
   ionViewDidLoad() {
+    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
+    this.homeIcon = ("./assets/homePageIcons/Home.svg");
     console.log('ionViewDidLoad AllLeavesPage');
   }
 
