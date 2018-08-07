@@ -43,8 +43,8 @@ export class LoginPage {
     public render: Renderer, public mainService: MyApp) {
 
     this.form = new FormGroup({
-      username: new FormControl("", Validators.required),
-      password: new FormControl("", Validators.required)
+      username: new FormControl("E0417574", Validators.required),
+      password: new FormControl("init@123", Validators.required)
     });
 
     this.authHandler.setLoginFailureCallback((error) => {
@@ -58,10 +58,10 @@ export class LoginPage {
     this.authHandler.setLoginSuccessCallback(() => {
       let view = this.navCtrl.getActive();
       if (!(view.instance instanceof HomePage)) {
-        console.log("invoke Home Page----->>>");
-        var tempResponceData:any = this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": "20180601","IP_ENDDA": "20180731","IP_PERNR": "00477072"}});
-        this.mainService.attanancePageData = tempResponceData.__zone_symbol__value;
-        console.log(this.mainService.attanancePageData);
+        // console.log("invoke Home Page----->>>");
+        // var tempResponceData:any = this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": "20180601","IP_ENDDA": "20180731","IP_PERNR": "00477072"}});
+        // this.mainService.attanancePageData = tempResponceData.__zone_symbol__value;
+        // console.log(this.mainService.attanancePageData);
         this.navCtrl.setRoot("HomePage");
       }
     });
@@ -70,7 +70,7 @@ export class LoginPage {
     });
 
     setTimeout(() => {
-      this.authHandler.checkIsLoggedIn("UserLogin");
+      this.authHandler.checkIsLoggedIn();
     }, 3000);
   }
 
@@ -83,7 +83,8 @@ export class LoginPage {
     let password = this.form.value.password;
     let credentials = {
       "username": username,
-      "password": password
+      "password": password,
+      "SECIRITY_TYPE": "SAP_LOGIN"
     };
     if (username === "" || password === "") {
       this.showAlert('Login Failure', 'Username and password are required');
@@ -95,8 +96,8 @@ export class LoginPage {
       dismissOnPageChange: true
     });
     this.loader.present().then(() => {
-      sessionStorage.setItem("securityName", "UserLogin");
-      this.authHandler.login(credentials, "UserLogin");
+      // sessionStorage.setItem("securityName", "titan_UserLogin");
+      this.authHandler.login(credentials);
     });
   }
 
@@ -125,7 +126,6 @@ export class LoginPage {
     }, 2000);
   }
 
-
   /**
    * Method to handle user login via google plus option
    */
@@ -136,15 +136,16 @@ export class LoginPage {
     }).then((res) => {
       let inputParams = {
         "vendor": "google",
-        "token": res.idToken
+        "token": res.idToken,
+        "SECIRITY_TYPE": "GMAIL_LOGIN"
       };
       this.loader = this.loadingCtrl.create({
         content: 'Signning in ...',
         dismissOnPageChange: true
       });
       this.loader.present().then(() => {
-        sessionStorage.setItem("securityName", "socialLogin");
-        this.authHandler.login(inputParams, "socialLogin");
+        // sessionStorage.setItem("securityName", "socialLogin");
+        this.authHandler.login(inputParams);
       });
     });
   }

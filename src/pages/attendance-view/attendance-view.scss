@@ -29,12 +29,15 @@ page-attendance-view {
     background-size: cover;
     height: 100%;
     overflow: hidden;
-
+    .calendarStaticHeight{
+      min-height: 54%;
+    }
     ion-calendar{
       padding: unset;
       background: url('assets/imgs/Calendar-BG.png');
       color: #fff !important;
       width: 100%;
+      min-height: 54%;
       display: block;
       margin: 0 auto;
       margin-bottom: 1em;

@@ -14,13 +14,16 @@
     <securityCheckDefinition name="socialLogin" class="com.github.mfpdev.sample.socialogin.SocialLoginSecurityCheck">
         <property name="keepOriginalToken" type="boolean" defaultValue="false"
                   displayName="keep original token"
-                  description="If true, the token submitted by the client is stored in the Authenticated User as an attribute 'originalToken'"
-        />
+                  description="If true, the token submitted by the client is stored in the Authenticated User as an attribute 'originalToken'"/>
         <property name="google.clientId"
                   defaultValue="609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg.apps.googleusercontent.com"
                   displayName="google client Id"
                   description="OAuth 2.0 client ID that was created for your server. Get it from Google Developers Console
                   at https://console.developers.google.com/projectselector/apis/credentials"/>
+        <property name="UserCustomMessage"
+                  defaultValue=""
+                  displayName="User Custom Message"
+                  description="By default this message is Empty, This is the Custom Message and i will be disply while user login success [HomePage]"/>
     </securityCheckDefinition>
 
 </mfp:adapter>

@@ -6,7 +6,7 @@ import { ConsoleServiceProvider } from '../../providers/console-service/console-
 
 @Injectable()
 export class AuthHandlerProvider {
-  securityCheckName = 'UserLogin';
+  securityCheckName = 'socialLogin';
   userLoginChallengeHandler;
   gmailLoginChallengeHandler;
   initialized = false;
@@ -20,18 +20,18 @@ export class AuthHandlerProvider {
     console.log('--> AuthHandlerProvider called');
   }
 
-  init() {
-    console.log('--> userAuthInit'); 
-    if (this.initialized) {
-      return;
-    }
-    this.initialized = true;
-    console.log('--> AuthHandler init() called');
-    this.userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("UserLogin");
-    this.userLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
-    this.userLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
-    this.userLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
-  }
+  // init() {
+  //   console.log('--> userAuthInit'); 
+  //   if (this.initialized) {
+  //     return;
+  //   }
+  //   this.initialized = true;
+  //   console.log('--> AuthHandler init() called');
+  //   this.userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("titan_UserLogin");
+  //   this.userLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
+  //   this.userLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
+  //   this.userLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
+  // }
 
   gmailAuthInit() {
     console.log('--> gmailAuthInit'); 
@@ -79,30 +79,8 @@ export class AuthHandlerProvider {
     console.log("-->>"+data.user.displayName);
     this.isChallenged = false;
     if (this.loginSuccessCallback != null) {
-      this.storage.jsonstoreInitialize().then(()=>{
-        this.storage.jsonstoreReadAll("userInfo").then((jsonData:any)=>{
-          if(jsonData){
-                if(jsonData.length == 0) {
-                  this.storage.jsonstoreAdd("userInfo", data.user.displayName).then((response:any)=>{
-                    if(response == 1){
-                      console.log("data added sucessfully-->"+ response);
-                      localStorage.setItem("userInfo", data.user.displayName);
-                      this.loginSuccessCallback();
-                    }
-                  },(error)=>{
-                    console.log("data added from jsonstore error",error);
-                  });
-                }
-                else{
-                  localStorage.setItem("userInfo", jsonData[0].json.value);
-                  this.loginSuccessCallback();
-                }
-          }
-        }, (error)=>{
-          console.log("Data readed from jsonstore error",error);
-        });
-
-      });
+        localStorage.setItem("userInfo", data.user.displayName);
+        this.loginSuccessCallback();
     } else {
       console.log('--> AuthHandler: loginSuccessCallback not set!');
     }
@@ -118,8 +96,8 @@ export class AuthHandlerProvider {
     }
   }
 
-  checkIsLoggedIn(securityName) {
-    this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
+  checkIsLoggedIn() {
+    // this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
     console.log('--> AuthHandler checkIsLoggedIn called');
     WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
     .then(
@@ -128,23 +106,25 @@ export class AuthHandlerProvider {
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
+        this.loginFailureCallback(error.responseText);
       }
     );
   }
 
-  login(credentialData,securityName) {
+  login(credentialData) {
     console.log('--> AuthHandler login called. isChallenged = ', this.isChallenged);
     console.log("input parameters are",credentialData);
     if (this.isChallenged) {
       if(credentialData){
-        (securityName == "titan_UserLogin") ? this.userLoginChallengeHandler.submitChallengeAnswer(credentialData) : this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
+        // (securityName == "socialLogin") ? this.userLoginChallengeHandler.submitChallengeAnswer(credentialData) : this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
+        this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
       }else{
         console.log("input data missing");
         return;
       }
     } else {
       var self = this;
-      this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
+      // this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
       WLAuthorizationManager.login(this.securityCheckName, credentialData)
       .then(
         (success) => {
@@ -159,9 +139,9 @@ export class AuthHandlerProvider {
     }
   }
 
-  logout(securityName) {
+  logout() {
     console.log('--> AuthHandler logout called');
-    this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
+    // this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
     return new Promise((resolve,reject)=>{
       WLAuthorizationManager.logout(this.securityCheckName)
     .then(

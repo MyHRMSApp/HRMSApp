@@ -27,8 +27,8 @@
       </ion-col>
     </ion-row>
     <ion-row style="height:60%;padding:0px 25px 25px 25px">
-          <ion-card-content>
-              <p style="background-color: white">Hi.. Happy to see you here!</p>
+          <ion-card-content *ngIf="customMsg!='false'">
+              <p style="background-color: white">{{customMsg}}</p>
           </ion-card-content>
       <ion-col col-6 (click)="attendance()">
         <ion-card>

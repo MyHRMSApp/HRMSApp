@@ -8,7 +8,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
 import { MyApp } from '../../app/app.component';
 import { ServiceProvider } from '../../providers/service/service';
-
+import { UtilsProvider } from '../../providers/utils/utils';
+import moment from 'moment';
 
 /**
  * HomePage Functionalities
@@ -30,6 +31,7 @@ export class HomePage {
   public imageOne: any;
   public userInfo: any;
   public userName: any;
+  public customMsg: any;
   jsondata: any;
   attendanceIcon: string;
   couponsIcon: any;
@@ -42,10 +44,12 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, public service: ServiceProvider) {
+    public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
+    public service: ServiceProvider, public utilService: UtilsProvider) {
     
     this.photos = localStorage.getItem("userPicture");
     this.userName = "";
+    this.customMsg = "";
   }
   
 openMenu() {
@@ -59,12 +63,23 @@ attendance() {
   /**
   Method for pushing 
   */
-  this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": "20180601","IP_ENDDA": "20180731","IP_PERNR": "00477072"}}).then((resultDate:any)=>{
+ this.utilService.showLoader("Please wait..");
+ var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+ var firstDay = new Date(y, m - 2, 1);
+ var lastDay = new Date(y, m + 3, 0);
+ var calStartDate = moment(firstDay).format("YYYYMMDD").toString();
+ var calEndDate = moment(lastDay).format("YYYYMMDD").toString();
+
+  this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": calStartDate,"IP_ENDDA": calEndDate,"IP_PERNR": this.userInfo.EP_PERNR}}).then((resultDate:any)=>{
     if(resultDate){
-      console.log("-->>"+resultDate);
+      this.mainService.attanancePageData = resultDate;
+      console.log(JSON.stringify(this.mainService.attanancePageData));
+      this.navCtrl.push("AttendanceViewPage");
     };
   }, (error)=>{
     console.log("Data readed from jsonstore error",error);
+    this.utilService.dismissLoader();
+    this.utilService.showPopup("Attendance",error);
   });
   // this.mainService.attanancePageData = tempResponceData.__zone_symbol__value;
   // console.log(this.mainService.attanancePageData);
@@ -82,6 +97,7 @@ coupons() {
 ionViewCanEnter() {
   this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
   this.userName = this.userInfo.EP_ENAME;
+  this.customMsg = this.userInfo.customMsg;
   console.log(this.userInfo);
 }
 

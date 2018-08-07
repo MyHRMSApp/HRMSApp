@@ -35,8 +35,10 @@ import java.util.Properties;
 public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckConfig {
 
     public static final String KEEP_ORIGINAL_TOKEN = "keepOriginalToken";
+    private static final String CUSTOM_MSG_CONFIG_PROPERTY = "UserCustomMessage";
 
     private boolean keepOriginalToken;
+    private String userCustomMessage;
     private Map<String, LoginVendor> vendors;
     private SSLSocketFactory sslSocketFactory;
 
@@ -49,6 +51,8 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
         super(properties);
         blockedStateExpirationSec = 1;
         keepOriginalToken = Boolean.parseBoolean(getStringProperty(KEEP_ORIGINAL_TOKEN, properties, "false"));
+
+        userCustomMessage = getStringProperty(CUSTOM_MSG_CONFIG_PROPERTY, properties, null);
 
         try {
             TrustManagerFactory factory = TrustManagerFactory.getInstance("PKIX");
@@ -88,6 +92,10 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
 
     public boolean isKeepOriginalToken() {
         return keepOriginalToken;
+    }
+
+    public String getUserCustomMessage() {
+        return userCustomMessage;
     }
 
     private void createVendors() {

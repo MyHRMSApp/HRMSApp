@@ -9,7 +9,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { CalendarComponentOptions } from 'ion2-calendar';
 import { MyApp } from '../../app/app.component';
 import moment from 'moment';
-
+import { UtilsProvider } from '../../providers/utils/utils';
 
 @IonicPage()
 @Component({
@@ -47,7 +47,7 @@ export class AttendanceViewPage {
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp) {
+    public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, public utilService: UtilsProvider) {
   }
   
   /**
@@ -151,6 +151,7 @@ export class AttendanceViewPage {
     setTimeout(() => {
       this.optionsRange = tempoptionsRange;
       this.calenderVIew = true;
+      this.utilService.dismissLoader();
     }, 100);
   
   }

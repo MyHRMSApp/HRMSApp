@@ -20,11 +20,15 @@ import com.ibm.mfp.server.registration.external.model.AuthenticatedUser;
 import com.ibm.mfp.server.security.external.checks.AuthorizationResponse;
 import com.ibm.mfp.server.security.external.checks.SecurityCheckConfiguration;
 
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Security check that aggregates different login vendors - Google, Facebook, etc.
@@ -41,11 +45,25 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
 
     public static final String VENDOR_KEY = "vendor";
     public static final String TOKEN_KEY = "token";
+    public static final String USER_NAME = "username";
+    public static final String PASSWORD = "password";
+    public static final String SAP_LOGIN = "SAP_LOGIN";
+    public static final String GMAIL_LOGIN = "GMAIL_LOGIN";
+    public static final String SECIRITY_TYPE = "SECIRITY_TYPE";
     public static final String VENDOR_ATTRIBUTE = "socialLoginVendor";
     public static final String ORIGINAL_TOKEN_ATTRIBUTE = "originalToken";
+    private static final String CUSTOM_MSG_CONFIG_PROPERTY = "UserCustomMessage";
 
     private transient String vendorName;
     private transient AuthenticatedUser user;
+    private String userId, displayName;
+    private String errorMsg;
+
+    private static UserManager userManager = new UserManager();
+
+    public String[] getConfigurationPropertyNames() {
+        return new String[]{CUSTOM_MSG_CONFIG_PROPERTY};
+    }
 
     @Override
     public SecurityCheckConfiguration createConfiguration(Properties properties) {
@@ -75,22 +93,65 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
 
     @Override
     protected boolean validateCredentials(Map<String, Object> credentials) {
-        vendorName = (String) credentials.get(VENDOR_KEY);
-        String token = (String) credentials.get(TOKEN_KEY);
-        if (vendorName != null && token != null) {
-            LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
-            if (vendor != null) {
-                AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
-                if (user != null) {
-                    Map<String, Object> attributes = new HashMap<>(user.getAttributes());
-                    attributes.put(VENDOR_ATTRIBUTE, vendorName);
-                    if (getConfiguration().isKeepOriginalToken())
-                        attributes.put(ORIGINAL_TOKEN_ATTRIBUTE, token);
-                    this.user = new AuthenticatedUser(user.getId(), user.getDisplayName(), getName(), attributes);
-                    return true;
-                }
+        JSONObject jsonObject = new JSONObject();
+        if(credentials!=null){
+            switch (credentials.get(SECIRITY_TYPE).toString()) {
+                case SAP_LOGIN:
+                        if(credentials.containsKey(USER_NAME) && credentials.containsKey(PASSWORD)){
+                            String username = (String) credentials.get(USER_NAME);
+                            String password = (String) credentials.get(PASSWORD);
+                
+                            //Look for this user in the database
+                            try {
+                                jsonObject = (JSONObject) userManager.getUser(username, password);
+                                errorMsg = "sample";
+                                if(jsonObject.getInt("EP_RESULT") == 0){
+                                    userId = jsonObject.getString("EP_ENAME");
+                                    jsonObject.put("customMsg", getConfiguration().getUserCustomMessage());
+                                    displayName = jsonObject.toString();
+                                    AuthenticatedUser user = new AuthenticatedUser();
+                                    this.user = new AuthenticatedUser(userId, displayName, this.getName());
+                                    // createUserforSAPLogin();
+                                    return true;
+                                }
+                                else{
+                                    return false;
+                                }
+                            } catch (Exception e) {
+                                System.out.println("---"+e);
+                                errorMsg = "Please provide valid Username or Password";
+                                return false;
+                            }
+                        }
+                        else{
+                            errorMsg = "Please provide valid Username or Password";
+                        }
+                    break;
+                case GMAIL_LOGIN:
+                        if(credentials.containsKey(VENDOR_KEY) && credentials.containsKey(TOKEN_KEY)){
+                        vendorName = (String) credentials.get(VENDOR_KEY);
+                        String token = (String) credentials.get(TOKEN_KEY);
+                        if (vendorName != null && token != null) {
+                            LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
+                            if (vendor != null) {
+                                AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
+                                if (user != null) {
+                                    Map<String, Object> attributes = new HashMap<>(user.getAttributes());
+                                    attributes.put(VENDOR_ATTRIBUTE, vendorName);
+                                    attributes.put("customMsg", getConfiguration().getUserCustomMessage());
+                                    if (getConfiguration().isKeepOriginalToken())
+                                        attributes.put(ORIGINAL_TOKEN_ATTRIBUTE, token);
+                                    this.user = new AuthenticatedUser(user.getId(), user.getDisplayName(), getName(), attributes);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
         }
+        
+
         return false;
     }
 
@@ -98,6 +159,11 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     protected AuthenticatedUser createUser() {
         return user;
     }
+
+    // @Override
+    // protected AuthenticatedUser createUserforSAPLogin() {
+    //     return new AuthenticatedUser(userId, displayName, this.getName());
+    // }
 
     @Override
     protected SocialLoginConfiguration getConfiguration() {

@@ -49,7 +49,7 @@ export class MyApp {
 
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
-      this.authHandler.init();
+     // this.authHandler.init();
       this.authHandler.gmailAuthInit();
     });
   }
@@ -65,8 +65,8 @@ export class MyApp {
    * Method for logging out user from app and MFP Server
    */
   logout() {
-    let checkName = sessionStorage.getItem("securityName");
-    this.authHandler.logout(checkName).then((resp)=>{
+    // let checkName = sessionStorage.getItem("securityName");
+    this.authHandler.logout().then((resp)=>{
       (resp) ? this.nav.setRoot("LoginPage") : console.log("logout failure");
     });
   }

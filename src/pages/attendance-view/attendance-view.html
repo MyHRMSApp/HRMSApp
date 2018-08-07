@@ -11,10 +11,11 @@
 
 
 <ion-content>
+  <div class="calendarStaticHeight">
   <ion-calendar *ngIf="calenderVIew" [(ngModel)]="dateRange" (onChange)="onChange($event)" [options]="optionsRange" [type]="string"
     [format]="'YYYY-MM-DD'">
   </ion-calendar>
-
+</div>
   <ion-grid>
     <ion-card style="background: #0a3946;margin-top: -3%;">
       <ion-row>

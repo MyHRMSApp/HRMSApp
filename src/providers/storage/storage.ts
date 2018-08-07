@@ -83,7 +83,19 @@ jsonstoreRemoveCollec(collectionName) {
  * @param collectionName
  */
 jsonstoreReplaceCollec(collectionName, data) {
-  return WL.JSONStore.get(collectionName).replace(data);
+  // console.log('Storing CollectionName and Data',collectionName,data);
+  // let dataToStore = (typeof data == "object") ? JSON.stringify(data) : data;
+  // let dataValue = {'value':dataToStore};
+  // console.log('value,', dataValue);
+  return new Promise((resolve,reject)=> {
+    WL.JSONStore.get(collectionName).change(data, options).then(function (numberOfDocsReplaced) {
+      console.log("Data Added to "+collectionName+"is Successful",data);
+      resolve(numberOfDocsReplaced);
+    }).fail(function (error) {
+      console.log('Data Added Error', error);
+      reject(error);
+    });
+  });
 }
 /**
  * Procedure for Read all collection data based on the collection name from the Json store
