@@ -11,6 +11,8 @@ import 'rxjs/add/operator/map';
 declare var WL;
 var collections = {
   userImage:{},
+  userInfo:{}
+
 };
 
 var options = {};
@@ -75,5 +77,19 @@ jsonstoreClearCollection(collectionName){
  */
 jsonstoreRemoveCollec(collectionName) {
   return WL.JSONStore.get(collectionName).removeCollection();
+}
+/**
+ * Procedure for Replace a collection value which is already exsist
+ * @param collectionName
+ */
+jsonstoreReplaceCollec(collectionName, data) {
+  return WL.JSONStore.get(collectionName).replace(data);
+}
+/**
+ * Procedure for Read all collection data based on the collection name from the Json store
+ * @param collectionName
+ */
+jsonstoreRead(collectionName) {
+    return WL.JSONStore.get(collectionName);
 }
 }

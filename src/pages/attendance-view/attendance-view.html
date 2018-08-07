@@ -2,7 +2,7 @@
   <ion-navbar color="header">
     <ion-buttons end>
       <button end (click)="openMenu()" class="menu">
-      <img [src]="hamburger" height="30px" width="30px" />
+        <img [src]="hamburger" height="30px" width="30px" />
       </button>
     </ion-buttons>
     <ion-title>ATTENDANCE</ion-title>
@@ -78,7 +78,7 @@
         </ion-row>
         <ion-row>
           <ion-col col-6 *ngIf="requests_ATT_1 != null" style="margin-bottom: 1%;">
-            <div class="label-time" style="float: left;"> 
+            <div class="label-time" style="float: left;">
               <span class="firstHalf"></span>
               <pre style="display: inline-block;"><b *ngFor="let req_ATT_1 of requests_ATT_1"style="font-size: 1.3em;" [ngClass]="{'ODP':'RequestRaised','FTP':'RequestRaised','CLP':'RequestRaised','SLP':'RequestRaised','GLP':'RequestRaised','QLP':'RequestRaised','PLP':'RequestRaised','ODA':'approved','FTA':'approved','CLA':'approved','SLA':'approved','GLA':'approved','QLA':'approved','PLA':'approved'}[req_ATT_1]">{{req_ATT_1}} </b></pre>
             </div>
@@ -115,5 +115,5 @@
 </ion-content>
 
 <ion-footer style="height:3.5em; text-align: center; background-color:#135c6d">
-      <img style="margin-top:2%" [src]="homeIcon" height="35px" width="35px" />
+  <img style="margin-top:2%" [src]="homeIcon" height="35px" width="35px" />
 </ion-footer>

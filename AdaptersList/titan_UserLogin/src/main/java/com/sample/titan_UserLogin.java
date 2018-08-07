@@ -56,12 +56,14 @@ public class titan_UserLogin extends UserAuthenticationSecurityCheck {
 
             //Look for this user in the database
             try {
-                jsonObject = userManager.getUser(username, password);
-                if(jsonObj.getString("EP_RESULT").toString() == "0"){
-                    userId = username;
-                    displayName = username;
-                    errorMsg = jsonObject;
-                    return true;
+                jsonObject = (JSONObject) userManager.getUser(username, password);
+                errorMsg = "sample";
+                if(jsonObject.getInt("EP_RESULT") == 0){
+                    userId = jsonObject.getString("EP_ENAME");
+                    displayName = jsonObject.toString();
+                    return true;   
+                }else{
+                    return false;
                 }
             } catch (Exception e) {
                 System.out.println("---"+e);

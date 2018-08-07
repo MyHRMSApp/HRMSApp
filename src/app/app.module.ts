@@ -19,6 +19,7 @@ import * as firebase from 'firebase';
 import { MyApp } from './app.component';
 import { UtilsProvider } from '../providers/utils/utils';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
+import { ConsoleServiceProvider } from '../providers/console-service/console-service';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAiXhrXqGqPMW025LuYVGTnlYsZb6GkcLs",
@@ -58,7 +59,9 @@ firebase.initializeApp(firebaseConfig)
     ServiceProvider,
     StorageProvider,
     UtilsProvider,
-    AuthHandlerProvider
+    AuthHandlerProvider,
+    ConsoleServiceProvider,
+    MyApp
   ]
 })
 export class AppModule {}

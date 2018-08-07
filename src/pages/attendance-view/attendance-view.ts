@@ -49,18 +49,18 @@ export class AttendanceViewPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp) {
   }
-
+  
+  /**
+  *Method for Menu Toggle
+  */
   openMenu() {
-    /**
-    Method for Menu Toggle
-    */
     this.menu.toggle();
   }
 
+  /**
+  *Method for pushing 
+  */
   home() {
-    /**
-    Method for pushing 
-    */
     this.navCtrl.setRoot("HomePage");
   }
 

@@ -22,6 +22,7 @@ export class MyApp {
   public photos: any;
   public attanancePageData: any;
   public couponPageData: any;
+  public userInformation: any;
 
   constructor(    public platform: Platform,
     public statusBar: StatusBar,

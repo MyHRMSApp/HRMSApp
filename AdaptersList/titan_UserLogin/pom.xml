@@ -20,11 +20,11 @@
 	<name>titan_UserLogin</name>
 
 	<dependencies>
-			<dependency>
+		<dependency>
 			<groupId>com.ibm.mfp</groupId>
 			<artifactId>adapter-maven-api</artifactId>
-			<scope>provided</scope>
 			<version>8.0.2018071312</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.ibm.mfp</groupId>
@@ -41,6 +41,12 @@
 			<artifactId>genson</artifactId>
 			<version>0.9</version>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
 <dependency>
     <groupId>org.springframework</groupId>
     <artifactId>spring-webmvc</artifactId>

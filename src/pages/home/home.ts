@@ -6,6 +6,8 @@ import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
+import { MyApp } from '../../app/app.component';
+import { ServiceProvider } from '../../providers/service/service';
 
 
 /**
@@ -26,6 +28,8 @@ export class HomePage {
   public cameraPhoto: any;
   public base64Image: any;
   public imageOne: any;
+  public userInfo: any;
+  public userName: any;
   jsondata: any;
   attendanceIcon: string;
   couponsIcon: any;
@@ -38,9 +42,10 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider) {
+    public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, public service: ServiceProvider) {
     
     this.photos = localStorage.getItem("userPicture");
+    this.userName = "";
   }
   
 openMenu() {
@@ -54,7 +59,17 @@ attendance() {
   /**
   Method for pushing 
   */
-  this.navCtrl.push("AttendanceViewPage");
+  this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": "20180601","IP_ENDDA": "20180731","IP_PERNR": "00477072"}}).then((resultDate:any)=>{
+    if(resultDate){
+      console.log("-->>"+resultDate);
+    };
+  }, (error)=>{
+    console.log("Data readed from jsonstore error",error);
+  });
+  // this.mainService.attanancePageData = tempResponceData.__zone_symbol__value;
+  // console.log(this.mainService.attanancePageData);
+
+  // this.navCtrl.push("AttendanceViewPage");
 }
 
 coupons() {
@@ -62,6 +77,12 @@ coupons() {
   Method for pushing 
   */
   this.navCtrl.push("CouponsPage");
+}
+
+ionViewCanEnter() {
+  this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  this.userName = this.userInfo.EP_ENAME;
+  console.log(this.userInfo);
 }
 
 

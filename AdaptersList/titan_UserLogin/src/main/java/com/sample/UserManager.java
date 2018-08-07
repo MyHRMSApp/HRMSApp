@@ -57,6 +57,9 @@ import com.ibm.mfp.adapter.api.OAuthSecurity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.ibm.mfp.server.registration.external.model.ClientData;
+import com.ibm.mfp.server.security.external.resource.AdapterSecurityContext;
+
 /**
  * This class hardcodes a list of valid users.
  * Replace this with your own implementation, such as a DataBase layer.
@@ -65,24 +68,25 @@ public class UserManager {
 
     String authString = "HCM_SERV_USR" + ":" + "HCM_SERV_USR@123";
     String getLeaveBalanceURL = "http://pirdev.titan.co.in:50400/RESTAdapter/UserAuthentication";
-    
 
+    @Context
+	AdapterSecurityContext adapterSecurityContext;
+    
+    @OAuthSecurity(scope = "titan_UserLogin")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getUser(String IP_EMPID, String IP_BEGDA) throws IOException {
-        String input = "{\"IP_EMPID\":\""+IP_EMPID+"\",\"IP_PASSWORD\":\""+IP_BEGDA+"\"}";
+    public JSONObject getUser(String IP_EMPID, String IP_PASSWORD) throws IOException {
+        String input = "{\"IP_EMPID\":\""+IP_EMPID+"\",\"IP_PASSWORD\":\""+IP_PASSWORD+"\"}";
+        System.out.println(input);
 		String  serverResJSON = null;
         JSONObject jsonObject = new JSONObject();
 
 		try {
             String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes("utf-8"));
-            String urlParameters  = "IP_EMPID=E0417574&IP_PASSWORD=init@123";
-            byte[] postData  = urlParameters.getBytes( "utf-8" );
-            int postDataLength = postData.length;
             URL url = new URL("http://pirdev.titan.co.in:50400/RESTAdapter/UserAuthentication");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Authorization", "Basic "+authStringEnc);
-            conn.setConnectTimeout(5000);
+            conn.setConnectTimeout(30000);
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -98,12 +102,11 @@ public class UserManager {
             jsonObject = new JSONObject(result);
             in.close();
             conn.disconnect();
-            System.out.println(jsonObject);
-
+            return jsonObject;
 		} catch (Exception e) {
-			System.out.println("-->"+ e);
+            System.out.println("UserManager-->"+ e);
+            return jsonObject;
         }
         
-        return jsonObject;
     }
 }

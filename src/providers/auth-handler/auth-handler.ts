@@ -1,5 +1,7 @@
 /// <reference path="../../../plugins/cordova-plugin-mfp/typings/worklight.d.ts" />
 import { Injectable } from '@angular/core';
+import { StorageProvider } from '../../providers/storage/storage';
+import { ConsoleServiceProvider } from '../../providers/console-service/console-service';
 
 
 @Injectable()
@@ -14,7 +16,7 @@ export class AuthHandlerProvider {
   loginSuccessCallback = null;
   loginFailureCallback = null;
 
-  constructor() {
+  constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider) {
     console.log('--> AuthHandlerProvider called');
   }
 
@@ -74,9 +76,33 @@ export class AuthHandlerProvider {
 
   handleSuccess(data) {
     console.log('--> AuthHandler handleSuccess called');
+    console.log("-->>"+data.user.displayName);
     this.isChallenged = false;
     if (this.loginSuccessCallback != null) {
-      this.loginSuccessCallback();
+      this.storage.jsonstoreInitialize().then(()=>{
+        this.storage.jsonstoreReadAll("userInfo").then((jsonData:any)=>{
+          if(jsonData){
+                if(jsonData.length == 0) {
+                  this.storage.jsonstoreAdd("userInfo", data.user.displayName).then((response:any)=>{
+                    if(response == 1){
+                      console.log("data added sucessfully-->"+ response);
+                      localStorage.setItem("userInfo", data.user.displayName);
+                      this.loginSuccessCallback();
+                    }
+                  },(error)=>{
+                    console.log("data added from jsonstore error",error);
+                  });
+                }
+                else{
+                  localStorage.setItem("userInfo", jsonData[0].json.value);
+                  this.loginSuccessCallback();
+                }
+          }
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
+        });
+
+      });
     } else {
       console.log('--> AuthHandler: loginSuccessCallback not set!');
     }
@@ -98,7 +124,7 @@ export class AuthHandlerProvider {
     WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
     .then(
       (accessToken) => {
-        console.log('--> AuthHandler: obtainAccessToken onSuccess');
+        console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
@@ -111,7 +137,7 @@ export class AuthHandlerProvider {
     console.log("input parameters are",credentialData);
     if (this.isChallenged) {
       if(credentialData){
-        (securityName == "UserLogin") ? this.userLoginChallengeHandler.submitChallengeAnswer(credentialData) : this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
+        (securityName == "titan_UserLogin") ? this.userLoginChallengeHandler.submitChallengeAnswer(credentialData) : this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
       }else{
         console.log("input data missing");
         return;

@@ -57,8 +57,8 @@ export class LoginPage {
     public render:Renderer, public mainService: MyApp) {
     
       this.form = new FormGroup({
-        username: new FormControl("", Validators.required),
-        password: new FormControl("", Validators.required)
+        username: new FormControl("E0417574", Validators.required),
+        password: new FormControl("init@123", Validators.required)
       });
   
       this.authHandler.setLoginFailureCallback((error) => {
@@ -73,15 +73,16 @@ export class LoginPage {
         let view = this.navCtrl.getActive();
         if (!(view.instance instanceof HomePage)) {
           console.log("invoke Home Page----->>>");
-          // var tempResponceData:any = this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": "20180601","IP_ENDDA": "20180731","IP_PERNR": "00477072"}});
-          // this.mainService.attanancePageData = tempResponceData.__zone_symbol__value;
-          // console.log(this.mainService.attanancePageData);
           this.navCtrl.setRoot("HomePage");
         }
       });
       this.authHandler.setHandleChallengeCallback(() => {
         this.navCtrl.setRoot("LoginPage");
       });
+
+      setTimeout(() => { 
+        this.authHandler.checkIsLoggedIn("titan_UserLogin");
+      },3000);
   }
 
   sampleLogin() {
