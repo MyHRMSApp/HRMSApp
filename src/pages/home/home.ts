@@ -50,6 +50,10 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     this.photos = localStorage.getItem("userPicture");
     this.userName = "";
     this.customMsg = "";
+    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    this.userName = this.userInfo.EP_ENAME;
+    this.customMsg = this.userInfo.customMsg;
+    console.log(this.userInfo);
   }
   
 openMenu() {
@@ -94,12 +98,12 @@ coupons() {
   this.navCtrl.push("CouponsPage");
 }
 
-ionViewCanEnter() {
-  this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  this.userName = this.userInfo.EP_ENAME;
-  this.customMsg = this.userInfo.customMsg;
-  console.log(this.userInfo);
-}
+// ionViewCanEnter() {
+//   this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+//   this.userName = this.userInfo.EP_ENAME;
+//   this.customMsg = this.userInfo.customMsg;
+//   console.log(this.userInfo);
+// }
 
 
 ionViewDidLoad() {   

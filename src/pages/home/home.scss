@@ -8,14 +8,11 @@ page-home {
     }
 
     ion-content{
-        background: url(../assets/homePageIcons/bg1.svg) no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        height: 100%;
-        overflow: hidden;
-        background-attachment: fixed;
+        background: url(../assets/homePageIcons/bg.jpg);
+        width: 100%;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
     
         .scroll-content{
             padding: 0px !important;
@@ -28,29 +25,17 @@ page-home {
     }
 
     ion-card-content{
-        padding: 0px 0px !important;
+        padding: 0% 0% !important;
+        margin-top: 2%;
         p{
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
         color:black !important;    
     }
     }
 
-    // .userImageDiv{
-    //     width: 100%;
-    //     height: 100%;
-    //     border-radius: 50%;
-        
-    //     .userImage{
-    //     border-radius: 50%;
-    //     margin-top: 11%;
-    //     width: 90px;
-    //     border: 2px solid white;
-    //  }
-    //  }
-
     .userImage {
         display: inline;
-        margin-top: 14%;
+        width: 25%;
     }
 
      .fab{
@@ -76,7 +61,7 @@ page-home {
      ion-card-content{
         width: 100%;
         p{
-            padding: 5px 5px !important;
+            padding: 1% 1% !important;
             text-align: left !important;
             border-radius: 3px !important;
          }
@@ -89,7 +74,7 @@ page-home {
 
      ion-col{
         text-align: -webkit-center;
-        padding: 0px !important;
+        padding: 0% !important;
         p{
             font-size: 1.5rem !important; 
         }
@@ -99,7 +84,7 @@ page-home {
         width: 98% !important;
         height: 97%;
         background: #194e5e !important;
-        margin: 2px !important;
+        margin: 1% !important;
         box-shadow: unset !important;
         -webkit-box-shadow: unset !important;
         opacity: 0.7 !important;
@@ -110,5 +95,16 @@ page-home {
             color:white !important;
          }
      }
+     @media only screen and (min-height: 568px) and (min-width: 320px) {
+        .userAvatar {
+         margin-top: 10%;
+     }
+    }
+    
+    @media only screen and (min-height: 620px) and (min-width: 320px) {
+        .userAvatar {
+         margin-top: 15%;
+     }
+    }
     }
 }
