@@ -11,11 +11,10 @@
 
 
 <ion-content>
-  <div class="calendarStaticHeight">
+  <div *ngIf="!calenderVIew" class="calendarStaticHeight"></div>
   <ion-calendar *ngIf="calenderVIew" [(ngModel)]="dateRange" (onChange)="onChange($event)" [options]="optionsRange" [type]="string"
     [format]="'YYYY-MM-DD'">
   </ion-calendar>
-</div>
   <ion-grid>
     <ion-card style="background: #0a3946;margin-top: -3%;">
       <ion-row>
@@ -45,49 +44,51 @@
     <ion-list>
       <ion-item>
         <ion-thumbnail class="dateBox" item-start [ngClass]="currentCssClass != ''?currentCssClass:'ATT1_NormalPunch_ATT2_NormalPunch'">
-          <p class="currentDate" [innerHTML]="currentDate"></p>
-          <p class="currentMonth" [innerHTML]="currentMonth"></p>
+          <p style="color:white" class="currentDate" [innerHTML]="currentDate"></p>
+          <p style="color:white" class="currentMonth" [innerHTML]="currentMonth"></p>
         </ion-thumbnail>
         <ion-row>
-          <ion-col col-12 style="margin-bottom: 1%;">
+          <ion-col col-12>
             <span class="label-time">
-              <pre><b>Working Hrs :</b> <span style="color: gray">{{totalHoursWorked}} hrs</span></pre>
+              <pre><b>Working hours :</b> <span style="color: gray">{{totalHoursWorked}} hrs</span></pre>
             </span>
           </ion-col>
-          <ion-col col-6 style="margin-bottom: 1%;">
+          <ion-col col-6 >
             <span class="label-time">
-              <pre><b style="font-size: 1.3em;">IN    :</b><span style="font-weight: 900;color: #0AA0BF;font-size: 1.3em;">{{punchIN}}</span></pre>
+              <pre><b style="font-size: 1.1em;">In         : </b><span style="font-weight: 900;color: #0AA0BF;font-size: 1.1em;">{{punchIN}}</span></pre>
             </span>
           </ion-col>
-          <ion-col col-6 style="margin-bottom: 1%;">
+          <ion-col col-6 >
             <span class="label-time">
-              <pre><b style="font-size: 1.3em;">OUT   :</b><span style="font-weight: 900;color: #0AA0BF;font-size: 1.3em;">{{punchOUT}}</span></pre>
-            </span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-6 style="margin-bottom: 1%;">
-            <span class="label-time">
-              <pre><b style="font-size: 1.3em;">MIDIN :</b><span style="color: #068C61;font-weight: 900;font-size: 1.3em;">{{midIN}}</span></pre>
-            </span>
-          </ion-col>
-          <ion-col col-6 style="margin-bottom: 1%;">
-            <span class="label-time">
-              <pre><b style="font-size: 1.3em;">MIDOUT:</b><span style="color: #068C61;font-weight: 900;font-size: 1.3em;">{{midOUT}}</span></pre>
+              <pre><b style="font-size: 1.1em;">Out         : </b><span style="font-weight: 900;color: #0AA0BF;font-size: 1.1em;">{{punchOUT}}</span></pre>
             </span>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-6 *ngIf="requests_ATT_1 != null" style="margin-bottom: 1%;">
+          <ion-col col-6 >
+            <span class="label-time">
+              <pre><b style="font-size: 1.1em;">Mid-In : </b><span style="color: #068C61;font-weight: 900;font-size: 1.1em;">{{midIN}}</span></pre>
+            </span>
+          </ion-col>
+          <ion-col col-6 >
+            <span class="label-time">
+              <pre><b style="font-size: 1.1em;">Mid-Out : </b><span style="color: #068C61;font-weight: 900;font-size: 1.1em;">{{midOUT}}</span></pre>
+            </span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <!-- <ion-col col-6 *ngIf="requests_ATT_1 != null" style="margin-bottom: 1%;"> -->
+            <ion-col col-6>
             <div class="label-time" style="float: left;">
               <span class="firstHalf"></span>
-              <pre style="display: inline-block;"><b *ngFor="let req_ATT_1 of requests_ATT_1"style="font-size: 1.3em;" [ngClass]="{'ODP':'RequestRaised','FTP':'RequestRaised','CLP':'RequestRaised','SLP':'RequestRaised','GLP':'RequestRaised','QLP':'RequestRaised','PLP':'RequestRaised','ODA':'approved','FTA':'approved','CLA':'approved','SLA':'approved','GLA':'approved','QLA':'approved','PLA':'approved'}[req_ATT_1]">{{req_ATT_1}} </b></pre>
+              <pre style="display: inline-block;"><b *ngFor="let req_ATT_1 of requests_ATT_1"style="font-size: 1.1em;" [ngClass]="{'ODP':'RequestRaised','FTP':'RequestRaised','CLP':'RequestRaised','SLP':'RequestRaised','GLP':'RequestRaised','QLP':'RequestRaised','PLP':'RequestRaised','ODA':'approved','FTA':'approved','CLA':'approved','SLA':'approved','GLA':'approved','QLA':'approved','PLA':'approved'}[req_ATT_1]">{{req_ATT_1}} </b></pre>
             </div>
           </ion-col>
-          <ion-col col-6 *ngIf="requests_ATT_2 != null" style="margin-bottom: 1%;">
+          <!-- <ion-col col-6 *ngIf="requests_ATT_2 != null" style="margin-bottom: 1%;"> -->
+          <ion-col col-6 >
             <div class="label-time" style="float: left;">
               <span class="secondHalf"></span>
-              <pre style="display: inline-block;"><b *ngFor="let req_ATT_2 of requests_ATT_2"style="font-size: 1.3em;" [ngClass]="{'ODP':'RequestRaised','FTP':'RequestRaised','CLP':'RequestRaised','SLP':'RequestRaised','GLP':'RequestRaised','QLP':'RequestRaised','PLP':'RequestRaised','ODA':'approved','FTA':'approved','CLA':'approved','SLA':'approved','GLA':'approved','QLA':'approved','PLA':'approved'}[req_ATT_2]">{{req_ATT_2}} </b></pre>
+              <pre style="display: inline-block;"><b *ngFor="let req_ATT_2 of requests_ATT_2"style="font-size: 1.1em;" [ngClass]="{'ODP':'RequestRaised','FTP':'RequestRaised','CLP':'RequestRaised','SLP':'RequestRaised','GLP':'RequestRaised','QLP':'RequestRaised','PLP':'RequestRaised','ODA':'approved','FTA':'approved','CLA':'approved','SLA':'approved','GLA':'approved','QLA':'approved','PLA':'approved'}[req_ATT_2]">{{req_ATT_2}} </b></pre>
             </div>
           </ion-col>
         </ion-row>

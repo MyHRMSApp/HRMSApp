@@ -10,23 +10,23 @@
 
 </ion-header>
 <ion-content>
-  <ion-grid>
-    <ion-row style="height:40%;">
+  <ion-grid style="height:100%;">
+    <ion-row style="height:28%;">
       <ion-col padding col-12>
-        <ion-avatar>
-          <img class="userImage" [src]="photos" height="100px" width="100px" />
+        <ion-avatar class="userAvatar">
+          <img class="userImage" [src]="photos" />
         </ion-avatar>
         <ion-fab (click)="changeImage()" style="margin-left:4%; margin-top:-13%;">
           <button ion-fab mini icon-only clear>
             <ion-icon style="text-align:center" name="ios-camera-outline"></ion-icon>
           </button>
         </ion-fab>
-        <p style="color:white;margin-top: 10px;margin-bottom: 0px;">
+        <p style="color:white;margin-top: 2%;margin-bottom: 0%;">
           <b>{{userName}}</b>
         </p>
       </ion-col>
     </ion-row>
-    <ion-row style="height:60%;padding:0px 25px 25px 25px">
+    <ion-row style="height:72%;padding: 5% 5% 0% 5%">
           <ion-card-content *ngIf="customMsg!='false'">
               <p style="background-color: white">{{customMsg}}</p>
           </ion-card-content>

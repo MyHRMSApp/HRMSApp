@@ -79,7 +79,7 @@ export class AuthHandlerProvider {
     console.log("-->>"+data.user.displayName);
     this.isChallenged = false;
     if (this.loginSuccessCallback != null) {
-        localStorage.setItem("userInfo", data.user.displayName);
+        localStorage.setItem("userInfo", data.user.displayName.replace(/'/g, '"'));
         this.loginSuccessCallback();
     } else {
       console.log('--> AuthHandler: loginSuccessCallback not set!');

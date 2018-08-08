@@ -45,6 +45,10 @@ page-attendance-view {
       box-shadow: 0px 6px 13px 15px rgba(0,0,0,0.4);
     }
 
+    pre {
+      font-family: "Century Gothic" !important;
+    }
+
     .firstHalf{
       content: url("../assets/imgs/First-Half.svg");
       display: inline-block;
@@ -525,7 +529,7 @@ page-attendance-view {
 .Cur_ATT1_NormalPunch_ATT2_UA{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important; color: #fff;}
 .Cur_ATT1_NormalPunch_ATT2_Pending{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #e5da28 50%) !important; color: #fff;}
 .Cur_ATT1_NormalPunch_ATT2_Approved{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #4de835 50%) !important; color: #fff;}
-
+.Cur_{background-color: #0a3946 !important; color: #fff;}
 
   ion-calendar-month .danger .days .on-selected{
     border-radius: 2px !important;
@@ -600,7 +604,7 @@ page-attendance-view {
 
   ion-thumbnail {
     min-width: 70px !important;
-    min-height: 90px !important;
+    min-height: 85px !important;
   }
 
   .card{
@@ -706,7 +710,7 @@ page-attendance-view {
       }
     }
     .col{
-      padding: 1%;
+      padding: 1.3%;
     }
   }
 
