@@ -84,7 +84,7 @@ export class LoginPage {
     let credentials = {
       "username": username,
       "password": password,
-      "SECIRITY_TYPE": "SAP_LOGIN"
+      "SECURITY_TYPE": "SAP_LOGIN"
     };
     if (username === "" || password === "") {
       this.showAlert('Login Failure', 'Username and password are required');
@@ -137,7 +137,7 @@ export class LoginPage {
       let inputParams = {
         "vendor": "google",
         "token": res.idToken,
-        "SECIRITY_TYPE": "GMAIL_LOGIN"
+        "SECURITY_TYPE": "GMAIL_LOGIN"
       };
       this.loader = this.loadingCtrl.create({
         content: 'Signning in ...',

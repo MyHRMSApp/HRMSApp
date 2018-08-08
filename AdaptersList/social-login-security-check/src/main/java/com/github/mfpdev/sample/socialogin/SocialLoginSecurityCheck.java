@@ -49,7 +49,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     public static final String PASSWORD = "password";
     public static final String SAP_LOGIN = "SAP_LOGIN";
     public static final String GMAIL_LOGIN = "GMAIL_LOGIN";
-    public static final String SECIRITY_TYPE = "SECIRITY_TYPE";
+    public static final String SECURITY_TYPE = "SECURITY_TYPE";
     public static final String VENDOR_ATTRIBUTE = "socialLoginVendor";
     public static final String ORIGINAL_TOKEN_ATTRIBUTE = "originalToken";
     private static final String CUSTOM_MSG_CONFIG_PROPERTY = "UserCustomMessage";
@@ -95,7 +95,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     protected boolean validateCredentials(Map<String, Object> credentials) {
         JSONObject jsonObject = new JSONObject();
         if(credentials!=null){
-            switch (credentials.get(SECIRITY_TYPE).toString()) {
+            switch (credentials.get(SECURITY_TYPE).toString()) {
                 case SAP_LOGIN:
                         if(credentials.containsKey(USER_NAME) && credentials.containsKey(PASSWORD)){
                             String username = (String) credentials.get(USER_NAME);
@@ -141,7 +141,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                     attributes.put("customMsg", getConfiguration().getUserCustomMessage());
                                     if (getConfiguration().isKeepOriginalToken())
                                         attributes.put(ORIGINAL_TOKEN_ATTRIBUTE, token);
-                                    this.user = new AuthenticatedUser(user.getId(), user.getDisplayName(), getName(), attributes);
+                                        this.user = new AuthenticatedUser(user.getId(), "{'EP_ENAME': '"+user.getDisplayName().toString()+"', 'customMsg': '"+getConfiguration().getUserCustomMessage().toString()+"'}", getName(), attributes);
                                     return true;
                                 }
                             }
