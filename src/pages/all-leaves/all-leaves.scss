@@ -30,9 +30,11 @@ page-all-leaves {
         .scroll-content{
             padding: 0px !important;
         }
-
+    ion-grid {
+        padding: 0px 30px 30px 30px !important;
+    }
     ion-row {
-        padding: 0px 25px 25px 25px;
+        border-bottom: 1px solid #0a3946;
     }
     .list {
         margin: 0px;
@@ -41,18 +43,19 @@ page-all-leaves {
         color:white;
     }
     ion-textarea{
-        background-color: #0a3946;
+        background-color: #194e5e;
+        border-radius: 5px;
+        padding: 10px;
     }
 
-    .confirm{
-        color: white;
-        border: 1px solid white;
-        padding: 25px 5px 25px 5px;
-        text-align: center;
-        width: 22%;
+    .confirm {
+        text-align: -webkit-center;
+        border: 1px solid white !important;
+        text-transform: capitalize;
         border-radius: 50%;
-        margin-left: 40%;
-        font-size: 14px;
+        background-color: #0a3946;
+        height: 38%;
+        width: 18%;
     }
 
 }
