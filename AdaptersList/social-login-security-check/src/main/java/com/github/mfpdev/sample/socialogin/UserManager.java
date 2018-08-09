@@ -68,7 +68,7 @@ import com.ibm.mfp.server.security.external.resource.AdapterSecurityContext;
 public class UserManager {
 
     // Define logger (Standard java.util.Logger)
-	private static final Logger LOGGER = Logger.getLogger(CommonAdapterServicesResource.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(UserManager.class.getName());
 
     String authString = "HCM_SERV_USR" + ":" + "HCM_SERV_USR@123";
     String getLeaveBalanceURL = "http://pirdev.titan.co.in:50400/RESTAdapter/UserAuthentication";
