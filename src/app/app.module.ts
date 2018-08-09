@@ -22,12 +22,12 @@ import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { ConsoleServiceProvider } from '../providers/console-service/console-service';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyAiXhrXqGqPMW025LuYVGTnlYsZb6GkcLs",
-  authDomain: "myhr-da310.firebaseapp.com",
-  databaseURL: "https://myhr-da310.firebaseio.com",
-  projectId: "myhr-da310",
-  storageBucket: "myhr-da310.appspot.com",
-  messagingSenderId: "609753179467"
+  apiKey: "AIzaSyDc0EYCDmJ3SZh5fiyk9M3qeYqDTBAYXgY",
+  authDomain: "myhrms-8f727.firebaseapp.com",
+  databaseURL: "https://myhrms-8f727.firebaseio.com",
+  projectId: "myhrms-8f727",
+  storageBucket: "myhrms-8f727.appspot.com",
+  messagingSenderId: "29768228914"
 }
 firebase.initializeApp(firebaseConfig)
 

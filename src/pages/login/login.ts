@@ -88,7 +88,7 @@ export class LoginPage {
     }
     console.log('--> Sign-in with user: ', username);
     this.loader = this.loadingCtrl.create({
-      content: 'Signining in...',
+      content: 'Signing in...',
       dismissOnPageChange: true
     });
     this.loader.present().then(() => {
@@ -126,10 +126,12 @@ export class LoginPage {
    * Method to handle user login via google plus option
    */
   userLoginViagooglePlus() {
+    console.log("1");
     this.googlePlus.login({
-      'webClientId': '609753179467-2l3pspgamabenaigj9euf0mqs9ug7cpg.apps.googleusercontent.com',
+      'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',
       'offline': true
     }).then((res) => {
+      console.log(res);
       let inputParams = {
         "vendor": "google",
         "token": res.idToken,
@@ -140,7 +142,7 @@ export class LoginPage {
         dismissOnPageChange: true
       });
       this.loader.present().then(() => {
-        // sessionStorage.setItem("securityName", "socialLogin");
+        //sessionStorage.setItem("securityName", "socialLogin");
         this.authHandler.login(inputParams);
       });
     });

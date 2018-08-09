@@ -20,7 +20,7 @@ export class ServiceProvider {
   invokeAdapterCall(adaptername, adaptermethodname, method, payload){
     var methodVal = (method == 'get')?WLResourceRequest.GET : WLResourceRequest.POST;
     var resourceRequest = new WLResourceRequest(
-      "/adapters/"+adaptername+"/"+adaptermethodname,
+      "/adapters/"+adaptername+"/services/"+adaptermethodname,
       methodVal
     );
     if(payload.payload == true){

@@ -74,7 +74,7 @@ attendance() {
  var calStartDate = moment(firstDay).format("YYYYMMDD").toString();
  var calEndDate = moment(lastDay).format("YYYYMMDD").toString();
 
-  this.service.invokeAdapterCall('attananceRequest', 'resource', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": calStartDate,"IP_ENDDA": calEndDate,"IP_PERNR": this.userInfo.EP_PERNR}}).then((resultDate:any)=>{
+  this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": calStartDate,"IP_ENDDA": calEndDate,"IP_PERNR": this.userInfo.EP_PERNR}}).then((resultDate:any)=>{
     if(resultDate){
       this.mainService.attanancePageData = resultDate;
       console.log(JSON.stringify(this.mainService.attanancePageData));
