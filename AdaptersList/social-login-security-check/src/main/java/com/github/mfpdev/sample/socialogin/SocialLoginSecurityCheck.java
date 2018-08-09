@@ -104,49 +104,55 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                             //Look for this user in the database
                             try {
                                 jsonObject = (JSONObject) userManager.getUser(username, password);
-                                errorMsg = "sample";
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
                                     jsonObject.put("customMsg", getConfiguration().getUserCustomMessage());
                                     displayName = jsonObject.toString();
                                     AuthenticatedUser user = new AuthenticatedUser();
                                     this.user = new AuthenticatedUser(userId, displayName, this.getName());
-                                    // createUserforSAPLogin();
+                                    errorMsg = "";
                                     return true;
-                                }
-                                else{
+                                }else if(jsonObject.getInt("EP_RESULT") == 1234510){
+                                    errorMsg = "Internal Server Error, Please try again";
+                                    return false;
+                                }else{
+                                    errorMsg = "Please provide valid Username or Password";
                                     return false;
                                 }
                             } catch (Exception e) {
                                 System.out.println("---"+e);
-                                errorMsg = "Please provide valid Username or Password";
+                                errorMsg = "Internal Server Error, Please try again";
                                 return false;
                             }
                         }
                         else{
                             errorMsg = "Please provide valid Username or Password";
+                            return false;
                         }
                     break;
                 case GMAIL_LOGIN:
                         if(credentials.containsKey(VENDOR_KEY) && credentials.containsKey(TOKEN_KEY)){
-                        vendorName = (String) credentials.get(VENDOR_KEY);
-                        String token = (String) credentials.get(TOKEN_KEY);
-                        if (vendorName != null && token != null) {
-                            LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
-                            if (vendor != null) {
-                                AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
-                                if (user != null) {
-                                    Map<String, Object> attributes = new HashMap<>(user.getAttributes());
-                                    attributes.put(VENDOR_ATTRIBUTE, vendorName);
-                                    attributes.put("customMsg", getConfiguration().getUserCustomMessage());
-                                    if (getConfiguration().isKeepOriginalToken())
-                                        attributes.put(ORIGINAL_TOKEN_ATTRIBUTE, token);
-                                        this.user = new AuthenticatedUser(user.getId(), "{'EP_ENAME': '"+user.getDisplayName().toString()+"', 'customMsg': '"+getConfiguration().getUserCustomMessage().toString()+"'}", getName(), attributes);
-                                    return true;
+                            vendorName = (String) credentials.get(VENDOR_KEY);
+                            String token = (String) credentials.get(TOKEN_KEY);
+                            if (vendorName != null && token != null) {
+                                LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
+                                if (vendor != null) {
+                                    AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
+                                    if (user != null) {
+                                        Map<String, Object> attributes = new HashMap<>(user.getAttributes());
+                                        attributes.put(VENDOR_ATTRIBUTE, vendorName);
+                                        attributes.put("customMsg", getConfiguration().getUserCustomMessage());
+                                        if (getConfiguration().isKeepOriginalToken())
+                                            attributes.put(ORIGINAL_TOKEN_ATTRIBUTE, token);
+                                            this.user = new AuthenticatedUser(user.getId(), "{'EP_ENAME': '"+user.getDisplayName().toString()+"', 'customMsg': '"+getConfiguration().getUserCustomMessage().toString()+"'}", getName(), attributes);
+                                            errorMsg = "";
+                                            return true;
+                                    }
                                 }
                             }
                         }
-                    }
+                    errorMsg = "Please provide valid Vendor Name or Vendor Key";
+                    return false;
                     break;
             }
         }

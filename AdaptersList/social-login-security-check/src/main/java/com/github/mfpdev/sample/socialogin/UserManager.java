@@ -24,6 +24,7 @@ import io.swagger.annotations.ApiResponses;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Base64;
 import java.util.ArrayList;
@@ -66,6 +67,9 @@ import com.ibm.mfp.server.security.external.resource.AdapterSecurityContext;
  */
 public class UserManager {
 
+    // Define logger (Standard java.util.Logger)
+	private static final Logger LOGGER = Logger.getLogger(CommonAdapterServicesResource.class.getName());
+
     String authString = "HCM_SERV_USR" + ":" + "HCM_SERV_USR@123";
     String getLeaveBalanceURL = "http://pirdev.titan.co.in:50400/RESTAdapter/UserAuthentication";
     
@@ -77,6 +81,8 @@ public class UserManager {
         JSONObject jsonObject = new JSONObject();
 
 		try {
+            LOGGER.info("\n SAP Request Sending from MFP Adapter \n\n");
+
             String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes("utf-8"));
             URL url = new URL("http://pirdev.titan.co.in:50400/RESTAdapter/UserAuthentication");
 
@@ -98,9 +104,11 @@ public class UserManager {
             jsonObject = new JSONObject(result);
             in.close();
             conn.disconnect();
+            LOGGER.info("\n SAP Responce : "+jsonObject.toString() +"\n\n");
             return jsonObject;
-		} catch (Exception e) {
-            System.out.println("UserManager-->"+ e);
+		} catch (Exception exception) {
+            LOGGER.log(Level.SEVERE, "[ Exception ]  : "+exception.toString());
+            jsonObject.put("EP_RESULT", 1234510);
             return jsonObject;
         }
         
