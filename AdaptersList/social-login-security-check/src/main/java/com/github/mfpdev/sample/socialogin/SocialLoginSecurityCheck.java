@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,23 +45,27 @@ import org.json.JSONObject;
  */
 public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
 
-    public static final String VENDOR_KEY = "vendor";
-    public static final String TOKEN_KEY = "token";
-    public static final String USER_NAME = "username";
-    public static final String PASSWORD = "password";
-    public static final String SAP_LOGIN = "SAP_LOGIN";
-    public static final String GMAIL_LOGIN = "GMAIL_LOGIN";
-    public static final String SECURITY_TYPE = "SECURITY_TYPE";
-    public static final String VENDOR_ATTRIBUTE = "socialLoginVendor";
-    public static final String ORIGINAL_TOKEN_ATTRIBUTE = "originalToken";
+    private static final String VENDOR_KEY = "vendor";
+    private static final String TOKEN_KEY = "token";
+    private static final String USER_NAME = "username";
+    private static final String PASSWORD = "password";
+    private static final String SAP_LOGIN = "SAP_LOGIN";
+    private static final String GMAIL_LOGIN = "GMAIL_LOGIN";
+    private static final String SECURITY_TYPE = "SECURITY_TYPE";
+    private static final String VENDOR_ATTRIBUTE = "socialLoginVendor";
+    private static final String ORIGINAL_TOKEN_ATTRIBUTE = "originalToken";
     private static final String CUSTOM_MSG_CONFIG_PROPERTY = "UserCustomMessage";
+    private static final String GMAIL_ID = "GMAIL_ID"; 
 
     private transient String vendorName;
     private transient AuthenticatedUser user;
-    private String userId, displayName;
+    private String userId, displayName, empCode;
     private String errorMsg;
 
     private static UserManager userManager = new UserManager();
+
+        // Define logger (Standard java.util.Logger)
+	private static final Logger LOGGER = Logger.getLogger(UserManager.class.getName());
 
     public String[] getConfigurationPropertyNames() {
         return new String[]{CUSTOM_MSG_CONFIG_PROPERTY};
@@ -107,11 +113,9 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                 errorMsg = "sample";
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
-                                    jsonObject.put("customMsg", getConfiguration().getUserCustomMessage());
                                     displayName = jsonObject.toString();
                                     AuthenticatedUser user = new AuthenticatedUser();
                                     this.user = new AuthenticatedUser(userId, displayName, this.getName());
-                                    // createUserforSAPLogin();
                                     return true;
                                 }else if(jsonObject.getInt("EP_RESULT") == 1234510){
                                     errorMsg = "Internal Server Error, Please try again";
@@ -119,8 +123,8 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                 }else{
                                     return false;
                                 }
-                            } catch (Exception e) {
-                                System.out.println("---"+e);
+                            } catch (Exception exception) {
+                                LOGGER.log(Level.SEVERE,"\n [ Exception ] : "+exception);
                                 errorMsg = "Please provide valid Username or Password";
                                 return false;
                             }
@@ -130,26 +134,39 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                         }
                     break;
                 case GMAIL_LOGIN:
-                        if(credentials.containsKey(VENDOR_KEY) && credentials.containsKey(TOKEN_KEY)){
-                        vendorName = (String) credentials.get(VENDOR_KEY);
-                        String token = (String) credentials.get(TOKEN_KEY);
-                        if (vendorName != null && token != null) {
-                            LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
-                            if (vendor != null) {
-                                AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
-                                if (user != null) {
-                                    Map<String, Object> attributes = new HashMap<>(user.getAttributes());
-                                    attributes.put(VENDOR_ATTRIBUTE, vendorName);
-                                    attributes.put("customMsg", getConfiguration().getUserCustomMessage());
-                                    if (getConfiguration().isKeepOriginalToken())
-                                        attributes.put(ORIGINAL_TOKEN_ATTRIBUTE, token);
-                                        this.user = new AuthenticatedUser(user.getId(), "{'EP_ENAME': '"+user.getDisplayName().toString()+"', 'customMsg': '"+getConfiguration().getUserCustomMessage().toString()+"'}", getName(), attributes);
+                    if(credentials.containsKey(GMAIL_ID)){
+                        String gmailID = (String) credentials.get(GMAIL_ID);
+                        //Look for this user in the database
+                        try {
+                            JSONObject employeeNO = (JSONObject) userManager.getEmployeeNumber(gmailID);
+                            if(employeeNO.getInt("EmpCode") != 0){
+                                empCode = Integer.toString(employeeNO.getInt("EmpCode")) ;
+                                jsonObject = (JSONObject) userManager.getUser("Gmail", "E0477072");
+                                if(jsonObject.getInt("EP_RESULT") == 0){
+                                    userId = jsonObject.getString("EP_ENAME");
+                                    displayName = jsonObject.toString();
+                                    AuthenticatedUser user = new AuthenticatedUser();
+                                    this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                     return true;
+                                }else if(jsonObject.getInt("EP_RESULT") == 1234510){
+                                    errorMsg = "Internal Server Error, Please try again";
+                                    return false;
                                 }
                             }
+                            else{
+                                errorMsg = "Please try with valid Titan Mail ID";
+                                return false;
+                            }
+                        } catch (Exception exception) {
+                            LOGGER.log(Level.SEVERE,"\n [ Exception ] : "+exception);
+                            errorMsg = "Internal Server Error, Please try again";
+                            return false;
                         }
                     }
-                    break;
+                    else{
+                        errorMsg = "Please try with valid Titan Mail ID";
+                    }
+                break;
             }
         }
         

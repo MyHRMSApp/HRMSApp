@@ -65,6 +65,7 @@ import org.json.JSONObject;
 
 import com.ibm.mfp.server.registration.external.model.ClientData;
 import com.ibm.mfp.server.security.external.resource.AdapterSecurityContext;
+import com.ibm.mfp.server.registration.external.model.AuthenticatedUser;
 
 @Api(value = "This is Common Adapter service for Titan Interface [SAP]")
 @Path("/services")
@@ -77,6 +78,9 @@ public class CommonAdapterServicesResource {
 	@Context
 	ConfigurationAPI configurationAPI;
 
+	@Context
+    AdapterSecurityContext securityContext;
+
 	// Define logger (Standard java.util.Logger)
 	private static final Logger LOGGER = Logger.getLogger(CommonAdapterServicesResource.class.getName());
 
@@ -84,11 +88,7 @@ public class CommonAdapterServicesResource {
 	private static final String GET_CUSTOMUSER_MSG = "UserCustomMessage";
 	private static final String SAP_USERNAME = "HCM_SERV_USR";
     private static final String SAP_PASSWORD = "HCM_SERV_USR@123";
-	private static final String GET_COUPONSLIST_URL = "http://pirdev.titan.co.in:50400/RESTAdapter/GetCouponDetail";
-	private static final String GET_LEAVEBALANCE_URL = "http://pirdev.titan.co.in:50400/RESTAdapter/GetLeaveBalance";
-	private static final String GET_APPLYLEAVE_URL = "http://pirdev.titan.co.in:50400/RESTAdapter/ApplyLeave";
-	private static final String GET_ATTENDANCE_URL = "http://pirdev.titan.co.in:50400/RESTAdapter/GetAttendanceStatus";
-
+	private static final String SAP_COMMON_URL = "https://pirdev.titan.co.in:50401/RESTAdapter/";
 	private static final String AUTH_STRING = SAP_USERNAME + ":" + SAP_PASSWORD;
 	private static final String[] PENDING_LEAVES = {"ODP", "FTP", "CLP", "SLP", "GLP", "QLP", "PLP"};
 	private static final String[] APPROVED_LEAVES = {"ODA", "FTA", "CLA", "SLA", "GLA", "QLA", "PLA"};
@@ -106,17 +106,18 @@ public class CommonAdapterServicesResource {
 	 * @QueryParam - IV_PERNR which contains user Pernr Number
 	 * @return - Coupon List (type - JSON String format)
 	 * */
-	@POST
+	@GET
 	@Path("/getCouponsList")
 	@Produces(MediaType.APPLICATION_JSON)
-	@OAuthSecurity(enabled = false)
-	public String getCouponsList( @QueryParam("IV_PERNR") String IV_PERNR	) {
+	@OAuthSecurity(scope = "socialLogin")
+	public String getCouponsList() {
 		commonServerResponce = new JSONObject(commonResponceStr);
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
 		JSONObject inputJSON = new JSONObject();
 		JSONObject serverResJSON = new JSONObject();
-		inputJSON.put("IV_PERNR", IV_PERNR);
-		serverResJSON = this.postService(inputJSON.toString(), GET_COUPONSLIST_URL);
-
+		inputJSON.put("IV_PERNR", userInformation.getString("EP_PERNR"));
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"GetCouponDetail");
+		
 		return serverResJSON.toString();
 	}
 
@@ -125,18 +126,18 @@ public class CommonAdapterServicesResource {
 	 * @QueryParam - IP_EMPTYP which contains user Employee Type [ESS, MSS], IV_PERNR which contains user Pernr Number
 	 * @return - Leave Balance (type - JSON String format)
 	 * */
-	@POST
+	@GET
 	@Path("/getLeaveBalance")
 	@Produces(MediaType.APPLICATION_JSON)
-	@OAuthSecurity(enabled = false)
-	public String getLeaveBalance(	@QueryParam("IP_EMPTYP") String IP_EMPTYP,
-									@QueryParam("IP_PERNR") String IP_PERNR	) {
+	@OAuthSecurity(scope = "socialLogin")
+	public String getLeaveBalance() {
 		JSONObject inputJSON = new JSONObject();
-		inputJSON.put("IP_EMPTYP", IP_EMPTYP);
-		inputJSON.put("IP_PERNR", IP_PERNR);						
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+		inputJSON.put("IP_EMPTYP", userInformation.getString("EP_USERTYPE"));
+		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));						
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), GET_LEAVEBALANCE_URL);
-
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"GetLeaveBalance");
+		
 		return serverResJSON.toString();
 	}
 
@@ -148,20 +149,21 @@ public class CommonAdapterServicesResource {
 	@POST
 	@Path("/validateLeaveBalance")
 	@Produces(MediaType.APPLICATION_JSON)
-	@OAuthSecurity(enabled = false)
-	public String validateLeaveBalance(	@QueryParam("IP_PERNR") String IP_PERNR,@QueryParam("IP_LTYP") String IP_LTYP,
-										@QueryParam("IP_FDATE") String IP_FDATE,@QueryParam("IP_TDATE") String IP_TDATE,
-										@QueryParam("IP_FHALF") String IP_FHALF,@QueryParam("IP_THALF") String IP_THALF	) {
+	@OAuthSecurity(scope = "socialLogin")
+	public String validateLeaveBalance(	@QueryParam("IP_LTYP") String IP_LTYP,@QueryParam("IP_FDATE") String IP_FDATE,
+										@QueryParam("IP_TDATE") String IP_TDATE,@QueryParam("IP_FHALF") String IP_FHALF,
+										@QueryParam("IP_THALF") String IP_THALF	) {
 		
 		JSONObject inputJSON = new JSONObject();
-		inputJSON.put("IP_PERNR", IP_PERNR);
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
 		inputJSON.put("IP_LTYP", IP_LTYP);	
 		inputJSON.put("IP_FDATE", IP_FDATE);
 		inputJSON.put("IP_TDATE", IP_TDATE);
 		inputJSON.put("IP_FHALF", IP_FHALF);
 		inputJSON.put("IP_THALF", IP_THALF);					
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), GET_LEAVEBALANCE_URL);
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"BalanceValidation");
 
 		return serverResJSON.toString();
 	}
@@ -174,16 +176,17 @@ public class CommonAdapterServicesResource {
 	@POST
 	@Path("/employeeApplyLeave")
 	@Produces(MediaType.APPLICATION_JSON)
-	@OAuthSecurity(enabled = false)
-	public String employeeApplyLeave(	@QueryParam("IP_PERNR") String IP_PERNR, @QueryParam("IP_LTYP") String IP_LTYP,
-										@QueryParam("IP_FDATE") String IP_FDATE, @QueryParam("IP_TDATE") String IP_TDATE,
+	@OAuthSecurity(scope = "socialLogin")
+	public String employeeApplyLeave(	@QueryParam("IP_FDATE") String IP_FDATE, @QueryParam("IP_TDATE") String IP_TDATE,
 										@QueryParam("IP_FHALF") String IP_FHALF, @QueryParam("IP_THALF") String IP_THALF,
 										@QueryParam("IP_DAY") String IP_DAY, @QueryParam("R_LEAVE") String R_LEAVE,
 										@QueryParam("IP_REQ_TYPE") String IP_REQ_TYPE, @QueryParam("IP_WF_STATUS") String IP_WF_STATUS,
-										@QueryParam("IP_CREATE_DATE") String IP_CREATE_DATE, @QueryParam("IP_CREATE_TIME") String IP_CREATE_TIME) {
+										@QueryParam("IP_CREATE_DATE") String IP_CREATE_DATE, @QueryParam("IP_CREATE_TIME") String IP_CREATE_TIME,
+										@QueryParam("IP_LTYP") String IP_LTYP) {
 		
 		JSONObject inputJSON = new JSONObject();
-		inputJSON.put("IP_PERNR", IP_PERNR);
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
 		inputJSON.put("IP_LTYP", IP_LTYP);	
 		inputJSON.put("IP_FDATE", IP_FDATE);
 		inputJSON.put("IP_TDATE", IP_TDATE);
@@ -196,7 +199,7 @@ public class CommonAdapterServicesResource {
 		inputJSON.put("IP_CREATE_DATE", IP_CREATE_DATE);
 		inputJSON.put("IP_CREATE_TIME", IP_CREATE_TIME);				
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), GET_LEAVEBALANCE_URL);
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"ApplyLeave");
 
 		return serverResJSON.toString();
 	}
@@ -206,12 +209,13 @@ public class CommonAdapterServicesResource {
 	 * @QueryParam - IP_PERNR which contains user Pernr Number
 	 * @return - Attanance Object (type - JSON String format)
 	 * */
-	@POST
+	@GET
 	@Path("/getEmployeeAttendanceData")
 	@Produces(MediaType.APPLICATION_JSON)
-	@OAuthSecurity(enabled = false)
-	public String getEmployeeAttendanceData( @QueryParam("IP_PERNR") String IP_PERNR) throws IOException {
+	@OAuthSecurity(scope = "socialLogin")
+	public String getEmployeeAttendanceData() throws IOException {
 		JSONObject inputJSON = new JSONObject();
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
 		JSONObject  responceJSON = new JSONObject();
 		List resultJSONarrlist = new ArrayList(); 
 		DateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -227,9 +231,9 @@ public class CommonAdapterServicesResource {
 		int lastDate = ENDDA.getActualMaximum(Calendar.DATE);
 		ENDDA.set(Calendar.DATE, lastDate);
 		inputJSON.put("IP_ENDDA", sdf.format(ENDDA.getTime()));
-		inputJSON.put("IP_PERNR", IP_PERNR);
+		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
 
-		responceJSON = this.postService(inputJSON.toString(), GET_ATTENDANCE_URL);
+		responceJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"GetAttendanceStatus");
 		JSONObject innerObject = responceJSON.getJSONObject("data").getJSONObject("ET_DATA");
 		JSONArray jsonArray = innerObject.getJSONArray("item");
 			
@@ -780,10 +784,23 @@ public class CommonAdapterServicesResource {
 	@GET
 	@Path("/getCustomUserMessage")
 	@Produces(MediaType.APPLICATION_JSON)
-	@OAuthSecurity(enabled = false)
+	@OAuthSecurity(scope = "socialLogin")
 	public String getCustomUserMessage() throws IOException {
 		
 		return configurationAPI.getPropertyValue(GET_CUSTOMUSER_MSG);
+	}
+
+	/* *
+	 * @Funtion - (getActiveUserProperties) this funtion is the common and i will give the current user informations
+	 * @Input 
+	 * @return - UserInformation OBJECT (type - JSONObject)
+	 * */
+	public JSONObject getActiveUserProperties(){
+
+		AuthenticatedUser currentUser = securityContext.getAuthenticatedUser();
+		JSONObject userInformation = new JSONObject(currentUser.getDisplayName());
+		LOGGER.log(Level.INFO, "[ USER INFO ]  : "+userInformation.toString());
+		return userInformation;
 	}
 
 	/* *

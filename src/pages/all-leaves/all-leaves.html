@@ -22,9 +22,7 @@
     </ion-col>
     <ion-col col-3>
       <ion-list>
-      <p style="text-align: right">
-        40
-      </p>
+      <p style="text-align: right">{{allLeaveData.BAL_ESS}}</p>
      </ion-list>
     </ion-col>
     </ion-row>
@@ -38,7 +36,7 @@
     <ion-col col-3>
       <ion-list>
       <p style="text-align: right">
-        20
+        {{allLeaveData.LEAVE_OCC}}
       </p>
       </ion-list>
     </ion-col>
@@ -50,7 +48,7 @@
         <p>From</p>
       </ion-list>
     </ion-col>
-    <ion-col class="cal_date" col-3>
+    <ion-col class="cal_date" col-3 (click)="fromDateCalendar()">
       <ion-list>
       <p style="text-align: right">
         <ion-icon class="cal" name="ios-calendar"></ion-icon>

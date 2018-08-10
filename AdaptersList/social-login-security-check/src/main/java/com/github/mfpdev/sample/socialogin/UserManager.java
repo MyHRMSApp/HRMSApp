@@ -70,21 +70,20 @@ public class UserManager {
     // Define logger (Standard java.util.Logger)
 	private static final Logger LOGGER = Logger.getLogger(UserManager.class.getName());
 
-    String authString = "HCM_SERV_USR" + ":" + "HCM_SERV_USR@123";
-    String getLeaveBalanceURL = "http://pirdev.titan.co.in:50400/RESTAdapter/UserAuthentication";
+    private static final String GET_AUTHSTRING = "HCM_SERV_USR" + ":" + "HCM_SERV_USR@123";
+    private static final String GET_USERAUTH_URL = "https://pirdev.titan.co.in:50401/RESTAdapter/UserAuthentication";
+    private static final String GET_GMAIL_URL = "https://script.google.com/macros/s/AKfycbz8ORIE4cyT3TJ9drTSIOoA-EyQdoBSq2wmz-M6ttuPMcx_hvY/exec?email=";
     
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getUser(String IP_EMPID, String IP_PASSWORD) throws IOException {
         String input = "{\"IP_EMPID\":\""+IP_EMPID+"\",\"IP_PASSWORD\":\""+IP_PASSWORD+"\"}";
-        System.out.println("User Input : "+input);
-		String  serverResJSON = null;
         JSONObject jsonObject = new JSONObject();
 
 		try {
-            LOGGER.info("\n SAP Request Sending from MFP Adapter \n\n");
+            LOGGER.log(Level.SEVERE,"\n SAP Request Sending from MFP Adapter \n\n");
 
-            String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes("utf-8"));
-            URL url = new URL("http://pirdev.titan.co.in:50400/RESTAdapter/UserAuthentication");
+            String authStringEnc = Base64.getEncoder().encodeToString(GET_AUTHSTRING.getBytes("utf-8"));
+            URL url = new URL(GET_USERAUTH_URL);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Authorization", "Basic "+authStringEnc);
@@ -104,11 +103,47 @@ public class UserManager {
             jsonObject = new JSONObject(result);
             in.close();
             conn.disconnect();
-            LOGGER.info("\n SAP Responce : "+jsonObject.toString() +"\n\n");
+            LOGGER.log(Level.SEVERE,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
             return jsonObject;
 		} catch (Exception exception) {
             LOGGER.log(Level.SEVERE, "[ Exception ]  : "+exception.toString());
             jsonObject.put("EP_RESULT", 1234510);
+            return jsonObject;
+        }
+        
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getEmployeeNumber(String EMP_MAILID) throws IOException {
+
+		String input = "{\"email\":\""+EMP_MAILID+"\"}";
+        JSONObject jsonObject = new JSONObject();
+
+		try {
+            LOGGER.log(Level.SEVERE,"\n SAP Request Sending from MFP Adapter \n\n");
+
+            // String authStringEnc = Base64.getEncoder().encodeToString(GET_AUTHSTRING.getBytes("utf-8"));
+            URL url = new URL("https://script.google.com/macros/s/AKfycbz8ORIE4cyT3TJ9drTSIOoA-EyQdoBSq2wmz-M6ttuPMcx_hvY/exec?email=nagarajan%40titan.co.in");
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            // conn.setRequestProperty("Authorization", "Basic "+authStringEnc);
+            conn.setConnectTimeout(30000);
+            conn.setRequestProperty("Content-Type", "text/plain; charset=utf-8");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestMethod("GET");
+
+            // read the response
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+            jsonObject = new JSONObject(result);
+            in.close();
+            conn.disconnect();
+            LOGGER.log(Level.SEVERE,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
+            return jsonObject;
+		} catch (Exception exception) {
+            LOGGER.log(Level.SEVERE, "[ Exception ]  : "+exception.toString());
+            jsonObject.put("EmpCode", 00);
             return jsonObject;
         }
         

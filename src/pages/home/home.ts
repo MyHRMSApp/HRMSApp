@@ -74,16 +74,21 @@ attendance() {
  var calStartDate = moment(firstDay).format("YYYYMMDD").toString();
  var calEndDate = moment(lastDay).format("YYYYMMDD").toString();
 
-  this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true,length: 3,payloadData: {"IP_BEGDA": calStartDate,"IP_ENDDA": calEndDate,"IP_PERNR": this.userInfo.EP_PERNR}}).then((resultDate:any)=>{
-    if(resultDate){
-      this.mainService.attanancePageData = resultDate;
-      console.log(JSON.stringify(this.mainService.attanancePageData));
-      this.navCtrl.push("AttendanceViewPage");
+  this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'get', {payload : false}).then((resultData:any)=>{
+    if(resultData){
+      if(resultData.status_code == 200){
+        this.mainService.attanancePageData = resultData.data;
+        console.log(JSON.stringify(this.mainService.attanancePageData));
+        this.navCtrl.push("AttendanceViewPage");
+      }else{
+        this.utilService.showPopup("Attendance", resultData.message);
+      }
+
     };
   }, (error)=>{
     console.log("Data readed from jsonstore error",error);
     this.utilService.dismissLoader();
-    this.utilService.showPopup("Attendance",error);
+    this.utilService.showPopup("Attendance",error.statusText);
   });
   // this.mainService.attanancePageData = tempResponceData.__zone_symbol__value;
   // console.log(this.mainService.attanancePageData);
@@ -223,7 +228,24 @@ uploadPhoto() {
 }
           
 applyLeave() {
-  this.navCtrl.push("ApplyLeavePage");
+  this.utilService.showLoader("Please wait..");
+  this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
+    if(resultData){
+      if(resultData.status_code == 200){
+        this.mainService.userLeaveBalanceListData = resultData.data;
+        console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
+        this.navCtrl.push("ApplyLeavePage");
+      }else{
+        this.utilService.showPopup("Leave Balance", resultData.message);
+      }
+
+    };
+  }, (error)=>{
+    console.log("Data readed from jsonstore error",error);
+    this.utilService.dismissLoader();
+    this.utilService.showPopup("Leave Balance",error.statusText);
+  });
+
 }
      
 }

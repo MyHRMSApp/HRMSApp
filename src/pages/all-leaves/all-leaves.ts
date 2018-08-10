@@ -6,6 +6,8 @@ import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
+import { CalendarModal, CalendarModalOptions, DayConfig, CalendarResult } from "ion2-calendar";
+import { ModalController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -15,12 +17,15 @@ import { StorageProvider } from '../../providers/storage/storage';
 export class AllLeavesPage {
   hamburger: string;
   homeIcon: string;
+  public allLeaveData:any;
+  
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider) {
+    public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController) {
+
   }
 
   ionViewDidLoad() {
@@ -37,6 +42,25 @@ export class AllLeavesPage {
   }
   home() {
     this.navCtrl.setRoot("HomePage");
+  }
+
+  ionViewCanEnter(){
+    this.allLeaveData = this.navParams.get("userLeave");
+  }
+
+  fromDateCalendar(){
+      // const options: CalendarModalOptions = {
+      //   title: 'BASIC',
+      // };
+  
+      // let myCalendar = this.modalCtrl.create("CalenderModelPage");
+  
+      // myCalendar.present();
+  
+      // myCalendar.onDidDismiss((date) => {
+      //   console.log(date);
+      // });
+
   }
 
 }
