@@ -47,15 +47,15 @@ page-all-leaves {
         border-radius: 5px;
         padding: 10px;
     }
-
+    ion-fab{
+        bottom: 20%;
+    }
     .confirm {
         text-align: -webkit-center;
         border: 1px solid white !important;
         text-transform: capitalize;
         border-radius: 50%;
         background-color: #0a3946;
-        height: 38%;
-        width: 18%;
     }
 
 }

@@ -38,8 +38,8 @@ export class ServiceProvider {
         if(responseData.responseJSON){
           resolve(responseData.responseJSON);
         }
-      },(Error)=>{
-        reject(Error);
+      },(error)=>{
+        reject(error);
       });
     });
   }

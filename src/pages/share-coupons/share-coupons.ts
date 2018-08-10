@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { MyApp } from '../../app/app.component'
 
 @IonicPage()
 @Component({
@@ -18,11 +19,20 @@ export class ShareCouponsPage {
   actionSheet: any;
   shareWhatsapp: boolean = false;
   cardBg: string;
+  title: any;
+  counts: any;
+  specificCoupons: any;
+  couponCounts: any;
 
   constructor(public menu: MenuController, public events: Events, public actionSheetCtrl: ActionSheetController,
     private toast: ToastController, private network: Network, public loadingCtrl: LoadingController, public platform: Platform,
     private http: Http, public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public socialSharing: SocialSharing) {
+    public navParams: NavParams, public socialSharing: SocialSharing, public mainService: MyApp) {
+
+    this.title = this.navParams.get("titleName");
+    this.specificCoupons = this.navParams.get("coupons");
+    this.couponCounts = this.navParams.get("length");
+    console.log(this.specificCoupons);
   }
 
   ionViewDidLoad() {

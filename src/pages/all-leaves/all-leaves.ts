@@ -15,12 +15,15 @@ import { StorageProvider } from '../../providers/storage/storage';
 export class AllLeavesPage {
   hamburger: string;
   homeIcon: string;
+  title: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider) {
+
+    this.title = this.navParams.get("titleName");
   }
 
   ionViewDidLoad() {

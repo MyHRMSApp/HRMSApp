@@ -6,7 +6,7 @@
       <img [src]="hamburger" height="30px" width="30px" />
       </button>
       </ion-buttons>
-      <ion-title>SHARE COUPONS</ion-title>
+      <ion-title>{{title}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -15,7 +15,7 @@
   <ion-grid>
   <ion-row>
     <ion-col col-8 style="text-align:left">
-    <p style="color:white">Available Coupons: 05</p>
+    <p style="color:white">Available Coupons: {{couponCounts}}</p>
     </ion-col>
     <ion-col col-3 style="text-align:right">
     <p style="color:white">Share</p>
@@ -24,13 +24,13 @@
     <img (click)="shareCoupon()" [src]="share" style="margin-top:55%" height="25px" width="25px" />
     </ion-col>
   </ion-row>
-  <ion-card style="background-image: url(./assets/couponsImages/coupons-BG.svg) !important;background-attachment: fixed;background-size: cover;">
+  <ion-card *ngFor="let s of specificCoupons" style="background-image: url(./assets/couponsImages/coupons-BG.svg) !important;background-attachment: fixed;background-size: cover;">
     <ion-row>
     <ion-col col-4>
-    <p class="couponNumber">1234567890</p>
+    <p class="couponNumber">{{s.DCOUPN}}</p>
     </ion-col>
     <ion-col col-6>
-    <p class="couponDesignation">Senior Management</p>
+    <p class="couponDesignation">{{s.CTYP}}</p>
     </ion-col>
     <ion-col col-2>
       <ion-item>

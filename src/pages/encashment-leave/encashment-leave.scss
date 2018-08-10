@@ -1,3 +1,79 @@
 page-encashment-leave {
 
+    .toolbar-background {
+        background: transparent !important;
+    }
+    .back-button {
+        color: white !important;
+    }
+    .toolbar-title{
+        color: white !important;
+        font-size: 1.4rem !important;
+    }
+    .toolbar-content{
+        text-align: center;
+    }
+    .header::after{
+        background-image: unset !important;
+    }
+
+    ion-content{
+        background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 100%;
+        overflow: hidden;
+    
+        .scroll-content{
+            padding: 0px !important;
+        }
+
+        ion-card {
+            border-radius: 15px !important;
+            background-color: #0d4655 !important;
+            text-align: center;
+           ion-card-header {
+            font-size: 1.3rem !important;
+            color: white !important;
+            padding: 8px !important;
+            background-color: #155060 !important;
+            text-align: center;
+           }
+           p {
+            margin-top: 4% !important;
+            color:white !important;
+           }
+        }
+
+        .cardOne {
+           height: 15%;
+        }
+
+        .cardTwo {
+           height: 25%;
+           margin-top: 15%;
+        }
+
+        .apply {
+            text-align: -webkit-center;
+            border: 1px solid white !important;
+            text-transform: capitalize;
+            border-radius: 50%;
+            background-color: #0a3946;
+            height: 6rem;
+            width: 18%;
+        }
+        
+        ion-input {
+            background-color: white;
+
+        .text-input{
+            margin: 8px 8px !important;
+        }
+    }
+
+    }
+
 }

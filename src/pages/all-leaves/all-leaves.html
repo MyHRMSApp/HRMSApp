@@ -6,7 +6,7 @@
         <img [src]="hamburger" height="30px" width="30px" />
       </button>
     </ion-buttons>
-    <ion-title>GENERAL LEAVE</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -84,9 +84,12 @@
     </ion-row>
   </ion-grid>
   
-  <div style="width:100%;text-align:center;height:32%">
+  <!-- <div style="width:100%;text-align:center;height:32%">
   <button class="confirm" ion-button>Confirm</button>
-  </div>
+  </div> -->
+  <ion-fab>
+      <button  class="confirm" ion-fab>Confirm</button>
+  </ion-fab>
 
 
 </ion-content>

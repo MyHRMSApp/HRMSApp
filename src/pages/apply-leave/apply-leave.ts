@@ -33,19 +33,19 @@ export class ApplyLeavePage {
     this.navCtrl.setRoot("HomePage");
   }
   privilegeLeave() {
-    this.navCtrl.push("AllLeavesPage");
+    this.navCtrl.push("AllLeavesPage", {"titleName":"PRIVILEGE LEAVE"});
   }
   sickLeave() {
-    this.navCtrl.push("AllLeavesPage");
+    this.navCtrl.push("AllLeavesPage", {"titleName":"SICK LEAVE"});
   }
   generalLeave() {
-    this.navCtrl.push("AllLeavesPage");
+    this.navCtrl.push("AllLeavesPage", {"titleName":"GENERAL LEAVE"});
   }
   casualLeave() {
-    this.navCtrl.push("AllLeavesPage");
+    this.navCtrl.push("AllLeavesPage", {"titleName":"CASUAL LEAVE"});
   }
   leaveEncashment() {
-    this.navCtrl.push("AllLeavesPage");
+    this.navCtrl.push("EncashmentLeavePage", {"titleName":"LEAVE ENCASHMENT"});
   }
 
   ionViewDidLoad() {

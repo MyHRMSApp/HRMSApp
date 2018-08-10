@@ -27,16 +27,34 @@ export class CouponsPage {
   jewelleries: string;
   saree: string;
   eyeWears: string;
+  counts: any;
+  watchCounts: any;
+  jewelleryCounts: any;
+  eyeWearCounts: any;
+  taneiraCounts: any;
+  watchCoupons: any;
+  jewelleryCoupons: any;
+  eyeWearCoupons: any;
+  taneiraCoupons: any;
 
 constructor(public menu: MenuController, public events: Events,
   private http: Http, private toast: ToastController, private network: Network, 
   public loadingCtrl: LoadingController, public platform: Platform, public mainService: MyApp, 
   public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
   public navParams: NavParams, public storage:StorageProvider, public service: ServiceProvider) {
+
+    this.counts = this.mainService.couponPageData;
+    
+    this.eyeWearCounts = this.counts.ET_EYEWEAR.item.length;
+    this.jewelleryCounts = this.counts.ET_JEWELLERY.item.length;
+    this.taneiraCounts = this.counts.ET_TANEIRA.item.length;
+    this.watchCounts = this.counts.ET_WATCH.item.length;
+
 }
 
 ionViewDidLoad() {
   console.log('ionViewDidLoad CouponsPage');
+
   this.hamburger = ("./assets/homePageIcons/hamburger.svg");
   this.homeIcon = ("./assets/homePageIcons/Home.svg");
   this.watches = ("./assets/couponsImages/watch.svg");
@@ -58,22 +76,23 @@ back(){
 }
 
 watch(){
-  this.navCtrl.push("ShareCouponsPage");
-  //var tempResponseData:any = this.service.invokeAdapterCall('couponRequest', 'getCoupons', 'post', {payload : true,length: 1,payloadData: {"IV_PERNR": "0063169"}});
-  //this.mainService.couponPageData = tempResponseData;
-  //console.log(tempResponseData);
+  this.watchCoupons = this.counts.ET_WATCH.item;
+  this.navCtrl.push("ShareCouponsPage", {"titleName":"WATCHES", "coupons": this.watchCoupons, "length": this.watchCounts});
 }
 
 jewellery() {
-  this.navCtrl.push("ShareCouponsPage");
+  this.jewelleryCoupons = this.counts.ET_JEWELLERY.item;
+  this.navCtrl.push("ShareCouponsPage", {"titleName":"JEWELLERY", "coupons": this.jewelleryCoupons, "length": this.jewelleryCounts});
 }
 
 eyewear() {
-  this.navCtrl.push("ShareCouponsPage");
+  this.eyeWearCoupons = this.counts.ET_EYEWEAR.item;
+  this.navCtrl.push("ShareCouponsPage", {"titleName":"EYE WEAR", "coupons": this.eyeWearCoupons, "length": this.eyeWearCounts});
 }
 
 taneira() {
-  this.navCtrl.push("ShareCouponsPage");
+  this.taneiraCoupons = this.counts.ET_TANEIRA.item;
+  this.navCtrl.push("ShareCouponsPage", {"titleName":"TANEIRA", "coupons": this.taneiraCoupons, "length": this.taneiraCounts});
 }
 
 }
