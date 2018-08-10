@@ -1,8 +1,8 @@
 <ion-content padding>
   <ion-grid>
-        
+
     <ion-row>
-        <img src="./assets/icon/logo.png" class="logo"/>
+      <img src="./assets/icon/logo.png" class="logo" />
       <ion-col col-12>
         <ion-list no-lines>
           <form (submit)="processForm()" [formGroup]="form">
@@ -16,25 +16,26 @@
                 <ion-input formControlName="password" placeholder="Password" type="password"></ion-input>
               </ion-item>
             </ion-list>
-              <button class="signIn" color="loginButton" ion-button full type="submit">Login</button>
-              <!-- <button (click)="sampleLogin()" color="loginButton" ion-button full>Login</button> -->
+            <button class="signIn" color="loginButton" ion-button full type="submit">Login</button>
+            <!-- <button (click)="sampleLogin()" color="loginButton" ion-button full>Login</button> -->
           </form>
           <ion-row>
             <ion-col class="rememberMeCol" col-8>
-            <ion-item class="rememberMeItem">
-              <ion-label>Remember me</ion-label>
-              <ion-checkbox [(ngModel)]="rememberMe"></ion-checkbox>
-            </ion-item>
+              <ion-item class="rememberMeItem">
+                <ion-label>Remember me</ion-label>
+                <ion-checkbox [(ngModel)]="rememberMe"></ion-checkbox>
+              </ion-item>
             </ion-col>
             <ion-col class="needHelp" col-4>
               <p>Need help</p>
-            </ion-col> 
-            </ion-row>
+            </ion-col>
+          </ion-row>
           <p class="or">or</p>
           <button class="googlePlusButton" color="googlePlus" (tap)="userLoginViagooglePlus()" ion-button full>
-          <ion-icon class="googlePlusIcon" item-start color="light" item-left name="logo-googleplus"></ion-icon>
-          <span>Sign in with Google</span></button>
-          </ion-list>
+            <ion-icon class="googlePlusIcon" item-start color="light" item-left name="logo-googleplus"></ion-icon>
+            <span>Sign in with Google</span>
+          </button>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>

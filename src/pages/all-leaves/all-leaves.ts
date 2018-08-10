@@ -19,6 +19,7 @@ export class AllLeavesPage {
   homeIcon: string;
   public allLeaveData:any;
   
+  title: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -26,6 +27,7 @@ export class AllLeavesPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController) {
 
+    this.title = this.navParams.get("titleName");
   }
 
   ionViewDidLoad() {

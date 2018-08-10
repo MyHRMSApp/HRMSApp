@@ -96,11 +96,15 @@ attendance() {
   // this.navCtrl.push("AttendanceViewPage");
 }
 
-coupons() {
   /**
   Method for pushing 
   */
+coupons() {
+  this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'post', {payload : true, length:1, payloadData: {"IV_PERNR": "00477072"}}).then((resultData:any)=>{
+  this.mainService.couponPageData = resultData;
+  console.log(resultData);
   this.navCtrl.push("CouponsPage");
+  });
 }
 
 // ionViewCanEnter() {

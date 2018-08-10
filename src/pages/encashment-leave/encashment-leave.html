@@ -1,46 +1,57 @@
 <ion-header>
-    <ion-navbar color="header">
-    <ion-buttons end>
-      <button style="background-color:white" end (click)="openMenu()" class="menu">
-        <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon>
-      </button>
-      </ion-buttons>
-      <ion-title>Leave Encashment</ion-title>
-    </ion-navbar>
-</ion-header>
+  <ion-navbar color="header">
+  <ion-buttons end>
+    <button style="background-color:transparent" end (click)="openMenu()" class="menu">
+      <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
+    <img [src]="hamburger" height="30px" width="30px" />
+    </button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+  </ion-header>
 
 
 <ion-content padding>
   <ion-grid>
-    <ion-row>
+
+    <ion-card class="cardOne">
       <ion-card-header>
         HISTORY
       </ion-card-header>
       <p>Claimed for 15 days on 24-05-2018</p>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid>
-    <ion-row>
+    </ion-card>
+    
+    <ion-card class="cardTwo">
       <ion-card-header>
-      NEW CLAIM
+        NEW CLAIM
       </ion-card-header>
+    <ion-row>
       <ion-col col-6>
-       Eligible
+       <p style="text-align: right">Eligible :</p>
       </ion-col>
       <ion-col col-6>
-       25 days
+       <p style="text-align: left">25 days</p>
       </ion-col>
       <ion-col col-6>
-       Apply
+       <p style="text-align: right">Apply      :</p>
       </ion-col>
-      <ion-col col-6>
-       days
+      <ion-col col-2>
+          <ion-input ></ion-input>
+      </ion-col>
+      <ion-col col-3>
+        <p style="text-align: left">days</p>
       </ion-col>
     </ion-row>
-  </ion-grid>
+    </ion-card>
 
-  <ion-item (click)="home()" class="home" color="light">Apply</ion-item>
+    <div style="width:100%;text-align:center;height:32%;margin-top:5%">
+      <button class="apply" ion-button>Apply</button>
+    </div>
+
+    <p style="color:red; text-align: center">*Claimed cancellation on portal only</p>
+
+
+</ion-grid>
 
 </ion-content>
 
