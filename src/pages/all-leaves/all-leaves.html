@@ -22,7 +22,8 @@
     </ion-col>
     <ion-col col-3>
       <ion-list>
-      <p style="text-align: right">{{allLeaveData.BAL_ESS}}</p>
+      <p style="text-align: right" *ngIf="allLeaveData !== undefined">{{allLeaveData.BAL_ESS}}</p>
+      <p style="text-align: right" *ngIf="allLeaveData === undefined">0</p>
      </ion-list>
     </ion-col>
     </ion-row>
@@ -35,9 +36,8 @@
     </ion-col>
     <ion-col col-3>
       <ion-list>
-      <p style="text-align: right">
-        {{allLeaveData.LEAVE_OCC}}
-      </p>
+          <p style="text-align: right" *ngIf="allLeaveData !== undefined">{{allLeaveData.LEAVE_OCC}}</p>
+          <p style="text-align: right" *ngIf="allLeaveData === undefined">0</p>
       </ion-list>
     </ion-col>
     </ion-row>
@@ -63,7 +63,7 @@
         <p>To</p>
       </ion-list>
     </ion-col>
-    <ion-col class="cal_date" col-3>
+    <ion-col class="cal_date" col-3 (click)="toDateCalendar()">
       <ion-list>
       <p style="text-align: right">
         <ion-icon class="cal" name="ios-calendar"></ion-icon>

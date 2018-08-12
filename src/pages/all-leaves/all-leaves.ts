@@ -8,6 +8,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
 import { CalendarModal, CalendarModalOptions, DayConfig, CalendarResult } from "ion2-calendar";
 import { ModalController } from 'ionic-angular';
+import { UtilsProvider } from '../../providers/utils/utils';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,8 @@ export class AllLeavesPage {
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController) {
+    public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
+    public utilService: UtilsProvider) {
 
     this.title = this.navParams.get("titleName");
   }
@@ -55,14 +57,20 @@ export class AllLeavesPage {
       //   title: 'BASIC',
       // };
   
-      // let myCalendar = this.modalCtrl.create("CalenderModelPage");
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage");
   
-      // myCalendar.present();
+      myCalendar.present();
   
-      // myCalendar.onDidDismiss((date) => {
-      //   console.log(date);
-      // });
+      myCalendar.onDidDismiss((date) => {
+        console.log(date);
+      });
 
+      // this.navCtrl.push("CustomCalendarModelPage");
+
+  }
+
+  toDateCalendar(){
+    // this.utilService.showCustomPopup("FAILURE", "leave applied Successfully...");
   }
 
 }

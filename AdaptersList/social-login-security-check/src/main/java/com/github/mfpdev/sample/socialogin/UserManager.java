@@ -80,7 +80,7 @@ public class UserManager {
         JSONObject jsonObject = new JSONObject();
 
 		try {
-            LOGGER.log(Level.SEVERE,"\n SAP Request Sending from MFP Adapter \n\n");
+            LOGGER.log(Level.INFO,"\n SAP Request Sending from MFP Adapter \n\n");
 
             String authStringEnc = Base64.getEncoder().encodeToString(GET_AUTHSTRING.getBytes("utf-8"));
             URL url = new URL(GET_USERAUTH_URL);
@@ -103,7 +103,7 @@ public class UserManager {
             jsonObject = new JSONObject(result);
             in.close();
             conn.disconnect();
-            LOGGER.log(Level.SEVERE,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
+            LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
             return jsonObject;
 		} catch (Exception exception) {
             LOGGER.log(Level.SEVERE, "[ Exception ]  : "+exception.toString());
