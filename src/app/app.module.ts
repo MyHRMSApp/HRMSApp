@@ -20,6 +20,7 @@ import { MyApp } from './app.component';
 import { UtilsProvider } from '../providers/utils/utils';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { ConsoleServiceProvider } from '../providers/console-service/console-service';
+import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDc0EYCDmJ3SZh5fiyk9M3qeYqDTBAYXgY",

@@ -20,6 +20,12 @@
                   displayName="google client Id"
                   description="OAuth 2.0 client ID that was created for your server. Get it from Google Developers Console
                   at https://console.developers.google.com/projectselector/apis/credentials"/>
+        
+        <property name="maxAttempts" defaultValue="3" description="How many attempts are allowed" type="integer"/>
+        <property name="blockedStateExpirationSec" defaultValue="60" description="How long before the client can try again (seconds)" type="integer"/>
+        <property name="successStateExpirationSec" defaultValue="3600" description="How long is a successful state valid for (seconds)" type="integer"/>
+        <property name="UserCustomMessage" defaultValue="UserCustomMessage" displayName="UserCustomMessage"/>
+
     </securityCheckDefinition>
 
 </mfp:adapter>

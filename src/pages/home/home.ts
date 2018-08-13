@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -45,7 +45,7 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
-    public service: ServiceProvider, public utilService: UtilsProvider) {
+    public service: ServiceProvider, public utilService: UtilsProvider, private _ngZone: NgZone) {
     
     this.photos = localStorage.getItem("userPicture");
     this.userName = "";
@@ -235,23 +235,33 @@ uploadPhoto() {
 }
           
 applyLeave() {
+  
+
+try {
+
   this.utilService.showLoader("Please wait..");
   this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
     if(resultData){
       if(resultData.status_code == 200){
         this.mainService.userLeaveBalanceListData = resultData.data;
         console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
+        this.utilService.dismissLoader();
         this.navCtrl.push("ApplyLeavePage");
       }else{
-        this.utilService.showPopup("Leave Balance", resultData.message);
+        this.utilService.dismissLoader();
+        this.utilService.showCustomPopup("FAILURE",resultData.message);
       }
 
     };
   }, (error)=>{
     console.log("Data readed from jsonstore error",error);
     this.utilService.dismissLoader();
-    this.utilService.showPopup("Leave Balance",error.statusText);
+    this.utilService.showCustomPopup("FAILURE",error.statusText);
   });
+  
+} catch (error) {
+  console.log("catch-->>",error);
+}
 
 }
      

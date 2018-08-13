@@ -39,7 +39,7 @@ export class LoginPage {
 
   constructor(public alert: AlertController, public service: ServiceProvider, public navCtrl: NavController,
     public navParams: NavParams, public loadingCtrl: LoadingController, public storage: StorageProvider,
-    private googlePlus: GooglePlus, public utils: UtilsProvider, public authHandler: AuthHandlerProvider,
+    private googlePlus: GooglePlus, public utilService: UtilsProvider, public authHandler: AuthHandlerProvider,
     public render: Renderer, public mainService: MyApp) {
 
     this.form = new FormGroup({
@@ -50,14 +50,16 @@ export class LoginPage {
     this.authHandler.setLoginFailureCallback((error) => {
       this.loader.dismiss();
       if (error !== null) {
-        this.showAlert('Login Failure', error);
+        this.utilService.showCustomPopup("FAILURE", error);
+        console.log("setLoginFailureCallback-FAILURE---->>>"+ error)
       } else {
-        this.showAlert('Login Failure', 'Failed to login.');
+        this.utilService.showCustomPopup("FAILURE", "Failed to login, Please try again");
       }
     });
     this.authHandler.setLoginSuccessCallback(() => {
       let view = this.navCtrl.getActive();
       if (!(view.instance instanceof HomePage)) {
+        localStorage.setItem("userLogout", "0");
         this.navCtrl.setRoot("HomePage");
       }
     });
@@ -70,7 +72,12 @@ export class LoginPage {
         content: 'Signing in ...',
         dismissOnPageChange: true
       });
-      this.authHandler.checkIsLoggedIn();
+      console.log("userLogout-->>"+localStorage.getItem("userLogout")+" "+"userFrishLogin Flag---->>"+this.mainService.userFrishLogin)
+      if(this.mainService.userFrishLogin){
+        this.mainService.userFrishLogin = false;
+        if(localStorage.getItem("userLogout") == "0") this.authHandler.checkIsLoggedIn();
+      }
+      
     }, 1000);
   }
 
@@ -87,7 +94,7 @@ export class LoginPage {
       "SECURITY_TYPE": "SAP_LOGIN"
     };
     if (username === "" || password === "") {
-      this.showAlert('Login Failure', 'Username and password are required');
+      this.utilService.showCustomPopup("FAILURE", "Username and password are required");
       return;
     }
     console.log('--> Sign-in with user: ', username);
@@ -153,7 +160,7 @@ export class LoginPage {
           });
       }else{
         this.googlePlus.disconnect().then((res) => {
-          this.utils.showPopup("Login", "Please use Titan Mail ID");
+          this.utilService.showCustomPopup("FAILURE", "Please use Titan Mail ID...");
         })
         
       }
@@ -161,14 +168,14 @@ export class LoginPage {
     });
   }
 
-  showAlert(alertTitle, alertMessage) {
-    let prompt = this.alert.create({
-      title: alertTitle,
-      message: alertMessage,
-      buttons: [{
-        text: 'Ok',
-      }]
-    });
-    prompt.present();
-  }
+  // showAlert(alertTitle, alertMessage) {
+  //   let prompt = this.alert.create({
+  //     title: alertTitle,
+  //     message: alertMessage,
+  //     buttons: [{
+  //       text: 'Ok',
+  //     }]
+  //   });
+  //   prompt.present();
+  // }
 }

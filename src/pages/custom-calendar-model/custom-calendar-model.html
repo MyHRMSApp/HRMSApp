@@ -11,7 +11,7 @@
 
 
 <ion-content>
-  <ion-calendar [(ngModel)]="dateRange" (onChange)="onChange($event)" [options]="optionsRange" [type]="string"
+  <ion-calendar *ngIf="calenderVIew" (onChange)="onChange($event)" [(ngModel)]="dateRange" [options]="optionsRange" [type]="string"
   [format]="'YYYY-MM-DD'">
 </ion-calendar>
 

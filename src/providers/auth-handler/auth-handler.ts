@@ -103,6 +103,7 @@ export class AuthHandlerProvider {
     .then(
       (accessToken) => {
         console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
+        this.loginSuccessCallback(accessToken);
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
