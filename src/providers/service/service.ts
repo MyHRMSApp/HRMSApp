@@ -36,12 +36,23 @@ export class ServiceProvider {
     return new Promise((resolve,reject)=>{
       resourceRequest.send().then((responseData:any)=>{
         if(responseData.responseJSON){
+         setTimeout(() => {
           resolve(responseData.responseJSON);
+         }, 1000);
         }
       },(error)=>{
+        setTimeout(() => {
+          reject(error);
+         }, 1000);
         reject(error);
       });
     });
   }
+
+
+
+
+
+  
 
 }

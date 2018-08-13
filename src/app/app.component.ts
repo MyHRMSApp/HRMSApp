@@ -6,9 +6,11 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { StorageProvider } from '../providers/storage/storage';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
+import { UtilsProvider } from '../providers/utils/utils';
 
 declare var WL;
 declare var WLAuthorizationManager;
+declare var document:any;
 @Component({
   templateUrl: 'app.html'
 })
@@ -24,6 +26,7 @@ export class MyApp {
   public couponPageData: any;
   public userInformation: any;
   public userLeaveBalanceListData: any;
+  public userFrishLogin:boolean  = true;
 
   constructor(public platform: Platform,
     public statusBar: StatusBar,
@@ -31,7 +34,7 @@ export class MyApp {
     private authHandler: AuthHandlerProvider,
     public storage:StorageProvider,
     public alert:AlertController,
-    public splashScreen: SplashScreen) {
+    public splashScreen: SplashScreen, public utilService: UtilsProvider) {
     this.initializeApp();
   }
 
@@ -53,6 +56,31 @@ export class MyApp {
      // this.authHandler.init();
       this.authHandler.gmailAuthInit();
     });
+    if(localStorage.getItem("userLogout") === null){
+      localStorage.setItem("userLogout", "1");
+      console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));
+    }else{
+      console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));
+    }
+
+  //   document.addEventListener('pause', function () {
+  //     console.log('App going to background');
+
+  //     if(localStorage.getItem("userLogout") == "1"){
+  //       localStorage.setItem("userLogout", "0");
+  //     }else if(localStorage.getItem("userLogout") == "0"){
+  //       localStorage.setItem("userLogout", "1");
+  //     }
+  //   });
+
+  //   document.addEventListener('resume', function () {
+  //     console.log('App coming to foreground');
+  //     if(localStorage.getItem("userLogout") == "1"){
+  //       localStorage.setItem("userLogout", "0");
+  //     }else if(localStorage.getItem("userLogout") == "0"){
+  //       localStorage.setItem("userLogout", "1");
+  //     }
+  // });
   }
 
   openPage(page) {
@@ -68,7 +96,13 @@ export class MyApp {
   logout() {
     // let checkName = sessionStorage.getItem("securityName");
     this.authHandler.logout().then((resp)=>{
-      (resp) ? this.nav.setRoot("LoginPage") : console.log("logout failure");
+      if(resp){
+        localStorage.setItem("userLogout", "1");
+        this.nav.setRoot("LoginPage");
+      }else{
+        console.log("logout failure");
+        this.utilService.showCustomPopup("FAILURE","Logout failure, Please try again..");
+      }
     });
   }
 
@@ -79,4 +113,7 @@ export class MyApp {
   helpline() {
     this.nav.push("HrHelplinePage");
   }
+
+
+  
 }

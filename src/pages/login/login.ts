@@ -59,6 +59,7 @@ export class LoginPage {
     this.authHandler.setLoginSuccessCallback(() => {
       let view = this.navCtrl.getActive();
       if (!(view.instance instanceof HomePage)) {
+        localStorage.setItem("userLogout", "0");
         this.navCtrl.setRoot("HomePage");
       }
     });
@@ -71,7 +72,12 @@ export class LoginPage {
         content: 'Signing in ...',
         dismissOnPageChange: true
       });
-      this.authHandler.checkIsLoggedIn();
+      console.log("userLogout-->>"+localStorage.getItem("userLogout")+" "+"userFrishLogin Flag---->>"+this.mainService.userFrishLogin)
+      if(this.mainService.userFrishLogin){
+        this.mainService.userFrishLogin = false;
+        if(localStorage.getItem("userLogout") == "0") this.authHandler.checkIsLoggedIn();
+      }
+      
     }, 1000);
   }
 

@@ -20,6 +20,7 @@ export class CustomCalendarModelPage {
 
   public optionsRange:any;
   public dateRange:any;
+  public calenderVIew:boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -35,7 +36,11 @@ export class CustomCalendarModelPage {
     var tempoptionsRange : CalendarComponentOptions = {
       showMonthPicker: false,
     };
-    this.optionsRange = tempoptionsRange;
+   
+    setTimeout(() => {
+      this.optionsRange = tempoptionsRange;
+      this.calenderVIew = true;
+    }, 100);
   
   }
 
