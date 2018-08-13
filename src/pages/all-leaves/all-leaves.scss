@@ -32,12 +32,16 @@ page-all-leaves {
         }
     ion-grid {
         padding: 0px 30px 30px 30px !important;
+        height: 70% !important;
     }
     ion-row {
         border-bottom: 1px solid #0a3946;
     }
     .list {
         margin: 0px;
+        p {
+         text-align: right !important;
+        }
     }
     p {
         color:white;
@@ -59,4 +63,12 @@ page-all-leaves {
     }
 
 }
+    ion-footer {
+        height:3.5em !important; 
+        text-align: center !important; 
+        background-color:#135c6d !important;
+        img {
+            margin-top:2% !important;
+        }
+    }
 }

@@ -17,7 +17,7 @@ page-encashment-leave {
         background-image: unset !important;
     }
 
-    ion-content{
+    ion-content {
         background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -55,8 +55,13 @@ page-encashment-leave {
            height: 25%;
            margin-top: 15%;
         }
-
-        .apply {
+        
+        .applyButtonParent{
+            width:100% !important;
+            text-align:center !important;
+            height:32% !important;
+            margin-top:5% !important;
+        .applyButton {
             text-align: -webkit-center;
             border: 1px solid white !important;
             text-transform: capitalize;
@@ -65,6 +70,13 @@ page-encashment-leave {
             height: 6rem;
             width: 18%;
         }
+    }
+        
+        .notifyMsg {
+            color:red !important; 
+            text-align: center !important;
+        }
+
         
         ion-input {
             background-color: white;
@@ -74,6 +86,15 @@ page-encashment-leave {
         }
     }
 
+    }
+
+    ion-footer {
+        height:3.5em !important; 
+        text-align: center !important; 
+        background-color:#135c6d !important;
+        img {
+            margin-top:2% !important;
+        }
     }
 
 }

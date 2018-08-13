@@ -44,11 +44,11 @@
     </ion-row>
     </ion-card>
 
-    <div style="width:100%;text-align:center;height:32%;margin-top:5%">
-      <button class="apply" ion-button>Apply</button>
+    <div class="applyButtonParent">
+      <button class="applyButton" ion-button>Apply</button>
     </div>
 
-    <p style="color:red; text-align: center">*Claimed cancellation on portal only</p>
+    <p class="notifyMsg">*Claimed cancellation on portal only</p>
 
 
 </ion-grid>
@@ -57,6 +57,6 @@
 
 
 
-<ion-footer style="height:3.5em; text-align: center; background-color:#135c6d ">
-    <img style="margin-top:2%" [src]="homeIcon" height="35px" width="35px" />
+<ion-footer>
+    <img [src]="homeIcon" height="35px" width="35px" />
 </ion-footer>

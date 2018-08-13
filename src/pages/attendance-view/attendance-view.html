@@ -16,7 +16,7 @@
     [format]="'YYYY-MM-DD'">
   </ion-calendar>
   <ion-grid>
-    <ion-card style="background: #0a3946;margin-top: -3%;">
+    <ion-card class="clrBoxParent">
       <ion-row>
         <ion-col style="padding: 5px 0px 5px 5px" col-4>
           <span class="clrBox approvedbg"></span>
@@ -77,14 +77,12 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <!-- <ion-col col-6 *ngIf="requests_ATT_1 != null" style="margin-bottom: 1%;"> -->
             <ion-col col-6>
             <div class="label-time" style="float: left;">
               <span class="firstHalf"></span>
               <pre style="display: inline-block;"><b *ngFor="let req_ATT_1 of requests_ATT_1"style="font-size: 1.1em;" [ngClass]="{'ODP':'RequestRaised','FTP':'RequestRaised','CLP':'RequestRaised','SLP':'RequestRaised','GLP':'RequestRaised','QLP':'RequestRaised','PLP':'RequestRaised','ODA':'approved','FTA':'approved','CLA':'approved','SLA':'approved','GLA':'approved','QLA':'approved','PLA':'approved'}[req_ATT_1]">{{req_ATT_1}} </b></pre>
             </div>
           </ion-col>
-          <!-- <ion-col col-6 *ngIf="requests_ATT_2 != null" style="margin-bottom: 1%;"> -->
           <ion-col col-6 >
             <div class="label-time" style="float: left;">
               <span class="secondHalf"></span>
@@ -116,6 +114,6 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer style="height:3.5em; text-align: center; background-color:#135c6d">
-  <img style="margin-top:2%" [src]="homeIcon" height="35px" width="35px" />
+<ion-footer>
+  <img [src]="homeIcon" height="35px" width="35px" />
 </ion-footer>

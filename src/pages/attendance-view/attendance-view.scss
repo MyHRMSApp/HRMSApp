@@ -605,6 +605,9 @@ page-attendance-view {
   ion-thumbnail {
     min-width: 70px !important;
     min-height: 85px !important;
+    p {
+      color: white !important;
+    }
   }
 
   .card{
@@ -730,22 +733,20 @@ page-attendance-view {
       }
     }
   }
+
+  .clrBoxParent{
+    background: #0a3946 !important;
+    margin-top: -3% !important;
+  }
 }
 
-ion-footer{
-  .home{
-    font-size: 1.5em;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 11%;
-    height: 85%;
-    padding-left: 3%;
-    padding-top: 2.5%;
-    border: 1px solid white;
-    border-radius: 50%;
-    margin-top: 1%;
- }
+ion-footer {
+  height:3.5em !important; 
+  text-align: center !important; 
+  background-color:#135c6d !important;
+  img {
+      margin-top:2% !important;
+  }
 }
 
 }

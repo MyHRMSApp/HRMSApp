@@ -30,10 +30,10 @@ page-coupons {
             padding: 0px !important;
 
         }
-    ion-card{
+    ion-card {
         margin: 10px 10px 0px 10px !important;
         background: #21687b !important;
-        p{
+        p {
             color:white !important;
             margin: 0px;
             display: table-cell;
@@ -74,6 +74,14 @@ page-coupons {
             color:#22d5a9 !important;
             padding-top: 4px;
         }
+    }
+  }
+  ion-footer {
+    height:3.5em !important; 
+    text-align: center !important; 
+    background-color:#135c6d !important;
+    img {
+        margin-top:2% !important;
     }
   }
 
