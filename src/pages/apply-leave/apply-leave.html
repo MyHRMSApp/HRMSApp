@@ -19,7 +19,8 @@
                 <ion-row>
                 <ion-col col-10>
                 <h1>PL</h1>
-                <p>Balance - 40</p>
+                <p *ngIf="userPLLeave !== undefined">Balance - {{userPLLeave.BAL_ESS}}</p>
+                <p *ngIf="userPLLeave === undefined">Balance - 0</p>
                 </ion-col>
                 <ion-col col-2>
                 <ion-icon name="ios-arrow-forward-outline"></ion-icon>
@@ -32,7 +33,8 @@
               <ion-row>
               <ion-col col-10>
               <h1>SL</h1>
-              <p>Balance - 40</p>
+              <p *ngIf="userSLLeave !== undefined" >Balance - {{userSLLeave.BAL_ESS}}</p>
+              <p *ngIf="userSLLeave === undefined">Balance - 0</p>
               </ion-col>
               <ion-col col-2>
               <ion-icon name="ios-arrow-forward-outline"></ion-icon>
@@ -45,7 +47,8 @@
                 <ion-row>
                 <ion-col col-10>
                 <h1>GL</h1>
-                <p>Balance - 40</p>
+                <p *ngIf="userGLLeave !== undefined">Balance - {{userGLLeave.BAL_ESS}}</p>
+                <p *ngIf="userGLLeave === undefined">Balance - 0</p>
                 </ion-col>
                 <ion-col col-2>
                 <ion-icon name="ios-arrow-forward-outline"></ion-icon>
@@ -58,7 +61,8 @@
                 <ion-row>
                 <ion-col col-10>
                 <h1>CL</h1>
-                <p>Balance - 40</p>
+                <p *ngIf="userCLLeave !== undefined" >Balance - {{userCLLeave.BAL_ESS}}</p>
+                <p *ngIf="userCLLeave === undefined">Balance - 0</p>
                 </ion-col>
                 <ion-col col-2>
                 <ion-icon name="ios-arrow-forward-outline"></ion-icon>
@@ -71,7 +75,8 @@
                 <ion-row>
                 <ion-col col-11>
                 <h1>LEAVE ENCASHMENT</h1>
-                <p>Balance - 40</p>
+                <p *ngIf="userLeaveEncashment !== undefined" >Balance - {{userLeaveEncashment.BAL_ESS}}</p>
+                <p *ngIf="userLeaveEncashment === undefined">Balance - 0</p>
                 </ion-col>
                 <ion-col col-1>
                 <ion-icon name="ios-arrow-forward-outline"></ion-icon>

@@ -72,18 +72,18 @@ export class AttendanceViewPage {
 
   onChange($event) {
     console.log(moment($event._d).format("YYYY-MM-DD"));
-    var currentDayData = this.mainService.attanancePageData.find(x=>x.map.LDATE == moment($event._d).format("YYYY-MM-DD"));
+    var currentDayData = this.mainService.attanancePageData.find(x=>x.LDATE == moment($event._d).format("YYYY-MM-DD"));
     if(currentDayData){
-      this.currentDate = moment(currentDayData.map.LDATE).format("DD").toString();
-      this.currentMonth = moment(currentDayData.map.LDATE).format("MMM").toString();
-      this.punchIN = currentDayData.map.PUN_P10;
-      this.punchOUT = currentDayData.map.PUN_P20;
-      this.midIN = currentDayData.map.PUN_P25;
-      this.midOUT = currentDayData.map.PUN_P15;
-      this.currentCssClass = "Cur_"+currentDayData.map.cssClass;
-      this.totalHoursWorked = currentDayData.map.ATT;
-      this.requests_ATT_1 = (currentDayData.map.RS_ATT1)?currentDayData.map.RS_ATT1:null;
-      this.requests_ATT_2 = (currentDayData.map.RS_ATT2)?currentDayData.map.RS_ATT2:null;
+      this.currentDate = moment(currentDayData.LDATE).format("DD").toString();
+      this.currentMonth = moment(currentDayData.LDATE).format("MMM").toString();
+      this.punchIN = currentDayData.PUN_P10;
+      this.punchOUT = currentDayData.PUN_P20;
+      this.midIN = currentDayData.PUN_P25;
+      this.midOUT = currentDayData.PUN_P15;
+      this.currentCssClass = "Cur_"+currentDayData.cssClass;
+      this.totalHoursWorked = currentDayData.ATT;
+      this.requests_ATT_1 = (currentDayData.RS_ATT1)?currentDayData.RS_ATT1:null;
+      this.requests_ATT_2 = (currentDayData.RS_ATT2)?currentDayData.RS_ATT2:null;
       console.log(currentDayData);
     }else{
       this.currentDate = moment().format("DD").toString();
@@ -118,23 +118,23 @@ export class AttendanceViewPage {
     console.log(this.mainService.attanancePageData.length);
     var jsonArr = [];
     for (var i = 0; i < this.mainService.attanancePageData.length; i++) {
-      console.log(moment().format("YYYY-MM-DD").toString()+"=="+this.mainService.attanancePageData[i].map.LDATE.toString());
-      if(this.mainService.attanancePageData[i].map.LDATE.toString() == moment().format("YYYY-MM-DD").toString()){
+      console.log(moment().format("YYYY-MM-DD").toString()+"=="+this.mainService.attanancePageData[i].LDATE.toString());
+      if(this.mainService.attanancePageData[i].LDATE.toString() == moment().format("YYYY-MM-DD").toString()){
         this.currentDate = moment().format("DD").toString();
         this.currentMonth = moment().format("MMM").toString();
-        this.punchIN = this.mainService.attanancePageData[i].map.PUN_P10;
-        this.punchOUT = this.mainService.attanancePageData[i].map.PUN_P20;
-        this.midIN = this.mainService.attanancePageData[i].map.PUN_P25;
-        this.midOUT = this.mainService.attanancePageData[i].map.PUN_P15;
-        this.currentCssClass = "Cur_"+this.mainService.attanancePageData[i].map.cssClass;
-        this.totalHoursWorked = this.mainService.attanancePageData[i].map.ATT;
-        this.requests_ATT_1 = (this.mainService.attanancePageData[i].map.RS_ATT1)?this.mainService.attanancePageData[i].map.RS_ATT1:null;
-        this.requests_ATT_2 = (this.mainService.attanancePageData[i].map.RS_ATT2)?this.mainService.attanancePageData[i].map.RS_ATT2:null;
+        this.punchIN = this.mainService.attanancePageData[i].PUN_P10;
+        this.punchOUT = this.mainService.attanancePageData[i].PUN_P20;
+        this.midIN = this.mainService.attanancePageData[i].PUN_P25;
+        this.midOUT = this.mainService.attanancePageData[i].PUN_P15;
+        this.currentCssClass = "Cur_"+this.mainService.attanancePageData[i].cssClass;
+        this.totalHoursWorked = this.mainService.attanancePageData[i].ATT;
+        this.requests_ATT_1 = (this.mainService.attanancePageData[i].RS_ATT1)?this.mainService.attanancePageData[i].RS_ATT1:null;
+        this.requests_ATT_2 = (this.mainService.attanancePageData[i].RS_ATT2)?this.mainService.attanancePageData[i].RS_ATT2:null;
       }
       jsonArr.push({
-        date: this.mainService.attanancePageData[i].map.LDATE,
-        cssClass: (moment().format("YYYY-MM-DD").toString() == this.mainService.attanancePageData[i].map.LDATE.toString())?this.mainService.attanancePageData[i].map.cssClass+" todayClass":this.mainService.attanancePageData[i].map.cssClass,
-        subTitle: (moment().format("YYYY-MM-DD").toString() == this.mainService.attanancePageData[i].map.LDATE.toString())?"Today":""
+        date: this.mainService.attanancePageData[i].LDATE,
+        cssClass: (moment().format("YYYY-MM-DD").toString() == this.mainService.attanancePageData[i].LDATE.toString())?this.mainService.attanancePageData[i].cssClass+" todayClass":this.mainService.attanancePageData[i].cssClass,
+        subTitle: (moment().format("YYYY-MM-DD").toString() == this.mainService.attanancePageData[i].LDATE.toString())?"Today":""
       });
   }
 

@@ -43,7 +43,7 @@ export class LoginPage {
     public render: Renderer, public mainService: MyApp) {
 
     this.form = new FormGroup({
-      username: new FormControl("E0417574", Validators.required),
+      username: new FormControl("E1596739", Validators.required),
       password: new FormControl("init@123", Validators.required)
     });
 
@@ -66,8 +66,12 @@ export class LoginPage {
     });
 
     setTimeout(() => {
+      this.loader = this.loadingCtrl.create({
+        content: 'Signing in ...',
+        dismissOnPageChange: true
+      });
       this.authHandler.checkIsLoggedIn();
-    }, 3000);
+    }, 1000);
   }
 
   sampleLogin() {
@@ -132,19 +136,28 @@ export class LoginPage {
       'offline': true
     }).then((res) => {
       console.log(res);
-      let inputParams = {
-        "vendor": "google",
-        "token": res.idToken,
-        "SECURITY_TYPE": "GMAIL_LOGIN"
-      };
-      this.loader = this.loadingCtrl.create({
-        content: 'Signing in ...',
-        dismissOnPageChange: true
-      });
-      this.loader.present().then(() => {
-        //sessionStorage.setItem("securityName", "socialLogin");
-        this.authHandler.login(inputParams);
-      });
+      if (/@titan\.co\.in$/.test(res.email)) {
+          let inputParams = {
+            "vendor": "google",
+            "token": res.idToken,
+            "SECURITY_TYPE": "GMAIL_LOGIN",
+            "GMAIL_ID": res.email
+          };
+          this.loader = this.loadingCtrl.create({
+            content: 'Signing in ...',
+            dismissOnPageChange: true
+          });
+          this.loader.present().then(() => {
+            //sessionStorage.setItem("securityName", "socialLogin");
+            this.authHandler.login(inputParams);
+          });
+      }else{
+        this.googlePlus.disconnect().then((res) => {
+          this.utils.showPopup("Login", "Please use Titan Mail ID");
+        })
+        
+      }
+
     });
   }
 

@@ -61,4 +61,20 @@ export class UtilsProvider {
     this.loader.dismiss();
   }
 
+  /**
+   * Method for showing popups
+   * @param title
+   * @param message
+   */
+  showCustomPopup(alertType, message){
+    const alert = this.alert.create({
+      title: "",
+      message: "<p class='header'>"+alertType+" !</p> <p>"+message+"</p>",
+      cssClass: alertType,
+      enableBackdropDismiss: false,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
 }

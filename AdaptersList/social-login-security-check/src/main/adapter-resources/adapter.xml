@@ -20,10 +20,6 @@
                   displayName="google client Id"
                   description="OAuth 2.0 client ID that was created for your server. Get it from Google Developers Console
                   at https://console.developers.google.com/projectselector/apis/credentials"/>
-        <property name="UserCustomMessage"
-                  defaultValue=""
-                  displayName="User Custom Message"
-                  description="By default this message is Empty, This is the Custom Message and i will be disply while user login success [HomePage]"/>
     </securityCheckDefinition>
 
 </mfp:adapter>
