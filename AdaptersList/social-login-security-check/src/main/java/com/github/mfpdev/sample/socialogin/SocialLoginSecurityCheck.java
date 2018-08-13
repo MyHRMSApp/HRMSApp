@@ -54,7 +54,6 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     private static final String SECURITY_TYPE = "SECURITY_TYPE";
     private static final String VENDOR_ATTRIBUTE = "socialLoginVendor";
     private static final String ORIGINAL_TOKEN_ATTRIBUTE = "originalToken";
-    private static final String CUSTOM_MSG_CONFIG_PROPERTY = "UserCustomMessage";
     private static final String GMAIL_ID = "GMAIL_ID"; 
 
     private transient String vendorName;
@@ -66,10 +65,6 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
 
         // Define logger (Standard java.util.Logger)
 	private static final Logger LOGGER = Logger.getLogger(UserManager.class.getName());
-
-    public String[] getConfigurationPropertyNames() {
-        return new String[]{CUSTOM_MSG_CONFIG_PROPERTY};
-    }
 
     @Override
     public SecurityCheckConfiguration createConfiguration(Properties properties) {
