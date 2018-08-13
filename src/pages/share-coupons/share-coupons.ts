@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams, ActionSheetController  } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -23,11 +23,15 @@ export class ShareCouponsPage {
   counts: any;
   specificCoupons: any;
   couponCounts: any;
+  selectedCoupons: any = [];
+  newArray: any = [];
+  shareData: {};
+  str: string;
 
   constructor(public menu: MenuController, public events: Events, public actionSheetCtrl: ActionSheetController,
     private toast: ToastController, private network: Network, public loadingCtrl: LoadingController, public platform: Platform,
     private http: Http, public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public socialSharing: SocialSharing, public mainService: MyApp) {
+    public navParams: NavParams, public mainService: MyApp, public socialSharing:SocialSharing, private ref:ChangeDetectorRef) {
 
     this.title = this.navParams.get("titleName");
     this.specificCoupons = this.navParams.get("coupons");
@@ -41,6 +45,7 @@ export class ShareCouponsPage {
     this.share = ("./assets/couponsImages/share.svg");
     this.cardBg = ("./assets/couponsImages/coupons-BG.svg");
     console.log('ionViewDidLoad ShareCouponsPage');
+
   }
 
   openMenu() {
@@ -53,23 +58,42 @@ export class ShareCouponsPage {
     this.navCtrl.setRoot("HomePage");
   }
   shareCoupon() {
-    this.shareWhatsapp=true;
+    setTimeout(() => {
+      this.shareWhatsapp=true;
+    }, 500)
   }
   gmail() {
-    var msg  = "Gmail";
+    var msg  = this.selectedCoupons;
     this.socialSharing.shareVia("com.google.android.gm", msg, null, null);
   }
   whatsapp() {
-    var msg  = "Whatsapp";
+    var msg  = this.selectedCoupons;
     this.socialSharing.shareViaWhatsApp(msg, null, null);
   }
   sms() {
-    var msg  = "SMS"
+    var msg  = this.selectedCoupons;
     this.socialSharing.shareViaSMS(msg, null);
   }
   cancel() {
     this.shareWhatsapp=false;
   }
+
+  shareMe(data) {
+    console.log(data);
+    this.ref.detectChanges();
+    data = {
+      Employee_Number : "EP00432123",
+      Coupon_Number : data.DCOUPN,
+    }
+    this.selectedCoupons.push(data);
+    console.log(this.selectedCoupons);
+    this.str = '';
+    for(let i =0; i < this.selectedCoupons.length; i++) {
+      this.str += "Employee Number :" + this.selectedCoupons[i].Employee_Number + "\n" + "Coupon Number :" + this.selectedCoupons[i].Coupon_Number + "\n";
+      console.log(this.str);
+    }
+
+}
   
 
 }

@@ -34,7 +34,7 @@
     </ion-col>
     <ion-col col-2>
       <ion-item>
-        <ion-checkbox [(ngModel)]="shareMe"></ion-checkbox>
+        <ion-checkbox (click)="shareMe(s)" [(ngModel)]="s.checked"></ion-checkbox>
       </ion-item>
     </ion-col>
   </ion-row>

@@ -54,14 +54,14 @@ firebase.initializeApp(firebaseConfig)
     Camera,
     Network,
     GooglePlus,
-    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServiceProvider,
     StorageProvider,
     UtilsProvider,
     AuthHandlerProvider,
     ConsoleServiceProvider,
-    MyApp
+    MyApp,
+    SocialSharing
   ]
 })
 export class AppModule {}

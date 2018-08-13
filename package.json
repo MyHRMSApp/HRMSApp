@@ -69,10 +69,10 @@
             "cordova-plugin-network-information": {},
             "cordova-plugin-mfp-jsonstore": {},
             "cordova-plugin-mfp-push": {},
-            "cordova-plugin-x-socialsharing": {},
             "cordova-plugin-googleplus": {
                 "REVERSED_CLIENT_ID": "29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com"
-            }
+            },
+            "cordova-plugin-x-socialsharing": {}
         },
         "platforms": [
             "android",
