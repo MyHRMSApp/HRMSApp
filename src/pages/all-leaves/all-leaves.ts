@@ -19,6 +19,10 @@ export class AllLeavesPage {
   hamburger: string;
   homeIcon: string;
   public allLeaveData:any;
+  public leaveFromDate:any;
+  public leaveToDate:any;
+  public leaveFromTime:any;
+  public leaveToTime:any;
   
   title: any;
 
@@ -30,6 +34,8 @@ export class AllLeavesPage {
     public utilService: UtilsProvider) {
 
     this.title = this.navParams.get("titleName");
+    this.leaveFromDate = " ";
+    this.leaveToDate = " ";
   }
 
   ionViewDidLoad() {
@@ -53,24 +59,33 @@ export class AllLeavesPage {
   }
 
   fromDateCalendar(){
-      // const options: CalendarModalOptions = {
-      //   title: 'BASIC',
-      // };
-  
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage");
-  
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "from" });
       myCalendar.present();
-  
-      myCalendar.onDidDismiss((date) => {
-        console.log(date);
+      myCalendar.onDidDismiss((data) => {
+        console.log(data);
+        if(data !== undefined && data.leaveFromDate !== undefined && data.leaveFromTime !== undefined){
+          this.leaveFromDate = data.leaveFromDate;
+          this.leaveFromTime = data.leaveFromTime;
+        }
+        
       });
-
-      // this.navCtrl.push("CustomCalendarModelPage");
-
   }
 
   toDateCalendar(){
-    // this.utilService.showCustomPopup("FAILURE", "leave applied Successfully...");
+    if(this.leaveFromDate !== undefined && this.leaveFromTime !== undefined ){
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "to", "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime });
+      myCalendar.present();
+      myCalendar.onDidDismiss((data) => {
+        console.log(data);
+        if(data !== undefined && data.leaveToDate !== undefined && data.leaveToTime !== undefined){
+          this.leaveToDate = data.leaveToDate;
+          this.leaveToTime = data.leaveToTime;
+        }
+      });
+    }else{
+      this.utilService.showCustomPopup4Error(this.title, "Please select From Date..", "FAILURE")
+    }
+    
   }
 
 }

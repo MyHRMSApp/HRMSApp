@@ -80,11 +80,7 @@
     </platform>
     <mfp:android>
         <mfp:sdkChecksum>3727668345</mfp:sdkChecksum>
-<<<<<<< HEAD
-        <mfp:appChecksum>2383937775</mfp:appChecksum>
-=======
-        <mfp:appChecksum>1174265535</mfp:appChecksum>
->>>>>>> 69999237aa01b8656283d18304704d36b90be10c
+        <mfp:appChecksum>595113422</mfp:appChecksum>
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
@@ -119,7 +115,7 @@
     </mfp:windows>
     <mfp:platformVersion>8.0.0.00-20180630-023429</mfp:platformVersion>
     <mfp:clientCustomInit enabled="false" />
-    <mfp:server runtime="mfp" url="http://192.168.43.158:9080" />
+    <mfp:server runtime="mfp" url="http://192.168.43.139:9080" />
     <mfp:directUpdateAuthenticityPublicKey />
     <mfp:languagePreferences>en</mfp:languagePreferences>
     <engine name="android" spec="^7.0.0" />

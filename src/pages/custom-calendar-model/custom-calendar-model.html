@@ -2,8 +2,8 @@
 
   <ion-navbar>
     <ion-title>
-      <span style="font-size: 0.8em">2018</span><br>
-      <span>Thu,25 Jun</span>
+      <span style="font-size: 0.8em">{{currentYear}}</span><br>
+      <span>{{currentDate}}</span>
     </ion-title>
   </ion-navbar>
 
@@ -11,6 +11,7 @@
 
 
 <ion-content>
+    <div class="tempCalender" *ngIf="!calenderVIew"></div>
   <ion-calendar *ngIf="calenderVIew" (onChange)="onChange($event)" [(ngModel)]="dateRange" [options]="optionsRange" [type]="string"
   [format]="'YYYY-MM-DD'">
 </ion-calendar>
@@ -19,7 +20,7 @@
       <ion-row>
         <ion-col>
             <div class="pretty p-default p-curve">
-                <input type="radio" name="color" />
+                <input type="radio" name="color" [disabled]="fulldayFlag" (click)="setTimingFunction('FD')" />
                 <span class="state p-info-o">
                     <label>Full Day</label>
                 </span>
@@ -27,7 +28,7 @@
         </ion-col>
         <ion-col>
             <div class="pretty p-default p-curve">
-                <input type="radio" name="color" />
+                <input type="radio" name="color" [disabled]="firstHalfFlag" (click)="setTimingFunction('FH')" />
                 <span class="state p-info-o">
                     <label>1st Half</label>
                 </span>
@@ -35,7 +36,7 @@
         </ion-col>
         <ion-col>
             <div class="pretty p-default p-curve">
-                <input type="radio" name="color" />
+                <input type="radio" name="color" [disabled]="secHalfFlag" (click)="setTimingFunction('SH')" />
                 <span class="state p-info-o">
                     <label>2st Half</label>
                 </span>
@@ -44,10 +45,10 @@
       </ion-row>
 
       <ion-row>
-          <ion-col><button ion-button small class="quarterly-btn">QUARTERLY</button></ion-col>
+          <ion-col><button ion-button small class="quarterly-btn" [disabled]="quarterFlag" (click)="getQuarterFunction()">QUARTERLY</button></ion-col>
           <ion-col></ion-col>
-          <ion-col><button ion-button small class="custom-btn">CANCEL</button></ion-col>
-          <ion-col><button ion-button small class="custom-btn">OK</button></ion-col>
+          <ion-col><button ion-button small class="custom-btn" (click)="dismiss('c')">CANCEL</button></ion-col>
+          <ion-col><button ion-button small class="custom-btn" (click)="dismiss('k')">OK</button></ion-col>
       </ion-row>
 
     </ion-grid>
