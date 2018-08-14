@@ -1,97 +1,76 @@
 <ion-header>
-  <ion-navbar color="header">
-    <ion-buttons end>
-      <button style="background-color:transparent" end (click)="openMenu()" class="menu">
-        <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
-        <img [src]="hamburger" height="30px" width="30px" />
-      </button>
-    </ion-buttons>
-    <ion-title>{{title}}</ion-title>
-  </ion-navbar>
-</ion-header>
-
-
-<ion-content padding>
-  <ion-grid>
-    
-    <ion-row>
-    <ion-col col-9>
-      <ion-list>
-        <p>Available balance</p>
-      </ion-list>
-    </ion-col>
-    <ion-col col-3>
-      <ion-list>
-      <p style="text-align: right" *ngIf="allLeaveData !== undefined">{{allLeaveData.BAL_ESS}}</p>
-      <p style="text-align: right" *ngIf="allLeaveData === undefined">0</p>
-     </ion-list>
-    </ion-col>
-    </ion-row>
-    
-    <ion-row>
-    <ion-col col-9>
-      <ion-list>
-        <p>Availed Occasions</p>
-      </ion-list>
-    </ion-col>
-    <ion-col col-3>
-      <ion-list>
-          <p style="text-align: right" *ngIf="allLeaveData !== undefined">{{allLeaveData.LEAVE_OCC}}</p>
-          <p style="text-align: right" *ngIf="allLeaveData === undefined">0</p>
-      </ion-list>
-    </ion-col>
-    </ion-row>
-    
-    <ion-row>
-    <ion-col col-9>
-      <ion-list>
-        <p>From</p>
-      </ion-list>
-    </ion-col>
-    <ion-col class="cal_date" col-3 (click)="fromDateCalendar()">
-      <ion-list>
-      <p class="align-right">
-        <ion-icon class="cal" name="ios-calendar"></ion-icon>
-      </p>
-      </ion-list>
-    </ion-col>
-    </ion-row>
-
-    <ion-row>
-    <ion-col col-9>
-      <ion-list>
-        <p>To</p>
-      </ion-list>
-    </ion-col>
-    <ion-col class="cal_date" col-3 (click)="toDateCalendar()">
-      <ion-list>
-      <p class="align-right">
-        <ion-icon class="cal" name="ios-calendar"></ion-icon>
-      </p>
-      </ion-list>
-    </ion-col>
-    </ion-row>
-    
-    <ion-row style="border: none">
-    <ion-col col-12>
-      <p>REASONS</p>
-      <p>
-        <ion-textarea type="text"></ion-textarea>
-      </p>
-    </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-navbar color="header">
+      <ion-buttons end>
+        <button style="background-color:transparent" end (click)="openMenu()" class="menu">
+          <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
+          <img [src]="hamburger" height="30px" width="30px" />
+        </button>
+      </ion-buttons>
+      <ion-title>GENERAL LEAVE</ion-title>
+    </ion-navbar>
+  </ion-header>
   
-  <!-- <div style="width:100%;text-align:center;height:32%">
-  <button class="confirm" ion-button>Confirm</button>
-  </div> -->
-  <ion-fab>
-      <button  class="confirm" ion-fab>Confirm</button>
-  </ion-fab>
+  
+  <ion-content padding>
+    <ion-grid style="height: 100%;">
+      
+      <ion-row>
+      <ion-col col-9>
+          <p>Available balance</p>
+      </ion-col>
+      <ion-col col-3>
+        <p style="text-align: right">
+          40
+        </p>
+      </ion-col>
 
+      <ion-col col-9>
+          <p>Availed Occasions</p>
+      </ion-col>
+      <ion-col col-3>
+        <p style="text-align: right">
+          20
+        </p>
+      </ion-col>
 
-</ion-content>
+      <ion-col col-9>
+          <p>From</p>
+      </ion-col>
+      <ion-col class="cal_date" col-3>
+        <p style="text-align: right">
+          <ion-icon class="cal" name="ios-calendar"></ion-icon>
+        </p>
+      </ion-col>
 
-<ion-footer>
-  <img (click)="home()" [src]="homeIcon" height="35px" width="35px" />
-</ion-footer>
+      <ion-col col-9>
+          <p>To</p>
+      </ion-col>
+      <ion-col class="cal_date" col-3>
+        <p style="text-align: right">
+          <ion-icon class="cal" name="ios-calendar"></ion-icon>
+        </p>
+      </ion-col>
+
+      <ion-col col-12>
+        <p>REASONS</p>
+        <p>
+          <ion-textarea type="text"></ion-textarea>
+        </p>
+      </ion-col>
+
+      <div style="width:100%;text-align:center;height:30%">
+          <button class="confirm" ion-button>Confirm</button>
+      </div>
+      </ion-row>
+      
+    </ion-grid>
+    
+  
+  
+  
+  </ion-content>
+  
+  <ion-footer style="height:3.5em; text-align: center; background-color:#135c6d ">
+    <img (click)="home()" style="margin-top:2%" [src]="homeIcon" height="35px" width="35px" />
+  </ion-footer>
+  

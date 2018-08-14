@@ -31,6 +31,10 @@ page-apply-leave {
         ion-row {
             padding: 0px 22px 22px 22px;
         }
+        ion-grid {
+            height: 100% !important;
+            text-align: center !important;
+        }
         ion-card {
             width: 98% !important;
             height: 97%;

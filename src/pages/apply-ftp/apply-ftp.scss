@@ -1,37 +1,128 @@
 page-apply-ftp {
-
-
-
-
-
-    .gridImageDiv{
-        width: 100%;
-        //height: 100%;
-        border-radius: 50%;
-        
-        .userImage{
-        margin-top: 30%;
-        border: 3px solid white;
-        width: 30px;
-       // margin-left: 25%;
-     }
-     }
-
-
-     ion-footer{
-        .home{
-          font-size: 1.5em;
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-          width: 11%;
-          height: 85%;
-          padding-left: 3%;
-          padding-top: 2.5%;
-          border: 1px solid white;
-          border-radius: 50%;
-          margin-top: 1%;
-       }
+    .toolbar-background {
+      background: transparent !important;
+    }
+    .back-button {
+      color: white !important;
+    }
+    .toolbar-title {
+      color: white !important;
+      font-size: 1.4rem !important;
+    }
+    .toolbar-content {
+      text-align: center;
+    }
+    .header::after {
+      background-image: unset !important;
+    }
+    ion-content {
+      background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      height: 100%;
+      overflow: hidden;
+      .scroll-content {
+        padding: 0px !important;
       }
-
-}
+      .gridImageDiv {
+        width: 100%;
+        border-radius: 50%;
+        text-align: -webkit-center;
+        .userImage {
+          margin-top: 4%;
+          width: 35%;
+        }
+      }
+      ion-grid {
+        height: 100% !important;
+        text-align: -webkit-center;
+      }
+      ion-row {
+        padding: 0px 3% 3% 3%;
+      }
+      .inTime{
+        margin-top: 10%;
+        color: #13e8e2 !important;
+      }
+      .outTime{
+        margin-top: 10%;
+        color: red !important;
+      }
+      .midInTime{
+        margin-top: 10%;
+        color: red !important;
+      }
+      .midOutTime{
+        margin-top: 10%;
+        color: #13e8e2 !important;
+      }
+      .ftp {
+        font-size: 1.2rem;
+      }
+      .inCard {
+        background: #194e5e !important;
+        text-align: center !important;
+        padding: 2%;
+        border-radius: 5px !important;
+        p {
+          color: white;
+        }
+      }
+      .outCard {
+        background: #237590 !important;
+        text-align: center !important;
+        padding: 2%;
+        border-radius: 5px !important;
+        p {
+          color: white;
+        }
+      }
+      .midInCard {
+        background: #237590 !important;
+        text-align: center !important;
+        padding: 2%;
+        border-radius: 5px !important;
+        p {
+          color: white;
+        }
+      }
+      .midOutCard {
+        background: #194e5e !important;
+        text-align: center !important;
+        padding: 2%;
+        border-radius: 5px !important;
+        p {
+          color: white;
+        }
+      }
+      .apply {
+        text-align: -webkit-center;
+        border: 1px solid white !important;
+        text-transform: capitalize;
+        border-radius: 50%;
+        background-color: #0a3946;
+        height: 6rem !important;
+        width: 6rem !important;
+      }
+      ion-textarea {
+        background: #194e5e !important;
+      }
+      .col {
+        padding: 0px !important;
+        text-align: center;
+        p {
+          color: white;
+        }
+      }
+    }
+    ion-footer {
+      height: 3.5em !important;
+      text-align: center !important;
+      background-color: #135c6d !important;
+      img {
+        margin-top: 2% !important;
+      }
+    }
+  }

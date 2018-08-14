@@ -5,6 +5,41 @@ ion-nav{
     }
  }
 
+ .menu-inner{
+         
+    .toolbar-background {
+        background: transparent !important;
+    }
+    .toolbar-title{
+        color: white !important;
+        font-size: 1.4rem !important;
+    }
+    .toolbar-content{
+        text-align: center;
+    }
+    .header::after{
+        background-image: unset !important;
+    }
+    
+    ion-content{
+        background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
+        height: 100%;
+        overflow: hidden;
+        
+        .item{
+            background-color: transparent !important;
+            color: white !important;
+        }
+        .button{
+            width: 80%;
+            margin-left: 10%;
+            bottom: 5%;
+            position: absolute;
+            background-color: #237590 !important;
+        }
+    }
+ }
+
  .SUCCESS .alert-wrapper{
     max-width: 90% !important;
     min-width: 90% !important;
