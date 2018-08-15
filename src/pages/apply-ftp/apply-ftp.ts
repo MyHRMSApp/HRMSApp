@@ -13,6 +13,9 @@ import { StorageProvider } from '../../providers/storage/storage';
   templateUrl: 'apply-ftp.html',
 })
 export class ApplyFtpPage {
+  attendanceIcon: string;
+  hamburger: string;
+  homeIcon: string;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -39,6 +42,9 @@ export class ApplyFtpPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ApplyFtpPage');
+    this.attendanceIcon = ("./assets/homePageIcons/attendance.svg");
+    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
+    this.homeIcon = ("./assets/homePageIcons/Home.svg");
   }
 
 }

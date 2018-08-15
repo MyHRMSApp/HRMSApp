@@ -45,37 +45,36 @@ export class ShareCouponsPage {
     this.share = ("./assets/couponsImages/share.svg");
     this.cardBg = ("./assets/couponsImages/coupons-BG.svg");
     console.log('ionViewDidLoad ShareCouponsPage');
-
   }
 
   openMenu() {
     this.menu.toggle();
   }
-  back(){
+  back() {
     this.navCtrl.pop();
   }
   home() {
     this.navCtrl.setRoot("HomePage");
   }
   shareCoupon() {
-    setTimeout(() => {
       this.shareWhatsapp=true;
-    }, 500)
+      this.ref.detectChanges();
   }
   gmail() {
-    var msg  = this.selectedCoupons;
+    var msg  = this.str;
     this.socialSharing.shareVia("com.google.android.gm", msg, null, null);
   }
   whatsapp() {
-    var msg  = this.selectedCoupons;
+    var msg  = this.str;
     this.socialSharing.shareViaWhatsApp(msg, null, null);
   }
   sms() {
-    var msg  = this.selectedCoupons;
+    var msg  = this.str;
     this.socialSharing.shareViaSMS(msg, null);
   }
   cancel() {
     this.shareWhatsapp=false;
+    this.ref.detectChanges();
   }
 
   shareMe(data) {
@@ -89,7 +88,7 @@ export class ShareCouponsPage {
     console.log(this.selectedCoupons);
     this.str = '';
     for(let i =0; i < this.selectedCoupons.length; i++) {
-      this.str += "Employee Number :" + this.selectedCoupons[i].Employee_Number + "\n" + "Coupon Number :" + this.selectedCoupons[i].Coupon_Number + "\n";
+      this.str +=  "Coupon Number :" + this.selectedCoupons[i].Coupon_Number + "\n";
       console.log(this.str);
     }
 

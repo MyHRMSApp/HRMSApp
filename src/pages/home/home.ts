@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -45,7 +45,7 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
-    public service: ServiceProvider, public utilService: UtilsProvider, private _ngZone: NgZone) {
+    public service: ServiceProvider, public utilService: UtilsProvider) {
     
     this.photos = localStorage.getItem("userPicture");
     this.userName = "";
@@ -100,7 +100,8 @@ attendance() {
   Method for pushing 
   */
 coupons() {
-  this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : true, length:1, payloadData: {"IV_PERNR": "00477072"}}).then((resultData:any)=>{
+  this.utilService.showLoader("Loading Coupons...");
+  this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : false}).then((resultData:any)=>{
   this.mainService.couponPageData = resultData;
   console.log(resultData);
   this.navCtrl.push("CouponsPage");

@@ -9,6 +9,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { CalendarModal, CalendarModalOptions, DayConfig, CalendarResult } from "ion2-calendar";
 import { ModalController } from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
+import { ServiceProvider } from '../../providers/service/service';
 
 @IonicPage()
 @Component({
@@ -16,26 +17,28 @@ import { UtilsProvider } from '../../providers/utils/utils';
   templateUrl: 'all-leaves.html',
 })
 export class AllLeavesPage {
-  hamburger: string;
-  homeIcon: string;
+  public hamburger: string;
+  public homeIcon: string;
   public allLeaveData:any;
   public leaveFromDate:any;
   public leaveToDate:any;
   public leaveFromTime:any;
   public leaveToTime:any;
-  
-  title: any;
+  public leaveType:any;
+  public title: any;
+  public resonForLeave: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
-    public utilService: UtilsProvider) {
+    public utilService: UtilsProvider, public service: ServiceProvider) {
 
     this.title = this.navParams.get("titleName");
     this.leaveFromDate = " ";
     this.leaveToDate = " ";
+    this.leaveType = this.navParams.get("leaveType");
   }
 
   ionViewDidLoad() {
@@ -83,9 +86,114 @@ export class AllLeavesPage {
         }
       });
     }else{
-      this.utilService.showCustomPopup4Error(this.title, "Please select From Date..", "FAILURE")
+      this.utilService.showCustomPopup4Error(this.title, "Please select From Date..", "FAILURE");
     }
     
+  }
+
+  calLeaveApplyValidation(){
+    this.utilService.showLoader("Please wait..");
+    this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:1, payloadData: {"IP_LTYP": this.leaveType,"IP_FDATE": this.leaveFromDate,"IP_TDATE": this.leaveToDate,"IP_FHALF": this.leaveFromTime,"IP_THALF": this.leaveToTime}}).then((resultData:any)=>{
+      if(resultData){
+        if(resultData.status_code == 200){
+          this.utilService.dismissLoader();
+          console.log(JSON.stringify(resultData.data));
+          if(resultData.data.ET_VBAL.FLAG == "S"){
+            var tempLeaveFromTime, tempLeaveToTime = "";
+            switch (this.leaveFromTime) {
+              case "FD":
+                tempLeaveFromTime = "full day";
+                break;
+              case "FH":
+                tempLeaveFromTime = "first half";
+                break;
+              case "SH":
+                tempLeaveFromTime = "secont half";
+                break;
+              case "FQ":
+                tempLeaveFromTime = "first quarter";
+                break;
+              case "LQ":
+                tempLeaveFromTime = "last quarter";
+                break;
+            }
+            switch (this.leaveToTime) {
+              case "FD":
+                tempLeaveToTime = "full day";
+                break;
+              case "FH":
+                tempLeaveToTime = "first half";
+                break;
+              case "SH":
+                tempLeaveToTime = "secont half";
+                break;
+              case "FQ":
+                tempLeaveToTime = "first quarter";
+                break;
+              case "LQ":
+                tempLeaveToTime = "last quarter";
+                break;
+            }
+            this.showCustomPopup4List(resultData.data.ET_VBAL.NO_DAY, this.leaveFromDate, this.leaveToDate, tempLeaveFromTime, tempLeaveToTime);
+          }else if(resultData.data.ET_VBAL.FLAG == "E"){
+            this.utilService.showCustomPopup4Error(this.title, resultData.data.ET_VBAL.REASON, "FAILURE");
+          }
+        }else{
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup4Error(this.title, resultData.message, "FAILURE");
+        }
+  
+      };
+    }, (error)=>{
+      console.log("Data readed from jsonstore error",error);
+      this.utilService.dismissLoader();
+      this.utilService.showCustomPopup4Error(this.title, error, "FAILURE")
+    });
+  }
+
+  showCustomPopup4List(noDays, leaveFromDate, leaveToDate, LeaveFromTime, LeaveToTime){
+
+    let message = "<div class='list-group'><div class='listData'><div class='contentLeft'>FROM</div> <div class='contentRight'><b>"+leaveFromDate+" -</b> "+LeaveFromTime+"</div></div>"+
+                  "<div class='listData'><div class='contentLeft'>TO</div> <div class='contentRight'><b>"+leaveToDate+" -</b> "+LeaveToTime+"</div></div>"+
+                  "<div class='listData'><div class='contentLeft'>NO OF DAYS</div> <div class='contentRight'><b>"+noDays+" days</b></div></div></div>";
+    const alert = this.alertCtrl.create({
+      title: this.title,
+      message: message,
+      cssClass: "SHOWALERT",
+      enableBackdropDismiss: false
+    });
+
+    alert.addButton('CANCEL');
+    alert.addButton({
+      text: 'APPLY',
+      handler: data => {
+       console.log("Apply clicked..!!");
+       this.utilService.showLoader("Please wait..");
+       var payloadData = {
+                          "IP_LTYP": this.leaveType,
+                          "IP_FDATE": leaveFromDate,
+                          "IP_TDATE": leaveToDate,
+                          "IP_FHALF": LeaveFromTime,
+                          "IP_THALF": LeaveToTime,
+                          "IP_DAY": noDays,
+                          "R_LEAVE": this.resonForLeave,
+                          "IP_REQ_TYPE": "New",
+                          "IP_WF_STATUS": "Submitted"
+                        }
+       this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:1, payloadData: payloadData}).then((resultData:any)=>{
+         if(resultData){
+             console.log(JSON.stringify(resultData.data));
+             this.utilService.dismissLoader();
+         }
+       }, (error)=>{
+         console.log("Data readed from jsonstore error",error);
+         this.utilService.dismissLoader();
+         this.utilService.showCustomPopup4Error(this.title, error, "FAILURE")
+       });
+      }
+    });
+
+    alert.present();
   }
 
 }

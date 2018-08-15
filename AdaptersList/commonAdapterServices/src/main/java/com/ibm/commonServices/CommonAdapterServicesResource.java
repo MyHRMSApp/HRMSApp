@@ -181,11 +181,15 @@ public class CommonAdapterServicesResource {
 										@QueryParam("IP_FHALF") String IP_FHALF, @QueryParam("IP_THALF") String IP_THALF,
 										@QueryParam("IP_DAY") String IP_DAY, @QueryParam("R_LEAVE") String R_LEAVE,
 										@QueryParam("IP_REQ_TYPE") String IP_REQ_TYPE, @QueryParam("IP_WF_STATUS") String IP_WF_STATUS,
-										@QueryParam("IP_CREATE_DATE") String IP_CREATE_DATE, @QueryParam("IP_CREATE_TIME") String IP_CREATE_TIME,
 										@QueryParam("IP_LTYP") String IP_LTYP) {
 		
 		JSONObject inputJSON = new JSONObject();
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");   
+		Date date = new Date();  
+	
 		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
 		inputJSON.put("IP_LTYP", IP_LTYP);	
 		inputJSON.put("IP_FDATE", IP_FDATE);
@@ -196,8 +200,8 @@ public class CommonAdapterServicesResource {
 		inputJSON.put("R_LEAVE", R_LEAVE);	
 		inputJSON.put("IP_REQ_TYPE", IP_REQ_TYPE);
 		inputJSON.put("IP_WF_STATUS", IP_WF_STATUS);
-		inputJSON.put("IP_CREATE_DATE", IP_CREATE_DATE);
-		inputJSON.put("IP_CREATE_TIME", IP_CREATE_TIME);				
+		inputJSON.put("IP_CREATE_DATE", dateFormat.format(date));
+		inputJSON.put("IP_CREATE_TIME", timeFormat.format(date));				
 		JSONObject serverResJSON = new JSONObject();
 		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"ApplyLeave");
 
@@ -812,7 +816,8 @@ public class CommonAdapterServicesResource {
 		JSONObject resultJSON = new JSONObject();
 		commonServerResponce = new JSONObject(commonResponceStr);
 		try {
-				LOGGER.info("\n SAP Request Sending from MFP Adapter \n\n");
+				LOGGER.info("\n SAP Request Sending from MFP Adapter :");
+				LOGGER.info("\n "+inputString+" \n\n");
 				authorizationStringEncrypted = Base64.getEncoder().encodeToString(AUTH_STRING.getBytes("utf-8"));
 				Client client = Client.create();
 				WebResource webResource = client.resource(restURL);

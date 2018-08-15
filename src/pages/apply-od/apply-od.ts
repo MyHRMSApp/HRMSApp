@@ -15,6 +15,8 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class ApplyOdPage {
   attendanceIcon: string;
+  hamburger: string;
+  homeIcon: string;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -41,7 +43,9 @@ export class ApplyOdPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ApplyOdPage');
-    this.attendanceIcon = ("./assets/homePageIcons/attendance.png");
+    this.attendanceIcon = ("./assets/homePageIcons/attendance.svg");
+    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
+    this.homeIcon = ("./assets/homePageIcons/Home.svg");
   }
 
 }

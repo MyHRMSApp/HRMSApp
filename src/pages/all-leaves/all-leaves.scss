@@ -68,6 +68,21 @@ page-all-leaves {
 
             
         }
+        .btn-layout{
+            width:100%;
+            text-align:center;
+            height:30%;
+            .confirm {
+                text-align: -webkit-center;
+                border: 1px solid white !important;
+                text-transform: capitalize;
+                border-radius: 50%;
+                background-color: #0a3946;
+                height: 6rem !important;
+                width: 6rem !important;
+                }
+        }
+        
     }
 
     ion-fab{
@@ -79,15 +94,18 @@ page-all-leaves {
         text-transform: capitalize;
         border-radius: 50%;
         background-color: #0a3946;
-    }
+        height: 6rem !important;
+        width: 6rem !important;
+      }
 
 }
-    ion-footer {
-        height:3.5em !important; 
-        text-align: center !important; 
-        background-color:#135c6d !important;
-        img {
-            margin-top:2% !important;
-        }
+
+ion-footer {
+    height:3.5em !important; 
+    text-align: center !important; 
+    background-color:#135c6d !important;
+    img {
+        margin-top:2% !important;
     }
+}
 }

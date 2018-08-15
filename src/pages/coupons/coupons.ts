@@ -6,6 +6,7 @@ import { Network } from '@ionic-native/network';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ServiceProvider } from '../../providers/service/service';
+import { UtilsProvider } from '../../providers/utils/utils';
 import { MyApp } from '../../app/app.component'
 
 
@@ -41,7 +42,8 @@ constructor(public menu: MenuController, public events: Events,
   private http: Http, private toast: ToastController, private network: Network, 
   public loadingCtrl: LoadingController, public platform: Platform, public mainService: MyApp, 
   public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-  public navParams: NavParams, public storage:StorageProvider, public service: ServiceProvider) {
+  public navParams: NavParams, public storage:StorageProvider, public service: ServiceProvider, 
+  public utilService: UtilsProvider) {
 
     this.counts = this.mainService.couponPageData;
     
@@ -54,7 +56,7 @@ constructor(public menu: MenuController, public events: Events,
 
 ionViewDidLoad() {
   console.log('ionViewDidLoad CouponsPage');
-
+  this.utilService.dismissLoader();
   this.hamburger = ("./assets/homePageIcons/hamburger.svg");
   this.homeIcon = ("./assets/homePageIcons/Home.svg");
   this.watches = ("./assets/couponsImages/watch.svg");

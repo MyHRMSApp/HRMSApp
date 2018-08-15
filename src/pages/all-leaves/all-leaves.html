@@ -1,16 +1,16 @@
 <ion-header>
-  <ion-navbar color="header">
-    <ion-buttons end>
-      <button style="background-color:transparent" end (click)="openMenu()" class="menu">
-        <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
-        <img [src]="hamburger" height="30px" width="30px" />
-      </button>
-    </ion-buttons>
-    <ion-title>{{title}}</ion-title>
-  </ion-navbar>
-</ion-header>
-
-
+    <ion-navbar color="header">
+      <ion-buttons end>
+        <button style="background-color:transparent" end (click)="openMenu()" class="menu">
+          <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
+          <img [src]="hamburger" height="30px" width="30px" />
+        </button>
+      </ion-buttons>
+      <ion-title>GENERAL LEAVE</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  
 <ion-content padding>
  
   
@@ -47,12 +47,15 @@
             
       </ion-list>
 
-      
+      <div class="btn-layout">
+          <button class="confirm" ion-button [(ngModel)]="resonForLeave" (click)="calLeaveApplyValidation()">CONFIRM</button>
+      </div>
+
 </ion-grid>
-
-
-</ion-content>
-
-<ion-footer>
-  <img (click)="home()" [src]="homeIcon" height="35px" width="35px" />
-</ion-footer>
+  
+  </ion-content>
+  
+  <ion-footer style="height:3.5em; text-align: center; background-color:#135c6d ">
+    <img (click)="home()" style="margin-top:2%" [src]="homeIcon" height="35px" width="35px" />
+  </ion-footer>
+  
