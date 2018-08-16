@@ -94,12 +94,13 @@ export class MyApp {
    * Method for logging out user from app and MFP Server
    */
   logout() {
-    // let checkName = sessionStorage.getItem("securityName");
+    //let checkName = sessionStorage.getItem("securityName");
     this.authHandler.logout().then((resp)=>{
-      if(resp){
+      if(resp) {
         localStorage.setItem("userLogout", "1");
         this.nav.setRoot("LoginPage");
-      }else{
+      }
+      else {
         console.log("logout failure");
         this.utilService.showCustomPopup("FAILURE","Logout failure, Please try again..");
       }

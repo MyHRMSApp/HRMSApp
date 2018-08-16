@@ -5,7 +5,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { StorageProvider } from '../../providers/storage/storage';
 
 
 @IonicPage()
@@ -14,16 +13,20 @@ import { StorageProvider } from '../../providers/storage/storage';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  hamburger: string;
+  homeIcon: string;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider) {
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
+    this.homeIcon = ("./assets/homePageIcons/Home.svg");
   }
 
   openMenu() {

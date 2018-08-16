@@ -5,7 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { MyApp } from '../../app/app.component'
+import { MyApp } from '../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -27,11 +27,12 @@ export class ShareCouponsPage {
   newArray: any = [];
   shareData: {};
   str: string;
+  shareIcon: boolean = false;
 
   constructor(public menu: MenuController, public events: Events, public actionSheetCtrl: ActionSheetController,
     private toast: ToastController, private network: Network, public loadingCtrl: LoadingController, public platform: Platform,
-    private http: Http, public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public mainService: MyApp, public socialSharing:SocialSharing, private ref:ChangeDetectorRef) {
+    private http: Http, public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController,
+    public navParams: NavParams, public mainService: MyApp, public socialSharing: SocialSharing, private ref: ChangeDetectorRef) {
 
     this.title = this.navParams.get("titleName");
     this.specificCoupons = this.navParams.get("coupons");
@@ -57,42 +58,70 @@ export class ShareCouponsPage {
     this.navCtrl.setRoot("HomePage");
   }
   shareCoupon() {
-      this.shareWhatsapp=true;
-      this.ref.detectChanges();
+    this.shareWhatsapp = true;
+    this.ref.detectChanges();
   }
   gmail() {
-    var msg  = this.str;
+    var msg = this.str;
     this.socialSharing.shareVia("com.google.android.gm", msg, null, null);
   }
   whatsapp() {
-    var msg  = this.str;
+    var msg = this.str;
     this.socialSharing.shareViaWhatsApp(msg, null, null);
   }
   sms() {
-    var msg  = this.str;
+    var msg = this.str;
     this.socialSharing.shareViaSMS(msg, null);
   }
   cancel() {
-    this.shareWhatsapp=false;
+    this.shareWhatsapp = false;
     this.ref.detectChanges();
   }
 
   shareMe(data) {
     console.log(data);
-    this.ref.detectChanges();
-    data = {
-      Employee_Number : "EP00432123",
-      Coupon_Number : data.DCOUPN,
-    }
-    this.selectedCoupons.push(data);
-    console.log(this.selectedCoupons);
-    this.str = '';
-    for(let i =0; i < this.selectedCoupons.length; i++) {
-      this.str +=  "Coupon Number :" + this.selectedCoupons[i].Coupon_Number + "\n";
-      console.log(this.str);
+    if (data.checked == true) {
+      this.shareIcon = true;
+      console.log("Checked == true");
+      this.ref.detectChanges();
+      data = {
+        Employee_Number: "EP00432123",
+        Coupon_Number: data.DCOUPN,
+      }
+      this.selectedCoupons.push(data);
+      console.log(this.selectedCoupons.length);
+      this.str = '';
+      this.str += "Hurry!" + "\n" + "Your friend has shared you the Coupon of Tanishq Summer Offer," + "\n" + "Employee Number:" + "25842500";
+      for (let i = 0; i < this.selectedCoupons.length; i++) {
+        this.str += "\n" + "Coupon Number:" + this.selectedCoupons[i].Coupon_Number;
+        console.log(this.str);
+      }
+      this.str += "\n" + "\n" + "Regards," + "\n" + "TITAN";
+    } else {
+      this.str = '';
+      this.str += "Hurry!" + "\n" + "Your friend has shared you the Coupon of Tanishq Summer Offer," + "\n" + "Employee Number:" + "25842500";
+      let uncheckedCoupon = data.DCOUPN;
+      console.log("Checked == false", uncheckedCoupon);
+      this.ref.detectChanges();
+      for (let i = 0; i < this.selectedCoupons.length; i++) {
+        if (this.selectedCoupons[i].Coupon_Number == uncheckedCoupon) {
+          this.selectedCoupons.splice(i, 1);
+          console.log(this.selectedCoupons);
+          console.log(this.selectedCoupons.length);
+          if (this.selectedCoupons.length == "0") {
+            this.shareIcon = false;
+            this.ref.detectChanges();
+          }
+        }
+      }
+      for (let i = 0; i < this.selectedCoupons.length; i++) {
+        this.str += "\n" + "Coupon Number:" + this.selectedCoupons[i].Coupon_Number;
+        console.log(this.str);
+      }
+      this.str += "\n" + "\n" + "Regards," + "\n" + "TITAN";
     }
 
-}
-  
+  }
+
 
 }

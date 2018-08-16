@@ -1,18 +1,45 @@
-<!--
-  Generated template for the ProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>profile</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+    <ion-navbar color="header">
+      <ion-buttons end>
+        <button style="background-color:transparent" end (click)="openMenu()" class="menu">
+          <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
+          <img [src]="hamburger" height="30px" width="30px" />
+        </button>
+      </ion-buttons>
+      <ion-title>PROFILE</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <ion-grid>
+      <ion-card>
+        <ion-row>
+          <ion-col col-6><p>Name</p></ion-col>
+          <ion-col col-6><p class="right">Vivek</p></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><p>Department</p></ion-col>
+          <ion-col col-6><p class="right">IT</p></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><p>Location</p></ion-col>
+          <ion-col col-6><p class="right">Corporate Office</p></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><p>Employee ID</p></ion-col>
+          <ion-col col-6><p class="right">2582500</p></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><p>UAN</p></ion-col>
+          <ion-col col-6><p class="right">123456</p></ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-grid>
+  
+  </ion-content>
+  
+  <ion-footer>
+    <img [src]="homeIcon" height="35px" width="35px" />
+  </ion-footer>
+  

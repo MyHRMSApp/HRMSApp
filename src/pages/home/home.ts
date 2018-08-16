@@ -134,13 +134,18 @@ ionViewDidLoad() {
 */
 changeImage() {
   let alert = this.alertCtrl.create({
+    title: "Choose Picture",
     buttons: [{
-      text: 'Camera',
+      text: 'Choose from camera',
       handler: () => this.takePhoto()
     },
     {
-      text: 'Gallery',
+      text: 'Choose from gallery',
       handler: () => this.uploadPhoto()
+    },
+    {
+      text: 'Remove picture',
+      handler: () => this.removePhoto()
     }
     ]
   });
@@ -234,12 +239,32 @@ uploadPhoto() {
     console.log(err);
   });
 }
+
+removePhoto(){
+  console.log("Remove Picture");
+  this.photos = ("./assets/icon/avatar.png");
+  this.storage.jsonstoreInitialize().then(()=>{
+    this.storage.jsonstoreClearCollection("userImage").then((response:any)=>{
+      if(response){
+        console.log("data cleared sucessfully");
+      }
+    },(error)=>{
+      console.log("data cleared error",error);
+    });
+    this.storage.jsonstoreAdd("userImage", this.photos).then((response:any)=>{
+      if(response){
+        console.log("data added sucessfully");
+        localStorage.setItem("userPicture", this.photos);
+      }
+    },(error)=>{
+      console.log("data added from jsonstore error",error);
+    });
+  });
+}
           
 applyLeave() {
-  
 
 try {
-
   this.utilService.showLoader("Please wait..");
   this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
     if(resultData){

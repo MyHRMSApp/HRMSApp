@@ -40,6 +40,23 @@ ion-nav{
     }
  }
 
+ ion-alert {
+    .alert-head {
+      background-color: #009688;
+      color: #fff;
+      text-align: center !important;
+      padding: 12px 12px 12px !important;
+    }
+    .alert-button {
+        color: black !important;
+        font-weight: bold !important;
+        text-transform: capitalize !important;
+      }
+    .alert-button-group {
+      display: grid !important;
+    }
+  }
+
  .SUCCESS .alert-wrapper{
     max-width: 90% !important;
     min-width: 90% !important;

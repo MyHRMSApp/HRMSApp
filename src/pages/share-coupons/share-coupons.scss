@@ -17,7 +17,7 @@ page-share-coupons {
         background-image: unset !important;
     }
 
-    ion-content{
+    ion-content {
         background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -82,10 +82,10 @@ page-share-coupons {
         }
     }
 
-    .shareCard{
-        bottom: 0px;
+    .shareCard {
+        bottom: 8%;
         left: 0px;
-        position: absolute;
+        position: fixed;
         background-color: white !important;
         border-radius: 20px !important;
         .col {
