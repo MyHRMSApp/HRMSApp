@@ -10,6 +10,7 @@ import { CalendarModal, CalendarModalOptions, DayConfig, CalendarResult } from "
 import { ModalController } from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { ServiceProvider } from '../../providers/service/service';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -38,6 +39,7 @@ export class AllLeavesPage {
     this.title = this.navParams.get("titleName");
     this.leaveFromDate = " ";
     this.leaveToDate = " ";
+    this.resonForLeave = "";
     this.leaveType = this.navParams.get("leaveType");
   }
 
@@ -93,7 +95,7 @@ export class AllLeavesPage {
 
   calLeaveApplyValidation(){
     this.utilService.showLoader("Please wait..");
-    this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:1, payloadData: {"IP_LTYP": this.leaveType,"IP_FDATE": this.leaveFromDate,"IP_TDATE": this.leaveToDate,"IP_FHALF": this.leaveFromTime,"IP_THALF": this.leaveToTime}}).then((resultData:any)=>{
+    this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: {"IP_LTYP": this.leaveType,"IP_FDATE": moment(this.leaveFromDate).format("YYYYMMDD"),"IP_TDATE": moment(this.leaveToDate).format("YYYYMMDD"),"IP_FHALF": this.leaveFromTime,"IP_THALF": this.leaveToTime}}).then((resultData:any)=>{
       if(resultData){
         if(resultData.status_code == 200){
           this.utilService.dismissLoader();
@@ -171,19 +173,42 @@ export class AllLeavesPage {
        this.utilService.showLoader("Please wait..");
        var payloadData = {
                           "IP_LTYP": this.leaveType,
-                          "IP_FDATE": leaveFromDate,
-                          "IP_TDATE": leaveToDate,
-                          "IP_FHALF": LeaveFromTime,
-                          "IP_THALF": LeaveToTime,
+                          "IP_FDATE": moment(leaveFromDate).format("YYYYMMDD"),
+                          "IP_TDATE": moment(leaveToDate).format("YYYYMMDD"),
+                          "IP_FHALF": this.leaveFromTime,
+                          "IP_THALF": this.leaveToTime,
                           "IP_DAY": noDays,
                           "R_LEAVE": this.resonForLeave,
                           "IP_REQ_TYPE": "New",
                           "IP_WF_STATUS": "Submitted"
                         }
-       this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:1, payloadData: payloadData}).then((resultData:any)=>{
+       this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
          if(resultData){
              console.log(JSON.stringify(resultData.data));
-             this.utilService.dismissLoader();
+             if(resultData.status_code == 200){
+              this.utilService.dismissLoader();
+              console.log(JSON.stringify(resultData.data));
+              if(resultData.data.EP_REASON.TYPE == "S"){
+                const alert = this.alertCtrl.create({
+                  title: "",
+                  message: "<p class='header'>"+this.title+" !</p> <p>"+resultData.data.EP_REASON.MESSAGE+"</p>",
+                  cssClass: "SUCCESS",
+                  enableBackdropDismiss: false,
+                });
+                alert.addButton({
+                  text: 'OK',
+                  handler: data => {
+                    this.navCtrl.setRoot("HomePage");
+                  }
+                });
+                alert.present();
+              }else if(resultData.data.EP_REASON.TYPE == "E"){
+                this.utilService.showCustomPopup4Error(this.title, resultData.data.EP_REASON.MESSAGE, "FAILURE");
+              }
+            }else{
+              this.utilService.dismissLoader();
+              this.utilService.showCustomPopup4Error(this.title, resultData.message, "FAILURE");
+            }
          }
        }, (error)=>{
          console.log("Data readed from jsonstore error",error);

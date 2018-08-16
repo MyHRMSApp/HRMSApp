@@ -186,7 +186,7 @@ public class CommonAdapterServicesResource {
 		JSONObject inputJSON = new JSONObject();
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");   
 		Date date = new Date();  
 	
@@ -263,6 +263,8 @@ public class CommonAdapterServicesResource {
 				String RS_ATT2 = objectInArray.get("RS_ATT2").toString();
 				String ABS = objectInArray.get("ABS").toString();
 				String ATT = objectInArray.get("ATT").toString();
+				String SHF_IN = objectInArray.get("SHF_IN").toString();
+				String SHF_OUT = objectInArray.get("SHF_OUT").toString();
 
 				String[] temp_reqState_ATT_1 = RS_ATT1.isEmpty()?null:RS_ATT1.split(",");
 				String[] temp_reqState_ATT_2 = RS_ATT2.isEmpty()?null:RS_ATT2.split(",");
@@ -277,6 +279,8 @@ public class CommonAdapterServicesResource {
 					resultJSON.put("ATT", ATT);
 					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
 					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
 					resultJSON.put("Holiday", true);
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", false);
@@ -436,6 +440,8 @@ public class CommonAdapterServicesResource {
 					resultJSON.put("ATT", ATT);
 					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
 					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
 					resultJSON.put("Holiday", false);
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", true);
@@ -595,6 +601,8 @@ public class CommonAdapterServicesResource {
 					resultJSON.put("ATT", ATT);
 					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
 					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
 					resultJSON.put("Holiday", false);
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", true);
@@ -755,6 +763,8 @@ public class CommonAdapterServicesResource {
 					resultJSON.put("ATT", ATT);
 					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
 					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
 					resultJSON.put("Holiday", false);
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", true);
@@ -768,6 +778,8 @@ public class CommonAdapterServicesResource {
 					resultJSON.put("ATT", ATT);
 					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
 					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
 					resultJSON.put("Holiday", false);
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", false);

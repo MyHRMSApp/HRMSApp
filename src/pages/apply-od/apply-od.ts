@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
@@ -22,7 +22,7 @@ export class ApplyOdPage {
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider) {
+    public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController) {
   }
   
   /**
@@ -46,6 +46,22 @@ export class ApplyOdPage {
     this.attendanceIcon = ("./assets/homePageIcons/attendance.svg");
     this.hamburger = ("./assets/homePageIcons/hamburger.svg");
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
+  }
+
+  inTimeSelection(){
+    let myCalendar = this.modalCtrl.create("CustomTimePickerPage", {title: "START TIME"});
+    myCalendar.present();
+    myCalendar.onDidDismiss((data) => {
+      console.log(data);
+    });
+  }
+
+  toTimeSelection(){
+    let myCalendar = this.modalCtrl.create("CustomTimePickerPage", {title: "END TIME"});
+    myCalendar.present();
+    myCalendar.onDidDismiss((data) => {
+      console.log(data);
+    });
   }
 
 }

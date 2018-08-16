@@ -42,13 +42,13 @@
 
         <ion-item>
             <ion-label stacked>REASONS</ion-label>
-            <ion-textarea type="text" rows="5" maxLength="120"></ion-textarea>
+            <ion-textarea type="text" rows="5" [(ngModel)]="resonForLeave" maxLength="120"></ion-textarea>
           </ion-item>
             
       </ion-list>
 
       <div class="btn-layout">
-          <button class="confirm" ion-button [(ngModel)]="resonForLeave" (click)="calLeaveApplyValidation()">CONFIRM</button>
+          <button class="confirm" ion-button (click)="calLeaveApplyValidation()">CONFIRM</button>
       </div>
 
 </ion-grid>
