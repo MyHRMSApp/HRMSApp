@@ -290,5 +290,13 @@ try {
 }
 
 }
+
+myRequest() {
+  this.navCtrl.push("MyRequestPage");
+}
+
+myTask() {
+  this.navCtrl.push("MyTasksPage");
+}
      
 }

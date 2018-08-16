@@ -1,18 +1,65 @@
-<!--
-  Generated template for the MyTasksPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>myTasks</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+    <ion-navbar color="header">
+      <ion-buttons end>
+        <button style="background-color:transparent" end (click)="openMenu()" class="menu">
+          <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
+          <img [src]="hamburger" height="30px" width="30px" />
+        </button>
+      </ion-buttons>
+      <ion-title>MY TASKS</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4 style="text-align:left">
+          <p style="color:white">Approve</p>
+        </ion-col>
+        <ion-col col-6 style="text-align: right">
+            <p class="couponDesignation">Select all</p>
+          </ion-col>
+          <ion-col col-2>
+            <ion-item>
+              <ion-checkbox></ion-checkbox>
+            </ion-item>
+          </ion-col>
+      </ion-row>
+      <ion-card *ngFor="let t of tasks; let i=index" (click)="toggleGroup(t)" [ngClass]="{active: isGroupShown(t)}">
+        <ion-row>
+          <ion-col col-2 style="padding:0px !important">
+              <div class="couponCounts">
+                <p>PL</p>
+              </div>
+          </ion-col>
+          <ion-col col-4>
+            <p style="margin-top: 12%;text-align: left;">{{t.title}}</p>
+          </ion-col>
+          <ion-col col-4>
+            <p style="margin-top: 12%">02/08 - 03/08</p>
+          </ion-col>
+          <ion-col col-2>
+            <ion-item>
+              <ion-checkbox [(ngModel)]="shareMe"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+          <ion-card *ngIf="isGroupShown(t)" class="subCard">
+            <p>Applied on: 25-06-2018</p>
+            <p>From : 27-06-2018(fullday)</p>
+            <p>TO : 28-06-2018(halfday)</p>
+            <ion-row>
+            <ion-col col-6><button class="approve" ion-button color="primary"><span><ion-icon name="ios-checkmark-circle-outline"></ion-icon></span><span style="padding-left: 10%;">Approve</span></button></ion-col>
+            <ion-col col-6><button class="reject" ion-button color="danger"><span><ion-icon name="ios-close-circle-outline"></ion-icon></span><span style="padding-left: 10%;">Reject</span></button></ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-row>
+      </ion-card>
+    </ion-grid>
+  
+  </ion-content>
+  
+  <ion-footer>
+    <img [src]="homeIcon" height="35px" width="35px" />
+  </ion-footer>
+  

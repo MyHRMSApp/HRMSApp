@@ -56,7 +56,7 @@
       </ion-col>
       <ion-col col-6>
         <ion-card>
-          <ion-avatar class="gridImageDiv">
+          <ion-avatar class="gridImageDiv" (click)="myRequest()">
             <img class="userImage option-img" [src]="my_requestIcon" />
           </ion-avatar>
           <p>My Request</p>
@@ -64,7 +64,7 @@
       </ion-col>
       <ion-col col-6>
         <ion-card>
-          <ion-avatar class="gridImageDiv">
+          <ion-avatar class="gridImageDiv" (click)="myTask()">
             <img class="userImage option-img" [src]="my_taskIcon" />
           </ion-avatar>
           <p>My Task</p>

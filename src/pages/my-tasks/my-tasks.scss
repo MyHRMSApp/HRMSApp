@@ -1,3 +1,163 @@
 page-my-tasks {
+    
+    .toolbar-background {
+        background: transparent !important;
+    }
+    .back-button {
+        color: white !important;
+    }
+    .toolbar-title{
+        color: white !important;
+        font-size: 1.4rem !important;
+    }
+    .toolbar-content{
+        text-align: center;
+    }
+    .header::after{
+        background-image: unset !important;
+    }
+
+    ion-content {
+        background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 100%;
+        overflow: hidden;
+    
+        .scroll-content{
+            padding: 0px !important;
+
+        }
+
+        .col {
+            text-align: center;
+        }
+
+        .couponCounts {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: normal;
+            line-height: 1.5;
+            background-color: #105366 !important;
+            border: 2px solid #105366;
+            border-radius: 50%;
+            z-index: 999;
+            width:100%;
+            height: 100%;
+            p {
+                border: 1px solid white !important;
+                width: 100%;
+                height: 100%;
+                color:white;
+                border-radius: 50%;
+                padding-top: 25%;
+            }
+        }
+
+        ion-row{
+            .couponDesignation {
+                color:white;
+            }
+            .item{
+                width: 80%;
+                padding-left: 8px;
+                background-color: transparent;
+            }
+            .checkbox-icon {
+                border-radius: 50% !important;
+                position: relative !important;
+                width: 20px !important;
+                height: 20px !important;
+                border-color: white !important;
+                background-color: transparent !important; 
+                border-width: 1px !important;  
+            }
+            .checkbox-checked .checkbox-inner {
+                left: 6px !important;
+                top: 1px !important;
+                width: 7px !important;
+                height: 14px !important;
+            }
+        }
+
+        ion-card {
+            background-color: #265865 !important;;
+            //box-shadow: unset !important;
+            border-top-left-radius: 30px !important;
+            border-bottom-left-radius: 30px !important; 
+            margin: 0px !important;
+            width: 100% !important;
+            margin-top: 2% !important;
+            ion-row {
+                top: 0%;
+                width: 100%;
+            .item{
+                width: 80%;
+                padding-left: 8px;
+                background-color: transparent;
+            }
+            .checkbox-icon {
+                border-radius: 50% !important;
+                position: relative !important;
+                width: 20px !important;
+                height: 20px !important;
+                border-color: white !important;
+                background-color: transparent !important; 
+                border-width: 1px !important;  
+            }
+            .checkbox-checked .checkbox-inner {
+                left: 6px !important;
+                top: 1px !important;
+                width: 7px !important;
+                height: 14px !important;
+            }
+           .col {
+            background-color: transparent;
+             }
+            [col-2] {
+                padding: 7px !important;
+            }
+            p {
+                color: white !important;
+            }
+        }
+    }
+    .subCard {
+        p{
+        margin-left: 3% !important;
+        }
+        ion-icon{
+            font-size: 2.4em !important;
+        }
+        .approve {
+            padding:0% !important; 
+            height:3rem !important;
+            padding-right:10% !important;    
+            border-top-left-radius: 30px !important;
+            border-bottom-left-radius: 30px !important; 
+            text-transform: capitalize !important;
+        }
+        .reject {
+            padding:0% !important;
+            height:3rem !important; 
+            padding-right:20% !important;     
+            border-top-left-radius: 30px !important;
+            border-bottom-left-radius: 30px !important; 
+            text-transform: capitalize !important;
+        }
+    }
+    }
+
+    ion-footer {
+        height:3.5em !important; 
+        text-align: center !important; 
+        background-color:#135c6d !important;
+        img {
+            margin-top:2% !important;
+        }
+      }
+
 
 }

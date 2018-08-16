@@ -1,3 +1,149 @@
 page-my-request {
 
+    .toolbar-background {
+        background: transparent !important;
+    }
+    .back-button {
+        color: white !important;
+    }
+    .toolbar-title{
+        color: white !important;
+        font-size: 1.4rem !important;
+    }
+    .toolbar-content{
+        text-align: center;
+    }
+    .header::after{
+        background-image: unset !important;
+    }
+
+    ion-content {
+        background: url(../assets/homePageIcons/BG.svg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 100%;
+        overflow: hidden;
+    
+        .scroll-content{
+            padding: 0px !important;
+
+        }
+
+        ion-grid{
+            padding: 3% !important;
+        }
+
+        ion-row {
+            background-color: #265865 !important;
+            border-bottom: 2px solid #0d4655;
+        }
+
+        .accordionRow{
+            background-color: transparent !important;
+            .accordionColOne{
+                text-align:-webkit-center;
+                .status{
+                    line-height: 0;
+                    font-size: 0.9rem;
+                }
+            }    
+            .accordionColTwo {
+                background-color: #265865;
+                border-bottom: 1px solid #0d4655;
+                .requestId{
+                    font-size:1.2rem !important; 
+                    line-height: 1 !important;
+                }
+                .date{
+                    line-height: 0 !important;
+                    letter-spacing: 1px !important;
+                    font-size: 1.3rem !important;
+                }
+                .day{
+                    font-size:1.2rem !important; 
+                    line-height: 0 !important;
+                }
+                .time{
+                    font-size:1.3rem !important;
+                    letter-spacing: 1px !important; 
+                    line-height: 1 !important;
+                }
+                .appliedOn{
+                    font-size:1.2rem !important; 
+                    line-height: 1 !important;
+                }
+                .appliedOnOD{
+                    font-size:1.2rem !important; 
+                    line-height: 0 !important;
+                }
+                .midTime{
+                    font-size:1.3rem !important;
+                    letter-spacing: 0px !important; 
+                    line-height: 0 !important;
+                }
+            }
+            .accordionColThree {
+                background-color: #265865;
+                border-bottom: 1px solid #0d4655;
+            }
+            
+        }
+
+        .col {
+            p{
+                color: white;
+            }
+            .right{
+                text-align: right !important;
+                padding-right: 5%;
+            }
+        }
+
+        .cancel {
+            background-color: red;
+            height: 100%;
+            ion-icon{
+               color: white;
+               font-size: 2em;
+               margin-left: 25%;
+               margin-top: 45%;
+            } 
+            p {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+        }
+
+        .couponCounts {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: normal;
+            line-height: 1.5;
+            background-color: #105366 !important;
+            border: 2px solid #105366;
+            border-radius: 50%;
+            height: 45px;
+            width: 45px;
+            border: 1px solid white;
+            z-index: 999;
+            margin-top: 30%;
+            p {
+                border-radius: 50%;
+                margin-top: 18%;
+                color: #22d5a9 !important;
+            }
+        }
+    }
+
+    ion-footer {
+        height:3.5em !important; 
+        text-align: center !important; 
+        background-color:#135c6d !important;
+        img {
+            margin-top:2% !important;
+        }
+      }
+
 }
