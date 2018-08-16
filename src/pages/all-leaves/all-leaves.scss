@@ -31,21 +31,63 @@ page-all-leaves {
             padding: 0px !important;
         }
     ion-grid {
-        padding: 0px 30px 30px 30px !important;
+        padding: 2% 4% !important;
+        min-height: 70%;
+        .list{
+            .item{
+                background: transparent;
+                color: #fff;
+                font-size: 1em;
+                .item-inner{
+                    border-bottom: 1px solid #134958;
+                    .icon{
+                        font-size: 1.6em;
+                    }
+                    .label{
+                        font-size: 1em;
+                        color: #fff;
+                    }
+                }
+                ion-textarea{
+                    background: #0F5063;
+                    margin-top: 3%;
+                    border-radius: 10px;
+
+                    .text-input{
+                        padding: 0 4%;
+                    }
+                }
+            }
+
+            .item-input:last-child, .item-input.item-input-has-focus:last-child, .item-input.input-has-focus:last-child{
+                border-bottom: transparent !important;
+                border-bottom-color: unset !important;
+                -webkit-box-shadow: unset !important;
+                box-shadow: unset !important;
+            }
+
+            
+        }
+        .btn-layout{
+            width:100%;
+            text-align:center;
+            height:30%;
+            .confirm {
+                text-align: -webkit-center;
+                border: 1px solid white !important;
+                text-transform: capitalize;
+                border-radius: 50%;
+                background-color: #0a3946;
+                height: 6rem !important;
+                width: 6rem !important;
+                }
+        }
+        
     }
 
-    .list {
-        margin: 0px;
+    ion-fab{
+        bottom: 20%;
     }
-    p {
-        color:white;
-    }
-    ion-textarea{
-        background-color: #194e5e;
-        border-radius: 5px;
-        padding: 10px;
-    }
-
     .confirm {
         text-align: -webkit-center;
         border: 1px solid white !important;

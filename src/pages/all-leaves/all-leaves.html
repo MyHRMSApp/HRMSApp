@@ -11,62 +11,47 @@
   </ion-header>
   
   
-  <ion-content padding>
-    <ion-grid style="height: 100%;">
-      
-      <ion-row>
-      <ion-col col-9>
-          <p>Available balance</p>
-      </ion-col>
-      <ion-col col-3>
-        <p style="text-align: right">
-          40
-        </p>
-      </ion-col>
+<ion-content padding>
+ 
+  
+<ion-grid>
+    <ion-list>
+        <ion-item>
+            Available balance
+          <span item-end *ngIf="allLeaveData !== undefined">{{allLeaveData.BAL_ESS}}</span>
+          <span item-end *ngIf="allLeaveData === undefined">0</span>
+        </ion-item>
 
-      <ion-col col-9>
-          <p>Availed Occasions</p>
-      </ion-col>
-      <ion-col col-3>
-        <p style="text-align: right">
-          20
-        </p>
-      </ion-col>
+        <ion-item>
+            Availed Occasions
+            <span item-end *ngIf="allLeaveData !== undefined">{{allLeaveData.LEAVE_OCC}}</span>
+            <span item-end *ngIf="allLeaveData === undefined">0</span>
+        </ion-item>
 
-      <ion-col col-9>
-          <p>From</p>
-      </ion-col>
-      <ion-col class="cal_date" col-3>
-        <p style="text-align: right">
-          <ion-icon class="cal" name="ios-calendar"></ion-icon>
-        </p>
-      </ion-col>
+        <ion-item>
+            From
+            <span item-end >{{leaveFromDate}}</span>
+            <ion-icon name="md-calendar" item-end (click)="fromDateCalendar()"></ion-icon>
+        </ion-item>
 
-      <ion-col col-9>
-          <p>To</p>
-      </ion-col>
-      <ion-col class="cal_date" col-3>
-        <p style="text-align: right">
-          <ion-icon class="cal" name="ios-calendar"></ion-icon>
-        </p>
-      </ion-col>
+        <ion-item>
+            To
+            <span item-end >{{leaveToDate}}</span>
+            <ion-icon name="md-calendar" item-end (click)="toDateCalendar()"></ion-icon>
+        </ion-item>
 
-      <ion-col col-12>
-        <p>REASONS</p>
-        <p>
-          <ion-textarea type="text"></ion-textarea>
-        </p>
-      </ion-col>
+        <ion-item>
+            <ion-label stacked>REASONS</ion-label>
+            <ion-textarea type="text" rows="5" maxLength="120"></ion-textarea>
+          </ion-item>
+            
+      </ion-list>
 
-      <div style="width:100%;text-align:center;height:30%">
-          <button class="confirm" ion-button>Confirm</button>
+      <div class="btn-layout">
+          <button class="confirm" ion-button [(ngModel)]="resonForLeave" (click)="calLeaveApplyValidation()">CONFIRM</button>
       </div>
-      </ion-row>
-      
-    </ion-grid>
-    
-  
-  
+
+</ion-grid>
   
   </ion-content>
   

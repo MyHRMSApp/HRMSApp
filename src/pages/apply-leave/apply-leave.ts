@@ -41,19 +41,19 @@ export class ApplyLeavePage {
     this.navCtrl.setRoot("HomePage");
   }
   privilegeLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"PRIVILEGE LEAVE", userLeave: this.userPLLeave});
+    this.navCtrl.push("AllLeavesPage", {"titleName":"PRIVILEGE LEAVE", userLeave: this.userPLLeave, leaveType: "0003"});
   }
   sickLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"SICK LEAVE", userLeave: this.userSLLeave});
+    this.navCtrl.push("AllLeavesPage", {"titleName":"SICK LEAVE", userLeave: this.userSLLeave, leaveType: "0002"});
   }
   generalLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"GENERAL LEAVE", userLeave: this.userGLLeave});
+    this.navCtrl.push("AllLeavesPage", {"titleName":"GENERAL LEAVE", userLeave: this.userGLLeave, leaveType: "0034"});
   }
   casualLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"CASUAL LEAVE", userLeave: this.userCLLeave});
+    this.navCtrl.push("AllLeavesPage", {"titleName":"CASUAL LEAVE", userLeave: this.userCLLeave, leaveType: "0001"});
   }
   leaveEncashment() {
-    this.navCtrl.push("EncashmentLeavePage", {"titleName":"LEAVE ENCASHMENT", userLeave: this.userLeaveEncashment});
+    this.navCtrl.push("EncashmentLeavePage", {"titleName":"LEAVE ENCASHMENT", userLeave: this.userLeaveEncashment, leaveType: "PL"});
   }
 
   ionViewDidLoad() {

@@ -101,7 +101,7 @@ attendance() {
   */
 coupons() {
   this.utilService.showLoader("Loading Coupons...");
-  this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : true, length:1, payloadData: {"IV_PERNR": "00477072"}}).then((resultData:any)=>{
+  this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : false}).then((resultData:any)=>{
   this.mainService.couponPageData = resultData;
   console.log(resultData);
   this.navCtrl.push("CouponsPage");
