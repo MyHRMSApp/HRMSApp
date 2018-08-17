@@ -819,6 +819,39 @@ public class CommonAdapterServicesResource {
 		return userInformation;
 	}
 
+
+		/* *
+	 * @Funtion - (validateLeaveBalance) this function is using for validation befor user Apply Leave
+	 * @QueryParam - IP_EMPTYP which contains user Employee Type [ESS, MSS], IV_PERNR which contains user Pernr Number
+	 * @return - Leave Balance (type - JSON String format)
+	 * */
+	@POST
+	@Path("/applyOnDutyRequest")
+	@Produces(MediaType.APPLICATION_JSON)
+	@OAuthSecurity(scope = "socialLogin")
+	public String applyOnDutyRequest(	@QueryParam("IP_SDATE") String IP_SDATE,@QueryParam("IP_EDATE") String IP_EDATE,
+										@QueryParam("LV_STIME") String LV_STIME,@QueryParam("LV_ETIME") String LV_ETIME,
+										@QueryParam("LV_PLACE") String LV_PLACE,@QueryParam("LV_ORG") String LV_ORG,
+										@QueryParam("LV_PER") String LV_PER, @QueryParam("LV_COMMENTS") String LV_COMMENTS	) {
+		
+		JSONObject inputJSON = new JSONObject();
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+		inputJSON.put("IV_PERNR", userInformation.getString("EP_PERNR"));
+		inputJSON.put("IP_SDATE", IP_SDATE);	
+		inputJSON.put("IP_EDATE", IP_EDATE);
+		inputJSON.put("LV_STIME", LV_STIME);
+		inputJSON.put("LV_ETIME", LV_ETIME);
+		inputJSON.put("LV_PLACE", LV_PLACE);	
+		inputJSON.put("LV_ORG", LV_ORG);
+		inputJSON.put("LV_PER", LV_PER);
+		inputJSON.put("LV_COMMENTS", LV_COMMENTS);				
+		JSONObject serverResJSON = new JSONObject();
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"ApplyOnDuty");
+
+		return serverResJSON.toString();
+	}
+
+
 	/* *
 	 * @Funtion - (postService) this funtion is the common interface connection with SAP backend
 	 * @QueryParam - InputString [This is String format which is having SAP Inputs], restURL [This is also String which is having the REST URL to connect SAP Backend]

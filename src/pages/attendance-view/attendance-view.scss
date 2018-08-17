@@ -45,6 +45,10 @@ page-attendance-view {
       box-shadow: 0px 6px 13px 15px rgba(0,0,0,0.4);
     }
 
+    ion-calendar-month .danger .days .on-selected{
+      background: transparent;
+    }
+
     pre {
       font-family: "Century Gothic" !important;
     }
@@ -295,6 +299,22 @@ page-attendance-view {
     }
   }
 
+  .ATT1_NomalPunch_ATT2_UA{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: 16% auto !important;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    p{
+      //margin-top: 15%;
+    }
+  }
+
   .ATT1_Pending_ATT2_Holliday{
     border-radius: 2px !important;
     width: 20px !important;
@@ -504,33 +524,37 @@ page-attendance-view {
     }
   }
 
-.Cur_ATT1_Approved_ATT2_Holliday{background: linear-gradient(to bottom, #4de835 50%, #136571 50%) !important; color: #fff;}
-.Cur_ATT1_Approved_ATT2_NormalPunch{background: linear-gradient(to bottom, #4de835 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
-.Cur_ATT1_Approved_ATT2_UA{background: linear-gradient(to bottom, #4de835 50%, #fe4543 50%) !important; color: #fff;}
-.Cur_ATT1_Approved_ATT2_Pending{background: linear-gradient(to bottom, #4de835 50%,#e5da28 50%) !important; color: #fff;}
-.Cur_ATT1_Approved_ATT2_Approved{background-color: #4de835 !important; color: #fff;}
-.Cur_ATT1_UA_ATT2_Holliday{background: linear-gradient(to bottom, #fe4543 50%, #136571 50%) !important; color: #fff;}
-.Cur_ATT1_UA_ATT2_NormalPunch{background: linear-gradient(to bottom, #fe4543 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
-.Cur_ATT1_UA_ATT2_UA{background-color: #fe4543 !important; color: #fff;}
-.Cur_ATT1_UA_ATT2_Approved{background: linear-gradient(to bottom, #fe4543 50%, #4de835 50%) !important; color: #fff;}
-.Cur_ATT1_UA_ATT2_Pending{background: linear-gradient(to bottom, #fe4543 50%, #e5da28 50%) !important; color: #fff;}
-.Cur_ATT1_Pending_ATT2_Pending{background-color: #e5da28 !important; color: #fff;}
-.Cur_ATT1_Pending_ATT2_Holliday{background: linear-gradient(to bottom, #e5da28 50%, #136571 50%) !important; color: #fff;}
-.Cur_ATT1_Pending_ATT2_NormalPunch{background: linear-gradient(to bottom, #e5da28 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
-.Cur_ATT1_Pending_ATT2_UA{background: linear-gradient(to bottom, #e5da28 50%, #fe4543 50%) !important; color: #fff;}
-.Cur_ATT1_Pending_ATT2_Approved{background: linear-gradient(to bottom, #e5da28 50%, #4de835 50%) !important; color: #fff;}
-.Cur_ATT1_Holliday_ATT2_Pending{background: linear-gradient(to bottom, #136571 50%, #e5da28 50%) !important; color: #fff;}
-.Cur_ATT1_Holliday_ATT2_Holliday, .Cur_HollydayClass{background-color: #136571 !important; color: #fff;}
-.Cur_ATT1_Holliday_ATT2_NormalPunch{background: linear-gradient(to bottom, #136571 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
-.Cur_ATT1_Holliday_ATT2_UA{background: linear-gradient(to bottom, #136571 50%, #fe4543 50%) !important; color: #fff;}
-.Cur_ATT1_Holliday_ATT2_Approved{background: linear-gradient(to bottom, #136571 50%, #4de835 50%) !important; color: #fff;}
-.Cur_ATT1_NormalPunch_ATT2_Holliday{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #136571 50%) !important; color: #fff;}
-.Cur_ATT1_NomalPunch_ATT2_NormalPunch{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 50%) !important; color: #fff;}
-.Cur_ATT1_NormalPunch_ATT2_UA{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important; color: #fff;}
-.Cur_ATT1_NormalPunch_ATT2_Pending{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #e5da28 50%) !important; color: #fff;}
-.Cur_ATT1_NormalPunch_ATT2_Approved{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #4de835 50%) !important; color: #fff;}
-.Cur_{background-color: #0a3946 !important; color: #fff;}
+.Cur_ATT1_Approved_ATT2_Holliday{background: linear-gradient(to bottom, #4de835 50%, #136571 50%) !important; color: #fff !important;}
+.Cur_ATT1_Approved_ATT2_NormalPunch{background: linear-gradient(to bottom, #4de835 50%, rgba(0, 0, 0, 0) 50%) !important; color:  rgb(0, 0, 0);}
+.Cur_ATT1_Approved_ATT2_UA{background: linear-gradient(to bottom, #4de835 50%, #fe4543 50%) !important; color: #fff !important;}
+.Cur_ATT1_Approved_ATT2_Pending{background: linear-gradient(to bottom, #4de835 50%,#e5da28 50%) !important; color: #fff !important;}
+.Cur_ATT1_Approved_ATT2_Approved{background-color: #4de835 !important; color: #fff !important;}
+.Cur_ATT1_UA_ATT2_Holliday{background: linear-gradient(to bottom, #fe4543 50%, #136571 50%) !important; color: #fff !important;}
+.Cur_ATT1_UA_ATT2_NormalPunch{background: linear-gradient(to bottom, #fe4543 50%, rgba(0, 0, 0, 0) 50%) !important; color:  rgb(0, 0, 0);}
+.Cur_ATT1_UA_ATT2_UA{background-color: #fe4543 !important; color: #fff !important;}
+.Cur_ATT1_UA_ATT2_Approved{background: linear-gradient(to bottom, #fe4543 50%, #4de835 50%) !important; color: #fff !important;}
+.Cur_ATT1_UA_ATT2_Pending{background: linear-gradient(to bottom, #fe4543 50%, #e5da28 50%) !important; color: #fff !important;}
+.Cur_ATT1_Pending_ATT2_Pending{background-color: #e5da28 !important; color: #fff !important;}
+.Cur_ATT1_Pending_ATT2_Holliday{background: linear-gradient(to bottom, #e5da28 50%, #136571 50%) !important; color: #fff !important;}
+.Cur_ATT1_Pending_ATT2_NormalPunch{background: linear-gradient(to bottom, #e5da28 50%, rgba(0, 0, 0, 0) 50%) !important; color:  rgb(0, 0, 0);}
+.Cur_ATT1_Pending_ATT2_UA{background: linear-gradient(to bottom, #e5da28 50%, #fe4543 50%) !important; color: #fff !important;}
+.Cur_ATT1_Pending_ATT2_Approved{background: linear-gradient(to bottom, #e5da28 50%, #4de835 50%) !important; color: #fff !important;}
+.Cur_ATT1_Holliday_ATT2_Pending{background: linear-gradient(to bottom, #136571 50%, #e5da28 50%) !important; color: #fff !important;}
+.Cur_ATT1_Holliday_ATT2_Holliday, .Cur_HollydayClass{background-color: #136571 !important; color: #fff !important;}
+.Cur_ATT1_Holliday_ATT2_NormalPunch{background: linear-gradient(to bottom, #136571 50%, rgba(0, 0, 0, 0) 50%) !important; color:  rgb(0, 0, 0);}
+.Cur_ATT1_Holliday_ATT2_UA{background: linear-gradient(to bottom, #136571 50%, #fe4543 50%) !important; color: #fff !important;}
+.Cur_ATT1_Holliday_ATT2_Approved{background: linear-gradient(to bottom, #136571 50%, #4de835 50%) !important; color: #fff !important;}
+.Cur_ATT1_NormalPunch_ATT2_Holliday{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #136571 50%) !important; color:  rgb(0, 0, 0);}
+.Cur_ATT1_NomalPunch_ATT2_NormalPunch{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 50%) !important; color:  rgb(0, 0, 0);}
+.Cur_ATT1_NormalPunch_ATT2_UA{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important; color: #fff !important;}
+.Cur_ATT1_NormalPunch_ATT2_Pending{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #e5da28 50%) !important; color:  rgb(0, 0, 0);}
+.Cur_ATT1_NormalPunch_ATT2_Approved{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #4de835 50%) !important; color:  rgb(0, 0, 0);}
+.Cur_{background-color: #0a3946 !important; color: #fff !important;}
+.Cur_ATT1_NomalPunch_ATT2_UA{background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important; color: rgb(0, 0, 0);}
 
+.item-md p{
+  color: unset !important;
+}
   ion-calendar-month .danger .days .on-selected{
     border-radius: 2px !important;
     width: 20px !important;
@@ -605,9 +629,9 @@ page-attendance-view {
   ion-thumbnail {
     min-width: 70px !important;
     min-height: 85px !important;
-    p {
-      color: white !important;
-    }
+    // p {
+    //   color: white !important;
+    // }
   }
 
   .card{

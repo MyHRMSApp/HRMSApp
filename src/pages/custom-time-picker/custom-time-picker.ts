@@ -33,11 +33,19 @@ export class CustomTimePickerPage {
       var tempHours = "00", tempSeconds = "00"; 
       if(this.hoursValue < 10){
         tempHours = "0"+this.hoursValue;
+      }else{
+        tempHours = this.hoursValue;
       }
       if(this.minuteValue < 10){
         tempSeconds = "0"+this.minuteValue;
+      }else{
+        tempHours = this.minuteValue;
       }
-      this.viewCtrl.dismiss({time : tempHours+":"+tempSeconds});
+      this.ref.detectChanges();
+      console.log("Time is : "+ tempHours+":"+tempSeconds)
+      setTimeout(() => {
+        this.viewCtrl.dismiss({time : tempHours+":"+tempSeconds});
+      }, 100);
   }
 
   setHoursTimeAddFunction(flag){

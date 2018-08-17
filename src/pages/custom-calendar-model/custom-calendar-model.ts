@@ -36,6 +36,9 @@ export class CustomCalendarModelPage {
   public currentDate:any;
   public currentYear:any;
   public selectedDateFromCal:any;
+  public quarterWiseSelectionFlag:any = true;
+  public dayWiseSelectionFlag:any = true;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
               public utilService: UtilsProvider, public alert:AlertController, public ref: ChangeDetectorRef) {
     this.calendarFor = this.navParams.get('Cal');
@@ -63,6 +66,12 @@ export class CustomCalendarModelPage {
         this.firstHalfFlag = false;
         this.secHalfFlag = false;
       }
+    }
+    if(this.navParams.get('quarterWiseSelectionFlag') == "false"){
+      this.quarterWiseSelectionFlag = false;
+    }
+    if(this.navParams.get('dayWiseSelectionFlag') == "false"){
+      this.dayWiseSelectionFlag = false;
     }
     this.currentDate = moment().format("ddd,Do MMM");
     this.currentYear = moment().format("YYYY");

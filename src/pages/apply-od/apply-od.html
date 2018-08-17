@@ -15,58 +15,58 @@
         <ion-grid>
         <ion-row>
             <ion-col col-6>
-                <ion-card>
+                <ion-card (click)="fromDateSelection()">
                     <p>START DATE</p>
                     <ion-avatar class="gridImageDiv">
                         <img class="userImage" [src]="attendanceIcon" />
                     </ion-avatar>
-                    <p class="startDate">20-06-1992</p>
+                    <p class="startDate">{{startDate}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
-                <ion-card>
+                <ion-card (click)="toDateSelection()">
                     <p>END DATE</p>
                     <ion-avatar class="gridImageDiv">
                         <img class="userImage" [src]="attendanceIcon" />
                     </ion-avatar>
-                    <p class="endDate">20-06-1992</p>
+                    <p class="endDate">{{endDate}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
                 <ion-card (click)="inTimeSelection()">
                     <p>IN</p>
-                    <p class="inTime">00:00</p>
+                    <p class="inTime">{{inTime}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
                 <ion-card (click)="toTimeSelection()">
                     <p>OUT</p>
-                    <p class="outTime">00:00</p>
+                    <p class="outTime">{{outTime}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-12>
                     <p class="visited">Place Visited/Visiting:</p>
                     <ion-card>
-                        <ion-input placeholder="Place Visited/Visiting">
+                        <ion-input placeholder="Place Visited/Visiting" [(ngModel)]="placeVisited">
                         </ion-input>
                     </ion-card>
               </ion-col>
               <ion-col col-12>
                     <p class="visited">Organization Visited/Visiting:</p>
                     <ion-card>
-                        <ion-input placeholder="Organization Visited/Visiting">
+                        <ion-input placeholder="Organization Visited/Visiting" [(ngModel)]="OrgVisited">
                         </ion-input>
                     </ion-card>
               </ion-col>
               <ion-col col-12>
                 <ion-card>
-                <ion-textarea placeholder="Reason">
+                <ion-textarea placeholder="Reason" [(ngModel)]="reasonForOD">
                 </ion-textarea>
                 </ion-card> 
               </ion-col>
     
               <div style="width:100%;text-align:center;height:32%">
-                <button class="apply" ion-button>Apply</button>
+                <button class="apply" ion-button (click)="callODApplyFunction()">Apply</button>
              </div>
         </ion-row>
         </ion-grid>
