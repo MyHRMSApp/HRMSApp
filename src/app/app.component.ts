@@ -27,7 +27,16 @@ export class MyApp {
   public userInformation: any;
   public userLeaveBalanceListData: any;
   public userFrishLogin:boolean  = true;
-
+  public attendanceCallFlag:boolean = true;
+  public attendanceNA1_Data:any;
+  public attendanceNA2_Data:any;
+  public attendanceN_NP1_Data:any;
+  public attendanceNP2_Data:any;
+  public attendanceN_NP1_DataFlag:boolean = true;
+  public attendanceNP2_DataFlag:boolean = true;
+  public attendanceNA1_DataFlag:boolean = true;
+  public attendanceNA2_DataFlag:boolean = true;
+  
   constructor(public platform: Platform,
     public statusBar: StatusBar,
     public render:Renderer,
@@ -45,10 +54,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       
-      console.log("Wlcommoninit success");
-        var wlEvent = new CustomEvent("wlInitFinished");
-        console.log("dispatch starting wlInitFinished event");
-        document.dispatchEvent(wlEvent);
+      
     });
 
     this.render.listenGlobal('document','wlInitFinished',()=>{
@@ -56,6 +62,7 @@ export class MyApp {
      // this.authHandler.init();
       this.authHandler.gmailAuthInit();
     });
+    console.log("localStorage.getItem-->>>"+localStorage.getItem("userLogout"));
     if(localStorage.getItem("userLogout") === null){
       localStorage.setItem("userLogout", "1");
       console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));

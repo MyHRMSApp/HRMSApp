@@ -50,6 +50,7 @@ export class UtilsProvider {
   showLoader(message){
     this.loader = this.loading.create({
       content: (message) ? message : this.commonValues.loadingMsg,
+      dismissOnPageChange: true
       // duration: 3000
     });
     this.loader.present();

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ibm.titanhrms" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:mfp="http://www.ibm.com/mobilefirst/cordova-plugin-mfp">
+<widget id="com.titan.myhrms" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:mfp="http://www.ibm.com/mobilefirst/cordova-plugin-mfp">
     <name>MyHR</name>
     <description>HRMS Application for Titan Employess</description>
     <author email="amit.goyal@in.ibm.com" href="http://ionicframework.com/">IBM Team</author>
@@ -80,14 +80,22 @@
     </platform>
     <mfp:android>
         <mfp:sdkChecksum>3727668345</mfp:sdkChecksum>
+<<<<<<< HEAD
         <mfp:appChecksum>2872856976</mfp:appChecksum>
+=======
+        <mfp:appChecksum>3847414126</mfp:appChecksum>
+>>>>>>> 61fae67107bdbb780a95687b75b6d69b459557c7
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
     </mfp:android>
     <mfp:ios>
         <mfp:sdkChecksum>4145390992</mfp:sdkChecksum>
+<<<<<<< HEAD
         <mfp:appChecksum>308294611</mfp:appChecksum>
+=======
+        <mfp:appChecksum>742373650</mfp:appChecksum>
+>>>>>>> 61fae67107bdbb780a95687b75b6d69b459557c7
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>

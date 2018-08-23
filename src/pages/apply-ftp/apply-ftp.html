@@ -16,40 +16,40 @@
         <ion-row>
             <ion-col col-12>
                 <p>DATE</p>
-                <p>30-07-2018</p>
+                <p>{{selectedDate}}</p>
             </ion-col>
             <ion-col col-6>
-                <ion-card class="inCard">
+                <ion-card class="inCard" (click)="punchInTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>IN</P>
-                    <p class="inTime">09:30</p>
+                    <p class="inTime">{{inPunch}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
-                <ion-card class="outCard">
+                <ion-card class="outCard" (click)="punchOutTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>OUT</P>
-                    <p class="outTime">09:30</p>
+                    <p class="outTime">{{outPunch}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
-                <ion-card class="midInCard">
+                <ion-card class="midInCard" (click)="midInTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>MID-IN</P>
-                    <p class="midInTime">09:30</p>
+                    <p class="midInTime">{{midInPunch}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
-                <ion-card class="midOutCard">
+                <ion-card class="midOutCard" (click)="midOutTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>MID-OUT</P>
-                    <p class="midOutTime">09:30</p>
+                    <p class="midOutTime">{{midOutPunch}}</p>
                 </ion-card>
               </ion-col>
         </ion-row>
     
         <div style="width:100%;text-align:center;height:32%">
-                <button class="apply" ion-button>Apply</button>
+                <button class="apply" ion-button (click)="callApplyFTPFunction()">Apply</button>
         </div>
       
       </ion-content>

@@ -26,7 +26,7 @@
         </p>
       </ion-col>
     </ion-row>
-    <ion-row style="height:72%;padding: 5% 5% 0% 5%">
+    <ion-row style="height:72%;" [ngClass]="{'customMsgFalse': customMsg!='false', 'customMsgTrue': customMsg=='false'}">
           <ion-card-content *ngIf="customMsg!='false'">
               <p style="background-color: white">{{customMsg}}</p>
           </ion-card-content>

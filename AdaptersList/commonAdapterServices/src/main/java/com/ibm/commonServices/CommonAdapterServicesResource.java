@@ -213,11 +213,11 @@ public class CommonAdapterServicesResource {
 	 * @QueryParam - IP_PERNR which contains user Pernr Number
 	 * @return - Attanance Object (type - JSON String format)
 	 * */
-	@GET
+	@POST
 	@Path("/getEmployeeAttendanceData")
 	@Produces(MediaType.APPLICATION_JSON)
 	@OAuthSecurity(scope = "socialLogin")
-	public String getEmployeeAttendanceData() throws IOException {
+	public String getEmployeeAttendanceData( @QueryParam("IP_SMONTH") Integer IP_SMONTH, @QueryParam("IP_EMONTH") Integer IP_EMONTH) throws IOException {
 		JSONObject inputJSON = new JSONObject();
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
 		JSONObject  responceJSON = new JSONObject();
@@ -225,12 +225,14 @@ public class CommonAdapterServicesResource {
 		DateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
 		Calendar BEGDA = Calendar.getInstance();
-		BEGDA.add(Calendar.MONTH, -2);
+		BEGDA.add(Calendar.MONTH, IP_SMONTH);
 		BEGDA.set(Calendar.DAY_OF_MONTH, 1);
 		inputJSON.put("IP_BEGDA", sdf.format(BEGDA.getTime()));
+		// inputJSON.put("IP_BEGDA", "20180701");
+		// inputJSON.put("IP_ENDDA", "20180831");
 
 		Calendar ENDDA = Calendar.getInstance();
-		ENDDA.add(Calendar.MONTH, 2);
+		ENDDA.add(Calendar.MONTH, IP_EMONTH);
 		ENDDA.set(Calendar.DATE, 1);
 		int lastDate = ENDDA.getActualMaximum(Calendar.DATE);
 		ENDDA.set(Calendar.DATE, lastDate);
@@ -799,11 +801,11 @@ public class CommonAdapterServicesResource {
 	 * */
 	@GET
 	@Path("/getCustomUserMessage")
-	@Produces(MediaType.APPLICATION_JSON)
 	@OAuthSecurity(scope = "socialLogin")
-	public String getCustomUserMessage() throws IOException {
-		
-		return configurationAPI.getPropertyValue(GET_CUSTOMUSER_MSG);
+	public String getCustomUserMessage(){
+		JSONObject customMessage = new JSONObject();
+		customMessage.put("customMessage", configurationAPI.getPropertyValue(GET_CUSTOMUSER_MSG));
+		return customMessage.toString();
 	}
 
 	/* *
@@ -820,10 +822,10 @@ public class CommonAdapterServicesResource {
 	}
 
 
-		/* *
-	 * @Funtion - (validateLeaveBalance) this function is using for validation befor user Apply Leave
+	/* *
+	 * @Funtion - (applyOnDutyRequest) this function is using for Apply OD Request
 	 * @QueryParam - IP_EMPTYP which contains user Employee Type [ESS, MSS], IV_PERNR which contains user Pernr Number
-	 * @return - Leave Balance (type - JSON String format)
+	 * @return - SAP Responce (type - JSON String format)
 	 * */
 	@POST
 	@Path("/applyOnDutyRequest")
@@ -847,6 +849,43 @@ public class CommonAdapterServicesResource {
 		inputJSON.put("LV_COMMENTS", LV_COMMENTS);				
 		JSONObject serverResJSON = new JSONObject();
 		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"ApplyOnDuty");
+
+		return serverResJSON.toString();
+	}
+
+
+	/* *
+	 * @Funtion - (applyOnDutyRequest) this function is using for Apply OD Request
+	 * @QueryParam - IP_EMPTYP which contains user Employee Type [ESS, MSS], IV_PERNR which contains user Pernr Number
+	 * @return - SAP Responce (type - JSON String format)
+	 * */
+	@POST
+	@Path("/applyFTPRequest")
+	@Produces(MediaType.APPLICATION_JSON)
+	@OAuthSecurity(scope = "socialLogin")
+	public String applyFTPRequest(	@QueryParam("DATUM") String DATUM,@QueryParam("SFT_IN") String SFT_IN,
+									@QueryParam("SFT_OUT") String SFT_OUT,@QueryParam("LUN_IN") String LUN_IN,
+									@QueryParam("LUN_OUT") String LUN_OUT,@QueryParam("LUN_IN_FLAG") String LUN_IN_FLAG,
+									@QueryParam("LUN_OUT_FLAG") String LUN_OUT_FLAG, @QueryParam("SFT_IN_FLAG") String SFT_IN_FLAG,
+									@QueryParam("SFT_OUT_FLAG") String SFT_OUT_FLAG, @QueryParam("R_TYPE") String R_TYPE	) {
+		
+		JSONObject inputJSON = new JSONObject();
+		JSONObject IS_FTP = new JSONObject();
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+		inputJSON.put("PERNR", userInformation.getString("EP_PERNR"));
+		inputJSON.put("DATUM", DATUM);	
+		inputJSON.put("SFT_IN", SFT_IN);
+		inputJSON.put("SFT_OUT", SFT_OUT);
+		inputJSON.put("LUN_IN", LUN_IN);
+		inputJSON.put("LUN_OUT", LUN_OUT);	
+		inputJSON.put("LUN_IN_FLAG", LUN_IN_FLAG);
+		inputJSON.put("LUN_OUT_FLAG", LUN_OUT_FLAG);
+		inputJSON.put("SFT_IN_FLAG", SFT_IN_FLAG);
+		inputJSON.put("SFT_OUT_FLAG", SFT_OUT_FLAG);
+		inputJSON.put("R_TYPE", R_TYPE);	
+		IS_FTP.put("IS_FTP", inputJSON);		
+		JSONObject serverResJSON = new JSONObject();
+		serverResJSON = this.postService(IS_FTP.toString(), SAP_COMMON_URL+"ApplyFTP");
 
 		return serverResJSON.toString();
 	}
