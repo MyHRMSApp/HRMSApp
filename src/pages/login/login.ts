@@ -48,11 +48,19 @@ export class LoginPage {
     });
 
     this.authHandler.setLoginFailureCallback((error) => {
-      this.loader.dismiss();
+      
       if (error !== null) {
-        this.utilService.showCustomPopup("FAILURE", error);
-        console.log("setLoginFailureCallback-FAILURE---->>>"+ error)
+        if(error == "Remaining attempts = undefinedundefined"){
+          // this.utilService.showCustomPopup("FAILURE", "Failed to login, Please try again");
+          this.processForm();
+        }else{
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup("FAILURE", error);
+        }
+        console.log("setLoginFailureCallback-FAILURE---->>>"+ error);
+        
       } else {
+        this.utilService.dismissLoader();
         this.utilService.showCustomPopup("FAILURE", "Failed to login, Please try again");
       }
     });
@@ -60,22 +68,24 @@ export class LoginPage {
       let view = this.navCtrl.getActive();
       if (!(view.instance instanceof HomePage)) {
         localStorage.setItem("userLogout", "0");
+        this.utilService.dismissLoader();
         this.navCtrl.setRoot("HomePage");
       }
     });
     this.authHandler.setHandleChallengeCallback(() => {
+      this.utilService.dismissLoader();
       this.navCtrl.setRoot("LoginPage");
     });
 
     setTimeout(() => {
-      this.loader = this.loadingCtrl.create({
-        content: 'Signing in ...',
-        dismissOnPageChange: true
-      });
+      // this.loaderCreate();
       console.log("userLogout-->>"+localStorage.getItem("userLogout")+" "+"userFrishLogin Flag---->>"+this.mainService.userFrishLogin)
       if(this.mainService.userFrishLogin){
         this.mainService.userFrishLogin = false;
-        if(localStorage.getItem("userLogout") == "0") this.authHandler.checkIsLoggedIn();
+        if(localStorage.getItem("userLogout") == "0"){
+          this.utilService.showLoader("Please Wait..");
+          this.authHandler.checkIsLoggedIn();
+        } 
       }
       
     }, 1000);
@@ -98,14 +108,10 @@ export class LoginPage {
       return;
     }
     console.log('--> Sign-in with user: ', username);
-    this.loader = this.loadingCtrl.create({
-      content: 'Signing in...',
-      dismissOnPageChange: true
-    });
-    this.loader.present().then(() => {
-      // sessionStorage.setItem("securityName", "titan_UserLogin");
+    this.utilService.showLoader("Please Wait..");
+    setTimeout(() => {
       this.authHandler.login(credentials);
-    });
+    }, 100);
   }
 
 
@@ -150,14 +156,10 @@ export class LoginPage {
             "SECURITY_TYPE": "GMAIL_LOGIN",
             "GMAIL_ID": res.email
           };
-          this.loader = this.loadingCtrl.create({
-            content: 'Signing in ...',
-            dismissOnPageChange: true
-          });
-          this.loader.present().then(() => {
-            //sessionStorage.setItem("securityName", "socialLogin");
+          this.utilService.showLoader("Please Wait..");
+          setTimeout(() => {
             this.authHandler.login(inputParams);
-          });
+          }, 100);
       }else{
         this.googlePlus.disconnect().then((res) => {
           this.utilService.showCustomPopup("FAILURE", "Please use Titan Mail ID...");
@@ -178,4 +180,5 @@ export class LoginPage {
   //   });
   //   prompt.present();
   // }
+
 }

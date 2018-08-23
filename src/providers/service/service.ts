@@ -34,14 +34,17 @@ export class ServiceProvider {
     resourceRequest.setHeaders("Content-Type","application/json");
     
     return new Promise((resolve,reject)=>{
+      console.log("Requesting Service to Server : " +"Menthod -> "+method +"Payload ->"+ payload);
       resourceRequest.send().then((responseData:any)=>{
         if(responseData.responseJSON){
          setTimeout(() => {
+          console.log("Success Responce from Server : " + JSON.stringify(responseData.responseJSON));
           resolve(responseData.responseJSON);
          }, 1000);
         }
       },(error)=>{
         setTimeout(() => {
+          console.log("Success Responce from Server : " + error);
           reject(error);
          }, 1000);
         reject(error);

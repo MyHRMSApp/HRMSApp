@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -39,20 +39,21 @@ export class HomePage {
   my_requestIcon: any;
   my_taskIcon: any;
   hamburger: string;
+  public attendanceInterval:any;
+  
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
-    public service: ServiceProvider, public utilService: UtilsProvider) {
+    public service: ServiceProvider, public utilService: UtilsProvider, public ref: ChangeDetectorRef) {
     
     this.photos = localStorage.getItem("userPicture");
     this.userName = "";
-    this.customMsg = "";
+    this.customMsg = "false";
     this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.userName = this.userInfo.EP_ENAME;
-    this.customMsg = this.userInfo.customMsg;
     console.log(this.userInfo);
   }
   
@@ -64,20 +65,42 @@ openMenu() {
 } 
   
 attendance() {
-  /**
-  Method for pushing 
-  */
- this.utilService.showLoader("Please wait..");
- var date = new Date(), y = date.getFullYear(), m = date.getMonth();
- var firstDay = new Date(y, m - 2, 1);
- var lastDay = new Date(y, m + 3, 0);
- var calStartDate = moment(firstDay).format("YYYYMMDD").toString();
- var calEndDate = moment(lastDay).format("YYYYMMDD").toString();
 
-  this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'get', {payload : false}).then((resultData:any)=>{
+ this.utilService.showLoader("Please wait..");
+ console.log("this.mainService.attanancePageData-->"+ this.mainService.attanancePageData);
+ 
+  if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
+    this.attendanceDataFetch();
+  }else{
+    var counter = 0;
+    this.attendanceInterval = setInterval(()=>{
+      console.log("turn no. " + counter);
+      if (this.mainService.attanancePageData !== undefined) {
+        this.mainService.attanancePageData = this.mainService.attendanceN_NP1_Data;
+          this.navCtrl.push("AttendanceViewPage");
+          this.routerOnDeactivate();
+      }else if(counter == 29){
+        this.utilService.dismissLoader();
+        this.utilService.showPopup("Attendance", "Internal Server Error, Please try again");
+        this.routerOnDeactivate();
+      }
+      counter++;
+    }, 1000);
+  }
+}
+
+attendanceDataFetch(){
+  console.log("attendanceDataFetch Menthod Called-->>");
+  var payloadData = {
+    "IP_SMONTH": -1,
+    "IP_EMONTH": 0
+  }
+  this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
     if(resultData){
       if(resultData.status_code == 200){
         this.mainService.attanancePageData = resultData.data;
+        this.mainService.attendanceN_NP1_Data = resultData.data;
+        this.mainService.attendanceN_NP1_DataFlag = false;
         console.log(JSON.stringify(this.mainService.attanancePageData));
         this.navCtrl.push("AttendanceViewPage");
       }else{
@@ -90,10 +113,10 @@ attendance() {
     this.utilService.dismissLoader();
     this.utilService.showPopup("Attendance",error.statusText);
   });
-  // this.mainService.attanancePageData = tempResponceData.__zone_symbol__value;
-  // console.log(this.mainService.attanancePageData);
+}
 
-  // this.navCtrl.push("AttendanceViewPage");
+routerOnDeactivate() {
+  clearInterval(this.attendanceInterval);
 }
 
   /**
@@ -111,12 +134,54 @@ coupons() {
   });
 }
 
-// ionViewCanEnter() {
-//   this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-//   this.userName = this.userInfo.EP_ENAME;
-//   this.customMsg = this.userInfo.customMsg;
-//   console.log(this.userInfo);
-// }
+ionViewCanEnter() {
+  try {
+    this.utilService.showLoader("Please wait..");
+    
+    if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
+      this.mainService.attendanceCallFlag = false;
+      this.mainService.attendanceN_NP1_DataFlag = false;
+      var payloadData = {
+        "IP_SMONTH": -1,
+        "IP_EMONTH": 0
+      }
+      this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+        if(resultData){
+          if(resultData.status_code == 200){
+            this.mainService.attanancePageData = resultData.data;
+            this.mainService.attendanceN_NP1_Data = resultData.data;
+            this.mainService.attendanceN_NP1_DataFlag = false;
+          }else{
+            // this.utilService.showPopup("Attendance", resultData.message);
+          }
+    
+        };
+      }, (error)=>{
+        console.log("Data readed from jsonstore error",error);
+      });
+  }
+
+
+    this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
+      if(resultData){
+          if(resultData.customMessage != "false"){
+            this.ref.detectChanges();
+            this.customMsg = resultData.customMessage;
+          }else{
+            this.customMsg = "false";
+          }
+      }
+      this.utilService.dismissLoader();
+    }, (error)=>{
+      console.log("Data readed from jsonstore error",error);
+      this.utilService.dismissLoader();
+      this.utilService.showCustomPopup("FAILURE",error.statusText);
+    });
+    
+  } catch (error) {
+    console.log("catch-->>",error);
+  }
+}
 
 
 ionViewDidLoad() {   

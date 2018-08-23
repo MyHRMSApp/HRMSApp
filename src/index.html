@@ -27,6 +27,15 @@
     }
   </script>-->
 
+  <script>
+  function wlCommonInit(){
+    console.log("Wlcommoninit success");
+    var wlEvent = new CustomEvent("wlInitFinished");
+    console.log("dispatch starting wlInitFinished event");
+    document.dispatchEvent(wlEvent);
+  }
+  </script>
+
   <link href="build/main.css" rel="stylesheet">
 
 
