@@ -154,7 +154,6 @@ export class AttendanceViewPage {
       this.calenderVIew = true;
       this.utilService.dismissLoader();
     }, 100);
-  
   }
   
 

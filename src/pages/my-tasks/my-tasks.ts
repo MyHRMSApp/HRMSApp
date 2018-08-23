@@ -14,12 +14,14 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 export class MyTasksPage {
   hamburger: string;
   homeIcon: string;
+  isDisabled = false;
 
   tasks = [
-    { title: "Vivek"},
-    { title: "Karthi"},
-    { title: "Amit"},
+    { title: "Vivek", selected: false},
+    { title: "Karthi", selected: false},
+    { title: "Amit", selected: false},
   ];
+  selectedAll: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -34,6 +36,19 @@ export class MyTasksPage {
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
   }
 
+
+  selectAll() {
+    for (var i = 0; i < this.tasks.length; i++) {
+      this.tasks[i].selected = this.selectedAll;
+    }
+  }
+
+  checkIfAllSelected() {
+    this.selectedAll = this.tasks.every((item:any) => {
+        return item.selected == true;
+      })
+  }
+
   shownGroup = null;
   toggleGroup(group) {
     if (this.isGroupShown(group)) {
@@ -41,10 +56,10 @@ export class MyTasksPage {
     } else {
         this.shownGroup = group;
     }
-};
-isGroupShown(group) {
-    return this.shownGroup === group;
-};
+  };
+  isGroupShown(group) {
+      return this.shownGroup === group;
+  };
 
   openMenu() {
     this.menu.toggle();

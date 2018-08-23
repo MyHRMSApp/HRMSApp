@@ -103,7 +103,7 @@ export class LoginPage {
       dismissOnPageChange: true
     });
     this.loader.present().then(() => {
-      // sessionStorage.setItem("securityName", "titan_UserLogin");
+      //sessionStorage.setItem("securityName", "titan_UserLogin");
       this.authHandler.login(credentials);
     });
   }

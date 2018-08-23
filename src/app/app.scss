@@ -5,6 +5,14 @@ ion-nav{
     }
  }
 
+ .header-ios .toolbar-background-ios {
+    border-style: none !important;
+}
+
+.list-ios > .item-block:last-child {
+    border-bottom: none !important;
+}
+
  .menu-inner{
          
     .toolbar-background {
