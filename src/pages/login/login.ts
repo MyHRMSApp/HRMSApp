@@ -180,5 +180,4 @@ export class LoginPage {
   //   });
   //   prompt.present();
   // }
-
 }

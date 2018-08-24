@@ -40,6 +40,7 @@ export class HomePage {
   my_taskIcon: any;
   hamburger: string;
   public attendanceInterval:any;
+  public showCustomMsg: boolean = false;
   
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
@@ -165,10 +166,13 @@ ionViewCanEnter() {
     this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData){
           if(resultData.customMessage != "false"){
-            this.ref.detectChanges();
             this.customMsg = resultData.customMessage;
+            this.showCustomMsg = true;
+            this.ref.detectChanges();
           }else{
             this.customMsg = "false";
+            this.showCustomMsg = false;
+            this.ref.detectChanges();
           }
       }
       this.utilService.dismissLoader();

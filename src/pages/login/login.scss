@@ -115,6 +115,16 @@ page-login {
         position: absolute !important;
         font-size:2rem !important;
       }
+
+          //Media query for iPhone-X
+          @media only screen and (min-height: 812px) and (min-width: 375px) {
+            .logo{
+              width: 45%;
+              margin-left:27%;
+              height: 20%;
+              margin-top: 30%;
+          }
+          }
    }
 
 }

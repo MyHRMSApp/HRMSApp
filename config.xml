@@ -80,22 +80,14 @@
     </platform>
     <mfp:android>
         <mfp:sdkChecksum>3727668345</mfp:sdkChecksum>
-<<<<<<< HEAD
-        <mfp:appChecksum>2872856976</mfp:appChecksum>
-=======
-        <mfp:appChecksum>3847414126</mfp:appChecksum>
->>>>>>> 61fae67107bdbb780a95687b75b6d69b459557c7
+        <mfp:appChecksum>1942748678</mfp:appChecksum>
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
     </mfp:android>
     <mfp:ios>
         <mfp:sdkChecksum>4145390992</mfp:sdkChecksum>
-<<<<<<< HEAD
-        <mfp:appChecksum>308294611</mfp:appChecksum>
-=======
-        <mfp:appChecksum>742373650</mfp:appChecksum>
->>>>>>> 61fae67107bdbb780a95687b75b6d69b459557c7
+        <mfp:appChecksum>747332487</mfp:appChecksum>
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
