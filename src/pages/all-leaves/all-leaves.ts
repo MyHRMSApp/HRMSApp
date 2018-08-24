@@ -11,6 +11,7 @@ import { ModalController } from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { ServiceProvider } from '../../providers/service/service';
 import moment from 'moment';
+import { MyApp } from '../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -25,22 +26,28 @@ export class AllLeavesPage {
   public leaveToDate:any;
   public leaveFromTime:any;
   public leaveToTime:any;
+  public leaveFromTimeStr:any;
+  public leaveToTimeStr:any;
   public leaveType:any;
   public title: any;
   public resonForLeave: any;
+  public userInfo:any;
+  public fromDateFlag:boolean = false;
+  public toDateFlag:boolean = false;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
-    public utilService: UtilsProvider, public service: ServiceProvider) {
+    public utilService: UtilsProvider, public service: ServiceProvider, public mainService: MyApp) {
 
     this.title = this.navParams.get("titleName");
     this.leaveFromDate = " ";
     this.leaveToDate = " ";
     this.resonForLeave = "";
     this.leaveType = this.navParams.get("leaveType");
+    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
   }
 
   ionViewDidLoad() {
@@ -64,13 +71,33 @@ export class AllLeavesPage {
   }
 
   fromDateCalendar(){
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "from" });
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "from", quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP = "E" && this.leaveType == "0001")?"true":"false" });
       myCalendar.present();
       myCalendar.onDidDismiss((data) => {
         console.log(data);
         if(data !== undefined && data.leaveFromDate !== undefined && data.leaveFromTime !== undefined){
           this.leaveFromDate = data.leaveFromDate;
           this.leaveFromTime = data.leaveFromTime;
+          this.fromDateFlag = true;
+          switch (this.leaveFromTime) {
+            case "FD":
+              this.leaveFromTimeStr = "full day";
+              break;
+            case "FH":
+              this.leaveFromTimeStr = "1st half";
+            break;
+            case "SH":
+              this.leaveFromTimeStr = "2nd half";
+            break;
+            case "FQ":
+              this.leaveFromTimeStr = "1st Quarter";
+              break;
+            case "LQ":
+              this.leaveFromTimeStr = "2nd Quarter";
+              break;
+          }
+        }else{
+          this.fromDateFlag = false;
         }
         
       });
@@ -78,14 +105,32 @@ export class AllLeavesPage {
 
   toDateCalendar(){
     if(this.leaveFromDate !== undefined && this.leaveFromTime !== undefined ){
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "to", "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime });
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "to", "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP = "E" && this.leaveType == "0001")?"true":"false" });
       myCalendar.present();
       myCalendar.onDidDismiss((data) => {
         console.log(data);
         if(data !== undefined && data.leaveToDate !== undefined && data.leaveToTime !== undefined){
           this.leaveToDate = data.leaveToDate;
           this.leaveToTime = data.leaveToTime;
-        }
+          this.toDateFlag = true;
+          switch (this.leaveToTime) {
+            case "FD":
+              this.leaveToTimeStr = "full day";
+              break;
+            case "FH":
+              this.leaveToTimeStr = "1st half";
+            break;
+            case "SH":
+              this.leaveToTimeStr = "2nd half";
+            break;
+            case "FQ":
+              this.leaveToTimeStr = "1st Quarter";
+              break;
+            case "LQ":
+              this.leaveToTimeStr = "2nd Quarter";
+              break;
+          }
+        }else{this.toDateFlag = false;}
       });
     }else{
       this.utilService.showCustomPopup4Error(this.title, "Please select From Date..", "FAILURE");
@@ -95,7 +140,18 @@ export class AllLeavesPage {
 
   calLeaveApplyValidation(){
     this.utilService.showLoader("Please wait..");
-    this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: {"IP_LTYP": this.leaveType,"IP_FDATE": moment(this.leaveFromDate).format("YYYYMMDD"),"IP_TDATE": moment(this.leaveToDate).format("YYYYMMDD"),"IP_FHALF": this.leaveFromTime,"IP_THALF": this.leaveToTime}}).then((resultData:any)=>{
+    var leavetypeData = this.leaveType;
+    if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ" || this.leaveToTime == "FQ" || this.leaveToTime == "LQ"){
+      leavetypeData = "0011";
+    }
+    var payloadData = {
+      "IP_LTYP": leavetypeData,
+      "IP_FDATE": moment(this.leaveFromDate).format("YYYYMMDD"),
+      "IP_TDATE": moment(this.leaveToDate).format("YYYYMMDD"),
+      "IP_FHALF": this.leaveFromTime,
+      "IP_THALF": this.leaveToTime
+    };
+    this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: payloadData}).then((resultData:any)=>{
       if(resultData){
         if(resultData.status_code == 200){
           this.utilService.dismissLoader();
@@ -198,6 +254,11 @@ export class AllLeavesPage {
                 alert.addButton({
                   text: 'OK',
                   handler: data => {
+                    this.mainService.attendanceN_NP1_DataFlag = true;
+                    this.mainService.attendanceNP2_DataFlag = true;
+                    this.mainService.attendanceNA1_DataFlag = true;
+                    this.mainService.attendanceNA2_DataFlag = true;
+                    this.mainService.attendanceCallFlag = true;
                     this.navCtrl.setRoot("HomePage");
                   }
                 });

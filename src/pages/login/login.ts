@@ -36,6 +36,8 @@ export class LoginPage {
   photos: string;
   form;
   loader: any;
+  public gmailLoginFlag:boolean = false;
+  public userLoginFlag:boolean = false;
 
   constructor(public alert: AlertController, public service: ServiceProvider, public navCtrl: NavController,
     public navParams: NavParams, public loadingCtrl: LoadingController, public storage: StorageProvider,
@@ -43,8 +45,10 @@ export class LoginPage {
     public render: Renderer, public mainService: MyApp) {
 
     this.form = new FormGroup({
-      username: new FormControl("E1596739", Validators.required),
-      password: new FormControl("init@123", Validators.required)
+      // username: new FormControl("E1596739", Validators.required),
+      // password: new FormControl("init@123", Validators.required)
+      username: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required)
     });
 
     this.authHandler.setLoginFailureCallback((error) => {
@@ -52,7 +56,12 @@ export class LoginPage {
       if (error !== null) {
         if(error == "Remaining attempts = undefinedundefined"){
           // this.utilService.showCustomPopup("FAILURE", "Failed to login, Please try again");
-          this.processForm();
+          if(this.userLoginFlag){
+            this.processForm();
+          }else if(this.gmailLoginFlag){
+            this.googleLoginError();
+          }
+          
         }else{
           this.utilService.dismissLoader();
           this.utilService.showCustomPopup("FAILURE", error);
@@ -96,6 +105,8 @@ export class LoginPage {
   }
 
   processForm() {
+    this.userLoginFlag = true;
+    this.gmailLoginFlag = false;
     let username = this.form.value.username;
     let password = this.form.value.password;
     let credentials = {
@@ -143,6 +154,8 @@ export class LoginPage {
    * Method to handle user login via google plus option
    */
   userLoginViagooglePlus() {
+    this.userLoginFlag = false;
+    this.gmailLoginFlag = true;
     console.log("1");
     this.googlePlus.login({
       'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',
@@ -154,7 +167,7 @@ export class LoginPage {
             "vendor": "google",
             "token": res.idToken,
             "SECURITY_TYPE": "GMAIL_LOGIN",
-            "GMAIL_ID": res.email
+            "GMAIL_ID": "nagarajan@titan.co.in"
           };
           this.utilService.showLoader("Please Wait..");
           setTimeout(() => {
@@ -180,5 +193,10 @@ export class LoginPage {
   //   });
   //   prompt.present();
   // }
+
+  googleLoginError(){
+    this.utilService.dismissLoader();
+    this.utilService.showCustomPopup("FAILURE", "Login process getting error, Please try again..");
+  }
 
 }

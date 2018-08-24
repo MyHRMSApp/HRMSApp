@@ -19,33 +19,49 @@
                 <p>{{selectedDate}}</p>
             </ion-col>
             <ion-col col-6>
-                <ion-card class="inCard" (click)="punchInTimeSelection()">
+                <ion-card [ngClass]="inPunch != '00:00:00'?'inCard':'outCard'" (click)="punchInTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>IN</P>
-                    <p class="inTime">{{inPunch}}</p>
+                    <p [ngClass]="inPunch != '00:00:00'?'inTime':'outTime'">{{inPunch}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
-                <ion-card class="outCard" (click)="punchOutTimeSelection()">
+                <ion-card [ngClass]="outPunch != '00:00:00'?'inCard':'outCard'" (click)="punchOutTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>OUT</P>
-                    <p class="outTime">{{outPunch}}</p>
+                    <p [ngClass]="outPunch != '00:00:00'?'inTime':'outTime'">{{outPunch}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
-                <ion-card class="midInCard" (click)="midInTimeSelection()">
+                <ion-card [ngClass]="midInPunch != '00:00:00'?'inCard':'outCard'" (click)="midInTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>MID-IN</P>
-                    <p class="midInTime">{{midInPunch}}</p>
+                    <p [ngClass]="midInPunch != '00:00:00'?'inTime':'outTime'">{{midInPunch}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
-                <ion-card class="midOutCard" (click)="midOutTimeSelection()">
+                <ion-card [ngClass]="midOutPunch != '00:00:00'?'inCard':'outCard'" (click)="midOutTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>MID-OUT</P>
-                    <p class="midOutTime">{{midOutPunch}}</p>
+                    <p [ngClass]="midOutPunch != '00:00:00'?'inTime':'outTime'">{{midOutPunch}}</p>
                 </ion-card>
               </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col col-12>
+                <ion-list class="list-View">
+                    <p>Request Type</p>
+                    <ion-item class="item-leave-height item-view">
+                        <ion-label>Request Type</ion-label>
+                        <ion-select [(ngModel)]="requestTypeSelection">
+                            <ion-option value="Forgot to record my attanance">Forgot to record my attanance</ion-option>
+                            <ion-option value="Forgot to bring my punch Card">Forgot to bring my punch Card</ion-option>
+                            <ion-option value="Access Reader / Technical Issue">Access Reader / Technical Issue</ion-option>
+                        </ion-select>
+                    </ion-item>
+            </ion-list>
+            </ion-col>
         </ion-row>
     
         <div style="width:100%;text-align:center;height:32%">

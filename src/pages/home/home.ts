@@ -136,7 +136,6 @@ coupons() {
 
 ionViewCanEnter() {
   try {
-    this.utilService.showLoader("Please wait..");
     
     if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
       this.mainService.attendanceCallFlag = false;
@@ -165,16 +164,14 @@ ionViewCanEnter() {
     this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData){
           if(resultData.customMessage != "false"){
-            this.ref.detectChanges();
             this.customMsg = resultData.customMessage;
           }else{
             this.customMsg = "false";
           }
+          this.ref.detectChanges();
       }
-      this.utilService.dismissLoader();
     }, (error)=>{
       console.log("Data readed from jsonstore error",error);
-      this.utilService.dismissLoader();
       this.utilService.showCustomPopup("FAILURE",error.statusText);
     });
     

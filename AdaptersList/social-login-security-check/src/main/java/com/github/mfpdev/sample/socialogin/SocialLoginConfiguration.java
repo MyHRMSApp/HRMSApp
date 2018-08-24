@@ -101,7 +101,6 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
     private void createVendors() {
         vendors = new HashMap<>();
         vendors.put("google", new GoogleSupport());
-        vendors.put("facebook", new FacebookSupport());
     }
 
 }

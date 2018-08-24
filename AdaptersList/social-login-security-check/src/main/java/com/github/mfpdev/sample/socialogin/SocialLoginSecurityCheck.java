@@ -134,9 +134,11 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                         //Look for this user in the database
                         try {
                             JSONObject employeeNO = (JSONObject) userManager.getEmployeeNumber(gmailID);
+                            System.out.println("-----employeeNO--- "+employeeNO);
                             if(employeeNO.getInt("EmpCode") != 0){
                                 empCode = Integer.toString(employeeNO.getInt("EmpCode"));
                                 jsonObject = (JSONObject) userManager.getUser("Gmail", "E0477072");
+                                System.out.println("-----jsonObject--- "+jsonObject);
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
                                     displayName = jsonObject.toString();
@@ -147,6 +149,9 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                     errorMsg = "Internal Server Error, Please try again";
                                     return false;
                                 }
+                            }else if(employeeNO.getInt("EmpCode") != 00){
+                                errorMsg = "Login process getting error, Please try again..";
+                                return false;
                             }
                             else{
                                 errorMsg = "Please try with valid Titan Mail ID";

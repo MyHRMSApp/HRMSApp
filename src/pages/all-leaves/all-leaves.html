@@ -6,7 +6,7 @@
           <img [src]="hamburger" height="30px" width="30px" />
         </button>
       </ion-buttons>
-      <ion-title>GENERAL LEAVE</ion-title>
+      <ion-title>{{title}}</ion-title>
     </ion-navbar>
   </ion-header>
   
@@ -30,13 +30,15 @@
 
         <ion-item>
             From
-            <span item-end >{{leaveFromDate}}</span>
+            <span item-end *ngIf="fromDateFlag">{{leaveFromDate}} - {{leaveFromTimeStr}}</span>
+            <span item-end *ngIf="fromDateFlag"></span>
             <ion-icon name="md-calendar" item-end (click)="fromDateCalendar()"></ion-icon>
         </ion-item>
 
         <ion-item>
             To
-            <span item-end >{{leaveToDate}}</span>
+            <span item-end *ngIf="toDateFlag">{{leaveToDate}} - {{leaveToTimeStr}}</span>
+            <span item-end *ngIf="toDateFlag"></span>
             <ion-icon name="md-calendar" item-end (click)="toDateCalendar()"></ion-icon>
         </ion-item>
 

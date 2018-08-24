@@ -9,6 +9,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import moment from 'moment';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
+import { MyApp } from '../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -33,7 +34,7 @@ export class ApplyOdPage {
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
-    public service: ServiceProvider, public utilService: UtilsProvider) {
+    public service: ServiceProvider, public utilService: UtilsProvider,  public mainService: MyApp) {
 
       this.startDate = moment().format("DD-MM-YYYY");
       this.endDate = moment().format("DD-MM-YYYY");
@@ -152,6 +153,11 @@ export class ApplyOdPage {
             alert.addButton({
               text: 'OK',
               handler: data => {
+                this.mainService.attendanceN_NP1_DataFlag = true;
+                this.mainService.attendanceNP2_DataFlag = true;
+                this.mainService.attendanceNA1_DataFlag = true;
+                this.mainService.attendanceNA2_DataFlag = true;
+                this.mainService.attendanceCallFlag = true;
                 this.navCtrl.setRoot("HomePage");
               }
             });

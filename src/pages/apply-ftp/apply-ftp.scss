@@ -116,6 +116,44 @@ page-apply-ftp {
           color: white;
         }
       }
+
+      .list-View{
+        margin: 0% 3%;
+        .item-view{
+          border-radius: 10px;
+          background: #237590 !important;
+          border-radius: 5px !important;
+          ion-label{
+            display: none;
+          }
+          ion-select{
+            max-width: 100% !important;
+            color: #ffffff !important;
+            padding: 13px 8px 13px 0px !important;
+            font-size: 0.9em;
+            .select-icon{
+              .select-icon-inner{
+                float: left;
+                display: block;
+                position: fixed;
+                color: #ffffff !important;
+                margin-left: 3%;
+              }
+            } 
+            .select-text{
+              margin-left: 10%;
+              min-width: 100% !important;
+              font-size: 0.9em;
+            }
+          }
+        }
+      }
+      
+      .alert-head{
+        text-align: center !important;
+      }
+
+      
     }
     ion-footer {
       height: 3.5em !important;

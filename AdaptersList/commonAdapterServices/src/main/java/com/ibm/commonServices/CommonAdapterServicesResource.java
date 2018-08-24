@@ -263,6 +263,8 @@ public class CommonAdapterServicesResource {
 				String MID_LATE = objectInArray.get("MID_LATE").toString();
 				String RS_ATT1 = objectInArray.get("RS_ATT1").toString();
 				String RS_ATT2 = objectInArray.get("RS_ATT2").toString();
+				RS_ATT1 = RS_ATT1.replaceAll("\\s+","");
+				RS_ATT2 = RS_ATT2.replaceAll("\\s+","");
 				String ABS = objectInArray.get("ABS").toString();
 				String ATT = objectInArray.get("ATT").toString();
 				String SHF_IN = objectInArray.get("SHF_IN").toString();
@@ -272,6 +274,22 @@ public class CommonAdapterServicesResource {
 				String[] temp_reqState_ATT_2 = RS_ATT2.isEmpty()?null:RS_ATT2.split(",");
 
 				if(SHIFT.equals("OFF") && temp_reqState_ATT_1 == null && temp_reqState_ATT_2 == null){
+					resultJSON.put("cssClass", "HollydayClass");
+					resultJSON.put("LDATE", LDATE);
+					resultJSON.put("PUN_P10", PUNIN);
+					resultJSON.put("PUN_P15", MIDOUT);
+					resultJSON.put("PUN_P20", PUNOUT);
+					resultJSON.put("PUN_P25", MIDIN);
+					resultJSON.put("ATT", ATT);
+					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
+					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
+					resultJSON.put("Holiday", true);
+					resultJSON.put("Absence", false);
+					resultJSON.put("RequestState", false);
+				}
+				else if(SHIFT.equals("G") && ATT_1.equals("HO") && ATT_2.equals("HO")){
 					resultJSON.put("cssClass", "HollydayClass");
 					resultJSON.put("LDATE", LDATE);
 					resultJSON.put("PUN_P10", PUNIN);

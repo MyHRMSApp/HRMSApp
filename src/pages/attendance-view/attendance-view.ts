@@ -212,12 +212,26 @@ export class AttendanceViewPage {
     this.navCtrl.push("ApplyOdPage");
   }
   applyFTP(){
-    this.navCtrl.push("ApplyFtpPage",{"ftpData": this.attendanceSingleDayData});
+
+    if(this.dateRange !== undefined){
+      var value = moment(this.dateRange, "YYYY-MM-DD").format("YYYY-MM-DD").toString();
+      var monthDifferCheck = moment().diff(moment(value, "YYYY-MM-DD"), 'months', true);
+      if(monthDifferCheck < 0){
+        this.utilService.showCustomPopup4Error("Apply FTP", "Invalid Date Selection..", "FAILURE");
+      }else{
+        this.navCtrl.push("ApplyFtpPage",{"ftpData": this.attendanceSingleDayData});
+      }
+    }else{
+      this.utilService.showCustomPopup4Error("Apply FTP", "Please select date..", "FAILURE");
+    }
+
+
+    
   }
 
   loadCalendarForNextMonth(){
     this.utilService.showLoader("Please Wait..");
-    this.calenderVIew = false;
+    // this.calenderVIew = false;
     if(this.mainService.attendanceNA1_DataFlag){
       var payloadData = {
         "IP_SMONTH": 1,
@@ -233,7 +247,7 @@ export class AttendanceViewPage {
             console.log(JSON.stringify(this.mainService.attanancePageData));
             this.loadCalendarView();
           }else{
-            this.calenderVIew = true;
+            // this.calenderVIew = true;
             this.mainService.attendanceNA1_DataFlag = true;
             this.utilService.dismissLoader();
             this.utilService.showPopup("Attendance", resultData.message);
@@ -255,7 +269,7 @@ export class AttendanceViewPage {
 
   loadCalendarForNextAfterMonth(){
     this.utilService.showLoader("Please Wait..");
-    this.calenderVIew = false;
+    // this.calenderVIew = false;
     if(this.mainService.attendanceNA2_DataFlag){
       var payloadData = {
         "IP_SMONTH": 2,
@@ -271,7 +285,7 @@ export class AttendanceViewPage {
             console.log(JSON.stringify(this.mainService.attanancePageData));
             this.loadCalendarView();
           }else{
-            this.calenderVIew = true;
+            // this.calenderVIew = true;
             this.mainService.attendanceNA2_DataFlag = true;
             this.utilService.dismissLoader();
             this.utilService.showPopup("Attendance", resultData.message);
@@ -294,7 +308,7 @@ export class AttendanceViewPage {
   loadCalendarForCurrentPriviousMonths(){
     
     this.utilService.showLoader("Please Wait..");
-    this.calenderVIew = false;
+    // this.calenderVIew = false;
     if(this.mainService.attendanceN_NP1_DataFlag){
       var payloadData = {
         "IP_SMONTH": -1,
@@ -310,7 +324,7 @@ export class AttendanceViewPage {
             console.log(JSON.stringify(this.mainService.attanancePageData));
             this.loadCalendarView();
           }else{
-            this.calenderVIew = true;
+            // this.calenderVIew = true;
             this.mainService.attendanceN_NP1_DataFlag = true;
             this.utilService.dismissLoader();
             this.utilService.showPopup("Attendance", resultData.message);
@@ -334,7 +348,7 @@ export class AttendanceViewPage {
 
   loadCalendarForPriviousBeforeMonth(){
     this.utilService.showLoader("Please Wait..");
-    this.calenderVIew = false;
+    // this.calenderVIew = false;
     if(this.mainService.attendanceNP2_DataFlag){
       var payloadData = {
         "IP_SMONTH": -2,
@@ -350,7 +364,7 @@ export class AttendanceViewPage {
             console.log(JSON.stringify(this.mainService.attanancePageData));
             this.loadCalendarView();
           }else{
-            this.calenderVIew = true;
+            // this.calenderVIew = true;
             this.mainService.attendanceNP2_DataFlag = true;
             this.utilService.dismissLoader();
             this.utilService.showPopup("Attendance", resultData.message);

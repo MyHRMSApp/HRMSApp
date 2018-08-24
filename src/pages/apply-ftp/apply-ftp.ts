@@ -9,6 +9,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import moment from 'moment';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
+import { MyApp } from '../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -29,13 +30,14 @@ export class ApplyFtpPage {
   public midOutPunchFlag:any = "";
   public selectedDate:any;
   public ftpObject:any;
+  public requestTypeSelection:any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
-    public service: ServiceProvider, public utilService: UtilsProvider) {
+    public service: ServiceProvider, public utilService: UtilsProvider, public mainService: MyApp) {
 
       if(this.navParams.get("ftpData")) this.ftpObject =  this.navParams.get("ftpData");
       
@@ -74,7 +76,7 @@ export class ApplyFtpPage {
     inTimePicker.present();
     inTimePicker.onDidDismiss((data) => {
       console.log(data);
-      this.inPunch = data.time;
+      this.inPunch = data.time+":00";
       this.inPunchFlag = "X";
     });
   }
@@ -84,7 +86,7 @@ export class ApplyFtpPage {
     outTimePicker.present();
     outTimePicker.onDidDismiss((data) => {
       console.log(data);
-      this.outPunch = data.time;
+      this.outPunch = data.time+":00";
       this.outPunchFlag = "X";
     });
   }
@@ -94,7 +96,7 @@ export class ApplyFtpPage {
     outTimePicker.present();
     outTimePicker.onDidDismiss((data) => {
       console.log(data);
-      this.midInPunch = data.time;
+      this.midInPunch = data.time+":00";
       this.midInPunchFlag = "X";
     });
   }
@@ -104,7 +106,7 @@ export class ApplyFtpPage {
     outTimePicker.present();
     outTimePicker.onDidDismiss((data) => {
       console.log(data);
-      this.midOutPunch = data.time;
+      this.midOutPunch = data.time+":00";
       this.midOutPunchFlag = "X";
     });
   }
@@ -155,6 +157,11 @@ export class ApplyFtpPage {
             alert.addButton({
               text: 'OK',
               handler: data => {
+                this.mainService.attendanceN_NP1_DataFlag = true;
+                this.mainService.attendanceNP2_DataFlag = true;
+                this.mainService.attendanceNA1_DataFlag = true;
+                this.mainService.attendanceNA2_DataFlag = true;
+                this.mainService.attendanceCallFlag = true;
                 this.navCtrl.setRoot("HomePage");
               }
             });
