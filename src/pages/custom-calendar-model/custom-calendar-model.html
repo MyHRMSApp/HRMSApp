@@ -10,7 +10,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content no-bounce>
     <div class="tempCalender" *ngIf="!calenderVIew"></div>
   <ion-calendar *ngIf="calenderVIew" (onChange)="onChange($event)" [(ngModel)]="dateRange" [options]="optionsRange" [type]="string"
   [format]="'YYYY-MM-DD'">

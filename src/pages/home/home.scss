@@ -44,12 +44,34 @@ page-home {
         width: 50%;
       }
     }
-    ion-card-content {
+    .withCustomMsg {
+      .gridImageDiv {
+        width: 85%;
+        border-radius: 50%;
+        .userImage {
+          margin-top: 15%;
+          width: 50%;
+        }
+      }
+    }
+    .withoutCustomMsg {
+      .gridImageDiv {
+        width: 85%;
+        border-radius: 50%;
+        .userImage {
+          margin-top: 10%;
+          width: 50%;
+        }
+      }
+    }
+    .customMsg {
       width: 100%;
       p {
         padding: 1% 1% !important;
         text-align: left !important;
         border-radius: 3px !important;
+        color: black !important;
+        background-color: white !important;
       }
     }
     p {
@@ -86,6 +108,30 @@ page-home {
     @media only screen and (min-height: 620px) and (min-width: 320px) {
       .userAvatar {
         margin-top: 15%;
+      }
+    }
+    //Media query for iPhone-X
+    @media only screen and (min-height: 812px) and (min-width: 375px) {
+      .gridImageDiv {
+        width: 85%;
+        border-radius: 50%;
+        .userImage {
+          margin-top: 15%;
+          width: 50%;
+        }
+      }
+      .userAvatar {
+        margin-top: 18%;
+      }
+      .withoutCustomMsg {
+        .gridImageDiv {
+          width: 100%;
+          border-radius: 50%;
+          .userImage {
+            margin-top: 15%;
+            width: 50%;
+          }
+        }
       }
     }
     .customMsgTrue{
