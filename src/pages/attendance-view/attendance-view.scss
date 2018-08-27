@@ -623,7 +623,7 @@ page-attendance-view {
 
   pre{
     font-size: 0.8em !important;
-    margin: 0.5px !important;
+    margin: 0.5% !important;
   }
 
   ion-thumbnail {
@@ -642,6 +642,13 @@ page-attendance-view {
     font-size: 0.85rem;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+  }
+
+  .label-ios{
+    margin:0% !important;
+  }
+  .item-ios ion-thumbnail[item-start]{
+    margin: 1% 1% 1% 0% !important;
   }
 
   .clrBox{
@@ -704,7 +711,7 @@ page-attendance-view {
   }
   ion-list{
     .item{
-      padding-left: 4px;
+      padding-left: 1%;
       border: 3px solid #10586B;
       border-radius: 6px;
       margin-top: 1%;

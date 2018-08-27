@@ -11,37 +11,38 @@
 
 
 <ion-content no-bounce>
+  
+  <ion-grid style="height:100%">
   <div *ngIf="!calenderVIew" class="calendarStaticHeight"></div>
   <ion-calendar *ngIf="calenderVIew" [(ngModel)]="dateRange" (onChange)="onChange($event)" (monthChange)="monthChange()" [options]="optionsRange" [type]="string"
     [format]="'YYYY-MM-DD'">
   </ion-calendar>
-  <ion-grid>
-    <ion-card class="clrBoxParent">
+    <ion-card style="height:12%" class="clrBoxParent">
       <ion-row>
-        <ion-col style="padding: 5px 0px 5px 5px" col-4>
+        <ion-col style="padding: 1% 0% 1% 1%" col-4>
           <span class="clrBox approvedbg"></span>
           <div class="clrBoxLabel">Approved</div>
         </ion-col>
-        <ion-col style="padding: 5px 0px 5px 0px" col-4>
+        <ion-col style="padding: 1% 0% 1% 0%" col-4>
           <span class="clrBox Unautharizedbg"></span>
           <div class="clrBoxLabel">Unauthorized absence</div>
         </ion-col>
-        <ion-col style="padding: 5px 0px 5px 0px" col-4>
+        <ion-col style="padding: 1% 0% 1% 1%" col-4>
           <span class="clrBox Normalbg"></span>
           <div class="clrBoxLabel">Normal Punch</div>
         </ion-col>
-        <ion-col style="padding: 5px 0px 5px 5px" col-4>
+        <ion-col style="padding: 1% 0% 1% 1%" col-4>
           <span class="clrBox RequestRaisedbg"></span>
           <div class="clrBoxLabel">Request Raised</div>
         </ion-col>
-        <ion-col style="padding: 5px 0px 5px 0px" col-4>
+        <ion-col style="padding: 1% 0% 1% 0%" col-4>
           <span class="clrBox HolidayWeekoffbg"></span>
           <div class="clrBoxLabel">Holiday/Weekly off</div>
         </ion-col>
       </ion-row>
     </ion-card>
 
-    <ion-list>
+    <ion-list style="height:19%">
       <ion-item>
         <ion-thumbnail class="dateBox" item-start [ngClass]="currentCssClass != ''?currentCssClass:'ATT1_NormalPunch_ATT2_NormalPunch'">
           <p  class="currentDate" [innerHTML]="currentDate"></p>
@@ -94,7 +95,7 @@
     </ion-list>
 
 
-    <ion-card class="attendance-btn-layout">
+    <ion-card style="height:15%" class="attendance-btn-layout">
       <ion-row>
         <ion-col (click)="applyLeave()" col-4>
           <button ion-button block class="btn-clr">Apply
