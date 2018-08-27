@@ -39,7 +39,7 @@ export class CustomTimePickerPage {
       if(this.minuteValue < 10){
         tempSeconds = "0"+this.minuteValue;
       }else{
-        tempHours = this.minuteValue;
+        tempSeconds = this.minuteValue;
       }
       this.ref.detectChanges();
       console.log("Time is : "+ tempHours+":"+tempSeconds)

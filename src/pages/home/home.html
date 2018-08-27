@@ -29,7 +29,7 @@
     <ion-row style="height:72%;" [ngClass]="{'customMsgFalse': customMsg!='false', 'customMsgTrue': customMsg=='false'}">
       <ion-col col-12 *ngIf="customMsg!='false'">
         <div class="customMsg">
-          <p>Warm welcome!</p>
+          <p>{{customMsg}}</p>
         </div>
       </ion-col>
       <ion-col col-6 (click)="attendance()">

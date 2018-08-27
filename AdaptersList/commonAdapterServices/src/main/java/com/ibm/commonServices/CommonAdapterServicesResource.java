@@ -13,59 +13,49 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Base64;
-import java.util.ArrayList;
 import java.util.*;
-import java.util.List;
-import java.util.Properties;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import java.net.*;
 import java.io.*;
 
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.MessageBodyWriter;
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.ClientHandlerException;
 
 import com.ibm.mfp.adapter.api.ConfigurationAPI;
 import com.ibm.mfp.adapter.api.AdaptersAPI;
 import com.ibm.mfp.adapter.api.OAuthSecurity;
 
-// import com.ibm.json.java.JSONArray;
-// import com.ibm.json.java.JSONObject;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-// import com.google.gson.Gson;
-// import com.google.gson.GsonBuilder;
 
 import com.ibm.mfp.server.registration.external.model.ClientData;
 import com.ibm.mfp.server.security.external.resource.AdapterSecurityContext;
 import com.ibm.mfp.server.registration.external.model.AuthenticatedUser;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.apache.http.entity.StringEntity;
 
 @Api(value = "This is Common Adapter service for Titan Interface [SAP]")
 @Path("/services")
@@ -100,7 +90,7 @@ public class CommonAdapterServicesResource {
 
 	// Static JSONObject declration PART
 	public JSONObject commonServerResponce = new JSONObject();
-	
+	public CloseableHttpClient httpclient = null;
 	/* *
 	 * @Funtion - (getCouponsList) this funtion will return Coupon List which will come from SAP
 	 * @QueryParam - IV_PERNR which contains user Pernr Number
@@ -144,7 +134,7 @@ public class CommonAdapterServicesResource {
 	/* *
 	 * @Funtion - (validateLeaveBalance) this function is using for validation befor user Apply Leave
 	 * @QueryParam - IP_EMPTYP which contains user Employee Type [ESS, MSS], IV_PERNR which contains user Pernr Number
-	 * @return - Leave Balance (type - JSON String format)
+	 * @return - SAP Responce (type - JSON String format)
 	 * */
 	@POST
 	@Path("/validateLeaveBalance")
@@ -169,9 +159,9 @@ public class CommonAdapterServicesResource {
 	}
 
 	/* *
-	 * @Funtion - (validateLeaveBalance) this function is using for validation befor user Apply Leave
-	 * @QueryParam - IP_EMPTYP which contains user Employee Type [ESS, MSS], IV_PERNR which contains user Pernr Number
-	 * @return - Leave Balance (type - JSON String format)
+	 * @Funtion - (employeeApplyLeave) this function is using for validation befor user Apply Leave
+	 * @QueryParam - IP_FDATE [Start Date], IP_TDATE [End Date], IP_FHALF [Start Period], IP_THALF [End Period], IP_DAY [Current Day], R_LEAVE [Reson Content], IP_REQ_TYPE [Request Type], IP_WF_STATUS [Work Flow Status], IP_LTYP [Leave Type]
+	 * @return - SAP Responce (type - JSON String format)
 	 * */
 	@POST
 	@Path("/employeeApplyLeave")
@@ -842,7 +832,7 @@ public class CommonAdapterServicesResource {
 
 	/* *
 	 * @Funtion - (applyOnDutyRequest) this function is using for Apply OD Request
-	 * @QueryParam - IP_EMPTYP which contains user Employee Type [ESS, MSS], IV_PERNR which contains user Pernr Number
+	 * @QueryParam - IP_SDATE [Start Date], IP_EDATE [End Date], LV_STIME [Start Time], LV_ETIME [End Time], LV_PLACE [Visited Place], LV_ORG [Visited Organization], LV_PER, LV_COMMENTS [User Comment]
 	 * @return - SAP Responce (type - JSON String format)
 	 * */
 	@POST
@@ -873,8 +863,8 @@ public class CommonAdapterServicesResource {
 
 
 	/* *
-	 * @Funtion - (applyOnDutyRequest) this function is using for Apply OD Request
-	 * @QueryParam - IP_EMPTYP which contains user Employee Type [ESS, MSS], IV_PERNR which contains user Pernr Number
+	 * @Funtion - (applyFTPRequest) this function is using for Apply FTP Request
+	 * @QueryParam - DATUM [FTP Apply Date], SFT_IN [Shift In Time punch], SFT_OUT [Shift Out Time punch], LUN_IN [Shift Mid in Time punch], LUN_OUT [Shift Mid Out Time punch], LUN_IN_FLAG, LUN_OUT_FLAG, SFT_IN_FLAG, SFT_OUT_FLAG [Flag will be 'X' if user change time for FTP], R_TYPE [FTP Request Type]
 	 * @return - SAP Responce (type - JSON String format)
 	 * */
 	@POST
@@ -908,47 +898,63 @@ public class CommonAdapterServicesResource {
 		return serverResJSON.toString();
 	}
 
-
 	/* *
 	 * @Funtion - (postService) this funtion is the common interface connection with SAP backend
 	 * @QueryParam - InputString [This is String format which is having SAP Inputs], restURL [This is also String which is having the REST URL to connect SAP Backend]
-	 * @return - resultJSON OBJECT (type - JSONObject format SAP RESPONCE)
+	 * @return - commonServerResponce OBJECT (type - JSONObject format SAP RESPONCE)
 	 * */
-	public JSONObject postService(String inputString, String restURL){ 
+	public JSONObject postService(String inputString, String restURL){
 		JSONObject resultJSON = new JSONObject();
 		commonServerResponce = new JSONObject(commonResponceStr);
+		
+		LOGGER.info("\n SAP Request Sending from MFP Adapter :");
+		LOGGER.info("\n "+inputString+" \n\n");
+		
 		try {
-				LOGGER.info("\n SAP Request Sending from MFP Adapter :");
-				LOGGER.info("\n "+inputString+" \n\n");
-				authorizationStringEncrypted = Base64.getEncoder().encodeToString(AUTH_STRING.getBytes("utf-8"));
-				Client client = Client.create();
-				WebResource webResource = client.resource(restURL);
-				ClientResponse response = webResource.type("application/json").header("Authorization", "Basic " + authorizationStringEncrypted).post(ClientResponse.class, inputString);
-				this.STATUS_CODE = response.getStatus();
-				resultJSON = new JSONObject(response.getEntity(String.class));
-				commonServerResponce.put("message", "");
-				commonServerResponce.put("status_code", STATUS_CODE);
-				commonServerResponce.put("data", resultJSON);
-				LOGGER.info("\n SAP Responce : "+resultJSON.toString() +"\n\n");
+			StringEntity params = new StringEntity(inputString);
+			CredentialsProvider credsProvider = new BasicCredentialsProvider();
+			credsProvider.setCredentials(new AuthScope("pirdev.titan.co.in", 50401),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
+			httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
+			HttpPost httpPost = new HttpPost(restURL);
+			httpPost.addHeader("User-Agent", "Mozilla/5.0");
+			httpPost.setEntity(params);
+			 
+			ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+	
+			 @Override
+				public String handleResponse(
+						final HttpResponse response) throws ClientProtocolException, IOException {
+					int status = response.getStatusLine().getStatusCode();
+					if (status >= 200 && status < 300) {
+						HttpEntity entity = response.getEntity();
+						return entity != null ? EntityUtils.toString(entity) : null;
+					} else {
+						LOGGER.log(Level.SEVERE, "Unexpected response status: " + status);
+						commonServerResponce.put("message", "Internal Server Error, Please try again");
+						commonServerResponce.put("status_code", 400);
+						commonServerResponce.put("data", "");
+						throw new ClientProtocolException("Unexpected response status: " + status);
+					}
+				}
+	 
+			};
+			String responseBody = httpclient.execute(httpPost, responseHandler);
+			resultJSON = new JSONObject(responseBody);
+			commonServerResponce.put("message", "");
+			commonServerResponce.put("status_code", "200");
+			commonServerResponce.put("data", resultJSON);
+			LOGGER.log(Level.INFO,"\n SAP Responce : "+resultJSON.toString() +"\n\n");
+			
+			}catch(IOException ioException){
+				LOGGER.log(Level.SEVERE, "[ IOException ]  : "+ioException.toString());
+			} finally {
+				try {
+					httpclient.close();
+				} catch (IOException ioException) {
+					LOGGER.log(Level.SEVERE, "[ IOException httpclient Close]  : "+ioException.toString());
+				}
 			}
-			catch (ClientHandlerException  exception) {
-				LOGGER.log(Level.SEVERE, "[ ClientHandlerException ]  : "+exception.toString());
-				commonServerResponce.put("message", "Internal Server Error, Please try again");
-				commonServerResponce.put("status_code", 500);
-				commonServerResponce.put("data", "");
-			}
-			catch (IOException  exception) {
-				LOGGER.log(Level.SEVERE, "[ IOException ]  : "+exception.toString());
-				commonServerResponce.put("message", "Some Input/Output Error, Please try again");
-				commonServerResponce.put("status_code", 403);
-				commonServerResponce.put("data", "");
-			}
-			catch (Exception  exception) {
-				LOGGER.log(Level.SEVERE, exception.toString());
-				commonServerResponce.put("message", "Internal Server Error, Please try again");
-				commonServerResponce.put("status_code", 400);
-				commonServerResponce.put("data", "");
-			}
+
 
 		return commonServerResponce;
 	}
