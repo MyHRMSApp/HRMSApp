@@ -158,7 +158,7 @@ export class AttendanceViewPage {
       }
       jsonArr.push({
         date: this.mainService.attanancePageData[i].LDATE,
-        cssClass: (moment().format("YYYY-MM-DD").toString() == this.mainService.attanancePageData[i].LDATE.toString())?this.mainService.attanancePageData[i].cssClass+" todayClass":this.mainService.attanancePageData[i].cssClass,
+        cssClass: (moment().format("YYYY-MM-DD").toString() == this.mainService.attanancePageData[i].LDATE.toString())?this.mainService.attanancePageData[i].cssClass+" todayClass":(this.mainService.attanancePageData[i].cssClass != "")?this.mainService.attanancePageData[i].cssClass:"ATT1_NomalPunch_ATT2_NormalPunch",
         subTitle: (moment().format("YYYY-MM-DD").toString() == this.mainService.attanancePageData[i].LDATE.toString())?"Today":""
       });
   }

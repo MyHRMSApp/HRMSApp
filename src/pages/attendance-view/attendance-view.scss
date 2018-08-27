@@ -37,7 +37,7 @@ page-attendance-view {
       background: url('assets/imgs/Calendar-BG.png');
       color: #fff !important;
       width: 100%;
-      min-height: 54%;
+      min-height: 63%;
       display: block;
       margin: 0 auto;
       margin-bottom: 1em;
@@ -98,7 +98,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background-color: #e5da28 !important;
@@ -114,7 +114,7 @@ page-attendance-view {
     // border-radius: 2px !important;
     // width: 20px !important;
     // display: block !important;
-    // margin: 16% auto !important;
+    // margin: -6% auto !important;     line-height: 20px;
     // padding: 0 !important;
     // height: 20px !important;
     // background-color: #136571 !important;
@@ -124,11 +124,11 @@ page-attendance-view {
 
     border-radius: unset;
     display: unset;
-    margin: unset;
     padding: unset;
     position: unset;
     z-index: unset;
-
+    margin: -20% auto !important;
+    line-height: 32px;
     background-color: #136571 !important;
     width: 100% !important;
     height: 100% !important;
@@ -142,7 +142,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background-color: #4de835 !important;
@@ -158,7 +158,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background-color: #fe4543 !important;
@@ -175,7 +175,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #4de835 50%,#e5da28 50%) !important;
@@ -191,7 +191,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #4de835 50%, #136571 50%) !important;
@@ -207,7 +207,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #4de835 50%, rgba(0, 0, 0, 0) 50%) !important;
@@ -223,7 +223,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #4de835 50%, #fe4543 50%) !important;
@@ -239,7 +239,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #fe4543 50%, #136571 50%) !important;
@@ -255,7 +255,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #fe4543 50%, rgba(0, 0, 0, 0) 50%) !important;
@@ -271,7 +271,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #fe4543 50%, #4de835 50%) !important;
@@ -287,7 +287,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #fe4543 50%, #e5da28 50%) !important;
@@ -303,7 +303,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important;
@@ -319,7 +319,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #e5da28 50%, #136571 50%) !important;
@@ -335,7 +335,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #e5da28 50%, rgba(0, 0, 0, 0) 50%) !important;
@@ -351,7 +351,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #e5da28 50%, #fe4543 50%) !important;
@@ -367,7 +367,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #e5da28 50%, #4de835 50%) !important;
@@ -383,7 +383,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #136571 50%, #e5da28 50%) !important;
@@ -399,7 +399,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #136571 50%, rgba(0, 0, 0, 0) 50%) !important;
@@ -415,7 +415,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, #136571 50%, #fe4543 50%) !important;
@@ -431,7 +431,7 @@ page-attendance-view {
      border-radius: 2px !important;
      width: 20px !important;
      display: block !important;
-     margin: 16% auto !important;
+     margin: -6% auto !important;     line-height: 20px;
      padding: 0 !important;
      height: 20px !important;
      background: linear-gradient(to bottom, #136571 50%, #4de835 50%) !important;
@@ -447,7 +447,7 @@ page-attendance-view {
      border-radius: 2px !important;
      width: 20px !important;
      display: block !important;
-     margin: 16% auto !important;
+     margin: -6% auto !important;     line-height: 20px;
      padding: 0 !important;
      height: 20px !important;
      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #136571 50%) !important;
@@ -463,7 +463,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 50%) !important;
@@ -479,7 +479,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #fe4543 50%) !important;
@@ -495,7 +495,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #e5da28 50%) !important;
@@ -511,7 +511,7 @@ page-attendance-view {
     border-radius: 2px !important;
     width: 20px !important;
     display: block !important;
-    margin: 16% auto !important;
+    margin: -6% auto !important;     line-height: 20px;
     padding: 0 !important;
     height: 20px !important;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #4de835 50%) !important;
@@ -523,6 +523,31 @@ page-attendance-view {
       //margin-top: 15%;
     }
   }
+
+  .ATT1_NormalPunch_ATT2_Approved{
+    border-radius: 2px !important;
+    width: 20px !important;
+    display: block !important;
+    margin: -6% auto !important;     line-height: 20px;
+    padding: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #4de835 50%) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    font-size: 0.7em;
+    font-size: 0.7em;
+    p{
+      //margin-top: 15%;
+    }
+  }
+
+  ion-calendar-month .danger .days .next-month-day, ion-calendar-month .danger .days .last-month-day{
+    opacity: 0.65; 
+    cursor: none;
+    pointer-events: none;
+  }
+
+
 
 .Cur_ATT1_Approved_ATT2_Holliday{background: linear-gradient(to bottom, #4de835 50%, #136571 50%) !important; color: #fff !important;}
 .Cur_ATT1_Approved_ATT2_NormalPunch{background: linear-gradient(to bottom, #4de835 50%, rgba(0, 0, 0, 0) 50%) !important; color:  rgb(0, 0, 0);}
@@ -556,16 +581,25 @@ page-attendance-view {
   color: unset !important;
 }
   ion-calendar-month .danger .days .on-selected{
-    border-radius: 2px !important;
-    width: 20px !important;
-    display: block !important;
-    margin: 16% auto !important;
-    padding: 0 !important;
-    height: 20px !important;
-    position: relative !important;
-    z-index: 2 !important;
-    border: 1px solid #fff;
-    font-size: 0.7em;
+    // border-radius: 2px !important;
+    // width: 20px !important;
+    // display: block !important;
+    // margin-top: 15% !important;
+    // line-height: 20px;
+    // padding: 0 !important;
+    // height: 20px !important;
+    // position: relative !important;
+    // z-index: 2 !important;
+    // border: 1px solid #fff;
+    // font-size: 0.7em !important;
+    p{
+      font-size: 1em !important;
+      font-weight: bolder;
+      border: 1px solid #fff;
+      border-radius: 10%;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   ion-calendar-week .week-title.transparent{
@@ -585,7 +619,7 @@ page-attendance-view {
   }
 
 
-  ion-calendar-month button.days-btn{
+  ion-calendar-month ion-button.days-btn{
     width: 100%;
     display: block;
     padding: 0;
@@ -601,7 +635,7 @@ page-attendance-view {
   ion-calendar-month .danger .days small{
     display: block;
     font-size: 0.5em;
-    margin-top: -20%;
+    margin-top: 7%;
   }
 
   ion-calendar-month .days {
