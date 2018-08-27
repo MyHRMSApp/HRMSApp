@@ -41,7 +41,7 @@ firebase.initializeApp(firebaseConfig)
     BrowserModule,
     HttpClientModule,
     HttpModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, { scrollAssist: false }),
     CalendarModule,
     //AngularFireModule.initializeApp(firebaseConfig)
   ],

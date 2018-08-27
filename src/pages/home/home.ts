@@ -40,7 +40,7 @@ export class HomePage {
   my_taskIcon: any;
   hamburger: string;
   public attendanceInterval:any;
-  public showCustomMsg: boolean = false;
+  public showCustomMsg: boolean;
   
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
@@ -56,6 +56,12 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.userName = this.userInfo.EP_ENAME;
     console.log(this.userInfo);
+    if (this.userInfo.EP_USERTYPE == "MSS"){
+     this.showCustomMsg = false;
+    }
+    else {
+      this.showCustomMsg = true;
+    }
   }
   
 openMenu() {
