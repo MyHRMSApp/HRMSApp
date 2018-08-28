@@ -51,6 +51,9 @@ export class LoginPage {
       password: new FormControl("", Validators.required)
     });
 
+    this.userLoginFlag = (localStorage.getItem("userLoginFlag") == "true")? true:false;
+    this.gmailLoginFlag = (localStorage.getItem("gmailLoginFlag") == "true")? true:false;
+
     this.authHandler.setLoginFailureCallback((error) => {
       
       if (error !== null) {
@@ -107,6 +110,8 @@ export class LoginPage {
   processForm() {
     this.userLoginFlag = true;
     this.gmailLoginFlag = false;
+    localStorage.setItem("userLoginFlag", "true");
+    localStorage.setItem("gmailLoginFlag", "false");
     let username = this.form.value.username;
     let password = this.form.value.password;
     let credentials = {
@@ -156,6 +161,8 @@ export class LoginPage {
   userLoginViagooglePlus() {
     this.userLoginFlag = false;
     this.gmailLoginFlag = true;
+    localStorage.setItem("userLoginFlag", "false");
+    localStorage.setItem("gmailLoginFlag", "true");
     console.log("1");
     this.googlePlus.login({
       'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',

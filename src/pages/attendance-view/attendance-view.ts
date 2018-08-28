@@ -132,13 +132,12 @@ export class AttendanceViewPage {
 
   loadCalendarView(){
     console.log('ionViewCanEnter HomePage');
-    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
 
-    var firstDay = new Date(y, m - 2, 1);
-    var lastDay = new Date(y, m + 3, 0);
+    this.calStartDate = moment().add('months', 2).date(0).format("YYYY, MM, DD");
+    this.calEndDate = moment().add('months', -2).date(1).format("YYYY, MM, DD");
 
-    this.calStartDate = moment(firstDay).format("YYYY, MM, DD").toString();
-    this.calEndDate = moment(lastDay).format("YYYY, MM, DD").toString();
+    console.log("first day-->>"+ this.calStartDate);
+    console.log("last day-->>"+  this.calEndDate);
 
     console.log(this.mainService.attanancePageData.length);
     var jsonArr = [];
@@ -166,14 +165,15 @@ export class AttendanceViewPage {
   console.log(jsonArr);
     var tempoptionsRange : CalendarComponentOptions = {
       color : 'danger',
-      from: this.calStartDate,
-      to: this.calEndDate,
+      from: new Date(this.calEndDate),
+      to: new Date(this.calStartDate),
       daysConfig: jsonArr,
       showMonthPicker: false,
       weekStart: 1
     };
 
     setTimeout(() => {
+      console.log("this.calStartDate: "+this.calStartDate+"this.calEndDate :"+this.calEndDate,);
       this.optionsRange = tempoptionsRange;
       this.calenderVIew = true;
       this.utilService.dismissLoader();
@@ -243,7 +243,7 @@ export class AttendanceViewPage {
             this.mainService.attanancePageData = resultData.data;
             this.mainService.attendanceNA1_Data = resultData.data;
             this.mainService.attendanceNA1_DataFlag = false;
-            this.dateRange = moment(moment().format("YYYY-MM-DD")).add(1, 'M')
+            this.dateRange = moment(moment().format("YYYY-MM-DD")).add(1, 'M');
             console.log(JSON.stringify(this.mainService.attanancePageData));
             this.loadCalendarView();
           }else{
@@ -393,6 +393,7 @@ export class AttendanceViewPage {
   }
 
   ionViewCanEnter() {
+    this.dateRange = moment().format("YYYY-MM-DD");
     this.loadCalendarView();
   }
   

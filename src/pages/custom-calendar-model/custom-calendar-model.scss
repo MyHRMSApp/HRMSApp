@@ -37,7 +37,7 @@ page-custom-calendar-model {
             background: transparent !important;
         }
 
-        ion-calendar-month button.days-btn p{
+        ion-calendar-month ion-button.days-btn p{
             font-size: 1em !important;
             margin: 0;
             color: #8C8C8C;
@@ -49,6 +49,21 @@ page-custom-calendar-model {
             padding: 5px 15px 0px 15px;
         }
 
+        ion-calendar .title .back {
+            margin-left: -80%;
+            left: -30px;
+            width: 40px;
+            margin-top: 3%;
+          }
+      
+        ion-calendar .title .forward {
+            margin-left: -50px;
+            right: -30px;
+            width: 40px;
+            margin-top: 3%;
+        }
+
+
         .tempCalender{
             min-height: 78%;
         }
@@ -57,9 +72,29 @@ page-custom-calendar-model {
             color: #019F9E;
         }
 
-        ion-calendar-month .primary .days .on-selected, ion-calendar-month .primary .startSelection button.days-btn, ion-calendar-month .primary .endSelection button.days-btn{
+        ion-calendar-month .primary .days .on-selected, ion-calendar-month .primary .startSelection ion-button.days-btn, ion-calendar-month .primary .endSelection ion-button.days-btn{
             background-color: #019F9E;
             color: #fff;
+        }
+
+        ion-calendar-month .primary .days ion-button{
+            p{
+                color: #8C8C8C;
+            }
+        }
+
+        ion-calendar-month .primary .days ion-button.on-selected{
+            background-color: #019F9E;
+            p{
+                color: #fff !important;
+                background: #019F9E;
+                width: 30px;
+                height: 30px;
+                border-radius: 67px;
+                padding: 19%;
+                margin-top: -25%;
+                font-size: 0.9em !important;
+            }
         }
 
         .custom-btn{

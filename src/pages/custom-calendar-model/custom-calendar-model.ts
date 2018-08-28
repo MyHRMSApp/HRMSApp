@@ -38,7 +38,7 @@ export class CustomCalendarModelPage {
   public selectedDateFromCal:any;
   public quarterWiseSelectionFlag:any = true;
   public dayWiseSelectionFlag:any = true;
-
+  public fromPage:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
               public utilService: UtilsProvider, public alert:AlertController, public ref: ChangeDetectorRef) {
     this.calendarFor = this.navParams.get('Cal');
@@ -78,6 +78,9 @@ export class CustomCalendarModelPage {
     }
     if(this.navParams.get('dayWiseSelectionFlag') == "false"){
       this.dayWiseSelectionFlag = false;
+    }
+    if(this.navParams.get('fromPage') == "ODApply"){
+      this.fromPage = "ODApply";
     }
     this.currentDate = moment().format("ddd,Do MMM");
     this.currentYear = moment().format("YYYY");
@@ -267,7 +270,7 @@ export class CustomCalendarModelPage {
       if(this.calendarFor == "from"){
         if(this.leaveFromDate === undefined){
           this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
-        }else if(this.leaveFromTime === undefined){
+        }else if(this.leaveFromTime === undefined && this.fromPage != "ODApply"){
           this.utilService.showCustomPopup4Error("Apply Leave", "please select the period..", "FAILURE");
         }else{
           let data = { leaveFromDate: this.leaveFromDate,
