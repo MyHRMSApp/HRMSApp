@@ -57,12 +57,10 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     this.userName = this.userInfo.EP_ENAME;
     console.log(this.userInfo);
     if (this.userInfo.EP_USERTYPE == "MSS"){
-    console.log("MSS");
-    this.showCustomMsg = true;
+     this.showCustomMsg = true;
     }
     else {
-    console.log("ESS");
-    this.showCustomMsg = false;
+      this.showCustomMsg = false;
     }
   }
   
@@ -145,6 +143,13 @@ coupons() {
 
 ionViewCanEnter() {
   try {
+
+    this.mainService.attendanceN_NP1_DataFlag = true;
+    this.mainService.attendanceNP2_DataFlag = true;
+    this.mainService.attendanceNA1_DataFlag = true;
+    this.mainService.attendanceNA2_DataFlag = true;
+    this.mainService.attendanceCallFlag = true;
+    
     if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
       this.mainService.attendanceCallFlag = false;
       this.mainService.attendanceN_NP1_DataFlag = false;

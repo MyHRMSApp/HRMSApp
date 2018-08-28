@@ -87,7 +87,7 @@ export class ApplyOdPage {
   }
 
   fromDateSelection(){
-    let fromDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", quarterWiseSelectionFlag: "false", Cal: "from"});
+    let fromDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
     fromDatePicker.present();
     fromDatePicker.onDidDismiss((data) => {
       console.log(data);
@@ -96,7 +96,7 @@ export class ApplyOdPage {
   }
 
   toDateSelection(){
-    let toDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", quarterWiseSelectionFlag: "false", Cal: "from"});
+    let toDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
     toDatePicker.present();
     toDatePicker.onDidDismiss((data) => {
       console.log(data);
