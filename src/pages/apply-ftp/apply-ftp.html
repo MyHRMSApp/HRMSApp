@@ -2,13 +2,13 @@
         <ion-navbar color="header">
         <ion-buttons end>
           <button style="background-color:transparent" end (click)="openMenu()" class="menu">
-            <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
+          <!-- <ion-icon style="font-size: 2.2em" color="loginButton" name="menu"></ion-icon> -->
           <img [src]="hamburger" height="30px" width="30px" />
           </button>
           </ion-buttons>
           <ion-title>Apply FTP</ion-title>
         </ion-navbar>
-    </ion-header>
+</ion-header>
     
     
     <ion-content padding no-bounce>
@@ -55,17 +55,17 @@
                     <ion-item class="item-leave-height item-view">
                         <ion-label>Request Type</ion-label>
                         <ion-select [(ngModel)]="requestTypeSelection">
-                            <ion-option value="Forgot to record my attanance">Forgot to record my attanance</ion-option>
+                            <ion-option value="Forgot to record my attendance">Forgot to record my attanance</ion-option>
                             <ion-option value="Forgot to bring my punch Card">Forgot to bring my punch Card</ion-option>
                             <ion-option value="Access Reader / Technical Issue">Access Reader / Technical Issue</ion-option>
                         </ion-select>
                     </ion-item>
-            </ion-list>
+                </ion-list>
             </ion-col>
         </ion-row>
     
         <div style="width:100%;text-align:center;height:32%">
-                <button class="apply" ion-button (click)="callApplyFTPFunction()">Apply</button>
+            <button class="apply" ion-button (click)="callApplyFTPFunction()">Apply</button>
         </div>
       
       </ion-content>

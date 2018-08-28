@@ -103,11 +103,21 @@ page-home {
     @media only screen and (min-height: 568px) and (min-width: 320px) {
       .userAvatar {
         margin-top: 10%;
+        .userImage {
+        border-radius:50%;
+        width:88px;
+        height:88px;
+        }
       }
     }
     @media only screen and (min-height: 620px) and (min-width: 320px) {
       .userAvatar {
         margin-top: 15%;
+        .userImage {
+        border-radius:50%;
+        width:88px;
+        height:88px;
+        }
       }
     }
     //Media query for iPhone-X
@@ -122,6 +132,11 @@ page-home {
       }
       .userAvatar {
         margin-top: 18%;
+        .userImage {
+        border-radius:50%;
+        width:88px;
+        height:88px;
+        }
       }
       .withoutCustomMsg {
         .gridImageDiv {

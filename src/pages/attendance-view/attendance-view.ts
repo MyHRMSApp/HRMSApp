@@ -89,7 +89,7 @@ export class AttendanceViewPage {
       this.requests_ATT_2 = (currentDayData.RS_ATT2)?currentDayData.RS_ATT2:null;
       console.log(currentDayData);
       this.attendanceSingleDayData = currentDayData;
-    }else{
+    } else {
       this.currentDate = moment().format("DD").toString();
       this.currentMonth = moment().format("MMM").toString();
       this.punchIN = "00:00:00";

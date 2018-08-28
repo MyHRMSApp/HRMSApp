@@ -40,7 +40,7 @@ export class HomePage {
   my_taskIcon: any;
   hamburger: string;
   public attendanceInterval:any;
-  public showCustomMsg: boolean;
+  public showCustomMsg: boolean = false;
   
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
@@ -57,10 +57,12 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     this.userName = this.userInfo.EP_ENAME;
     console.log(this.userInfo);
     if (this.userInfo.EP_USERTYPE == "MSS"){
-     this.showCustomMsg = false;
+    console.log("MSS");
+    this.showCustomMsg = true;
     }
     else {
-      this.showCustomMsg = true;
+    console.log("ESS");
+    this.showCustomMsg = false;
     }
   }
   
@@ -143,7 +145,6 @@ coupons() {
 
 ionViewCanEnter() {
   try {
-    
     if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
       this.mainService.attendanceCallFlag = false;
       this.mainService.attendanceN_NP1_DataFlag = false;
@@ -152,12 +153,12 @@ ionViewCanEnter() {
         "IP_EMONTH": 0
       }
       this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-        if(resultData){
+        if(resultData) {
           if(resultData.status_code == 200){
             this.mainService.attanancePageData = resultData.data;
             this.mainService.attendanceN_NP1_Data = resultData.data;
             this.mainService.attendanceN_NP1_DataFlag = false;
-          }else{
+          } else {
             // this.utilService.showPopup("Attendance", resultData.message);
           }
     
@@ -172,11 +173,11 @@ ionViewCanEnter() {
       if(resultData){
           if(resultData.customMessage != "false"){
             this.customMsg = resultData.customMessage;
-            this.showCustomMsg = true;
+            //this.showCustomMsg = true;
             this.ref.detectChanges();
           }else{
             this.customMsg = "false";
-            this.showCustomMsg = false;
+            //this.showCustomMsg = false;
             this.ref.detectChanges();
           }
           this.ref.detectChanges();
@@ -238,6 +239,7 @@ takePhoto() {
     saveToPhotoAlbum: true
   }
   this.camera.getPicture(options).then((imageData) => {
+    this.utilService.showLoader("Picture is updating..");
     setTimeout(()=>{
       if(imageData){
         console.log("getting into if condition",imageData);
@@ -255,13 +257,18 @@ takePhoto() {
             if(response){
               console.log("data added sucessfully");
               localStorage.setItem("userPicture", this.photos);
+              this.photos = this.base64Image;
+              this.ref.detectChanges();
+              this.utilService.dismissLoader();
             }
           },(error)=>{
             console.log("data added from jsonstore error",error);
+            this.utilService.dismissLoader();
           });
         });
       }else{
         console.log("Image data not yet recieved");
+        this.utilService.dismissLoader();
       } 
     },1000); 
   }, 
@@ -281,6 +288,7 @@ uploadPhoto() {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   }).then((imageData) => {
+    this.utilService.showLoader("Picture is updating..");
     setTimeout(()=>{
       if(imageData){
         console.log("getting into if condition",imageData);
@@ -298,13 +306,18 @@ uploadPhoto() {
             if(response){
               console.log("data added sucessfully");
               localStorage.setItem("userPicture", this.photos);
+              this.photos = this.base64Image;
+              this.ref.detectChanges();
+              this.utilService.dismissLoader();
             }
           },(error)=>{
             console.log("data added from jsonstore error",error);
+            this.utilService.dismissLoader();
           });
         });
       }else{
         console.log("Image data not yet recieved");
+        this.utilService.dismissLoader();
       } 
     },1000); 
   }, 
@@ -315,6 +328,7 @@ uploadPhoto() {
 
 removePhoto(){
   console.log("Remove Picture");
+  this.utilService.showLoader("Picture is removing..");
   this.photos = ("./assets/icon/avatar.png");
   this.storage.jsonstoreInitialize().then(()=>{
     this.storage.jsonstoreClearCollection("userImage").then((response:any)=>{
@@ -328,9 +342,11 @@ removePhoto(){
       if(response){
         console.log("data added sucessfully");
         localStorage.setItem("userPicture", this.photos);
+        this.utilService.dismissLoader();
       }
     },(error)=>{
       console.log("data added from jsonstore error",error);
+      this.utilService.dismissLoader();
     });
   });
 }

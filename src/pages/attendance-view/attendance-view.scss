@@ -53,21 +53,21 @@ page-attendance-view {
       font-family: "Century Gothic" !important;
     }
 
-    .firstHalf{
+    .firstHalf {
       content: url("../assets/imgs/First-Half.svg");
       display: inline-block;
       width:15%;
     }
 
-    .secondHalf{
+    .secondHalf {
       content: url("../assets/imgs/Second-Half.svg");
       display: inline-block;
       width:15%;
     }
 
-    .header::after{
+    .header::after {
       background-image: unset !important;
-  }
+    }
 
     ion-calendar .title, ion-calendar .title .switch-btn,ion-calendar .title .back, ion-calendar .title .forward{
       background: transparent !important;
@@ -105,7 +105,7 @@ page-attendance-view {
     position: relative !important;
     z-index: 2 !important;
     font-size: 0.7em;
-    p{
+    p {
       //margin-top: 15%;
     }
   }
