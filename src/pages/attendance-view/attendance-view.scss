@@ -2,6 +2,12 @@ page-attendance-view {
 
   height: 100%;
 
+  .disable-btn{
+    cursor: none;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
   .toolbar-background {
     background: transparent !important;
   }

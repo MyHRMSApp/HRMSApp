@@ -6,8 +6,9 @@ import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
-import { UtilsProvider } from '../../providers/utils/utils';
 import { MyApp } from '../../app/app.component';
+import { ServiceProvider } from '../../providers/service/service';
+import { UtilsProvider } from '../../providers/utils/utils';
 
 @IonicPage()
 @Component({
@@ -27,7 +28,8 @@ export class ApplyLeavePage {
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public storage:StorageProvider, public utilService: UtilsProvider, public mainServices: MyApp) {
+    public navParams: NavParams, public storage:StorageProvider, public utilService: UtilsProvider,
+    public mainServices: MyApp, public service: ServiceProvider) {
       
     }
 
@@ -53,7 +55,31 @@ export class ApplyLeavePage {
     this.navCtrl.push("AllLeavesPage", {"titleName":"CASUAL LEAVE", userLeave: this.userCLLeave, leaveType: "0001"});
   }
   leaveEncashment() {
-    this.navCtrl.push("EncashmentLeavePage", {"titleName":"LEAVE ENCASHMENT", userLeave: this.userLeaveEncashment, leaveType: "PL"});
+  
+      try {
+        this.utilService.showLoader("Please wait..");
+        this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveEncashBalance', 'get', {payload : false}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 200){
+              this.mainServices.leaveEncashData = resultData.data;
+              console.log(JSON.stringify(this.mainServices.userLeaveBalanceListData));
+              this.utilService.dismissLoader();
+              this.navCtrl.push("EncashmentLeavePage", {"titleName":"LEAVE ENCASHMENT", userLeave: this.userLeaveEncashment, leaveType: "ENC"});
+            }else{
+              this.utilService.dismissLoader();
+              this.utilService.showCustomPopup("FAILURE",resultData.message);
+            }
+
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup("FAILURE",error.statusText);
+        });
+        
+      } catch (error) {
+        console.log("catch-->>",error);
+      }
   }
 
   ionViewDidLoad() {

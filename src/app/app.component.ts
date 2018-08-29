@@ -36,6 +36,7 @@ export class MyApp {
   public attendanceNP2_DataFlag:boolean = true;
   public attendanceNA1_DataFlag:boolean = true;
   public attendanceNA2_DataFlag:boolean = true;
+  public leaveEncashData:any;
   
   constructor(public platform: Platform,
     public statusBar: StatusBar,
