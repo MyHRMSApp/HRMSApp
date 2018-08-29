@@ -12,6 +12,7 @@ import moment from 'moment';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { ServiceProvider } from '../../providers/service/service';
 
+declare var angular:any;
 @IonicPage()
 @Component({
   selector: 'page-attendance-view',
@@ -106,23 +107,35 @@ export class AttendanceViewPage {
 
   monthChange(){
     var elements:any = document.getElementsByClassName("switch-btn");
+    var backArrow = document.getElementById("backArrow");
+    var frontArrow = document.getElementById("frontArrow");
     setTimeout(() => {
       var value = moment(elements[0].innerText, "MMM YYYY").format("MMYYYY").toString();
       var monthDifferCheck = moment().diff(moment(value, "MMYYYY"), 'months', true);
       if(monthDifferCheck >= 0 && monthDifferCheck < 1){
         console.log("monthDifferCheck-->> "+"Current Month");
+        backArrow.className = "back";
+        frontArrow.className = "forward";
         this.loadCalendarForCurrentPriviousMonths();
       }else if(monthDifferCheck < 0 && monthDifferCheck > -1){
         console.log("monthDifferCheck-->> "+"Next Month");
+        backArrow.className = "back";
+        frontArrow.className = "forward";
         this.loadCalendarForNextMonth();
       }else if(monthDifferCheck < -1 && monthDifferCheck > -2){
         console.log("monthDifferCheck-->> "+"Next after Month");
+        backArrow.className = "back";
+        frontArrow.className = "forward disable-btn";
         this.loadCalendarForNextAfterMonth();
       }else if(monthDifferCheck >= 1 && monthDifferCheck < 2){
         console.log("monthDifferCheck-->> "+"Privious Month");
+        backArrow.className = "back";
+        frontArrow.className = "forward";
         this.loadCalendarForPriviousMonths();
       }else if(monthDifferCheck >= 2 && monthDifferCheck < 3){
         console.log("monthDifferCheck-->> "+"Privious before Month");
+        backArrow.className = "back disable-btn";
+        frontArrow.className = "forward";
         this.loadCalendarForPriviousBeforeMonth();
       }
     }, 1000);

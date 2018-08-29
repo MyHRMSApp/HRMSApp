@@ -1,5 +1,11 @@
 page-encashment-leave {
 
+    .disableBtn{
+        opacity: 0.4;   
+        pointer-events: none;
+        cursor: none;
+    }
+
     .toolbar-background {
         background: transparent !important;
     }
@@ -41,19 +47,44 @@ page-encashment-leave {
             background-color: #155060 !important;
             text-align: center;
            }
-           p {
-            margin-top: 4% !important;
+           .history {
+            margin: 4% !important;
             color:white !important;
+            text-align: left !important;
+            .dot{
+                margin: 0% 3%;
+                font-size: 1em;
+            }
+            .content{
+                font-size: 0.9em;
+                color: #fff;
+            }
            }
+           
         }
 
         .cardOne {
            height: 15%;
+           color: #fff;
         }
 
         .cardTwo {
            height: 25%;
            margin-top: 15%;
+           color: #fff;
+           .applybtn{
+            ion-input{
+                width: 14% !important;
+                display: inline-block;
+                height: 90%;
+                border-radius: 10%;
+            }
+        }
+        pre{
+            display: inline-block;
+            margin: 0;
+            font-family: "Century Gothic";
+        }
         }
         
         .applyButtonParent{

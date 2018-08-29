@@ -18,7 +18,10 @@
       <ion-card-header>
         HISTORY
       </ion-card-header>
-      <p>Claimed for 15 days on 24-05-2018</p>
+      <p class="history" *ngFor="let history of encashmentData.ET_HSTRY.item">
+        <span class="dot">•</span>
+        <span class="content">{{history.HISTORY}}</span>
+      </p>
     </ion-card>
     
     <ion-card class="cardTwo">
@@ -26,26 +29,17 @@
         NEW CLAIM
       </ion-card-header>
     <ion-row>
-      <ion-col col-6>
-       <p style="text-align: right">Eligible :</p>
+      <ion-col col-12>
+        <pre><p style="text-align: center; color: #fff;"><span>Eligible     :     </span><span>{{encashmentData.EP_NDAY}} days</span></p></pre>
       </ion-col>
-      <ion-col col-6>
-       <p style="text-align: left">25 days</p>
-      </ion-col>
-      <ion-col col-6>
-       <p style="text-align: right">Apply      :</p>
-      </ion-col>
-      <ion-col col-2>
-          <ion-input ></ion-input>
-      </ion-col>
-      <ion-col col-3>
-        <p style="text-align: left">days</p>
+      <ion-col col-12 class="applybtn">
+          <pre><span>   Apply     :     <ion-input [(ngModel)]="applyEncashDays" style="color: #000;"></ion-input>   Days</span></pre>
       </ion-col>
     </ion-row>
     </ion-card>
 
-    <div class="applyButtonParent">
-      <button class="applyButton" ion-button>Apply</button>
+    <div class="applyButtonParent" [ngClass]="{'disableBtn': applyBtnFlag === true}">
+      <button class="applyButton" ion-button (click)="applyEncashmentRequest()">Apply</button>
     </div>
 
     <p class="notifyMsg">*Claimed cancellation on portal only</p>

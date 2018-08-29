@@ -899,6 +899,54 @@ public class CommonAdapterServicesResource {
 	}
 
 	/* *
+	 * @Funtion - (getLeaveEncashBalance) this funtion will return Coupon List which will come from SAP
+	 * @QueryParam - IV_PERNR which contains user Pernr Number
+	 * @return - Leave Encashment Balance List (type - JSON String format)
+	 * */
+	@GET
+	@Path("/getLeaveEncashBalance")
+	@Produces(MediaType.APPLICATION_JSON)
+	@OAuthSecurity(scope = "socialLogin")
+	public String getLeaveEncashBalance() {
+		commonServerResponce = new JSONObject(commonResponceStr);
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+		JSONObject inputJSON = new JSONObject();
+		JSONObject serverResJSON = new JSONObject();
+		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"GetLeaveEncashment");
+		
+		return serverResJSON.toString();
+	}
+
+	/* *
+	 * @Funtion - (applyEncashmentRequest) this function is using for Apply FTP Request
+	 * @QueryParam - 
+	 * @return - SAP Responce (type - JSON String format)
+	 * */
+	@POST
+	@Path("/applyEncashmentRequest")
+	@Produces(MediaType.APPLICATION_JSON)
+	@OAuthSecurity(scope = "socialLogin")
+	public String applyEncashmentRequest(@QueryParam("IP_NO_DAYS") String IP_NO_DAYS) {
+		
+		JSONObject inputJSON = new JSONObject();
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");   
+		Date date = new Date(); 
+		
+		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
+		inputJSON.put("IP_DATE", dateFormat.format(date));	
+		inputJSON.put("IP_TIME", timeFormat.format(date));
+		inputJSON.put("IP_NO_DAYS", IP_NO_DAYS);		
+		JSONObject serverResJSON = new JSONObject();
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"ApplyLeaveEncash");
+
+		return serverResJSON.toString();
+	}
+
+	/* *
 	 * @Funtion - (postService) this funtion is the common interface connection with SAP backend
 	 * @QueryParam - InputString [This is String format which is having SAP Inputs], restURL [This is also String which is having the REST URL to connect SAP Backend]
 	 * @return - commonServerResponce OBJECT (type - JSONObject format SAP RESPONCE)
@@ -931,7 +979,7 @@ public class CommonAdapterServicesResource {
 					} else {
 						LOGGER.log(Level.SEVERE, "Unexpected response status: " + status);
 						commonServerResponce.put("message", "Internal Server Error, Please try again");
-						commonServerResponce.put("status_code", 400);
+						commonServerResponce.put("status_code", status);
 						commonServerResponce.put("data", "");
 						throw new ClientProtocolException("Unexpected response status: " + status);
 					}
