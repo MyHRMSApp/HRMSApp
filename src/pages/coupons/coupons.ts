@@ -77,7 +77,7 @@ back(){
   this.navCtrl.pop();
 }
 
-watch(){
+watch() {
   this.watchCoupons = this.counts.data.ET_WATCH.item;
   this.navCtrl.push("ShareCouponsPage", {"titleName":"WATCHES", "coupons": this.watchCoupons, "length": this.watchCounts});
 }

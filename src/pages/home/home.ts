@@ -244,7 +244,7 @@ takePhoto() {
     saveToPhotoAlbum: true
   }
   this.camera.getPicture(options).then((imageData) => {
-    this.utilService.showLoader("Picture is updating..");
+    this.utilService.showLoader("Updating picture..");
     setTimeout(()=>{
       if(imageData){
         console.log("getting into if condition",imageData);
@@ -293,7 +293,7 @@ uploadPhoto() {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   }).then((imageData) => {
-    this.utilService.showLoader("Picture is updating..");
+    this.utilService.showLoader("Updating picture..");
     setTimeout(()=>{
       if(imageData){
         console.log("getting into if condition",imageData);
@@ -332,8 +332,8 @@ uploadPhoto() {
 }
 
 removePhoto(){
-  console.log("Remove Picture");
-  this.utilService.showLoader("Picture is removing..");
+  console.log("Removing picture");
+  this.utilService.showLoader("Removing picture..");
   this.photos = ("./assets/icon/avatar.png");
   this.storage.jsonstoreInitialize().then(()=>{
     this.storage.jsonstoreClearCollection("userImage").then((response:any)=>{
@@ -362,16 +362,16 @@ try {
   this.utilService.showLoader("Please wait..");
   this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
     if(resultData){
-      if(resultData.status_code == 200){
+      if(resultData.status_code == 200) {
         this.mainService.userLeaveBalanceListData = resultData.data;
         console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
         this.utilService.dismissLoader();
         this.navCtrl.push("ApplyLeavePage");
-      }else{
+      }
+      else {
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup("FAILURE",resultData.message);
       }
-
     };
   }, (error)=>{
     console.log("Data readed from jsonstore error",error);
