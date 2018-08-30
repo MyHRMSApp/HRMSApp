@@ -83,13 +83,12 @@ page-my-tasks {
         }
 
         ion-card {
-            background-color: #265865 !important;;
-            //box-shadow: unset !important;
-            border-top-left-radius: 30px !important;
-            border-bottom-left-radius: 30px !important; 
+            background-color: transparent !important;;
             margin: 0px !important;
             width: 100% !important;
             margin-top: 2% !important;
+            -webkit-box-shadow: unset !important;
+            box-shadow:  unset !important;
             ion-row {
                 top: 0%;
                 width: 100%;
@@ -121,6 +120,7 @@ page-my-tasks {
             }
             p {
                 color: white !important;
+                margin: 0px !important;
             }
         }
     }

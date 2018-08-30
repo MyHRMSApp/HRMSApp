@@ -105,6 +105,42 @@ page-my-request {
                         font-size: 1em; 
                         font-weight: bolder;
                     }
+                    .fromTime{
+                        padding: 0; 
+                        font-size: 0.9em; 
+                        font-weight: bolder;
+                        color: #3cc6c4 !important;
+                    }
+                    .toTime{
+                        text-align: center; 
+                        font-size: 0.9em; 
+                        font-weight: bolder;
+                        color: #3cc6c4 !important;
+                    }
+                    .fromIn{
+                        padding: 0; 
+                        font-size: 0.9em; 
+                        font-weight: bolder;
+                        color: #3cc6c4 !important;
+                    }
+                    .toOut{
+                        text-align: center; 
+                        font-size: 0.9em; 
+                        font-weight: bolder;
+                        color: #3cc6c4 !important;
+                    }
+                    .fromMidIn{
+                        padding: 0; 
+                        font-size: 0.9em; 
+                        font-weight: bolder;
+                        color: #deb06b !important;
+                    }
+                    .toMidOut{
+                        text-align: center; 
+                        font-size: 0.9em; 
+                        font-weight: bolder;
+                        color: #deb06b !important;
+                    }
                 }
                 .periodDetails{
                      display: block;

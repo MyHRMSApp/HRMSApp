@@ -74,10 +74,28 @@
           <p class="status">Approved</p>
           </ion-col>
           <ion-col (click)="cancelOD()" class="accordionColTwo" col-8>
-          <p class="requestId">Req Id: 123456</p>
-          <p class="date">27-06-2018 <span style="letter-spacing:0">till</span> 27-06-2018</p>
-          <p class="time">FROM - 09:30 TO - 06:30</p>
-          <p class="appliedOnOD">Applied on: 24-06-2018</p>
+          
+          <ion-col col-12 class="requestId">
+            <span>Req Id: 123456</span>
+          </ion-col>
+
+          <ion-col col-12 class="dateDetails">
+            <ion-col col-5 class="fromDate"><span >27-06-2018</span></ion-col>
+            <ion-col col-2 class="till"><span>Till</span></ion-col>
+            <ion-col col-5 class="toDate"><span >27-06-2018</span></ion-col>
+          </ion-col>
+
+          <ion-col col-12 class="dateDetails">
+            <ion-col col-6 class="fromTime"><span >FROM - 09:30</span></ion-col>
+            <ion-col col-6 class="toTime"><span >TO - 06:30</span></ion-col>
+          </ion-col>
+
+          <ion-col col-12 class="appliedDetails">
+            <span>applied on: 24-06-2018</span>
+          </ion-col>
+
+          <!-- <p class="time">FROM - 09:30 TO - 06:30</p>
+          <p class="appliedOnOD">Applied on: 24-06-2018</p> -->
           </ion-col>
           <ion-col col-2 class="accordionColThree">
               <div class="cancel" (click)="confirmCancelOD()" *ngIf="cancelButtonOD==true">
@@ -99,11 +117,31 @@
           <p class="status">Approved</p>
           </ion-col>
           <ion-col (click)="cancelFTP()" class="accordionColTwo" col-8>
-          <p class="requestId">Req Id: 123456</p>
-          <p class="date">27-06-2018</p>
-          <p class="time">IN - 09:30 OUT - 06:30</p>
+            <ion-col col-12 class="requestId">
+              <span>Req Id: 123456</span>
+            </ion-col>
+
+            <ion-col col-12 class="dateDetails">
+              <span>27-06-2018</span>
+            </ion-col>
+
+            <ion-col col-12 class="dateDetails">
+              <ion-col col-6 class="fromIn"><span >IN - 09:30</span></ion-col>
+              <ion-col col-6 class="toOut"><span >OUT - 06:30</span></ion-col>
+            </ion-col>
+
+            <ion-col col-12 class="dateDetails">
+              <ion-col col-6 class="fromMidIn"><span >MID-IN - 09:30</span></ion-col>
+              <ion-col col-6 class="toMidOut"><span >MID-OUT - 06:30</span></ion-col>
+            </ion-col>
+
+            <ion-col col-12 class="appliedDetails">
+              <span>applied on: 24-06-2018</span>
+            </ion-col>
+
+          <!-- <p class="time">IN - 09:30 OUT - 06:30</p>
           <p class="midTime">MID-IN - 09:30 MID-OUT - 06:30</p>
-          <p class="appliedOn">Applied on: 24-06-2018</p>
+          <p class="appliedOn">Applied on: 24-06-2018</p> -->
           </ion-col>
           <ion-col col-2 class="accordionColThree">
               <div *ngIf="cancelButtonFTP==true" (click)="confirmCancelFTP()" class="cancel">
