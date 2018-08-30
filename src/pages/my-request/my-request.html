@@ -18,43 +18,49 @@
         <ion-col col-6><p>LEAVES</p></ion-col>
         <ion-col col-6><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
     </ion-row>
-    <ion-row *ngIf="isGroupLeave()" class="accordionRow">
-        <ion-col  (click)="cancelLeave()" class="accordionColOne" col-2>
-        <div class="couponCounts">
-          <p>PL</p>
-        </div>
-        <p class="status pendingStatus">Pending</p>
-        </ion-col>
-        <ion-col (click)="cancelLeave()" class="accordionColTwo" col-8>
-
-          <ion-col col-12 class="requestId">
-            <span>Req Id: 123456</span>
+    <div *ngFor="let leaveItem of leaveRequestDataList">
+      <ion-row *ngIf="isGroupLeave()" class="accordionRow">
+          <ion-col class="accordionColOne" col-2>
+          <div class="couponCounts">
+            <p>{{leaveItem.LEAVE_TY}}</p>
+          </div>
+          <p class="status" [ngClass]="{'approvedStatus': getStatusRequest(leaveItem.STATUS) == 'Approved', 'rejectStatus': getStatusRequest(leaveItem.STATUS) == 'Rejected', 'pendingStatus': getStatusRequest(leaveItem.STATUS) == 'Pending'}">{{getStatusRequest(leaveItem.STATUS)}}</p>
           </ion-col>
+          <ion-col (click)="cancelLeave(leaveItem.REQID)" class="accordionColTwo" col-8>
 
-          <ion-col col-12 class="dateDetails">
-            <ion-col col-5 class="fromDate"><span >27-06-2018</span></ion-col>
-            <ion-col col-2 class="till"><span>Till</span></ion-col>
-            <ion-col col-5 class="toDate"><span >27-06-2018</span></ion-col>
-          </ion-col>
-
-          <ion-col col-12 class="periodDetails">
-              <ion-col col-5 col-5 class="fromPeriod"><span >(fullday)</span></ion-col>
-              <ion-col col-2 class="till"><span>-</span></ion-col>
-              <ion-col col-5 class="toPeriod"><span >(fullday)</span></ion-col>
+            <ion-col col-12 class="requestId">
+              <span>Req Id: {{leaveItem.REQID}}</span>
             </ion-col>
 
-          <ion-col col-12 class="appliedDetails">
-            <span >applied on: 24-06-2018</span>
-          </ion-col>
+            <ion-col col-12 class="dateDetails">
+              <ion-col col-5 class="fromDate"><span >{{leaveItem.BEGDA}}</span></ion-col>
+              <ion-col col-2 class="till"><span>Till</span></ion-col>
+              <ion-col col-5 class="toDate"><span >{{leaveItem.EDNDA}}</span></ion-col>
+            </ion-col>
 
-        </ion-col>
-        <ion-col col-2 class="accordionColThree">
-            <div class="cancel" (click)="confirmCancelLeave()" *ngIf="cancelButtonLeave==true">
-            <ion-icon name="ios-close-circle-outline"></ion-icon>
-            <p>Cancel</p>
-          </div>
-        </ion-col>
-    </ion-row>
+            <ion-col col-12 class="periodDetails">
+                <ion-col col-5 col-5 class="fromPeriod"><span >({{getPeriod(leaveItem.BEGUZ)}})</span></ion-col>
+                <ion-col col-2 class="till"><span>-</span></ion-col>
+                <ion-col col-5 class="toPeriod"><span >({{getPeriod(leaveItem.ENDUZ)}})</span></ion-col>
+              </ion-col>
+
+            <ion-col col-12 class="appliedDetails">
+              <span >applied on: {{leaveItem.CREON}}</span>
+            </ion-col>
+
+            <ion-col col-12 class="statusMsg" *ngIf="getStatusRequest(leaveItem.STATUS) != 'Approved'">
+                <span [ngClass]="{'approvedStatus': getStatusRequest(leaveItem.STATUS) == 'Approved', 'rejectStatus': getStatusRequest(leaveItem.STATUS) == 'Rejected', 'pendingStatus': getStatusRequest(leaveItem.STATUS) == 'Pending'}">Status: {{getStatusRequestMsg(leaveItem.STATUS)}}</span>
+              </ion-col>
+
+          </ion-col>
+          <ion-col col-2 class="accordionColThree">
+              <div class="cancel displayNone" (click)="confirmCancelLeave()" id="{{leaveItem.REQID}}">
+              <ion-icon name="ios-close-circle-outline"></ion-icon>
+              <p>Cancel</p>
+            </div>
+          </ion-col>
+      </ion-row>
+    </div>
 
       <ion-row (click)="toggleOD()" [ngClass]="{active: isGroupOD()}">
         <ion-col col-6><p>ON DUTY</p></ion-col>

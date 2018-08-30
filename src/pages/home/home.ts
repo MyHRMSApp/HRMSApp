@@ -386,7 +386,32 @@ try {
 }
 
 myRequest() {
-  this.navCtrl.push("MyRequestPage");
+  
+try {
+  this.utilService.showLoader("Please wait..");
+  this.service.invokeAdapterCall('commonAdapterServices', 'getMyRequestDetails', 'get', {payload : false}).then((resultData:any)=>{
+    if(resultData){
+      if(resultData.status_code == 200) {
+        this.mainService.myRequestData = resultData.data;
+        console.log(JSON.stringify(this.mainService.myRequestData));
+        this.utilService.dismissLoader();
+        this.navCtrl.push("MyRequestPage");
+      }
+      else {
+        this.utilService.dismissLoader();
+        this.utilService.showCustomPopup("FAILURE",resultData.message);
+      }
+    };
+  }, (error)=>{
+    console.log("Data readed from jsonstore error",error);
+    this.utilService.dismissLoader();
+    this.utilService.showCustomPopup("FAILURE",error.statusText);
+  });
+  
+} catch (error) {
+  console.log("catch-->>",error);
+}
+  
 }
 
 myTask() {
