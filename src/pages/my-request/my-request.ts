@@ -79,11 +79,11 @@ export class MyRequestPage {
       this.ref.detectChanges();
     }
     cancelOD(){
-      this.cancelButtonOD=!this.cancelButtonOD;
+      this.cancelButtonOD=true;
       this.ref.detectChanges();
     }
     cancelFTP(){
-      this.cancelButtonFTP=!this.cancelButtonFTP;
+      this.cancelButtonFTP=true;
       this.ref.detectChanges();
     }
 

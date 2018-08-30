@@ -23,13 +23,30 @@
         <div class="couponCounts">
           <p>PL</p>
         </div>
-        <p class="status">Approved</p>
+        <p class="status pendingStatus">Pending</p>
         </ion-col>
         <ion-col (click)="cancelLeave()" class="accordionColTwo" col-8>
-        <p class="requestId">Req Id: 123456</p>
-        <p class="date">27-06-2018 <span style="letter-spacing:0">till</span> 27-06-2018</p>
-        <p class="day">(fullday) - (fullday)</p>
-        <p class="appliedOn">Applied on: 24-06-2018</p>
+
+          <ion-col col-12 class="requestId">
+            <span>Req Id: 123456</span>
+          </ion-col>
+
+          <ion-col col-12 class="dateDetails">
+            <ion-col col-5 class="fromDate"><span >27-06-2018</span></ion-col>
+            <ion-col col-2 class="till"><span>Till</span></ion-col>
+            <ion-col col-5 class="toDate"><span >27-06-2018</span></ion-col>
+          </ion-col>
+
+          <ion-col col-12 class="periodDetails">
+              <ion-col col-5 col-5 class="fromPeriod"><span >(fullday)</span></ion-col>
+              <ion-col col-2 class="till"><span>-</span></ion-col>
+              <ion-col col-5 class="toPeriod"><span >(fullday)</span></ion-col>
+            </ion-col>
+
+          <ion-col col-12 class="appliedDetails">
+            <span >applied on: 24-06-2018</span>
+          </ion-col>
+
         </ion-col>
         <ion-col col-2 class="accordionColThree">
             <div class="cancel" (click)="confirmCancelLeave()" *ngIf="cancelButtonLeave==true">

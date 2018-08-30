@@ -48,18 +48,72 @@ page-my-request {
                     line-height: 0;
                     font-size: 0.9rem;
                 }
+                .pendingStatus{
+                    color: #DB9131;
+                }
+                .approvedStatus{
+                    color: #2ED536;
+                }
+                .rejectStatus{
+                    color: #E54B4F; 
+                }
             }    
             .accordionColTwo {
                 background-color: #265865;
                 border-bottom: 1px solid #0d4655;
+                color: #fff;
                 .requestId{
-                    font-size:1.2rem !important; 
-                    line-height: 1 !important;
+                    display: block; 
+                    padding: 1% 5%; 
+                    color: #8fae5f;
+                    span{
+                        font-size: 0.8em;
+                    }
                 }
-                .date{
-                    line-height: 0 !important;
-                    letter-spacing: 1px !important;
-                    font-size: 1.3rem !important;
+                .dateDetails{
+                    display: block; 
+                    padding: 1% 5%;
+                    .fromDate{
+                        padding: 0; 
+                        font-size: 1em; 
+                        font-weight: bolder;
+                    }
+                    .till{
+                        text-align: center; 
+                        font-size: 1em; 
+                        margin-left: 3%;
+                    }
+                    .toDate{
+                        text-align: center; 
+                        font-size: 1em; 
+                        font-weight: bolder;
+                    }
+                }
+                .periodDetails{
+                     display: block;
+                     padding: 1% 5%;
+                     color: rgb(141, 135, 103);
+                    .fromPeriod{
+                        padding: 0; 
+                        font-size: 0.8em;
+                        margin-left: 8%;
+                    }
+                    .till{
+                        text-align: center; 
+                        margin-left: 12%;
+                    }
+                    .toPeriod{
+                        text-align: center; 
+                        margin-left: 10%; 
+                        font-size: 0.8em;
+                    }
+                }
+                .appliedDetails{
+                    display: block; 
+                    padding: 1% 5%;
+                    span{
+                        font-size: 0.8em;
+                    }
                 }
                 .day{
                     font-size:1.2rem !important; 
