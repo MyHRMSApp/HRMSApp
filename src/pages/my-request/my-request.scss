@@ -52,14 +52,12 @@ page-my-request {
             .accordionColTwo {
                 background-color: #265865;
                 border-bottom: 1px solid #0d4655;
+                color: #fff;
                 .requestId{
-                    font-size:1.2rem !important; 
-                    line-height: 1 !important;
+                    display: block;
                 }
                 .date{
-                    line-height: 0 !important;
-                    letter-spacing: 1px !important;
-                    font-size: 1.3rem !important;
+                    display: block;
                 }
                 .day{
                     font-size:1.2rem !important; 

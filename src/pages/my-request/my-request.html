@@ -23,13 +23,30 @@
         <div class="couponCounts">
           <p>PL</p>
         </div>
-        <p class="status">Approved</p>
+        <p class="status" style="color: #DB9131;">Pending</p>
         </ion-col>
         <ion-col (click)="cancelLeave()" class="accordionColTwo" col-8>
-        <p class="requestId">Req Id: 123456</p>
-        <p class="date">27-06-2018 <span style="letter-spacing:0">till</span> 27-06-2018</p>
-        <p class="day">(fullday) - (fullday)</p>
-        <p class="appliedOn">Applied on: 24-06-2018</p>
+
+          <ion-col col-12 style="display: block; padding: 1% 5%; color: #8fae5f;">
+            <span style="font-size: 0.8em;">Req Id: 123456</span>
+          </ion-col>
+
+          <ion-col col-12 style="display: block; padding: 1% 5%;">
+            <ion-col col-5 style="padding: 0; font-size: 1em; font-weight: bolder;"><span >27-06-2018</span></ion-col>
+            <ion-col col-2 style="text-align: center; font-size: 1em; margin-left: 3%;"><span>Till</span></ion-col>
+            <ion-col col-5 style="text-align: center; font-size: 1em; font-weight: bolder;"><span >27-06-2018</span></ion-col>
+          </ion-col>
+
+          <ion-col col-12 style="display: block; padding: 1% 5%;color: rgb(141, 135, 103);">
+              <ion-col col-5 col-5 style="padding: 0; font-size: 0.8em;margin-left: 8%;"><span >(fullday)</span></ion-col>
+              <ion-col col-2 style="text-align: center; margin-left: 12%;"><span>-</span></ion-col>
+              <ion-col col-5 style="text-align: center; margin-left: 10%; font-size: 0.8em;"><span >(fullday)</span></ion-col>
+            </ion-col>
+
+          <ion-col col-12 style="display: block; padding: 1% 5%;">
+            <span style="font-size: 0.8em;">applied on: 24-06-2018</span>
+          </ion-col>
+
         </ion-col>
         <ion-col col-2 class="accordionColThree">
             <div class="cancel" (click)="confirmCancelLeave()" *ngIf="cancelButtonLeave==true">

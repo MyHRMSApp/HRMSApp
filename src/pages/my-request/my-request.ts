@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -23,7 +23,7 @@ export class MyRequestPage {
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams) { 
+    public navParams: NavParams, private ref: ChangeDetectorRef) { 
   }
 
   ionViewDidLoad() {
@@ -40,6 +40,7 @@ export class MyRequestPage {
       } else {
           this.shownLeave = group;
       }
+      this.ref.detectChanges();
     };
     isGroupLeave(group) {
       return this.shownLeave === group;
@@ -53,6 +54,7 @@ export class MyRequestPage {
       } else {
           this.shownOD = group;
       }
+      this.ref.detectChanges();
     };
     isGroupOD(group) {
       return this.shownOD === group;
@@ -66,29 +68,36 @@ export class MyRequestPage {
       } else {
           this.shownFTP = group;
       }
+      this.ref.detectChanges();
     };
     isGroupFTP(group) {
       return this.shownFTP === group;
     };
 
     cancelLeave(){
-      this.cancelButtonLeave=true;
+      this.cancelButtonLeave=!this.cancelButtonLeave;
+      this.ref.detectChanges();
     }
     cancelOD(){
       this.cancelButtonOD=true;
+      this.ref.detectChanges();
     }
     cancelFTP(){
       this.cancelButtonFTP=true;
+      this.ref.detectChanges();
     }
 
     confirmCancelLeave(){
       this.cancelButtonLeave=false;
+      this.ref.detectChanges();
     }
     confirmCancelOD(){
       this.cancelButtonOD=false;
+      this.ref.detectChanges();
     }
     confirmCancelFTP(){
       this.cancelButtonFTP=false;
+      this.ref.detectChanges();
     }
 
   openMenu() {
