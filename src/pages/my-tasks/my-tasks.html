@@ -27,12 +27,10 @@
           </ion-item>
         </ion-col>
     </ion-row>
-    <ion-card *ngFor="let t of tasks; let i=index" (click)="toggleGroup(t)" [ngClass]="{active: isGroupShown(t)}">
+    <ion-card style="background-image: url(./assets/couponsImages/my-Task-BG.svg) !important;background-size: 100% 100%;" *ngFor="let t of tasks; let i=index" (click)="toggleGroup(t)" [ngClass]="{active: isGroupShown(t)}">
       <ion-row>
-        <ion-col col-2 style="padding:0px !important">
-            <div class="couponCounts">
+        <ion-col col-2>
               <p>PL</p>
-            </div>
         </ion-col>
         <ion-col col-4>
           <p style="margin-top: 12%;text-align: left;">{{t.title}}</p>
