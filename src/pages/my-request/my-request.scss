@@ -1,5 +1,20 @@
 page-my-request {
 
+    .pendingStatus{
+        color: #DB9131;
+    }
+    .approvedStatus{
+        color: #2ED536;
+    }
+    .rejectStatus{
+        color: #E54B4F; 
+    }
+
+    .displayNone{
+        display: none;
+    }
+
+
     .toolbar-background {
         background: transparent !important;
     }
@@ -46,8 +61,10 @@ page-my-request {
                 text-align:-webkit-center;
                 .status{
                     line-height: 0;
-                    font-size: 0.9rem;
+                    font-size: 0.75em;
+                    font-weight: bolder;
                 }
+
                 .pendingStatus{
                     color: #DB9131;
                 }
@@ -144,12 +161,37 @@ page-my-request {
                         font-size: 0.8em;
                     }
                 }
+                .timeDetails{
+                    display: block;
+                    padding: 1% 3%;
+                    font-size: 0.75em;
+                    font-weight: bolder;
+                    .normalClr{
+                        color: #38C1C1;
+                    }
+                    .changeClr{
+                        color: #EDB366;
+                    }
+                }
                 .appliedDetails{
                     display: block; 
                     padding: 1% 5%;
                     span{
                         font-size: 0.8em;
                     }
+                }
+                .statusMsg{
+                    display: block; 
+                    padding: 1% 5%;
+                    span{
+                        overflow: hidden;
+                        display: inline-block;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: 100%;
+                        font-size: 0.8em;
+                    }
+
                 }
                 .day{
                     font-size:1.2rem !important; 

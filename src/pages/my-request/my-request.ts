@@ -5,7 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
-
+import { MyApp } from '../../app/app.component';
+import { ServiceProvider } from '../../providers/service/service';
+import { UtilsProvider } from '../../providers/utils/utils';
 
 @IonicPage()
 @Component({
@@ -18,12 +20,16 @@ export class MyRequestPage {
   cancelButtonLeave: boolean = false;
   cancelButtonFTP: boolean = false;
   cancelButtonOD: boolean = false;
+  public leaveRequestDataList:any;
+  public odRequestDataList:any;
+  public ftpRequestDataList:any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, private ref: ChangeDetectorRef) { 
+    public navParams: NavParams, private ref: ChangeDetectorRef, public mainService: MyApp, 
+    public service: ServiceProvider, public utilService: UtilsProvider) { 
   }
 
   ionViewDidLoad() {
@@ -74,8 +80,15 @@ export class MyRequestPage {
       return this.shownFTP === group;
     };
 
-    cancelLeave(){
+    cancelLeave(eventID){
       this.cancelButtonLeave=!this.cancelButtonLeave;
+      if(!this.cancelButtonLeave){
+        var cancelBtn = document.getElementById(eventID);
+        cancelBtn.className = "cancel displayNone";
+      }else{
+        var cancelBtn = document.getElementById(eventID);
+        cancelBtn.className = "cancel";
+      }
       this.ref.detectChanges();
     }
     cancelOD(){
@@ -87,8 +100,8 @@ export class MyRequestPage {
       this.ref.detectChanges();
     }
 
-    confirmCancelLeave(){
-      this.cancelButtonLeave=false;
+    confirmCancelLeave(event){
+      this.cancelButtonLeave=!this.cancelButtonLeave;
       this.ref.detectChanges();
     }
     confirmCancelOD(){
@@ -106,6 +119,80 @@ export class MyRequestPage {
 
   back(){
     this.navCtrl.pop();
+  }
+
+  ionViewCanEnter() {
+    console.log("this.mainService.myRequestData--->>>"+this.mainService.myRequestData);
+    this.leaveRequestDataList = this.mainService.myRequestData.ET_LEAVE.item;
+    this.odRequestDataList = this.mainService.myRequestData.ET_OD.item;
+    this.ftpRequestDataList = this.mainService.myRequestData.ET_FTP.item;
+  }
+
+  getStatusRequest(status){
+    var res = status.split("@");
+    var responceData = "";
+    if(res[1] == "P"){
+      responceData = "Pending";
+    }else if(res[1] == "A"){
+      responceData = "Approved";
+    }else if(res[1] == "R"){
+      responceData = "Rejected";
+    }
+    return responceData;
+  }
+
+  getStatusRequestMsg(status){
+    var res = status.split("@");
+    return res[0];
+  }
+
+  getPeriod(period){
+    var periodRes = "";
+    switch (period) {
+      case "FD":
+        periodRes = "full Day";
+        break;
+      case "FQ":
+        periodRes = "1st Qtr";
+        break;
+      case "SQ":
+        periodRes = "2nd Qtr";
+        break;
+      case "FH":
+        periodRes = "1st half";
+        break;
+      case "SH":
+        periodRes = "2nd half";
+        break;
+    }
+
+    return periodRes;
+  }
+
+  getTimeDetails(timeData){
+    console.log("getTimeDetails------->>"+timeData);
+    if (timeData.toString().includes("@")){
+      var result = timeData.toString().split("@");
+      return result[0];
+    }else{
+      return timeData;
+    }
+
+    
+  }
+
+  getTimeDetailsChange(timeData){
+    console.log("getTimeDetailsChange------->>"+timeData);
+    if (timeData.toString().includes("@")){
+      var result = timeData.toString().split("@");
+      if(result[1] == "Y"){
+        return 'Y';
+      }
+    }else{
+      return 'N';
+    }
+    
+    
   }
 
 }

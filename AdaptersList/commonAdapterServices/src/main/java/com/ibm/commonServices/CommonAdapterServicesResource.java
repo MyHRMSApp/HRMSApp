@@ -947,6 +947,26 @@ public class CommonAdapterServicesResource {
 	}
 
 	/* *
+	 * @Funtion - (getMyRequestDetails) this funtion will return My Request List which will come from SAP
+	 * @QueryParam - IV_PERNR which contains user Pernr Number
+	 * @return - Leave Encashment Balance List (type - JSON String format)
+	 * */
+	@GET
+	@Path("/getMyRequestDetails")
+	@Produces(MediaType.APPLICATION_JSON)
+	@OAuthSecurity(scope = "socialLogin")
+	public String getMyRequestDetails() {
+		commonServerResponce = new JSONObject(commonResponceStr);
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+		JSONObject inputJSON = new JSONObject();
+		JSONObject serverResJSON = new JSONObject();
+		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"GetMyRequests");
+		
+		return serverResJSON.toString();
+	}
+
+	/* *
 	 * @Funtion - (postService) this funtion is the common interface connection with SAP backend
 	 * @QueryParam - InputString [This is String format which is having SAP Inputs], restURL [This is also String which is having the REST URL to connect SAP Backend]
 	 * @return - commonServerResponce OBJECT (type - JSONObject format SAP RESPONCE)
