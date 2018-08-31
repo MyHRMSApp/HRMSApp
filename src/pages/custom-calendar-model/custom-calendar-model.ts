@@ -344,4 +344,36 @@ export class CustomCalendarModelPage {
     alert.present();
   }
 
+  monthChange(){
+    var elements:any = document.getElementsByClassName("switch-btn");
+    var backArrow = document.getElementById("backArrow");
+    var frontArrow = document.getElementById("frontArrow");
+    setTimeout(() => {
+      var value = moment(elements[0].innerText, "MMM YYYY").format("MMYYYY").toString();
+      var monthDifferCheck = moment().diff(moment(value, "MMYYYY"), 'months', true);
+      if(monthDifferCheck >= 0 && monthDifferCheck < 1){
+        console.log("monthDifferCheck-->> "+"Current Month");
+        backArrow.className = "back";
+        frontArrow.className = "forward";
+      }else if(monthDifferCheck < 0 && monthDifferCheck > -1){
+        console.log("monthDifferCheck-->> "+"Next Month");
+        backArrow.className = "back";
+        frontArrow.className = "forward";
+      }else if(monthDifferCheck < -1 && monthDifferCheck > -2){
+        console.log("monthDifferCheck-->> "+"Next after Month");
+        backArrow.className = "back";
+        frontArrow.className = "forward disable-btn";
+      }else if(monthDifferCheck >= 1 && monthDifferCheck < 2){
+        console.log("monthDifferCheck-->> "+"Privious Month");
+        backArrow.className = "back";
+        frontArrow.className = "forward";
+      }else if(monthDifferCheck >= 2 && monthDifferCheck < 3){
+        console.log("monthDifferCheck-->> "+"Privious before Month");
+        backArrow.className = "back disable-btn";
+        frontArrow.className = "forward";
+      }
+    }, 1000);
+    
+  }
+
 }

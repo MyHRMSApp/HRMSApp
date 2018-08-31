@@ -4,7 +4,13 @@ page-custom-calendar-model {
         max-height: 80%;
         display: block !important;
         position: unset !important;
-        margin: 15% auto;    
+        margin: 15% auto;   
+        
+        .disable-btn{
+            cursor: none;
+            pointer-events: none;
+            opacity: 0.4;
+          }
 
         .toolbar-md {
             padding: 4px;
