@@ -41,6 +41,8 @@ export class HomePage {
   hamburger: string;
   public attendanceInterval:any;
   public showCustomMsg: boolean = false;
+  public showTasks: boolean = false;
+  showTemplate: string;
   
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
@@ -178,11 +180,13 @@ ionViewCanEnter() {
       if(resultData){
           if(resultData.customMessage != "false"){
             this.customMsg = resultData.customMessage;
-            //this.showCustomMsg = true;
+            this.showTasks = false;
+            this.showTemplate = "withTasks";
             this.ref.detectChanges();
           }else{
             this.customMsg = "false";
-            //this.showCustomMsg = false;
+            this.showTasks = true;
+            this.showTemplate = "withoutTasks";
             this.ref.detectChanges();
           }
           this.ref.detectChanges();

@@ -64,6 +64,26 @@ page-home {
         }
       }
     }
+    // .withTasks {
+    //   .gridImageDiv {
+    //     width: 85%;
+    //     border-radius: 50%;
+    //     .userImage {
+    //       margin-top: 10%;
+    //       width: 50%;
+    //     }
+    //   }
+    // }
+    // .withoutTasks {
+    //   .gridImageDiv {
+    //     width: 100%;
+    //     border-radius: 50%;
+    //     .userImage {
+    //       margin-top: 22%;
+    //       width: 50%;
+    //     }
+    //   }
+    // }
     .customMsg {
       width: 100%;
       p {
@@ -122,12 +142,24 @@ page-home {
     }
     //Media query for iPhone-X
     @media only screen and (min-height: 812px) and (min-width: 375px) {
-      .gridImageDiv {
-        width: 85%;
-        border-radius: 50%;
-        .userImage {
-          margin-top: 15%;
-          width: 50%;
+      .withCustomMsg {
+        .gridImageDiv {
+          width: 85%;
+          border-radius: 50%;
+          .userImage {
+            margin-top: 22%;
+            width: 50%;
+          }
+        }
+      }
+      .withoutCustomMsg {
+        .gridImageDiv {
+          width: 100%;
+          border-radius: 50%;
+          .userImage {
+            margin-top: 35%;
+            width: 50%;
+          }
         }
       }
       .userAvatar {
@@ -136,16 +168,6 @@ page-home {
         border-radius:50%;
         width:88px;
         height:88px;
-        }
-      }
-      .withoutCustomMsg {
-        .gridImageDiv {
-          width: 100%;
-          border-radius: 50%;
-          .userImage {
-            margin-top: 15%;
-            width: 50%;
-          }
         }
       }
     }
