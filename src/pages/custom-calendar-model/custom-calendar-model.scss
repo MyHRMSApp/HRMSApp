@@ -6,12 +6,13 @@ page-custom-calendar-model {
         position: unset !important;
         margin: 15% auto;    
 
-        .toolbar-md {
-            padding: 4px;
+        .toolbar-md .toolbar-ios {
+            padding: 4px !important;
             min-height: 65px;
+            padding-top: unset !important;
         }
 
-        .toolbar-title-md{
+        .toolbar-title-md .toolbar-title-ios {
             color: #fff !important;
         }
 
@@ -1075,3 +1076,66 @@ page-custom-calendar-model {
        
 
 }
+
+
+ //Media query for iPhone-X
+ @media only screen and (min-height: 812px) and (min-width: 375px) {
+    
+    page-custom-calendar-model {
+
+        max-width: 85%;
+        max-height: 60%;
+        display: block !important;
+        position: relative !important;
+        margin: 35% auto; 
+
+        .toolbar-background-ios{
+            background: unset !important;
+        }
+
+        .toolbar-title-ios {
+            color: white !important;
+            text-align: left !important;
+        }
+        
+        .toolbar-ios ion-title {
+            padding: 0 10px 1px !important;
+        }
+
+        .toolbar-ios {
+            padding: 4px !important;
+            min-height: 65px;
+            padding-top: unset !important;
+        }
+
+        ion-title {
+            padding-top: unset !important;
+        }
+
+        ion-calendar-month .primary .days ion-button.on-selected{
+            background-color: #019F9E;
+            p{
+                color: #fff !important;
+                background: #019F9E;
+                width: 30px;
+                height: 30px;
+                border-radius: 67px;
+                padding: 15%;
+                margin-top: -15%;
+                font-size: 0.9em !important;
+            }
+        }
+
+        .pretty .state label {
+            position: initial;
+            display: inline-block;
+            font-weight: 400;
+            margin: -3px;
+            text-indent: 1.8em;
+            min-width: calc(1em + 2px)
+        }
+    }
+
+
+
+ }

@@ -202,6 +202,7 @@ ion-nav{
          .alert-button{
             color: #009688 !important;
             font-weight: bolder;
+            font-size: 1em !important;
          }
      }
      .alert-radio-group{
@@ -272,3 +273,21 @@ ion-nav{
 
 
  }
+
+  //Media query for iPhone-X
+  @media only screen and (min-height: 812px) and (min-width: 375px) {
+
+    .alert-radio-icon{
+        left: 0px !important;
+        top: 0;
+        border-radius: 4px;
+        position: relative;
+        width: 22px;
+        height: 20px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #009688;
+        min-width: 22px !important;
+    }
+
+}
