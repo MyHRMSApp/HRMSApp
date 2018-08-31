@@ -124,6 +124,8 @@ export class MyRequestPage {
   ionViewCanEnter() {
     console.log("this.mainService.myRequestData--->>>"+this.mainService.myRequestData);
     this.leaveRequestDataList = this.mainService.myRequestData.ET_LEAVE.item;
+    this.odRequestDataList = this.mainService.myRequestData.ET_OD.item;
+    this.ftpRequestDataList = this.mainService.myRequestData.ET_FTP.item;
   }
 
   getStatusRequest(status){
@@ -165,6 +167,32 @@ export class MyRequestPage {
     }
 
     return periodRes;
+  }
+
+  getTimeDetails(timeData){
+    console.log("getTimeDetails------->>"+timeData);
+    if (timeData.toString().includes("@")){
+      var result = timeData.toString().split("@");
+      return result[0];
+    }else{
+      return timeData;
+    }
+
+    
+  }
+
+  getTimeDetailsChange(timeData){
+    console.log("getTimeDetailsChange------->>"+timeData);
+    if (timeData.toString().includes("@")){
+      var result = timeData.toString().split("@");
+      if(result[1] == "Y"){
+        return 'Y';
+      }
+    }else{
+      return 'N';
+    }
+    
+    
   }
 
 }

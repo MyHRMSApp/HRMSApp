@@ -62,7 +62,57 @@
       </ion-row>
     </div>
 
-      <ion-row (click)="toggleOD()" [ngClass]="{active: isGroupOD()}">
+
+    <ion-row text-wrap (click)="toggleOD()" [ngClass]="{active: isGroupOD()}">
+        <ion-col col-6><p>ON DUTY</p></ion-col>
+        <ion-col col-6><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
+    </ion-row>
+    <div *ngFor="let leaveItem of odRequestDataList">
+      <ion-row *ngIf="isGroupOD()" class="accordionRow">
+          <ion-col class="accordionColOne" col-2>
+          <div class="couponCounts">
+            <p>OD</p>
+          </div>
+          <p class="status" [ngClass]="{'approvedStatus': getStatusRequest(leaveItem.STATUS) == 'Approved', 'rejectStatus': getStatusRequest(leaveItem.STATUS) == 'Rejected', 'pendingStatus': getStatusRequest(leaveItem.STATUS) == 'Pending'}">{{getStatusRequest(leaveItem.STATUS)}}</p>
+          </ion-col>
+          <ion-col (click)="cancelLeave(leaveItem.REQID)" class="accordionColTwo" col-8>
+
+            <ion-col col-12 class="requestId">
+              <span>Req Id: {{leaveItem.REQID}}</span>
+            </ion-col>
+
+            <ion-col col-12 class="dateDetails">
+              <ion-col col-5 class="fromDate"><span >{{leaveItem.BEGDA}}</span></ion-col>
+              <ion-col col-2 class="till"><span>Till</span></ion-col>
+              <ion-col col-5 class="toDate"><span >{{leaveItem.ENGDDA}}</span></ion-col>
+            </ion-col>
+
+            <ion-col col-12 class="timeDetails">
+                <ion-col col-6 class="fromPeriod"><span >FROM - {{leaveItem.SFT_IN}}</span></ion-col>
+                <ion-col col-6 class="toPeriod"><span >TO - {{leaveItem.SFT_OUT}}</span></ion-col>
+              </ion-col>
+
+            <ion-col col-12 class="appliedDetails">
+              <span >applied on: {{leaveItem.CREON}}</span>
+            </ion-col>
+
+            <ion-col col-12 class="statusMsg" *ngIf="getStatusRequest(leaveItem.STATUS) != 'Approved'">
+                <span [ngClass]="{'approvedStatus': getStatusRequest(leaveItem.STATUS) == 'Approved', 'rejectStatus': getStatusRequest(leaveItem.STATUS) == 'Rejected', 'pendingStatus': getStatusRequest(leaveItem.STATUS) == 'Pending'}">Status: {{getStatusRequestMsg(leaveItem.STATUS)}}</span>
+              </ion-col>
+
+          </ion-col>
+          <ion-col col-2 class="accordionColThree">
+              <div class="cancel displayNone" (click)="confirmCancelLeave()" id="{{leaveItem.REQID}}">
+              <ion-icon name="ios-close-circle-outline"></ion-icon>
+              <p>Cancel</p>
+            </div>
+          </ion-col>
+      </ion-row>
+    </div>
+
+    
+
+      <!-- <ion-row (click)="toggleOD()" [ngClass]="{active: isGroupOD()}">
         <ion-col col-6><p>ON DUTY</p></ion-col>
         <ion-col col-6><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
       </ion-row>
@@ -94,8 +144,8 @@
             <span>applied on: 24-06-2018</span>
           </ion-col>
 
-          <!-- <p class="time">FROM - 09:30 TO - 06:30</p>
-          <p class="appliedOnOD">Applied on: 24-06-2018</p> -->
+          <p class="time">FROM - 09:30 TO - 06:30</p>
+          <p class="appliedOnOD">Applied on: 24-06-2018</p>
           </ion-col>
           <ion-col col-2 class="accordionColThree">
               <div class="cancel" (click)="confirmCancelOD()" *ngIf="cancelButtonOD==true">
@@ -103,9 +153,67 @@
               <p>Cancel</p>
             </div>
           </ion-col>
-      </ion-row>
+      </ion-row> -->
 
-      <ion-row (click)="toggleFTP()" [ngClass]="{active: isGroupFTP()}">
+
+      <ion-row text-wrap (click)="toggleFTP()" [ngClass]="{active: isGroupFTP()}">
+          <ion-col col-6><p>FORGOT TO PUNCH</p></ion-col>
+          <ion-col col-6><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
+      </ion-row>
+      <div *ngFor="let leaveItem of ftpRequestDataList">
+        <ion-row *ngIf="isGroupFTP()" class="accordionRow">
+            <ion-col class="accordionColOne" col-2>
+            <div class="couponCounts">
+              <p>FTP</p>
+            </div>
+            <p class="status" [ngClass]="{'approvedStatus': getStatusRequest(leaveItem.STATUS) == 'Approved', 'rejectStatus': getStatusRequest(leaveItem.STATUS) == 'Rejected', 'pendingStatus': getStatusRequest(leaveItem.STATUS) == 'Pending'}">{{getStatusRequest(leaveItem.STATUS)}}</p>
+            </ion-col>
+            <ion-col (click)="cancelLeave(leaveItem.REQID)" class="accordionColTwo" col-8>
+  
+              <ion-col col-12 class="requestId">
+                <span>Req Id: {{leaveItem.REQID}}</span>
+              </ion-col>
+  
+              <ion-col col-12 class="dateDetails">
+                <ion-col col-12 class="fromDate"><span >{{leaveItem.DATUM}}</span></ion-col>
+              </ion-col>
+  
+              <ion-col col-12 class="timeDetails">
+                  <ion-col col-6 class="fromPeriod" [ngClass]="{'changeClr': getTimeDetailsChange(leaveItem.SFT_IN) == 'Y', 'normalClr': getTimeDetailsChange(leaveItem.SFT_IN) == 'N'}"><span >IN - {{getTimeDetails(leaveItem.SFT_IN)}}</span></ion-col>
+                  <ion-col col-6 class="toPeriod" [ngClass]="{'changeClr': getTimeDetailsChange(leaveItem.SFT_OUT) == 'Y', 'normalClr': getTimeDetailsChange(leaveItem.SFT_OUT) == 'N'}"><span >OUT - {{getTimeDetails(leaveItem.SFT_OUT)}}</span></ion-col>
+                </ion-col>
+                <ion-col col-12 class="timeDetails">
+                    <ion-col col-6 class="fromPeriod" [ngClass]="{'changeClr': getTimeDetailsChange(leaveItem.LUN_IN) == 'Y', 'normalClr': getTimeDetailsChange(leaveItem.LUN_IN) == 'N'}"><span >MID-IN - {{getTimeDetails(leaveItem.LUN_IN)}}</span></ion-col>
+                    <ion-col col-6 class="toPeriod" [ngClass]="{'changeClr': getTimeDetailsChange(leaveItem.LUN_OUT) == 'Y', 'normalClr': getTimeDetailsChange(leaveItem.LUN_OUT) == 'N'}"><span >MID-OUT - {{getTimeDetails(leaveItem.LUN_OUT)}}</span></ion-col>
+                  </ion-col>
+  
+              <ion-col col-12 class="appliedDetails">
+                <span >applied on: {{leaveItem.CREON}}</span>
+              </ion-col>
+  
+              <ion-col col-12 class="statusMsg" *ngIf="getStatusRequest(leaveItem.STATUS) != 'Approved'">
+                  <span [ngClass]="{'approvedStatus': getStatusRequest(leaveItem.STATUS) == 'Approved', 'rejectStatus': getStatusRequest(leaveItem.STATUS) == 'Rejected', 'pendingStatus': getStatusRequest(leaveItem.STATUS) == 'Pending'}">Status: {{getStatusRequestMsg(leaveItem.STATUS)}}</span>
+                </ion-col>
+  
+            </ion-col>
+            <ion-col col-2 class="accordionColThree" *ngIf="getStatusRequest(leaveItem.STATUS) == 'Pending'">
+                <div class="cancel displayNone" (click)="confirmCancelLeave()" id="{{leaveItem.REQID}}">
+                <ion-icon name="ios-close-circle-outline"></ion-icon>
+                <p>Cancel</p>
+              </div>
+            </ion-col>
+
+            <ion-col col-2 class="accordionColThree" *ngIf="getStatusRequest(leaveItem.STATUS) == 'Approved' || getStatusRequest(leaveItem.STATUS) == 'Rejected'">
+              <div class="cancel displayNone" (click)="confirmCancelLeave()" id="{{leaveItem.REQID}}">
+              <ion-icon name="ios-close-circle-outline"></ion-icon>
+              <p>Delete</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+      <!-- <ion-row (click)="toggleFTP()" [ngClass]="{active: isGroupFTP()}">
         <ion-col col-6><p>FORGOT TO PUNCH</p></ion-col>
         <ion-col col-6><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
       </ion-row>
@@ -139,9 +247,6 @@
               <span>applied on: 24-06-2018</span>
             </ion-col>
 
-          <!-- <p class="time">IN - 09:30 OUT - 06:30</p>
-          <p class="midTime">MID-IN - 09:30 MID-OUT - 06:30</p>
-          <p class="appliedOn">Applied on: 24-06-2018</p> -->
           </ion-col>
           <ion-col col-2 class="accordionColThree">
               <div *ngIf="cancelButtonFTP==true" (click)="confirmCancelFTP()" class="cancel">
@@ -149,7 +254,7 @@
               <p>Cancel</p>
             </div>
           </ion-col>
-      </ion-row>
+      </ion-row> -->
 
 </ion-grid>
 
