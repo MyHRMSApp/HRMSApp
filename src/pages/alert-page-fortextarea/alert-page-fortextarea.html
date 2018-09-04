@@ -1,0 +1,23 @@
+<!--
+  Generated template for the AlertPageFortextareaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Reason for Deletion</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<textarea rows="3" maxlength="150" [(ngModel)]="deleteReason"></textarea>
+
+<ion-row>
+  <ion-col><button ion-button small class="custom-btn" (click)="dismiss()">OK</button></ion-col>
+</ion-row>
+
+</ion-content>

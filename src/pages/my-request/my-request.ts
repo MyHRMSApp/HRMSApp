@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, ModalController  } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
@@ -8,6 +8,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { MyApp } from '../../app/app.component';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
+import {AlertPageFortextareaPage } from '../alert-page-fortextarea/alert-page-fortextarea';
 
 @IonicPage()
 @Component({
@@ -20,16 +21,19 @@ export class MyRequestPage {
   cancelButtonLeave: boolean = false;
   cancelButtonFTP: boolean = false;
   cancelButtonOD: boolean = false;
-  public leaveRequestDataList:any;
-  public odRequestDataList:any;
-  public ftpRequestDataList:any;
+  public leaveRequestDataList:Array<any>;
+  public odRequestDataList:Array<any>;
+  public ftpRequestDataList:Array<any>;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, private ref: ChangeDetectorRef, public mainService: MyApp, 
-    public service: ServiceProvider, public utilService: UtilsProvider) { 
+    public service: ServiceProvider, public utilService: UtilsProvider, public modalCtrl: ModalController) { 
+      this.leaveRequestDataList = [];
+      this.odRequestDataList = [];
+      this.ftpRequestDataList = [];
   }
 
   ionViewDidLoad() {
@@ -100,9 +104,91 @@ export class MyRequestPage {
       this.ref.detectChanges();
     }
 
-    confirmCancelLeave(event){
-      this.cancelButtonLeave=!this.cancelButtonLeave;
-      this.ref.detectChanges();
+    confirmCancelLeave(status, requestItem, leaveType){
+      var leaveTypevalue = "";
+      switch (leaveType) {
+        case 'CL':
+          leaveTypevalue = "01";
+          break;
+        case 'SL':
+          leaveTypevalue = "01";
+          break;
+        case 'PL':
+          leaveTypevalue = "01";
+          break;
+        case 'GL':
+          leaveTypevalue = "01";
+          break;
+        case 'OD':
+          leaveTypevalue = "01";
+          break;
+        case 'FTP':
+          leaveTypevalue = "01";
+          break;
+      }
+
+      if(status == 'P'){
+        var payloadData = {
+          "IP_RNO": requestItem.REQID,
+          "IP_LTYPE": leaveTypevalue,
+          "IP_FLAG": 'C',
+          "IP_CMNT": ""
+        }
+      }else if(status == 'A'){
+        let deletionTextareaAlert = this.modalCtrl.create("AlertPageFortextareaPage");
+        deletionTextareaAlert.present();
+        deletionTextareaAlert.onDidDismiss((data) => {
+          console.log(data);
+          var payloadData = {
+            "IP_RNO": requestItem.REQID,
+            "IP_LTYPE": leaveTypevalue,
+            "IP_FLAG": 'D',
+            "IP_CMNT": data.deleteReason
+          }
+        });
+      }
+      this.applyCancelDeleteRequest(payloadData);
+    }
+
+    applyCancelDeleteRequest(payloadData){
+      this.utilService.showLoader("Please wait..");
+
+      console.log(payloadData);
+    
+    this.service.invokeAdapterCall('commonAdapterServices', 'applyCancelandDeleteRequest', 'post', {payload : true, length:4, payloadData: payloadData}).then((resultData:any)=>{
+      if(resultData){
+        if(resultData.status_code == 200){
+          if(resultData.data.FLAG == "E"){
+            this.utilService.dismissLoader();
+            this.utilService.showCustomPopup4Error("My Request", resultData.data.REASON, "FAILURE");
+          }else if(resultData.data.FLAG == "S"){
+            const alert = this.alertCtrl.create({
+              title: "",
+              message: "<p class='header'>My Request</p> <p>"+resultData.data.REASON+"</p>",
+              cssClass: "SUCCESS",
+              enableBackdropDismiss: false,
+            });
+            alert.addButton({
+              text: 'OK',
+              handler: data => {
+                this.navCtrl.setRoot("HomePage");
+              }
+            });
+            this.utilService.dismissLoader();
+            alert.present();
+            
+          }
+        }else{
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup4Error("My Request", resultData.message, "FAILURE");
+        }
+  
+      };
+    }, (error)=>{
+      console.log("Data readed from jsonstore error",error);
+      this.utilService.dismissLoader();
+      this.utilService.showCustomPopup4Error("My Request", error.statusText, "FAILURE");
+    });
     }
     confirmCancelOD(){
       this.cancelButtonOD=false;
@@ -122,10 +208,36 @@ export class MyRequestPage {
   }
 
   ionViewCanEnter() {
-    console.log("this.mainService.myRequestData--->>>"+this.mainService.myRequestData);
-    this.leaveRequestDataList = this.mainService.myRequestData.ET_LEAVE.item;
-    this.odRequestDataList = this.mainService.myRequestData.ET_OD.item;
-    this.ftpRequestDataList = this.mainService.myRequestData.ET_FTP.item;
+    
+    if(this.mainService.myRequestData.ET_LEAVE !== ""){
+      if(this.mainService.myRequestData.ET_LEAVE.item.length === undefined){
+        this.leaveRequestDataList.push(this.mainService.myRequestData.ET_LEAVE.item);
+      }else{
+        for(var i=0; i<this.mainService.myRequestData.ET_LEAVE.item.length; i++){
+          this.leaveRequestDataList.push(this.mainService.myRequestData.ET_LEAVE.item[i]);
+        }
+      }
+    }
+
+    if(this.mainService.myRequestData.ET_OD !== ""){
+      if(this.mainService.myRequestData.ET_OD.item.length === undefined){
+        this.odRequestDataList.push(this.mainService.myRequestData.ET_OD.item);
+      }else{
+        for(var i=0; i<this.mainService.myRequestData.ET_OD.item.length; i++){
+          this.odRequestDataList.push(this.mainService.myRequestData.ET_OD.item[i]);
+        }
+      }
+    }
+
+    if(this.mainService.myRequestData.ET_FTP !== ""){
+      if(this.mainService.myRequestData.ET_FTP.item.length === undefined){
+        this.ftpRequestDataList.push(this.mainService.myRequestData.ET_FTP.item);
+      }else{
+        for(var i=0; i<this.mainService.myRequestData.ET_FTP.item.length; i++){
+          this.ftpRequestDataList.push(this.mainService.myRequestData.ET_FTP.item[i]);
+        }
+      }
+    }
   }
 
   getStatusRequest(status){
@@ -191,8 +303,11 @@ export class MyRequestPage {
     }else{
       return 'N';
     }
-    
-    
+  }
+
+  getTimeValue(timeData){
+    timeData = timeData.replace(/:/g, "");
+    return timeData;
   }
 
 }

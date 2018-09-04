@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ConsoleServiceProvider } from '../../providers/console-service/console-service';
-
+import { UtilsProvider } from '../utils/utils';
 
 @Injectable()
 export class AuthHandlerProvider {
@@ -16,7 +16,7 @@ export class AuthHandlerProvider {
   loginSuccessCallback = null;
   loginFailureCallback = null;
 
-  constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider) {
+  constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider, public utilService: UtilsProvider) {
     console.log('--> AuthHandlerProvider called');
   }
 
@@ -40,10 +40,12 @@ export class AuthHandlerProvider {
     }
     this.initialized = true;
     console.log('--> gmailAuthInit init() called');
+    this.utilService.showLoader("Please wait");
     this.gmailLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("socialLogin");
     this.gmailLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.gmailLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
     this.gmailLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
+    this.checkIsLoggedIn();
   }
 
   setHandleChallengeCallback(onHandleChallenge) {
@@ -64,10 +66,7 @@ export class AuthHandlerProvider {
   handleChallenge(challenge) {
     console.log('--> AuthHandler handleChallenge called.\n', JSON.stringify(challenge));
     this.isChallenged = true;
-    if (challenge.errorMsg !== null && this.loginFailureCallback != null) {
-      var statusMsg = 'Remaining attempts = ' + challenge.remainingAttempts + '' + challenge.errorMsg;
-      this.loginFailureCallback(statusMsg);
-    } else if (this.handleChallengeCallback != null) {
+    if (this.handleChallengeCallback != null) {
       this.handleChallengeCallback();
     } else {
       console.log('--> AuthHandler: handleChallengeCallback not set!');

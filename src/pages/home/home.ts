@@ -267,16 +267,17 @@ ionViewCanEnter() {
       if(resultData){
           if(resultData.customMessage != "false"){
             this.customMsg = resultData.customMessage;
-            this.showTasks = false;
-            this.showTemplate = "withTasks";
-            this.ref.detectChanges();
+            setTimeout(() => {
+              this.showTasks = true;
+              this.ref.detectChanges();
+            }, 100);
           }else{
             this.customMsg = "false";
-            this.showTasks = true;
-            this.showTemplate = "withoutTasks";
-            this.ref.detectChanges();
-          }
-          this.ref.detectChanges();
+            setTimeout(() => {
+              this.showTasks = false;
+              this.ref.detectChanges();
+            }, 100);
+          } 
       }
     }, (error)=>{
       console.log("Data readed from jsonstore error",error);
@@ -354,8 +355,8 @@ takePhoto() {
               console.log("data added sucessfully");
               localStorage.setItem("userPicture", this.photos);
               this.photos = this.base64Image;
-              this.ref.detectChanges();
               this.utilService.dismissLoader();
+              this.ref.detectChanges();
             }
           },(error)=>{
             console.log("data added from jsonstore error",error);
@@ -403,8 +404,8 @@ uploadPhoto() {
               console.log("data added sucessfully");
               localStorage.setItem("userPicture", this.photos);
               this.photos = this.base64Image;
-              this.ref.detectChanges();
               this.utilService.dismissLoader();
+              this.ref.detectChanges();
             }
           },(error)=>{
             console.log("data added from jsonstore error",error);

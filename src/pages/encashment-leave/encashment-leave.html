@@ -18,10 +18,18 @@
       <ion-card-header>
         HISTORY
       </ion-card-header>
-      <p class="history" *ngFor="let history of encashmentData.ET_HSTRY.item">
+      <div *ngIf="encashmentData.length > 0">
+      <p class="history" *ngFor="let history of encashmentData">
         <span class="dot">•</span>
         <span class="content">{{history.HISTORY}}</span>
-      </p>
+      </p></div>
+
+      <div *ngIf="encashmentData.length == 0">
+          <p class="history">
+            <span class="dot">•</span>
+            <span class="content">No history available..</span>
+          </p></div>
+
     </ion-card>
     
     <ion-card class="cardTwo">
@@ -30,7 +38,7 @@
       </ion-card-header>
     <ion-row>
       <ion-col col-12>
-        <pre><p style="text-align: center; color: #fff;"><span>Eligible     :     </span><span>{{encashmentData.EP_NDAY}} days</span></p></pre>
+        <pre><p style="text-align: center; color: #fff;"><span>Eligible     :     </span><span>{{encashmentEP_NDAY}} days</span></p></pre>
       </ion-col>
       <ion-col col-12 class="applybtn">
           <pre><span>   Apply     :     <ion-input [(ngModel)]="applyEncashDays" style="color: #000;"></ion-input>   Days</span></pre>

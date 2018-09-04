@@ -12,6 +12,9 @@
     </description>
 
     <securityCheckDefinition name="socialLogin" class="com.github.mfpdev.sample.socialogin.SocialLoginSecurityCheck">
+        <property name="successStateExpirationSec" defaultValue="60"/>
+        <property name="blockedStateExpirationSec" defaultValue="60"/>
+        <property name="maxAttempts" defaultValue="3"/>
         <property name="keepOriginalToken" type="boolean" defaultValue="false"
                   displayName="keep original token"
                   description="If true, the token submitted by the client is stored in the Authenticated User as an attribute 'originalToken'"/>
