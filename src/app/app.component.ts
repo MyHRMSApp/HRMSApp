@@ -114,6 +114,28 @@ export class MyApp {
         this.utilService.showCustomPopup("FAILURE","Logout failure, Please try again..");
       }
     });
+
+    this.photos = ("./assets/icon/avatar.png");
+    this.storage.jsonstoreInitialize().then(()=>{
+    this.storage.jsonstoreClearCollection("userImage").then((response:any)=>{
+      if(response){
+        console.log("data cleared sucessfully");
+      }
+    },(error)=>{
+      console.log("data cleared error",error);
+    });
+    this.storage.jsonstoreAdd("userImage", this.photos).then((response:any)=>{
+      if(response){
+        console.log("data added sucessfully");
+        localStorage.setItem("userPicture", this.photos);
+        this.utilService.dismissLoader();
+      }
+    },(error)=>{
+      console.log("data added from jsonstore error",error);
+      this.utilService.dismissLoader();
+    });
+  });
+  
   }
 
   profile() {

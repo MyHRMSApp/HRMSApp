@@ -43,6 +43,15 @@ export class HomePage {
   public showCustomMsg: boolean = false;
   public showTasks: boolean = false;
   showTemplate: string;
+  public eyeWearCounts: any[];
+  public jewelleryCounts: any[];
+  public taneiraCounts: any[];
+  public watchCounts: any[];
+  eyeWearLength: number;
+  jewelleryLength: number;
+  taneiraLength: number;
+  watchLength: number;
+
   
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
@@ -51,6 +60,11 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider, public ref: ChangeDetectorRef) {
+
+    this.eyeWearCounts = [];
+    this.jewelleryCounts = [];
+    this.taneiraCounts = [];
+    this.watchCounts = [];
     
     this.photos = localStorage.getItem("userPicture");
     this.userName = "";
@@ -134,9 +148,85 @@ routerOnDeactivate() {
 coupons() {
   this.utilService.showLoader("Loading Coupons...");
   this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : false}).then((resultData:any)=>{
-  this.mainService.couponPageData = resultData;
-  console.log(resultData);
-  this.navCtrl.push("CouponsPage");
+    if(resultData) {
+      if(resultData.status_code == 200){
+        this.mainService.couponPageData = resultData;
+        
+        /**
+         * ET_EYEWEAR
+         */
+        if(resultData.data.ET_EYEWEAR !== ""){
+          if(resultData.data.ET_EYEWEAR.item.length === undefined) {
+            this.eyeWearCounts.push(resultData.data.ET_EYEWEAR.item);
+            this.eyeWearLength = this.eyeWearCounts.length;
+          }else {
+            for (let i=0; resultData.data.ET_EYEWEAR.item[i]; i++ ){
+              this.eyeWearCounts.push(resultData.data.ET_EYEWEAR.item[i]);
+            }
+            this.eyeWearLength = this.eyeWearCounts.length;
+          }
+          }else{
+            this.eyeWearLength = 0;
+          }
+
+         /**
+         * ET_JEWELLERY
+         */
+        if(resultData.data.ET_JEWELLERY !== ""){
+          if(resultData.data.ET_JEWELLERY.item.length === undefined) {
+            this.jewelleryCounts.push(resultData.data.ET_JEWELLERY.item);
+            this.jewelleryLength = this.jewelleryCounts.length;
+            console.log(this.jewelleryLength);
+          }else {
+            for (let i=0; resultData.data.ET_JEWELLERY.item[i]; i++ ){
+              this.jewelleryCounts.push(resultData.data.ET_JEWELLERY.item[i]);
+            }
+            this.jewelleryLength = this.jewelleryCounts.length;
+          }
+          }else{
+            this.jewelleryLength = 0;
+          }
+
+        /**
+         * ET_TANEIRA
+         */
+        if(resultData.data.ET_TANEIRA !== ""){
+          if(resultData.data.ET_TANEIRA.item.length === undefined) {
+            this.taneiraCounts.push(resultData.data.ET_TANEIRA.item);
+            this.taneiraLength = this.taneiraCounts.length;
+          }else {
+            for (let i=0; resultData.data.ET_TANEIRA.item[i]; i++ ){
+              this.taneiraCounts.push(resultData.data.ET_TANEIRA.item[i]);
+            }
+            this.taneiraLength = this.taneiraCounts.length;
+          }
+          }else{
+            this.taneiraLength = 0;
+          }
+
+        /**
+         * ET_WATCH
+         */
+        if(resultData.data.ET_WATCH !== ""){
+          if(resultData.data.ET_WATCH.item.length === undefined) {
+            this.watchCounts.push(resultData.data.ET_WATCH.item);
+            this.watchLength = this.watchCounts.length;
+          }else {
+            for (let i=0; resultData.data.ET_WATCH.item[i]; i++ ){
+              this.watchCounts.push(resultData.data.ET_WATCH.item[i]);
+            }
+            this.watchLength = this.watchCounts.length;
+          }
+          }else{
+            this.watchLength = 0;
+          }
+
+        this.navCtrl.push("CouponsPage", {"eyeWearLength":this.eyeWearLength, "jewelleryLength": this.jewelleryLength, "taneiraLength":this.taneiraLength, "watchLength":this.watchLength,});
+
+      } else {
+        this.utilService.showPopup("Coupons", resultData.message);
+      }
+    };
   },
   (error)=>{
    console.log(error);
@@ -145,7 +235,6 @@ coupons() {
 
 ionViewCanEnter() {
   try {
-
     this.mainService.attendanceN_NP1_DataFlag = true;
     this.mainService.attendanceNP2_DataFlag = true;
     this.mainService.attendanceNA1_DataFlag = true;
@@ -174,8 +263,6 @@ ionViewCanEnter() {
         console.log("Data readed from jsonstore error",error);
       });
   }
-
-
     this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData){
           if(resultData.customMessage != "false"){

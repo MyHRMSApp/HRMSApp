@@ -46,15 +46,16 @@ constructor(public menu: MenuController, public events: Events,
   public utilService: UtilsProvider) {
 
     this.counts = this.mainService.couponPageData;
+    console.log("Counts" + JSON.stringify(this.counts));
     
-    this.eyeWearCounts = this.counts.data.ET_EYEWEAR.item.length;
-    this.jewelleryCounts = this.counts.data.ET_JEWELLERY.item.length;
-    this.taneiraCounts = this.counts.data.ET_TANEIRA.item.length;
-    this.watchCounts = this.counts.data.ET_WATCH.item.length;
-
-}
+    this.eyeWearCounts = this.navParams.get("eyeWearLength");;
+    this.jewelleryCounts = this.navParams.get("jewelleryLength");;
+    this.taneiraCounts = this.navParams.get("taneiraLength");;
+    this.watchCounts = this.navParams.get("watchLength");;
+  }
 
 ionViewDidLoad() {
+  
   console.log('ionViewDidLoad CouponsPage');
   this.utilService.dismissLoader();
   this.hamburger = ("./assets/homePageIcons/hamburger.svg");
@@ -78,23 +79,43 @@ back(){
 }
 
 watch() {
+  if(this.eyeWearCounts == 0){
+    this.utilService.showCustomPopup("FAILURE", "No coupons available");
+  }
+  else{
   this.watchCoupons = this.counts.data.ET_WATCH.item;
   this.navCtrl.push("ShareCouponsPage", {"titleName":"WATCHES", "coupons": this.watchCoupons, "length": this.watchCounts});
 }
+}
 
 jewellery() {
+  if(this.eyeWearCounts == 0){
+    this.utilService.showCustomPopup("FAILURE", "No coupons available");
+  }
+  else{
   this.jewelleryCoupons = this.counts.data.ET_JEWELLERY.item;
   this.navCtrl.push("ShareCouponsPage", {"titleName":"JEWELLERY", "coupons": this.jewelleryCoupons, "length": this.jewelleryCounts});
 }
+}
 
 eyewear() {
+  if(this.eyeWearCounts == 0){
+    this.utilService.showCustomPopup("FAILURE", "No coupons available");
+  }
+  else{
   this.eyeWearCoupons = this.counts.data.ET_EYEWEAR.item;
   this.navCtrl.push("ShareCouponsPage", {"titleName":"EYE WEAR", "coupons": this.eyeWearCoupons, "length": this.eyeWearCounts});
 }
+}
 
 taneira() {
+  if(this.eyeWearCounts == 0){
+    this.utilService.showCustomPopup("FAILURE", "No coupons available");
+  }
+  else{
   this.taneiraCoupons = this.counts.data.ET_TANEIRA.item;
   this.navCtrl.push("ShareCouponsPage", {"titleName":"TANEIRA", "coupons": this.taneiraCoupons, "length": this.taneiraCounts});
+}
 }
 
 }
