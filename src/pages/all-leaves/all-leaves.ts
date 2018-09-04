@@ -235,7 +235,7 @@ export class AllLeavesPage {
                           "IP_THALF": this.leaveToTime,
                           "IP_DAY": noDays,
                           "R_LEAVE": this.resonForLeave,
-                          "IP_REQ_TYPE": "New",
+                          "IP_REQ_TYPE": "NEW",
                           "IP_WF_STATUS": "Submitted"
                         }
        this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{

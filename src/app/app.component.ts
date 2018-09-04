@@ -64,13 +64,13 @@ export class MyApp {
      // this.authHandler.init();
       this.authHandler.gmailAuthInit();
     });
-    console.log("localStorage.getItem-->>>"+localStorage.getItem("userLogout"));
-    if(localStorage.getItem("userLogout") === null){
-      localStorage.setItem("userLogout", "1");
-      console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));
-    }else{
-      console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));
-    }
+    // console.log("localStorage.getItem-->>>"+localStorage.getItem("userLogout"));
+    // if(localStorage.getItem("userLogout") === null){
+    //   localStorage.setItem("userLogout", "1");
+    //   console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));
+    // }else{
+    //   console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));
+    // }
 
   //   document.addEventListener('pause', function () {
   //     console.log('App going to background');

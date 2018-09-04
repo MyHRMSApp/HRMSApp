@@ -88,7 +88,9 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     @Override
     protected Map<String, Object> createChallenge() {
         Map<String, Object> res = new HashMap<>();
-        res.put("vendorList", getConfiguration().getEnabledVendors().keySet().toArray());
+        // res.put("vendorList", getConfiguration().getEnabledVendors().keySet().toArray());
+        res.put("errorMsg",errorMsg);
+        res.put("remainingAttempts",getRemainingAttempts());
         return res;
     }
 
@@ -116,6 +118,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                     errorMsg = "Internal Server Error, Please try again";
                                     return false;
                                 }else{
+                                    errorMsg = "Please provide valid Username or Password";
                                     return false;
                                 }
                             } catch (Exception exception) {
@@ -123,9 +126,6 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                 errorMsg = "Please provide valid Username or Password";
                                 return false;
                             }
-                        }
-                        else{
-                            errorMsg = "Please provide valid Username or Password";
                         }
                     break;
                 case GMAIL_LOGIN:

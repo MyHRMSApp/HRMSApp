@@ -19,9 +19,10 @@ export class EncashmentLeavePage {
   title: any;
   hamburger: string;
   homeIcon: string;
-  public encashmentData:any;
+  public encashmentData:Array<any>;
   public applyBtnFlag:boolean = false;
   public applyEncashDays:any;
+  public encashmentEP_NDAY:any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -31,6 +32,7 @@ export class EncashmentLeavePage {
     public service: ServiceProvider, public utilService: UtilsProvider) {
 
       this.title = this.navParams.get("titleName");
+      this.encashmentData = [];
   }
 
   ionViewDidLoad() {
@@ -40,8 +42,18 @@ export class EncashmentLeavePage {
   }
 
   ionViewCanEnter() {
-    this.encashmentData = this.mainService.leaveEncashData;
-    this.applyBtnFlag = (this.encashmentData.EP_ELGBL == "")?true:false;
+    // this.encashmentData = this.mainService.leaveEncashData;
+    if(this.mainService.leaveEncashData.ET_HSTRY !== ""){
+      if(this.mainService.leaveEncashData.ET_HSTRY.item.length === undefined){
+        this.encashmentData.push(this.mainService.leaveEncashData.ET_HSTRY.item);
+      }else{
+        for(var i=0; i<this.mainService.leaveEncashData.ET_HSTRY.item.length; i++){
+          this.encashmentData.push(this.mainService.leaveEncashData.ET_HSTRY.item[i]);
+        }
+      }
+    }
+    this.applyBtnFlag = (this.mainService.leaveEncashData.EP_ELGBL == "")?true:false;
+    this.encashmentEP_NDAY = this.mainService.leaveEncashData.EP_NDAY;
   }
 
   openMenu() {

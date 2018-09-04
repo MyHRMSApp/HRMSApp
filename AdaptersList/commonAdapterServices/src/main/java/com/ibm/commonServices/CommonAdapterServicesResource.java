@@ -967,6 +967,32 @@ public class CommonAdapterServicesResource {
 	}
 
 	/* *
+	 * @Funtion - (applyCancelandDeleteRequest) this function is using for Apply Cancel and Delete Request which is in MyRequestList
+	 * @QueryParam - 
+	 * @return - SAP Responce (type - JSON String format)
+	 * */
+	@POST
+	@Path("/applyCancelandDeleteRequest")
+	@Produces(MediaType.APPLICATION_JSON)
+	@OAuthSecurity(scope = "socialLogin")
+	public String applyCancelandDeleteRequest(@QueryParam("IP_RNO") String IP_RNO, @QueryParam("IP_LTYPE") String IP_LTYPE,
+										 @QueryParam("IP_FLAG") String IP_FLAG, @QueryParam("IP_CMNT") String IP_CMNT) {
+		
+		JSONObject inputJSON = new JSONObject();
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
+		
+		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
+		inputJSON.put("IP_RNO", IP_RNO);	
+		inputJSON.put("IP_LTYPE", IP_LTYPE);
+		inputJSON.put("IP_FLAG", IP_FLAG);		
+		inputJSON.put("IP_CMNT", IP_CMNT);		
+		JSONObject serverResJSON = new JSONObject();
+		serverResJSON = this.postService(inputJSON.toString(), SAP_COMMON_URL+"ApplyCancelLeave");
+
+		return serverResJSON.toString();
+	}
+
+	/* *
 	 * @Funtion - (postService) this funtion is the common interface connection with SAP backend
 	 * @QueryParam - InputString [This is String format which is having SAP Inputs], restURL [This is also String which is having the REST URL to connect SAP Backend]
 	 * @return - commonServerResponce OBJECT (type - JSONObject format SAP RESPONCE)

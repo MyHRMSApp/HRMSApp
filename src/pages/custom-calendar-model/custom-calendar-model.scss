@@ -12,13 +12,13 @@ page-custom-calendar-model {
             opacity: 0.4;
           }
 
-        .toolbar-md .toolbar-ios {
+        .toolbar-md, .toolbar-ios {
             padding: 4px !important;
             min-height: 65px;
             padding-top: unset !important;
         }
 
-        .toolbar-title-md .toolbar-title-ios {
+        .toolbar-title-md, .toolbar-title-ios {
             color: #fff !important;
         }
 
@@ -56,18 +56,44 @@ page-custom-calendar-model {
             padding: 5px 15px 0px 15px;
         }
 
+        // ion-calendar .title .back {
+        //     margin-left: -80%;
+        //     left: -30px;
+        //     width: 40px;
+        //     margin-top: 3%;
+        //   }
+      
+        // ion-calendar .title .forward {
+        //     margin-left: -50px;
+        //     right: -30px;
+        //     width: 40px;
+        //     margin-top: 3%;
+        // }
+
         ion-calendar .title .back {
-            margin-left: -80%;
-            left: -30px;
+            left: 15px !important;
             width: 40px;
-            margin-top: 3%;
+            height: 40px;
+            text-align: center;
+            display: block;
+            ion-icon{
+              margin-top: 25%;
+            }
           }
       
         ion-calendar .title .forward {
-            margin-left: -50px;
-            right: -30px;
-            width: 40px;
-            margin-top: 3%;
+          right: 15px !important;
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          display: block;
+          ion-icon{
+            margin-top: 25%;
+          }
+        }
+       
+        ion-content ion-calendar .title .switch-btn{
+          margin-top: 1%;
         }
 
 

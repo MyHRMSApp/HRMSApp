@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ServiceProvider } from '../providers/service/service';
@@ -62,7 +62,7 @@ firebase.initializeApp(firebaseConfig)
     AuthHandlerProvider,
     ConsoleServiceProvider,
     MyApp,
-    SocialSharing
+    SocialSharing, Nav
   ]
 })
 export class AppModule {}

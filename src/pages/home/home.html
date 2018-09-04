@@ -27,8 +27,8 @@
         </p>
       </ion-col>
     </ion-row>
-    <ion-row style="height:72%;" [ngClass]="{'customMsgFalse': customMsg!='false', 'customMsgTrue': customMsg=='false'}">
-      <ion-col col-12 *ngIf="customMsg!='false'">
+    <ion-row style="height:72%;" [ngClass]="{'customMsgFalse': showTasks, 'customMsgTrue': !showTasks}">
+      <ion-col col-12 *ngIf="showTasks">
         <div class="customMsg">
           <p>{{customMsg}}</p>
         </div>

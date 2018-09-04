@@ -51,56 +51,27 @@ export class LoginPage {
       password: new FormControl("", Validators.required)
     });
 
-    this.userLoginFlag = (localStorage.getItem("userLoginFlag") == "true")? true:false;
-    this.gmailLoginFlag = (localStorage.getItem("gmailLoginFlag") == "true")? true:false;
+    // this.userLoginFlag = (localStorage.getItem("userLoginFlag") == "true")? true:false;
+    // this.gmailLoginFlag = (localStorage.getItem("gmailLoginFlag") == "true")? true:false;
 
     this.authHandler.setLoginFailureCallback((error) => {
-      
-      if (error !== null) {
-        if(error == "Remaining attempts = undefinedundefined"){
-          // this.utilService.showCustomPopup("FAILURE", "Failed to login, Please try again");
-          if(this.userLoginFlag){
-            this.processForm();
-          }else if(this.gmailLoginFlag){
-            this.googleLoginError();
-          }
-          
-        }else{
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup("FAILURE", error);
-        }
-        console.log("setLoginFailureCallback-FAILURE---->>>"+ error);
-        
-      } else {
-        this.utilService.dismissLoader();
-        this.utilService.showCustomPopup("FAILURE", "Failed to login, Please try again");
-      }
+          this.utilService.showCustomPopup("FAILURE", error.errorMsg);
     });
+
     this.authHandler.setLoginSuccessCallback(() => {
       let view = this.navCtrl.getActive();
       if (!(view.instance instanceof HomePage)) {
-        localStorage.setItem("userLogout", "0");
         this.utilService.dismissLoader();
         this.navCtrl.setRoot("HomePage");
       }
     });
+
     this.authHandler.setHandleChallengeCallback(() => {
       this.utilService.dismissLoader();
       this.navCtrl.setRoot("LoginPage");
     });
-
-    setTimeout(() => {
-      // this.loaderCreate();
-      console.log("userLogout-->>"+localStorage.getItem("userLogout")+" "+"userFrishLogin Flag---->>"+this.mainService.userFrishLogin)
-      if(this.mainService.userFrishLogin){
-        this.mainService.userFrishLogin = false;
-        if(localStorage.getItem("userLogout") == "0"){
-          this.utilService.showLoader("Please Wait..");
-          this.authHandler.checkIsLoggedIn();
-        } 
-      }
-      
-    }, 1000);
+    
   }
 
   sampleLogin() {
@@ -108,10 +79,10 @@ export class LoginPage {
   }
 
   processForm() {
-    this.userLoginFlag = true;
-    this.gmailLoginFlag = false;
-    localStorage.setItem("userLoginFlag", "true");
-    localStorage.setItem("gmailLoginFlag", "false");
+    // this.userLoginFlag = true;
+    // this.gmailLoginFlag = false;
+    // localStorage.setItem("userLoginFlag", "true");
+    // localStorage.setItem("gmailLoginFlag", "false");
     let username = this.form.value.username;
     let password = this.form.value.password;
     let credentials = {
@@ -124,7 +95,13 @@ export class LoginPage {
       return;
     }
     console.log('--> Sign-in with user: ', username);
-    this.utilService.showLoader("Please Wait..");
+
+    if(this.utilService.loader === undefined || !this.utilService.loader.hasOwnProperty('data')){
+      this.utilService.showLoader("Please Wait..");
+    }
+
+    console.log(this.utilService.loader);
+
     setTimeout(() => {
       this.authHandler.login(credentials);
     }, 100);
@@ -145,7 +122,6 @@ export class LoginPage {
             } else {
               this.photos = jsonData.json.value;
               localStorage.setItem("userPicture", this.photos);
-              //console.log("JSON data has image");
             }
           };
         }, (error) => {
@@ -159,11 +135,11 @@ export class LoginPage {
    * Method to handle user login via google plus option
    */
   userLoginViagooglePlus() {
-    this.userLoginFlag = false;
-    this.gmailLoginFlag = true;
-    localStorage.setItem("userLoginFlag", "false");
-    localStorage.setItem("gmailLoginFlag", "true");
-    console.log("1");
+    // this.userLoginFlag = false;
+    // this.gmailLoginFlag = true;
+    // localStorage.setItem("userLoginFlag", "false");
+    // localStorage.setItem("gmailLoginFlag", "true");
+    // console.log("1");
     this.googlePlus.login({
       'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',
       'offline': true
@@ -188,22 +164,6 @@ export class LoginPage {
       }
 
     });
-  }
-
-  // showAlert(alertTitle, alertMessage) {
-  //   let prompt = this.alert.create({
-  //     title: alertTitle,
-  //     message: alertMessage,
-  //     buttons: [{
-  //       text: 'Ok',
-  //     }]
-  //   });
-  //   prompt.present();
-  // }
-
-  googleLoginError(){
-    this.utilService.dismissLoader();
-    this.utilService.showCustomPopup("FAILURE", "Login process getting error, Please try again..");
   }
 
 }

@@ -14,6 +14,13 @@ page-my-request {
         display: none;
     }
 
+    .noresponce{
+        text-align: center;
+        display: block;
+        padding: 5%;
+        color: #fff;
+    }
+
 
     .toolbar-background {
         background: transparent !important;
@@ -92,17 +99,17 @@ page-my-request {
                     padding: 1% 5%;
                     .fromDate{
                         padding: 0; 
-                        font-size: 1em; 
+                        font-size: 0.9em; 
                         font-weight: bolder;
                     }
                     .till{
                         text-align: center; 
-                        font-size: 1em; 
+                        font-size: 0.9em; 
                         margin-left: 3%;
                     }
                     .toDate{
                         text-align: center; 
-                        font-size: 1em; 
+                        font-size: 0.9em; 
                         font-weight: bolder;
                     }
                     .fromTime{
@@ -217,8 +224,14 @@ page-my-request {
                 }
             }
             .accordionColThree {
-                background-color: #265865;
+                background-color: #105366 !important;
                 border-bottom: 1px solid #0d4655;
+                .cancel{
+                    ion-icon{
+                        font-weight: bolder;
+                        color: red;
+                    }
+                }
             }
             
         }
@@ -234,7 +247,7 @@ page-my-request {
         }
 
         .cancel {
-            background-color: red;
+            // background-color: red;
             height: 100%;
             ion-icon{
                color: white;
