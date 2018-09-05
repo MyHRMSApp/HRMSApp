@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -22,18 +22,22 @@ export class MyTasksPage {
     { title: "Amit", selected: false},
   ];
   selectedAll: any;
+  acceptButton: string;
+  rejectButton: string;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams, public ref: ChangeDetectorRef) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyTasksPage');
     this.hamburger = ("./assets/homePageIcons/hamburger.svg");
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
+    this.acceptButton = ("./assets/couponsImages/my-Task-Approve.svg");
+    this.rejectButton = ("./assets/couponsImages/my-Task-Cancel.svg");
   }
 
 
@@ -43,10 +47,9 @@ export class MyTasksPage {
     }
   }
 
-  checkIfAllSelected() {
-    this.selectedAll = this.tasks.every((item:any) => {
-        return item.selected == true;
-      })
+  shareMe(data) {
+    console.log(data);
+    this.ref.detectChanges();
   }
 
   shownGroup = null;
@@ -56,6 +59,7 @@ export class MyTasksPage {
     } else {
         this.shownGroup = group;
     }
+    this.ref.detectChanges();
   };
   isGroupShown(group) {
       return this.shownGroup === group;

@@ -16,46 +16,51 @@
     <ion-row>
       <ion-col col-4 style="text-align:left;display:inline-flex">
         <p style="color:white">Approve</p>
-        <p style="margin-left: 8%;color: white;"><ion-icon style="font-size:3em;line-height:0.4" name="ios-checkmark"></ion-icon></p>
+        <p style="margin-left: 8%;color: white;">
+          <ion-icon style="font-size:3em;line-height:0.4" name="ios-checkmark"></ion-icon>
+        </p>
       </ion-col>
       <ion-col col-6 style="text-align: right">
-          <p class="couponDesignation">Select all</p>
-        </ion-col>
-        <ion-col col-2>
-          <ion-item>
-            <ion-checkbox [(ngModel)]="selectedAll" (change)="selectAll()"></ion-checkbox>
-          </ion-item>
-        </ion-col>
+        <p class="couponDesignation">Select all</p>
+      </ion-col>
+      <ion-col col-2>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="selectedAll" (change)="selectAll()"></ion-checkbox>
+        </ion-item>
+      </ion-col>
     </ion-row>
-    <ion-card style="background-image: url(./assets/couponsImages/my-Task-BG.svg) !important;background-size: 100% 100%;" *ngFor="let t of tasks; let i=index" (click)="toggleGroup(t)" [ngClass]="{active: isGroupShown(t)}">
-      <ion-row>
+    <ion-card *ngFor="let t of tasks; let i=index" (click)="toggleGroup(t)" [ngClass]="{active: isGroupShown(t)}">
+      <ion-row style="background-image: url(./assets/couponsImages/my-Task-BG.svg) !important;background-size: 100% 100%;">
         <ion-col col-2>
-              <p>PL</p>
+          <p style="margin-top: 25% !important;margin-right: 10% !important;">PL</p>
         </ion-col>
         <ion-col col-4>
-          <p style="margin-top: 12%;text-align: left;">{{t.title}}</p>
+          <p style="margin-top: 8% !important;text-align: left;">{{t.title}}</p>
+          <p style="color: yellow !important; font-size: 0.7em">(E0417574)</p>
+
         </ion-col>
         <ion-col col-4>
-          <p style="margin-top: 12%">02/08 - 03/08</p>
+          <p style="margin-top: 14% !important">02/08 - 03/08</p>
         </ion-col>
         <ion-col col-2>
           <ion-item>
-            <ion-checkbox [(ngModel)]="t.selected" (change)="checkIfAllSelected()"></ion-checkbox>
+            <ion-checkbox (click)="shareMe(t)" [(ngModel)]="t.selected"></ion-checkbox>
           </ion-item>
         </ion-col>
-        <ion-card *ngIf="isGroupShown(t)" class="subCard">
-          <p>Applied on: 25-06-2018</p>
-          <p>From : 27-06-2018(fullday)</p>
-          <p>TO : 28-06-2018(halfday)</p>
-          <ion-row>
-          <ion-col col-6><button class="approve" ion-button color="primary"><span><ion-icon name="ios-checkmark-circle-outline"></ion-icon></span><span style="padding-left: 10%;">Approve</span></button></ion-col>
-          <ion-col col-6><button class="reject" ion-button color="danger"><span><ion-icon name="ios-close-circle-outline"></ion-icon></span><span style="padding-left: 10%;">Reject</span></button></ion-col>
-          </ion-row>
-        </ion-card>
+      </ion-row>
+      <ion-row *ngIf="isGroupShown(t)" class="subCard">
+        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: 25-06-2018</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>From :</p></ion-col>
+        <ion-col col-5 style="text-align: -webkit-right"><p>27-06-2018</p></ion-col>
+        <ion-col col-4 style="text-align: -webkit-left"><p>(fullday)</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>To   :</p></ion-col>
+        <ion-col col-5 style="text-align: -webkit-right"><p>28-06-2018</p></ion-col>
+        <ion-col col-4 style="text-align: -webkit-left"><p>(halfday)</p></ion-col>
+        <ion-col col-6 style="text-align: -webkit-right"><img class="button" [src]="acceptButton" /></ion-col>
+        <ion-col col-6 style="text-align: -webkit-left"><img class="button" [src]="rejectButton" /></ion-col>
       </ion-row>
     </ion-card>
   </ion-grid>
-
 </ion-content>
 
 <ion-footer>

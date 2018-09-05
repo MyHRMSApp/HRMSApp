@@ -260,7 +260,7 @@ ionViewCanEnter() {
     
         };
       }, (error)=>{
-        console.log("Data readed from jsonstore error",error);
+        console.log("Error",error);
       });
   }
     this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
@@ -280,7 +280,7 @@ ionViewCanEnter() {
           } 
       }
     }, (error)=>{
-      console.log("Data readed from jsonstore error",error);
+      console.log("Error",error);
       this.utilService.showCustomPopup("FAILURE",error.statusText);
     });
     
@@ -337,37 +337,16 @@ takePhoto() {
   }
   this.camera.getPicture(options).then((imageData) => {
     this.utilService.showLoader("Updating picture..");
-    setTimeout(()=>{
       if(imageData){
         console.log("getting into if condition",imageData);
         this.base64Image = 'data:image/jpeg;base64,' + imageData;
         this.photos = this.base64Image;
-        this.storage.jsonstoreInitialize().then(()=>{
-          this.storage.jsonstoreClearCollection("userImage").then((response:any)=>{
-            if(response){
-              console.log("data cleared sucessfully");
-            }
-          },(error)=>{
-            console.log("data cleared error",error);
-          });
-          this.storage.jsonstoreAdd("userImage", this.photos).then((response:any)=>{
-            if(response){
-              console.log("data added sucessfully");
-              localStorage.setItem("userPicture", this.photos);
-              this.photos = this.base64Image;
-              this.utilService.dismissLoader();
-              this.ref.detectChanges();
-            }
-          },(error)=>{
-            console.log("data added from jsonstore error",error);
-            this.utilService.dismissLoader();
-          });
-        });
+        localStorage.setItem("userPicture", this.photos);
+        this.utilService.dismissLoader();
       }else{
         console.log("Image data not yet recieved");
         this.utilService.dismissLoader();
-      } 
-    },1000); 
+      }
   }, 
   (err) => {
     console.log(err);
@@ -386,37 +365,16 @@ uploadPhoto() {
     mediaType: this.camera.MediaType.PICTURE
   }).then((imageData) => {
     this.utilService.showLoader("Updating picture..");
-    setTimeout(()=>{
       if(imageData){
         console.log("getting into if condition",imageData);
         this.base64Image = 'data:image/jpeg;base64,' + imageData;
         this.photos = this.base64Image;
-        this.storage.jsonstoreInitialize().then(()=>{
-          this.storage.jsonstoreClearCollection("userImage").then((response:any)=>{
-            if(response){
-              console.log("data cleared sucessfully");
-            }
-          },(error)=>{
-            console.log("data cleared error",error);
-          });
-          this.storage.jsonstoreAdd("userImage", this.photos).then((response:any)=>{
-            if(response){
-              console.log("data added sucessfully");
-              localStorage.setItem("userPicture", this.photos);
-              this.photos = this.base64Image;
-              this.utilService.dismissLoader();
-              this.ref.detectChanges();
-            }
-          },(error)=>{
-            console.log("data added from jsonstore error",error);
-            this.utilService.dismissLoader();
-          });
-        });
+        localStorage.setItem("userPicture", this.photos);
+        this.utilService.dismissLoader();
       }else{
         console.log("Image data not yet recieved");
         this.utilService.dismissLoader();
       } 
-    },1000); 
   }, 
   (err) => {
     console.log(err);
@@ -427,25 +385,8 @@ removePhoto(){
   console.log("Removing picture");
   this.utilService.showLoader("Removing picture..");
   this.photos = ("./assets/icon/avatar.png");
-  this.storage.jsonstoreInitialize().then(()=>{
-    this.storage.jsonstoreClearCollection("userImage").then((response:any)=>{
-      if(response){
-        console.log("data cleared sucessfully");
-      }
-    },(error)=>{
-      console.log("data cleared error",error);
-    });
-    this.storage.jsonstoreAdd("userImage", this.photos).then((response:any)=>{
-      if(response){
-        console.log("data added sucessfully");
-        localStorage.setItem("userPicture", this.photos);
-        this.utilService.dismissLoader();
-      }
-    },(error)=>{
-      console.log("data added from jsonstore error",error);
-      this.utilService.dismissLoader();
-    });
-  });
+  localStorage.setItem("userPicture", this.photos);
+  this.utilService.dismissLoader();
 }
           
 applyLeave() {
