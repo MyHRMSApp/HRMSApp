@@ -38,7 +38,6 @@
         "cordova-plugin-ionic-keyboard": "^2.0.5",
         "cordova-plugin-ionic-webview": "^1.1.19",
         "cordova-plugin-mfp": "^8.0.2018070216",
-        "cordova-plugin-mfp-jsonstore": "^8.0.2018070216",
         "cordova-plugin-mfp-push": "^8.0.2018040410",
         "cordova-plugin-network-information": "^2.0.1",
         "cordova-plugin-okhttp": "file:node_modules\\cordova-plugin-okhttp",
@@ -68,7 +67,6 @@
             "cordova-plugin-mfp": {},
             "cordova-plugin-camera": {},
             "cordova-plugin-network-information": {},
-            "cordova-plugin-mfp-jsonstore": {},
             "cordova-plugin-mfp-push": {},
             "cordova-plugin-googleplus": {
                 "REVERSED_CLIENT_ID": "29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com"

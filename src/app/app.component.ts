@@ -96,7 +96,7 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
-    this.storage.jsonstoreInitialize();
+    //this.storage.jsonstoreInitialize();
   }
 
   /**
@@ -114,28 +114,8 @@ export class MyApp {
         this.utilService.showCustomPopup("FAILURE","Logout failure, Please try again..");
       }
     });
-
     this.photos = ("./assets/icon/avatar.png");
-    this.storage.jsonstoreInitialize().then(()=>{
-    this.storage.jsonstoreClearCollection("userImage").then((response:any)=>{
-      if(response){
-        console.log("data cleared sucessfully");
-      }
-    },(error)=>{
-      console.log("data cleared error",error);
-    });
-    this.storage.jsonstoreAdd("userImage", this.photos).then((response:any)=>{
-      if(response){
-        console.log("data added sucessfully");
-        localStorage.setItem("userPicture", this.photos);
-        this.utilService.dismissLoader();
-      }
-    },(error)=>{
-      console.log("data added from jsonstore error",error);
-      this.utilService.dismissLoader();
-    });
-  });
-  
+    localStorage.setItem("userPicture", this.photos);
   }
 
   profile() {

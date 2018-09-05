@@ -103,28 +103,15 @@ export class LoginPage {
 
   }
 
-
-  /**
-   * Method for reading  json data from local jsonstore
-   */
   ionViewDidLoad() {
-    setTimeout(() => {
-      this.storage.jsonstoreInitialize().then(() => {
-        this.storage.jsonstoreReadAll("userImage").then((jsonData: any) => {
-          if (jsonData) {
-            if (jsonData.length == 0) {
+            this.photos = localStorage.getItem("userPicture");
+            if(this.photos == null) {
               this.photos = ("./assets/icon/avatar.png");
               localStorage.setItem("userPicture", this.photos);
-            } else {
-              this.photos = jsonData.json.value;
-              localStorage.setItem("userPicture", this.photos);
             }
-          };
-        }, (error) => {
-          console.log("Data readed from jsonstore error", error);
-        });
-      });
-    }, 2000);
+            else {
+            localStorage.setItem("userPicture", this.photos);
+            }
   }
 
   /**
