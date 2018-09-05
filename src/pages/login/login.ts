@@ -9,7 +9,6 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { MyApp } from '../../app/app.component'
 import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
 
-
 /**
  * Login Functionalities
  * @author Vivek
@@ -32,7 +31,6 @@ export class LoginPage {
   public password: any;
   public isChallenged: boolean = false;
   jsondata: any;
-  //storage: any;
   photos: string;
   form;
   loader: any;
@@ -51,27 +49,34 @@ export class LoginPage {
       password: new FormControl("", Validators.required)
     });
 
-    // this.userLoginFlag = (localStorage.getItem("userLoginFlag") == "true")? true:false;
-    // this.gmailLoginFlag = (localStorage.getItem("gmailLoginFlag") == "true")? true:false;
-
     this.authHandler.setLoginFailureCallback((error) => {
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup("FAILURE", error.errorMsg);
+          if(error.status == 403 && error.statusText == "Forbidden"){
+            this.utilService.showCustomPopup("FAILURE", "Your account is Locked, Please try again after 60 Sec..");
+          }else if(error.errorMsg !== undefined && error.errorMsg !== null){
+            this.utilService.showCustomPopup("FAILURE", error.errorMsg);
+          } 
     });
 
     this.authHandler.setLoginSuccessCallback(() => {
+      this.utilService.dismissLoader();
       let view = this.navCtrl.getActive();
       if (!(view.instance instanceof HomePage)) {
-        this.utilService.dismissLoader();
         this.navCtrl.setRoot("HomePage");
       }
     });
 
-    this.authHandler.setHandleChallengeCallback(() => {
+    this.authHandler.setHandleChallengeCallback((error) => {
       this.utilService.dismissLoader();
       this.navCtrl.setRoot("LoginPage");
-    });
-    
+      if(error.remainingAttempts !== undefined && error.remainingAttempts != 3){
+        if(error.errorMsg !== undefined && error.errorMsg !== null){
+          this.utilService.showCustomPopup("FAILURE", error.errorMsg);
+        }
+        
+      }
+
+    }); 
   }
 
   sampleLogin() {
@@ -79,10 +84,6 @@ export class LoginPage {
   }
 
   processForm() {
-    // this.userLoginFlag = true;
-    // this.gmailLoginFlag = false;
-    // localStorage.setItem("userLoginFlag", "true");
-    // localStorage.setItem("gmailLoginFlag", "false");
     let username = this.form.value.username;
     let password = this.form.value.password;
     let credentials = {
@@ -93,18 +94,13 @@ export class LoginPage {
     if (username === "" || password === "") {
       this.utilService.showCustomPopup("FAILURE", "Username and password are required");
       return;
-    }
-    console.log('--> Sign-in with user: ', username);
-
-    if(this.utilService.loader === undefined || !this.utilService.loader.hasOwnProperty('data')){
+    }else{
       this.utilService.showLoader("Please Wait..");
+      setTimeout(() => {
+        this.authHandler.login(credentials);
+      }, 100);
     }
 
-    console.log(this.utilService.loader);
-
-    setTimeout(() => {
-      this.authHandler.login(credentials);
-    }, 100);
   }
 
 
@@ -135,11 +131,6 @@ export class LoginPage {
    * Method to handle user login via google plus option
    */
   userLoginViagooglePlus() {
-    // this.userLoginFlag = false;
-    // this.gmailLoginFlag = true;
-    // localStorage.setItem("userLoginFlag", "false");
-    // localStorage.setItem("gmailLoginFlag", "true");
-    // console.log("1");
     this.googlePlus.login({
       'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',
       'offline': true
@@ -160,9 +151,7 @@ export class LoginPage {
         this.googlePlus.disconnect().then((res) => {
           this.utilService.showCustomPopup("FAILURE", "Please use Titan Mail ID...");
         })
-        
       }
-
     });
   }
 

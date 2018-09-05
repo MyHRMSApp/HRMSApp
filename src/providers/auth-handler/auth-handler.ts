@@ -40,7 +40,6 @@ export class AuthHandlerProvider {
     }
     this.initialized = true;
     console.log('--> gmailAuthInit init() called');
-    this.utilService.showLoader("Please wait");
     this.gmailLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler("socialLogin");
     this.gmailLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.gmailLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
@@ -67,7 +66,7 @@ export class AuthHandlerProvider {
     console.log('--> AuthHandler handleChallenge called.\n', JSON.stringify(challenge));
     this.isChallenged = true;
     if (this.handleChallengeCallback != null) {
-      this.handleChallengeCallback();
+      this.handleChallengeCallback(challenge);
     } else {
       console.log('--> AuthHandler: handleChallengeCallback not set!');
     }
@@ -96,7 +95,7 @@ export class AuthHandlerProvider {
   }
 
   checkIsLoggedIn() {
-    // this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
+    this.utilService.showLoader("Please Wait..");
     console.log('--> AuthHandler checkIsLoggedIn called');
     WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
     .then(
@@ -106,7 +105,7 @@ export class AuthHandlerProvider {
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
-        this.loginFailureCallback(error.responseText);
+        this.loginFailureCallback(error);
       }
     );
   }

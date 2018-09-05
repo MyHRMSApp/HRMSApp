@@ -108,22 +108,22 @@ export class MyRequestPage {
       var leaveTypevalue = "";
       switch (leaveType) {
         case 'CL':
-          leaveTypevalue = "01";
+          leaveTypevalue = "0001";
           break;
         case 'SL':
-          leaveTypevalue = "01";
+          leaveTypevalue = "0002";
           break;
         case 'PL':
-          leaveTypevalue = "01";
+          leaveTypevalue = "0003";
           break;
         case 'GL':
-          leaveTypevalue = "01";
+          leaveTypevalue = "0034";
           break;
         case 'OD':
-          leaveTypevalue = "01";
+          leaveTypevalue = "";
           break;
         case 'FTP':
-          leaveTypevalue = "01";
+          leaveTypevalue = "";
           break;
       }
 
@@ -134,6 +134,7 @@ export class MyRequestPage {
           "IP_FLAG": 'C',
           "IP_CMNT": ""
         }
+        this.applyCancelDeleteRequest(payloadData);
       }else if(status == 'A'){
         let deletionTextareaAlert = this.modalCtrl.create("AlertPageFortextareaPage");
         deletionTextareaAlert.present();
@@ -145,9 +146,10 @@ export class MyRequestPage {
             "IP_FLAG": 'D',
             "IP_CMNT": data.deleteReason
           }
+          this.applyCancelDeleteRequest(payloadData);
         });
       }
-      this.applyCancelDeleteRequest(payloadData);
+      
     }
 
     applyCancelDeleteRequest(payloadData){

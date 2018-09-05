@@ -348,6 +348,8 @@ export class CustomCalendarModelPage {
     var elements:any = document.getElementsByClassName("switch-btn");
     var backArrow = document.getElementById("backArrow");
     var frontArrow = document.getElementById("frontArrow");
+    frontArrow.className = "forward disable-btn";
+    backArrow.className = "back disable-btn";
     setTimeout(() => {
       var value = moment(elements[0].innerText, "MMM YYYY").format("MMYYYY").toString();
       var monthDifferCheck = moment().diff(moment(value, "MMYYYY"), 'months', true);

@@ -91,6 +91,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
         // res.put("vendorList", getConfiguration().getEnabledVendors().keySet().toArray());
         res.put("errorMsg",errorMsg);
         res.put("remainingAttempts",getRemainingAttempts());
+        errorMsg = null;
         return res;
     }
 
@@ -131,29 +132,44 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                 case GMAIL_LOGIN:
                     if(credentials.containsKey(GMAIL_ID)){
                         String gmailID = (String) credentials.get(GMAIL_ID);
+                        vendorName = (String) credentials.get(VENDOR_KEY);
+                        String token = (String) credentials.get(TOKEN_KEY);
                         //Look for this user in the database
+                        System.out.println(gmailID +"<---->"+vendorName+"<---->"+token);
                         try {
-                            JSONObject employeeNO = (JSONObject) userManager.getEmployeeNumber(gmailID);
-                            if(employeeNO.getInt("EmpCode") != 0){
-                                empCode = Integer.toString(employeeNO.getInt("EmpCode"));
-                                jsonObject = (JSONObject) userManager.getUser("Gmail", "E0477072");
-                                if(jsonObject.getInt("EP_RESULT") == 0){
-                                    userId = jsonObject.getString("EP_ENAME");
-                                    displayName = jsonObject.toString();
-                                    AuthenticatedUser user = new AuthenticatedUser();
-                                    this.user = new AuthenticatedUser(userId, displayName, this.getName());
-                                    return true;
-                                }else if(jsonObject.getInt("EP_RESULT") == 1234510){
-                                    errorMsg = "Internal Server Error, Please try again";
-                                    return false;
+                            if (vendorName != null && token != null) {
+                                LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
+                                if (vendor != null) {
+                                    AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
+                                    System.out.println("-->>firebase-->>"+ user.toString());
+                                    if (user != null) {
+                                        JSONObject employeeNO = (JSONObject) userManager.getEmployeeNumber(gmailID);
+                                        if(employeeNO.getInt("EmpCode") != 0){
+                                            empCode = Integer.toString(employeeNO.getInt("EmpCode"));
+                                            jsonObject = (JSONObject) userManager.getUser("Gmail", "E0477072");
+                                            if(jsonObject.getInt("EP_RESULT") == 0){
+                                                userId = jsonObject.getString("EP_ENAME");
+                                                displayName = jsonObject.toString();
+                                                AuthenticatedUser userNew = new AuthenticatedUser();
+                                                userNew = new AuthenticatedUser(userId, displayName, this.getName());
+                                                return true;
+                                            }else if(jsonObject.getInt("EP_RESULT") == 1234510){
+                                                errorMsg = "Internal Server Error, Please try again..";
+                                                return false;
+                                            }
+                                        }else if(employeeNO.getInt("EmpCode") != 00){
+                                            errorMsg = "Login process getting error, Please try again..";
+                                            return false;
+                                        }
+                                        else{
+                                            errorMsg = "Please try with valid Titan Mail ID";
+                                            return false;
+                                        }
+                                    }else{
+                                        errorMsg = "token is not giving user details...";
+                                        return false;
+                                    }
                                 }
-                            }else if(employeeNO.getInt("EmpCode") != 00){
-                                errorMsg = "Login process getting error, Please try again..";
-                                return false;
-                            }
-                            else{
-                                errorMsg = "Please try with valid Titan Mail ID";
-                                return false;
                             }
                         } catch (Exception exception) {
                             LOGGER.log(Level.SEVERE,"\n [ Exception ] : "+exception);

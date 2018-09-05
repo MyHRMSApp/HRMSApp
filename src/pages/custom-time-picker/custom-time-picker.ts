@@ -51,12 +51,13 @@ export class CustomTimePickerPage {
   setHoursTimeAddFunction(flag){
     if(flag == "H"){
       if(this.hoursValue < 24 && this.hoursValue >= 0){
-        this.hoursValue++;
+        this.hoursValue = this.hoursValue+1;
+        this.hoursValue = (this.hoursValue == 24)?0:this.hoursValue;
         this.ref.detectChanges();
       }
     }else if(flag == "S"){
       if(this.minuteValue < 59 && this.minuteValue >= 0){
-        this.minuteValue++;
+        this.minuteValue = (this.minuteValue + 5 == 60)?0:this.minuteValue + 5;
         this.ref.detectChanges();
       }
     }
@@ -65,13 +66,14 @@ export class CustomTimePickerPage {
 
   setHoursTimeReduceFunction(flag){
     if(flag == "H"){
-      if(this.hoursValue <= 24 && this.hoursValue > 0){
-        this.hoursValue--;
+      if(this.hoursValue <= 24 && this.hoursValue >= 0){
+        this.hoursValue = this.hoursValue-1;
+        this.hoursValue = (this.hoursValue == -1)?23:this.hoursValue;
         this.ref.detectChanges();
       }
     }else if(flag == "S"){
       if(this.minuteValue < 59 && this.minuteValue >= 0){
-        this.minuteValue--;
+        this.minuteValue = (this.minuteValue - 5 == 0)?55:this.minuteValue - 5;
         this.ref.detectChanges();
       }
     }
