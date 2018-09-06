@@ -86,17 +86,38 @@ export class LoginPage {
   processForm() {
     let username = this.form.value.username;
     let password = this.form.value.password;
-    let credentials = {
-      "username": username,
-      "password": password,
-      "SECURITY_TYPE": "SAP_LOGIN"
-    };
-    if (username === "" || password === "") {
-      this.utilService.showCustomPopup("FAILURE", "Username and password are required");
+    if (username === "") {
+      this.utilService.showCustomPopup("FAILURE", "Username is required..");
+      return;
+    }else if(username.length < 4){
+      this.utilService.showCustomPopup("FAILURE", "Username must be min 4 and max 8 characters..");
+      return;
+    }else if (password === "") {
+      this.utilService.showCustomPopup("FAILURE", "Password is required..");
       return;
     }else{
+      var userNameLength = username;
+      switch (userNameLength.length) {
+        case 7:
+          username = "E"+username;
+          break;
+        case 6:
+          username = "E0"+username;
+          break;
+        case 5:
+          username = "E00"+username;
+          break;
+        case 4:
+          username = "E000"+username;
+          break;
+      }
       this.utilService.showLoader("Please Wait..");
       setTimeout(() => {
+        let credentials = {
+          "username": username,
+          "password": password,
+          "SECURITY_TYPE": "SAP_LOGIN"
+        };
         this.authHandler.login(credentials);
       }, 100);
     }
