@@ -17,9 +17,9 @@ export class MyTasksPage {
   isDisabled = false;
 
   tasks = [
-    { title: "Vivek", selected: false},
-    { title: "Karthi", selected: false},
-    { title: "Amit", selected: false},
+    { title: "Vivek", selected: false, type: "CL"},
+    { title: "Karthi", selected: false, type: "OD"},
+    { title: "Amit", selected: false, type: "FTP"},
   ];
   selectedAll: any;
   acceptButton: string;
