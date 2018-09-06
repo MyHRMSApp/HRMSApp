@@ -80,14 +80,22 @@
     </platform>
     <mfp:android>
         <mfp:sdkChecksum>3727668345</mfp:sdkChecksum>
+<<<<<<< HEAD
         <mfp:appChecksum>860850565</mfp:appChecksum>
+=======
+        <mfp:appChecksum>763055939</mfp:appChecksum>
+>>>>>>> 1712bb87a8a6185b20e6d5ec6468227be7bcb776
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
     </mfp:android>
     <mfp:ios>
         <mfp:sdkChecksum>4145390992</mfp:sdkChecksum>
+<<<<<<< HEAD
         <mfp:appChecksum>3688032934</mfp:appChecksum>
+=======
+        <mfp:appChecksum>706700779</mfp:appChecksum>
+>>>>>>> 1712bb87a8a6185b20e6d5ec6468227be7bcb776
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
@@ -115,7 +123,7 @@
     </mfp:windows>
     <mfp:platformVersion>8.0.0.00-20180630-023429</mfp:platformVersion>
     <mfp:clientCustomInit enabled="false" />
-    <mfp:server runtime="mfp" url="http://192.168.43.158:9080" />
+    <mfp:server runtime="mfp" url="http://172.25.6.95:9080" />
     <mfp:directUpdateAuthenticityPublicKey />
     <mfp:languagePreferences>en</mfp:languagePreferences>
     <engine name="android" spec="^7.0.0" />
