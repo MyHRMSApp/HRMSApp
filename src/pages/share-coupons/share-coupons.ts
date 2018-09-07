@@ -79,7 +79,7 @@ export class ShareCouponsPage {
   }
 
   shareMe(data) {
-    console.log(data);
+      console.log(data);
     if (data.checked == true) {
       this.shareIcon = true;
       console.log("Checked == true");
@@ -118,7 +118,7 @@ export class ShareCouponsPage {
         this.str += "\n" + "Coupon Number:" + this.selectedCoupons[i].Coupon_Number;
         console.log(this.str);
       }
-      this.str += "\n" + "\n" + "Regards," + "\n" + "TITAN";
+        this.str += "\n" + "\n" + "Regards," + "\n" + "TITAN";
     }
 
   }

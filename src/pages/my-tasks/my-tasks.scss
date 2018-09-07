@@ -125,6 +125,8 @@ page-my-tasks {
         }
     }
     .subCard {
+        background-color: #0f4a5d !important;
+        border-radius:7px;
         p{
         margin-left: 3% !important;
         }
@@ -152,6 +154,18 @@ page-my-tasks {
     .button{
         width: 60%;
     } 
+
+    .disableApprove {
+        .approve {
+            opacity: 0.3 !important;
+        }
+    }
+    .enableApprove {
+        .approve {
+            opacity: 1 !important;
+        }
+    }
+    
     }
 
     ion-footer {

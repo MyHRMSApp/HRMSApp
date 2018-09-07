@@ -202,10 +202,10 @@ export class AllLeavesPage {
         }
   
       };
-    }, (error)=>{
-      console.log("Data readed from jsonstore error",error);
+    }, (error)=> {
+      console.log("Data readed from jsonstore error", error);
       this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error(this.title, error, "FAILURE")
+      this.utilService.showCustomPopup4Error(this.title, error, "FAILURE");
     });
   }
 

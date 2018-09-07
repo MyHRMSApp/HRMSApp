@@ -12,11 +12,11 @@
 
 
 <ion-content padding no-bounce>
-  <ion-grid>
+  <ion-grid [ngClass]="showApprove ? 'enableApprove' : 'disableApprove'">
     <ion-row>
       <ion-col col-4 style="text-align:left;display:inline-flex">
-        <p style="color:white">Approve</p>
-        <p style="margin-left: 8%;color: white;">
+        <p class="approve" style="color:white">Approve</p>
+        <p class="approve" style="margin-left: 8%;color: white;">
           <ion-icon style="font-size:3em;line-height:0.4" name="ios-checkmark"></ion-icon>
         </p>
       </ion-col>
@@ -25,7 +25,7 @@
       </ion-col>
       <ion-col col-2>
         <ion-item>
-          <ion-checkbox [(ngModel)]="selectedAll" (change)="selectAll()"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="selectAllCheckmark" (click)="selectAll(selectAllCheckmark)"></ion-checkbox>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -44,7 +44,7 @@
         </ion-col>
         <ion-col col-2>
           <ion-item>
-            <ion-checkbox (click)="shareMe(t)" [(ngModel)]="t.selected"></ion-checkbox>
+            <ion-checkbox (click)="selectMe(t)" [(ngModel)]="t.selected"></ion-checkbox>
           </ion-item>
         </ion-col>
       </ion-row>

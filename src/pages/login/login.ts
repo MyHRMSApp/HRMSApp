@@ -163,4 +163,8 @@ export class LoginPage {
     });
   }
 
+  help(){
+    this.navCtrl.push("NeedHelpPage");
+  }
+
 }

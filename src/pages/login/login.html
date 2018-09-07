@@ -8,7 +8,7 @@
           <form (submit)="processForm()" [formGroup]="form">
             <ion-list>
               <ion-item class="employee_id">
-                <ion-icon color="light" class="iconPerson" item-left name="ios-card-outline"></ion-icon>
+                <ion-icon color="light" class="iconPerson" item-left><p style="color:white;font-weight:300;font-size:1.6rem">E</p></ion-icon>
                 <ion-input formControlName="username" placeholder="Employee Id" type="text"></ion-input>
               </ion-item>
               <ion-item class="password">
@@ -26,7 +26,7 @@
                 <ion-checkbox></ion-checkbox>
               </ion-item>
             </ion-col>
-            <ion-col class="needHelp" col-4>
+            <ion-col (click)="help()" class="needHelp" col-4>
               <p>Need help</p>
             </ion-col>
           </ion-row>

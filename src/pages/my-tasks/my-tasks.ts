@@ -15,15 +15,15 @@ export class MyTasksPage {
   hamburger: string;
   homeIcon: string;
   isDisabled = false;
-
-  tasks = [
-    { title: "Vivek", selected: false, type: "CL"},
-    { title: "Karthi", selected: false, type: "OD"},
-    { title: "Amit", selected: false, type: "FTP"},
-  ];
+  tasks = [{ title: "Vivek", selected: false, type: "CL"},
+           { title: "Karthi", selected: false, type: "OD"},
+           { title: "Amit", selected: false, type: "FTP"}];
   selectedAll: any;
   acceptButton: string;
   rejectButton: string;
+  public selectAllCheckmark: boolean = false;
+  public showApprove: boolean = false;
+  selectedLeaves: any = [];
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -41,15 +41,54 @@ export class MyTasksPage {
   }
 
 
-  selectAll() {
-    for (var i = 0; i < this.tasks.length; i++) {
-      this.tasks[i].selected = this.selectedAll;
+  selectAll(data) {
+    //console.log(data);
+    this.ref.detectChanges();
+    if (data == true) {
+      this.showApprove = true;
+      this.ref.detectChanges();
+      for (var i = 0; i < this.tasks.length; i++) {
+        this.tasks[i].selected = true;
+      }
+    }
+    else {
+      this.showApprove = false;
+      this.ref.detectChanges();
+      for (var j = 0; j < this.tasks.length; j++) {
+        this.tasks[j].selected = false;
+      }
     }
   }
 
-  shareMe(data) {
-    console.log(data);
-    this.ref.detectChanges();
+  selectMe(data) {
+    //console.log(data);
+    if (data.selected == true) {
+      this.showApprove = true;
+      this.ref.detectChanges();
+      data = {
+        emp_name: data.title,
+        type: data.type,
+      }
+      this.selectedLeaves.push(data);
+      
+    }
+    else {
+      let uncheckedLeave = data.type;
+      console.log("Checked == false", uncheckedLeave);
+      this.ref.detectChanges();
+      for (let i = 0; i < this.selectedLeaves.length; i++) {
+        console.log(this.selectedLeaves[i].type);
+        if (this.selectedLeaves[i].type == uncheckedLeave) {
+          this.selectedLeaves.splice(i, 1);
+          console.log(this.selectedLeaves);
+          console.log(this.selectedLeaves.length);
+          if (this.selectedLeaves.length == "0") {
+            this.showApprove = false;
+            this.ref.detectChanges();
+          }
+        }
+    }
+  }
   }
 
   shownGroup = null;
@@ -71,6 +110,10 @@ export class MyTasksPage {
   
   back(){
     this.navCtrl.pop();
+  }
+
+  home() {
+    this.navCtrl.setRoot("HomePage");
   }
 
 }
