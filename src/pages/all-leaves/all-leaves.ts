@@ -42,6 +42,7 @@ export class AllLeavesPage {
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
     public utilService: UtilsProvider, public service: ServiceProvider, public mainService: MyApp) {
 
+    this.menu.swipeEnable(false);
     this.title = this.navParams.get("titleName");
     this.leaveFromDate = " ";
     this.leaveToDate = " ";

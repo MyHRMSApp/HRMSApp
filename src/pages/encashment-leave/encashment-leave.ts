@@ -30,9 +30,10 @@ export class EncashmentLeavePage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider,public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider) {
-
-      this.title = this.navParams.get("titleName");
-      this.encashmentData = [];
+    
+    this.menu.swipeEnable(false);
+    this.title = this.navParams.get("titleName");
+    this.encashmentData = [];
   }
 
   ionViewDidLoad() {

@@ -30,7 +30,8 @@ export class ApplyLeavePage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public utilService: UtilsProvider,
     public mainServices: MyApp, public service: ServiceProvider) {
-      
+     
+    this.menu.swipeEnable(false);
     }
 
   openMenu() {

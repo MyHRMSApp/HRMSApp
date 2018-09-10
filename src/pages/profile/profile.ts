@@ -34,6 +34,8 @@ export class ProfilePage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public mainService: MyApp, public service: ServiceProvider,
     public utilService: UtilsProvider) {
+    
+    this.menu.swipeEnable(false);
   }
 
   ionViewDidLoad() {

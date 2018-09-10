@@ -38,14 +38,14 @@ export class ApplyFtpPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
     public service: ServiceProvider, public utilService: UtilsProvider, public mainService: MyApp) {
-
-      if(this.navParams.get("ftpData")) this.ftpObject =  this.navParams.get("ftpData");
-      
-      this.selectedDate = this.ftpObject.LDATE;
-      this.inPunch = this.ftpObject.PUN_P10;
-      this.outPunch = this.ftpObject.PUN_P20;
-      this.midInPunch = this.ftpObject.PUN_P25;
-      this.midOutPunch = this.ftpObject.PUN_P15;
+    
+    this.menu.swipeEnable(false);  
+    if(this.navParams.get("ftpData")) this.ftpObject =  this.navParams.get("ftpData");
+    this.selectedDate = this.ftpObject.LDATE;
+    this.inPunch = this.ftpObject.PUN_P10;
+    this.outPunch = this.ftpObject.PUN_P20;
+    this.midInPunch = this.ftpObject.PUN_P25;
+    this.midOutPunch = this.ftpObject.PUN_P15;
   }
 
   /**

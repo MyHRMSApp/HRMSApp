@@ -44,7 +44,8 @@ constructor(public menu: MenuController, public events: Events,
   public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
   public navParams: NavParams, public storage:StorageProvider, public service: ServiceProvider, 
   public utilService: UtilsProvider) {
-
+    
+    this.menu.swipeEnable(false);
     this.counts = this.mainService.couponPageData;
     console.log("Counts" + JSON.stringify(this.counts));
     

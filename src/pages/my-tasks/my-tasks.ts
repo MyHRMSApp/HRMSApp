@@ -40,8 +40,10 @@ export class MyTasksPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public ref: ChangeDetectorRef, public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider, public modalCtrl: ModalController ) {
-      this.commonLeaveType = [];
-      this.ODLeaveType = [];
+    
+    this.menu.swipeEnable(false);
+    this.commonLeaveType = [];
+    this.ODLeaveType = [];
   }
 
   ionViewDidLoad() {

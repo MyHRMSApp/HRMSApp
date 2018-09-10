@@ -33,7 +33,8 @@ export class ShareCouponsPage {
     private toast: ToastController, private network: Network, public loadingCtrl: LoadingController, public platform: Platform,
     private http: Http, public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController,
     public navParams: NavParams, public mainService: MyApp, public socialSharing: SocialSharing, private ref: ChangeDetectorRef) {
-
+    
+    this.menu.swipeEnable(false);
     this.title = this.navParams.get("titleName");
     this.specificCoupons = this.navParams.get("coupons");
     this.couponCounts = this.navParams.get("length");

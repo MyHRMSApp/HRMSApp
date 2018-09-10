@@ -35,7 +35,8 @@ export class ApplyOdPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
     public service: ServiceProvider, public utilService: UtilsProvider,  public mainService: MyApp) {
-
+    
+      this.menu.swipeEnable(false);
       this.startDate = moment().format("DD-MM-YYYY");
       this.endDate = moment().format("DD-MM-YYYY");
       this.inTime = "00:00";

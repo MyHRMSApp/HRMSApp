@@ -31,9 +31,11 @@ export class MyRequestPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, private ref: ChangeDetectorRef, public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider, public modalCtrl: ModalController) { 
-      this.leaveRequestDataList = [];
-      this.odRequestDataList = [];
-      this.ftpRequestDataList = [];
+    
+    this.menu.swipeEnable(false);
+    this.leaveRequestDataList = [];
+    this.odRequestDataList = [];
+    this.ftpRequestDataList = [];
   }
 
   ionViewDidLoad() {

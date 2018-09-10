@@ -52,6 +52,8 @@ export class AttendanceViewPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
     public utilService: UtilsProvider, public service: ServiceProvider) {
+    
+    this.menu.swipeEnable(false);
   }
   
   /**
