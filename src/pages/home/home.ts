@@ -60,7 +60,8 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider, public ref: ChangeDetectorRef) {
-
+    
+    this.menu.swipeEnable(false);
     this.eyeWearCounts = [];
     this.jewelleryCounts = [];
     this.taneiraCounts = [];

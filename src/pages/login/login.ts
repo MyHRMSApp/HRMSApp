@@ -1,7 +1,7 @@
 import { UtilsProvider } from './../../providers/utils/utils';
 import { Component, Renderer } from '@angular/core';
 import { HomePage } from './../home/home';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, MenuController, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ServiceProvider } from '../../providers/service/service';
 import { StorageProvider } from '../../providers/storage/storage';
@@ -40,8 +40,9 @@ export class LoginPage {
   constructor(public alert: AlertController, public service: ServiceProvider, public navCtrl: NavController,
     public navParams: NavParams, public loadingCtrl: LoadingController, public storage: StorageProvider,
     private googlePlus: GooglePlus, public utilService: UtilsProvider, public authHandler: AuthHandlerProvider,
-    public render: Renderer, public mainService: MyApp) {
-
+    public render: Renderer, public mainService: MyApp, public menu: MenuController ) {
+    
+    this.menu.swipeEnable(false);
     this.form = new FormGroup({
       // username: new FormControl("E1596739", Validators.required),
       // password: new FormControl("init@123", Validators.required)

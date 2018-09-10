@@ -30,6 +30,8 @@ export class MyTasksPage {
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public ref: ChangeDetectorRef) {
+
+    this.menu.swipeEnable(false);
   }
 
   ionViewDidLoad() {

@@ -1,12 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-
-/**
- * Generated class for the CustomTimePickerPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, ViewController, MenuController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -19,7 +12,8 @@ export class CustomTimePickerPage {
   public customTitle:any = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-              public ref: ChangeDetectorRef) {
+              public ref: ChangeDetectorRef, public menu: MenuController) {
+    this.menu.swipeEnable(false);
     this.hoursValue = 0;
     this.minuteValue = 0;
     this.customTitle = this.navParams.get("title");

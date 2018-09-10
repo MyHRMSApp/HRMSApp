@@ -21,6 +21,8 @@ export class ProfilePage {
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams) {
+    
+    this.menu.swipeEnable(false);
   }
 
   ionViewDidLoad() {

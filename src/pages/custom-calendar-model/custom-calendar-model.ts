@@ -1,16 +1,8 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, MenuController } from 'ionic-angular';
 import { CalendarComponentOptions } from 'ion2-calendar';
 import moment from 'moment';
 import { UtilsProvider } from '../../providers/utils/utils';
-
-
-/**
- * Generated class for the CustomCalendarModelPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -39,8 +31,10 @@ export class CustomCalendarModelPage {
   public quarterWiseSelectionFlag:any = true;
   public dayWiseSelectionFlag:any = true;
   public fromPage:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
+  constructor(public menu: MenuController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
               public utilService: UtilsProvider, public alert:AlertController, public ref: ChangeDetectorRef) {
+    
+    this.menu.swipeEnable(false);
     this.calendarFor = this.navParams.get('Cal');
     if(this.calendarFor == "to"){
       this.leaveFromDate = this.navParams.get('leaveFromDate');

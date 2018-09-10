@@ -14,7 +14,6 @@
 	<description>commonAdapterServices</description>
 
 	<JAXRSApplicationClass>com.ibm.commonServices.CommonAdapterServicesApplication</JAXRSApplicationClass>
-
 	<property name="UserCustomMessage" defaultValue="" displayName="User Custom Message"/>
 
 </mfp:adapter>
