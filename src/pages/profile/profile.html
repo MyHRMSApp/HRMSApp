@@ -16,24 +16,36 @@
       <ion-card>
         <ion-row>
           <ion-col col-6><p>Name</p></ion-col>
-          <ion-col col-6><p class="right">Vivek</p></ion-col>
+          <ion-col col-6><p class="right">{{getProfileValue(profileDetails.ENAME)}}</p></ion-col>
         </ion-row>
         <ion-row>
           <ion-col col-6><p>Department</p></ion-col>
-          <ion-col col-6><p class="right">IT</p></ion-col>
+          <ion-col col-6><p class="right">{{getProfileValue(profileDetails.ORGEH_TXT)}}</p></ion-col>
         </ion-row>
         <ion-row>
           <ion-col col-6><p>Location</p></ion-col>
-          <ion-col col-6><p class="right">Corporate Office</p></ion-col>
+          <ion-col col-6><p class="right">{{getProfileValue(profileDetails.BTRTL_TXT)}}</p></ion-col>
         </ion-row>
         <ion-row>
           <ion-col col-6><p>Employee ID</p></ion-col>
-          <ion-col col-6><p class="right">2582500</p></ion-col>
+          <ion-col col-6><p class="right">{{getProfileValue(profileDetails.EMPCODE)}}</p></ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-6><p>UAN</p></ion-col>
-          <ion-col col-6><p class="right">123456</p></ion-col>
+          <ion-col col-6><p>Reporting Manager</p></ion-col>
+          <ion-col col-6><p class="right">{{getProfileValue(profileDetails.EP_MANAGER)}}</p></ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col col-6><p>Designation</p></ion-col>
+          <ion-col col-6><p class="right">{{getProfileValue(profileDetails.PERSG_TXT)}}</p></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><p>EMP_HR</p></ion-col>
+          <ion-col col-6><p class="right">{{getProfileValue(profileDetails.EMP_HR)}}</p></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-6><p>Employee Level</p></ion-col>
+            <ion-col col-6><p class="right">{{getProfileValue(profileDetails.PERSK)}}</p></ion-col>
+          </ion-row>
       </ion-card>
     </ion-grid>
   

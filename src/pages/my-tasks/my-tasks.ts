@@ -31,8 +31,8 @@ export class MyTasksPage {
   public commonLeaveType:Array<any>;
   public ODLeaveType:Array<any>;
   public selectedAllFlag:boolean = false;
-  public approvedRequestJSONObject:any = {'IT_INPUT': {'item': ''},'IP_CMNT': 'APPROVED'};
-  public rejectedRequestJSONObject:any = {'IT_INPUT': {'item': ''},'IP_CMNT': 'REJECTED'};
+  public approvedRequestJSONObject:any = {'IT_INPUT': {'item': ''}};
+  public rejectedRequestJSONObject:any = {'IT_INPUT': {'item': ''}};
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -187,8 +187,9 @@ export class MyTasksPage {
     this.approvedRequestJSONObject.IT_INPUT.item = {
       "PERNR": this.commonLeaveType[indexValue].PERNR,
       "REQNO":  this.commonLeaveType[indexValue].REQID,
-      "RTYP": this.commonLeaveType[indexValue].type,
-      "FLAG": ""};
+      "RTYP": this.getLeaveTypeValue(this.commonLeaveType[indexValue].type),
+      "FLAG": "A"};
+      this.approvedRequestJSONObject.IP_CMNT = "";
       console.log(JSON.stringify(this.approvedRequestJSONObject));
       this.approveRejectRequestCall(this.approvedRequestJSONObject);
   }
@@ -196,13 +197,14 @@ export class MyTasksPage {
   applySingleRejectRequest(indexValue){
       let deletionTextareaAlert = this.modalCtrl.create("AlertPageFortextareaPage");
         deletionTextareaAlert.present();
-        deletionTextareaAlert.onDidDismiss((data) => {
+        deletionTextareaAlert.onDidDismiss((data) => { 
           console.log(data);
           this.rejectedRequestJSONObject.IT_INPUT.item = {
             "PERNR": this.commonLeaveType[indexValue].PERNR,
             "REQNO":  this.commonLeaveType[indexValue].REQID,
-            "RTYP": this.commonLeaveType[indexValue].type,
-            "FLAG": data.deleteReason};
+            "RTYP": this.getLeaveTypeValue(this.commonLeaveType[indexValue].type),
+            "FLAG": "R"};
+            this.rejectedRequestJSONObject.IP_CMNT = data.deleteReason;
             console.log(JSON.stringify(this.rejectedRequestJSONObject));
             this.approveRejectRequestCall(this.rejectedRequestJSONObject);
         });
@@ -222,19 +224,20 @@ export class MyTasksPage {
         this.approvedRequestJSONObject.IT_INPUT.item = {
           "PERNR": approvedLsitTemp[0].PERNR,
           "REQNO":  approvedLsitTemp[0].REQID,
-          "RTYP": approvedLsitTemp[0].type,
-          "FLAG": ""
+          "RTYP": this.getLeaveTypeValue(approvedLsitTemp[0].type),
+          "FLAG": "A"
       }
     }else{
       for(var i=0; i<approvedLsitTemp.length; i++){
         approvedListObject.push({
             "PERNR": approvedLsitTemp[i].PERNR,
             "REQNO":  approvedLsitTemp[i].REQID,
-            "RTYP": approvedLsitTemp[i].type,
-            "FLAG": ""
+            "RTYP": this.getLeaveTypeValue(approvedLsitTemp[i].type),
+            "FLAG": "A"
         });
       }
       this.approvedRequestJSONObject.IT_INPUT.item = approvedListObject;
+      this.approvedRequestJSONObject.IP_CMNT = "";
     }
     console.log("approvedLsitTemp--->>"+JSON.stringify(this.approvedRequestJSONObject));
     this.approveRejectRequestCall(this.approvedRequestJSONObject);
@@ -250,6 +253,7 @@ export class MyTasksPage {
       if(resultData.status_code == 200){
         if(resultData.data.ET_DATA.FLAG == "E"){
           this.utilService.dismissLoader();
+          this.selectAll();
           this.utilService.showCustomPopup4Error("My Task", resultData.data.ET_DATA.REASON, "FAILURE");
         }else if(resultData.data.ET_DATA.FLAG == "S"){
           const alert = this.alertCtrl.create({
@@ -279,6 +283,31 @@ export class MyTasksPage {
     this.utilService.dismissLoader();
     this.utilService.showCustomPopup4Error("My Task", error.statusText, "FAILURE");
   });
+  }
+
+  getLeaveTypeValue(leaveType){
+    var leaveTypevalue = "";
+      switch (leaveType) {
+        case 'CL':
+          leaveTypevalue = "01";
+          break;
+        case 'SL':
+          leaveTypevalue = "01";
+          break;
+        case 'PL':
+          leaveTypevalue = "01";
+          break;
+        case 'GL':
+          leaveTypevalue = "01";
+          break;
+        case 'OD':
+          leaveTypevalue = "02";
+          break;
+        case 'FTP':
+          leaveTypevalue = "03";
+          break;
+      }
+      return leaveTypevalue;
   }
 
 }
