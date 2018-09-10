@@ -65,6 +65,9 @@ page-my-tasks {
                 padding-left: 8px;
                 background-color: transparent;
             }
+            .checkbox{
+                margin: 12px 9px 12px 6px !important;
+            }
             .checkbox-icon {
                 border-radius: 50% !important;
                 position: relative !important;
@@ -158,6 +161,8 @@ page-my-tasks {
     .disableApprove {
         .approve {
             opacity: 0.3 !important;
+            cursor: none !important;
+            pointer-events: none !important;
         }
     }
     .enableApprove {

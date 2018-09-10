@@ -310,7 +310,7 @@ export class MyRequestPage {
   }
 
   getTimeValue(timeData){
-    timeData = timeData.replace(/:/g, "");
+    timeData = timeData.toString().replace(/:/g, "");
     return timeData;
   }
 
