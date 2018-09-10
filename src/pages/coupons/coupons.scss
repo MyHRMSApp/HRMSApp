@@ -81,6 +81,12 @@ page-coupons {
             margin-left: 12px;
         }
         }
+    //Media query for iPhone-8-Plus
+    @media only screen and (min-height: 736px) and (min-width: 414px) {
+        .couponCounts {
+            margin-left: 12px;
+        }
+        }
   }
   ion-footer {
     height:3.5em !important; 

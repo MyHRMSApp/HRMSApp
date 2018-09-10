@@ -1,5 +1,5 @@
 import { UtilsProvider } from './../../providers/utils/utils';
-import { Component, Renderer } from '@angular/core';
+import { Component, Renderer, ChangeDetectorRef } from '@angular/core';
 import { HomePage } from './../home/home';
 import { IonicPage, MenuController, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -36,11 +36,12 @@ export class LoginPage {
   loader: any;
   public gmailLoginFlag:boolean = false;
   public userLoginFlag:boolean = false;
+  remember: boolean = false;
 
   constructor(public alert: AlertController, public service: ServiceProvider, public navCtrl: NavController,
     public navParams: NavParams, public loadingCtrl: LoadingController, public storage: StorageProvider,
     private googlePlus: GooglePlus, public utilService: UtilsProvider, public authHandler: AuthHandlerProvider,
-    public render: Renderer, public mainService: MyApp, public menu: MenuController ) {
+    public render: Renderer, public mainService: MyApp, public menu: MenuController, public ref:ChangeDetectorRef  ) {
     
     this.menu.swipeEnable(false);
     this.form = new FormGroup({
@@ -82,6 +83,11 @@ export class LoginPage {
 
   sampleLogin() {
     this.navCtrl.setRoot("HomePage");
+  }
+  
+  rememberMe() {
+    this.remember = true;
+    this.ref.detectChanges();
   }
 
   processForm() {

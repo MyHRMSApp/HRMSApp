@@ -1,7 +1,8 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
-import { Nav, Platform,AlertController } from 'ionic-angular';
+import { Nav, Platform,AlertController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Network } from '@ionic-native/network';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { StorageProvider } from '../providers/storage/storage';
@@ -41,11 +42,11 @@ export class MyApp {
   public myTaskData:any;
   
   constructor(public platform: Platform,
-    public statusBar: StatusBar,
+    public statusBar: StatusBar, public network: Network,
     public render:Renderer,
     private authHandler: AuthHandlerProvider,
     public storage:StorageProvider,
-    public alert:AlertController,
+    public alert:AlertController, public toast: ToastController,
     public splashScreen: SplashScreen, public utilService: UtilsProvider) {
     this.initializeApp();
   }
@@ -65,6 +66,17 @@ export class MyApp {
      // this.authHandler.init();
       this.authHandler.gmailAuthInit();
     });
+
+        /* Function to find the network status */
+        this.network.onConnect().subscribe(data => {
+          console.log(data)
+          this.displayNetworkUpdate(data.type);
+        }, error => console.error(error));
+       
+        this.network.onDisconnect().subscribe(data => {
+          console.log(data)
+          this.displayNetworkUpdate(data.type);
+        }, error => console.error(error));
     // console.log("localStorage.getItem-->>>"+localStorage.getItem("userLogout"));
     // if(localStorage.getItem("userLogout") === null){
     //   localStorage.setItem("userLogout", "1");
@@ -91,6 +103,23 @@ export class MyApp {
   //       localStorage.setItem("userLogout", "1");
   //     }
   // });
+  }
+
+    /* This is used for network connection toast via ${networkType}*/
+    displayNetworkUpdate(connectionState: string){
+    let networkType = this.network.type;
+    if(`${connectionState}` == "offline"){
+      this.toast.create({
+        message: `You are in ${connectionState}, check your internet.`,
+        duration: 3000
+      }).present();
+    }
+    else {
+    this.toast.create({
+      message: `You are in ${connectionState}`,
+      duration: 3000
+    }).present();
+  }
   }
 
   openPage(page) {
