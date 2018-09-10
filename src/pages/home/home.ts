@@ -448,7 +448,30 @@ try {
 }
 
 myTask() {
-  this.navCtrl.push("MyTasksPage");
+  try {
+    this.utilService.showLoader("Please wait..");
+    this.service.invokeAdapterCall('commonAdapterServices', 'getMyTaskDetails', 'get', {payload : false}).then((resultData:any)=>{
+      if(resultData){
+        if(resultData.status_code == 200) {
+          this.mainService.myTaskData = resultData.data;
+          console.log(JSON.stringify(this.mainService.myTaskData));
+          this.utilService.dismissLoader();
+          this.navCtrl.push("MyTasksPage");
+        }
+        else {
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup("FAILURE",resultData.message);
+        }
+      };
+    }, (error)=>{
+      console.log("Data readed from jsonstore error",error);
+      this.utilService.dismissLoader();
+      this.utilService.showCustomPopup("FAILURE",error.statusText);
+    });
+    
+  } catch (error) {
+    console.log("catch-->>",error);
+  }
 }
      
 }

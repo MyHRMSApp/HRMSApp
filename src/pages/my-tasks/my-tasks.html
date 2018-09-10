@@ -12,11 +12,11 @@
 
 
 <ion-content padding no-bounce>
-  <ion-grid [ngClass]="showApprove ? 'enableApprove' : 'disableApprove'">
+  <ion-grid [ngClass]="approvedFlag ? 'enableApprove' : 'disableApprove'">
     <ion-row>
-      <ion-col col-4 style="text-align:left;display:inline-flex">
-        <p class="approve" style="color:white">Approve</p>
-        <p class="approve" style="margin-left: 8%;color: white;">
+      <ion-col col-4 style="text-align:left;display:inline-flex" >
+        <p (click)="applyAllApprovedRequests()" class="approve" style="color:white">Approve</p>
+        <p (click)="applyAllApprovedRequests()" class="approve" style="margin-left: 8%;color: white;">
           <ion-icon style="font-size:3em;line-height:0.4" name="ios-checkmark"></ion-icon>
         </p>
       </ion-col>
@@ -25,67 +25,116 @@
       </ion-col>
       <ion-col col-2>
         <ion-item>
-          <ion-checkbox [(ngModel)]="selectAllCheckmark" (click)="selectAll(selectAllCheckmark)"></ion-checkbox>
+          <ion-checkbox [checked]="selectedAllFlag" (click)="selectAll()"></ion-checkbox>
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-card *ngFor="let t of tasks; let i=index" (click)="toggleGroup(t)" [ngClass]="{active: isGroupShown(t)}">
+  <div  *ngFor="let commonLeave of commonLeaveType; let i=index">
+    <ion-card  *ngIf="commonLeave.type != 'OD' && commonLeave.type != 'FTP'" (click)="toggleGroup(commonLeave)" [ngClass]="{active: isGroupShown(commonLeave)}">
       <ion-row style="background-image: url(./assets/couponsImages/my-Task-BG.svg) !important;background-size: 100% 100%;">
         <ion-col col-2>
-          <p style="margin-top: 25% !important;margin-right: 10% !important;">{{t.type}}</p>
+          <p style="margin-top: 25% !important;margin-right: 10% !important;">{{commonLeave.type}}</p>
         </ion-col>
         <ion-col col-4>
-          <p style="margin-top: 8% !important;text-align: left;">{{t.title}}</p>
-          <p style="color: yellow !important; font-size: 0.7em">(E0417574)</p>
+          <p style="margin-top: 8% !important;text-align: left;">{{commonLeave.NAME}}</p>
+          <p style="color: yellow !important; font-size: 0.7em">({{commonLeave.PERNR}})</p>
 
         </ion-col>
         <ion-col col-4>
-          <p style="margin-top: 14% !important">02/08 - 03/08</p>
+          <p style="margin-top: 14% !important">{{commonLeave.BEGDA | date :  "dd/MM"}} - {{commonLeave.EDNDA | date :  "dd/MM"}}</p>
         </ion-col>
         <ion-col col-2>
           <ion-item>
-            <ion-checkbox (click)="selectMe(t)" [(ngModel)]="t.selected"></ion-checkbox>
+            <ion-checkbox (click)="selectMe(i)" [checked]="commonLeave.selected"></ion-checkbox>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="isGroupShown(t) && t.type == 'CL' " class="subCard">
-        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: 25-06-2018</p></ion-col>
+      <ion-row *ngIf="isGroupShown(commonLeave) && commonLeave.type != 'OD' && commonLeave.type != 'FTP'" class="subCard">
+        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON}}</p></ion-col>
         <ion-col col-3 style="text-align: -webkit-left"><p>From :</p></ion-col>
-        <ion-col col-5 style="text-align: -webkit-right"><p>27-06-2018</p></ion-col>
-        <ion-col col-4 style="text-align: -webkit-left"><p>(fullday)</p></ion-col>
+        <ion-col col-5 style="text-align: -webkit-right"><p>{{commonLeave.BEGDA | date :  "dd-MM-y"}}</p></ion-col>
+        <ion-col col-4 style="text-align: -webkit-left"><p>({{getPeriod(commonLeave.BEGUZ)}})</p></ion-col>
         <ion-col col-3 style="text-align: -webkit-left"><p>To   :</p></ion-col>
-        <ion-col col-5 style="text-align: -webkit-right"><p>28-06-2018</p></ion-col>
-        <ion-col col-4 style="text-align: -webkit-left"><p>(halfday)</p></ion-col>
-        <ion-col col-6 style="text-align: -webkit-right"><img class="button" [src]="acceptButton" /></ion-col>
-        <ion-col col-6 style="text-align: -webkit-left"><img class="button" [src]="rejectButton" /></ion-col>
-      </ion-row>
-      <ion-row *ngIf="isGroupShown(t) && t.type == 'OD' " class="subCard">
-        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: 25-06-2018</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>27-06-2018</p></ion-col>
-        <ion-col col-1><p>-</p></ion-col>
-        <ion-col col-8 style="text-align: -webkit-left"><p>27-06-2018</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>IN</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: 09:30</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-right"><p>OUT</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: 06:30</p></ion-col>
-        <ion-col col-6 style="text-align: -webkit-right"><img class="button" [src]="acceptButton" /></ion-col>
-        <ion-col col-6 style="text-align: -webkit-left"><img class="button" [src]="rejectButton" /></ion-col>
-      </ion-row>
-      <ion-row *ngIf="isGroupShown(t) && t.type == 'FTP' " class="subCard">
-        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: 25-06-2018</p></ion-col>
-        <ion-col col-12 style="text-align: -webkit-left"><p>27-06-2018</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>IN</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: 09:30</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-right"><p>OUT</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: 06:30</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>MID-IN</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: 09:30</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-right"><p>MID-OUT</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: 06:30</p></ion-col>
-        <ion-col col-6 style="text-align: -webkit-right"><img class="button" [src]="acceptButton" /></ion-col>
-        <ion-col col-6 style="text-align: -webkit-left"><img class="button" [src]="rejectButton" /></ion-col>
+        <ion-col col-5 style="text-align: -webkit-right"><p>{{commonLeave.EDNDA | date :  "dd-MM-y"}}</p></ion-col>
+        <ion-col col-4 style="text-align: -webkit-left"><p>({{getPeriod(commonLeave.ENDUZ)}})</p></ion-col>
+        <ion-col col-6 style="text-align: -webkit-right" (click)="applySingleApprovedRequest(i)"><img class="button" [src]="acceptButton" /></ion-col>
+        <ion-col col-6 style="text-align: -webkit-left" (click)="applySingleRejectRequest(i)"><img class="button" [src]="rejectButton" /></ion-col>
       </ion-row>
     </ion-card>
+  </div>
+
+  <div  *ngFor="let commonLeave of commonLeaveType; let i=index">
+    <ion-card *ngIf="commonLeave.type == 'OD'" (click)="toggleGroup(commonLeave)" [ngClass]="{active: isGroupShown(commonLeave)}">
+      <ion-row style="background-image: url(./assets/couponsImages/my-Task-BG.svg) !important;background-size: 100% 100%;">
+        <ion-col col-2>
+          <p style="margin-top: 25% !important;margin-right: 10% !important;">{{commonLeave.type}}</p>
+        </ion-col>
+        <ion-col col-4>
+          <p style="margin-top: 8% !important;text-align: left;">{{commonLeave.NAME}}</p>
+          <p style="color: yellow !important; font-size: 0.7em">({{commonLeave.PERNR}})</p>
+
+        </ion-col>
+        <ion-col col-4>
+          <p style="margin-top: 14% !important">{{commonLeave.BEGDA | date :  "dd/MM"}} - {{commonLeave.ENGDDA | date :  "dd/MM"}}</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-item>
+            <ion-checkbox (click)="selectMe(i)" [checked]="commonLeave.selected"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isGroupShown(commonLeave) && commonLeave.type == 'OD' " class="subCard">
+        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON}}</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>{{commonLeave.BEGDA | date :  "dd-MM-y"}}</p></ion-col>
+        <ion-col col-1><p>-</p></ion-col>
+        <ion-col col-8 style="text-align: -webkit-left"><p>{{commonLeave.ENGDDA | date :  "dd-MM-y"}}</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>IN</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-right"><p>OUT</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_OUT) | date :  "HH:mm"}}</p></ion-col>
+        <ion-col col-6 style="text-align: -webkit-right" (click)="applySingleApprovedRequest(i)"><img class="button" [src]="acceptButton" /></ion-col>
+        <ion-col col-6 style="text-align: -webkit-left" (click)="applySingleRejectRequest(i)"><img class="button" [src]="rejectButton" /></ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+
+  <div  *ngFor="let commonLeave of commonLeaveType; let i=index">
+    <ion-card *ngIf="commonLeave.type == 'FTP'" (click)="toggleGroup(commonLeave)" [ngClass]="{active: isGroupShown(commonLeave)}">
+      <ion-row style="background-image: url(./assets/couponsImages/my-Task-BG.svg) !important;background-size: 100% 100%;">
+        <ion-col col-2>
+          <p style="margin-top: 25% !important;margin-right: 10% !important;">{{commonLeave.type}}</p>
+        </ion-col>
+        <ion-col col-4>
+          <p style="margin-top: 8% !important;text-align: left;">{{commonLeave.NAME}}</p>
+          <p style="color: yellow !important; font-size: 0.7em">({{commonLeave.PERNR}})</p>
+
+        </ion-col>
+        <ion-col col-4>
+          <p style="margin-top: 14% !important">{{commonLeave.DATUM | date :  "dd/MM"}}</p>
+        </ion-col>
+        <ion-col col-2>
+          <ion-item>
+            <ion-checkbox (click)="selectMe(i)" [checked]="commonLeave.selected"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isGroupShown(commonLeave) && commonLeave.type == 'FTP' " class="subCard">
+        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON}}</p></ion-col>
+        <ion-col col-12 style="text-align: -webkit-left"><p>{{commonLeave.DATUM | date :  "dd-MM-y"}}</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>IN</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-right"><p>OUT</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_OUT) | date :  "HH:mm"}}</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>MID-IN</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.LUN_IN) | date :  "HH:mm"}}</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-right"><p>MID-OUT</p></ion-col>
+        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.LUN_OUT) | date :  "HH:mm"}}</p></ion-col>
+        <ion-col col-6 style="text-align: -webkit-right" (click)="applySingleApprovedRequest(i)"><img class="button" [src]="acceptButton" /></ion-col>
+        <ion-col col-6 style="text-align: -webkit-left" (click)="applySingleRejectRequest(i)"><img class="button" [src]="rejectButton" /></ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+
   </ion-grid>
 </ion-content>
 
