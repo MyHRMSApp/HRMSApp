@@ -140,7 +140,8 @@ export class AllLeavesPage {
   }
 
   calLeaveApplyValidation(){
-    this.utilService.showLoader("Please wait..");
+    if(this.mainService.internetConnectionCheck){
+      this.utilService.showLoader("Please wait..");
     var leavetypeData = this.leaveType;
     if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ" || this.leaveToTime == "FQ" || this.leaveToTime == "LQ"){
       leavetypeData = "0011";
@@ -152,62 +153,66 @@ export class AllLeavesPage {
       "IP_FHALF": this.leaveFromTime,
       "IP_THALF": this.leaveToTime
     };
-    this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: payloadData}).then((resultData:any)=>{
-      if(resultData){
-        if(resultData.status_code == 200){
-          this.utilService.dismissLoader();
-          console.log(JSON.stringify(resultData.data));
-          if(resultData.data.ET_VBAL.FLAG == "S"){
-            var tempLeaveFromTime, tempLeaveToTime = "";
-            switch (this.leaveFromTime) {
-              case "FD":
-                tempLeaveFromTime = "full day";
-                break;
-              case "FH":
-                tempLeaveFromTime = "first half";
-                break;
-              case "SH":
-                tempLeaveFromTime = "secont half";
-                break;
-              case "FQ":
-                tempLeaveFromTime = "first quarter";
-                break;
-              case "LQ":
-                tempLeaveFromTime = "last quarter";
-                break;
+      this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: payloadData}).then((resultData:any)=>{
+        if(resultData){
+          if(resultData.status_code == 200){
+            this.utilService.dismissLoader();
+            console.log(JSON.stringify(resultData.data));
+            if(resultData.data.ET_VBAL.FLAG == "S"){
+              var tempLeaveFromTime, tempLeaveToTime = "";
+              switch (this.leaveFromTime) {
+                case "FD":
+                  tempLeaveFromTime = "full day";
+                  break;
+                case "FH":
+                  tempLeaveFromTime = "first half";
+                  break;
+                case "SH":
+                  tempLeaveFromTime = "secont half";
+                  break;
+                case "FQ":
+                  tempLeaveFromTime = "first quarter";
+                  break;
+                case "LQ":
+                  tempLeaveFromTime = "last quarter";
+                  break;
+              }
+              switch (this.leaveToTime) {
+                case "FD":
+                  tempLeaveToTime = "full day";
+                  break;
+                case "FH":
+                  tempLeaveToTime = "first half";
+                  break;
+                case "SH":
+                  tempLeaveToTime = "secont half";
+                  break;
+                case "FQ":
+                  tempLeaveToTime = "first quarter";
+                  break;
+                case "LQ":
+                  tempLeaveToTime = "last quarter";
+                  break;
+              }
+              this.showCustomPopup4List(resultData.data.ET_VBAL.NO_DAY, this.leaveFromDate, this.leaveToDate, tempLeaveFromTime, tempLeaveToTime);
+            }else if(resultData.data.ET_VBAL.FLAG == "E"){
+              this.utilService.showCustomPopup4Error(this.title, resultData.data.ET_VBAL.REASON, "FAILURE");
             }
-            switch (this.leaveToTime) {
-              case "FD":
-                tempLeaveToTime = "full day";
-                break;
-              case "FH":
-                tempLeaveToTime = "first half";
-                break;
-              case "SH":
-                tempLeaveToTime = "secont half";
-                break;
-              case "FQ":
-                tempLeaveToTime = "first quarter";
-                break;
-              case "LQ":
-                tempLeaveToTime = "last quarter";
-                break;
-            }
-            this.showCustomPopup4List(resultData.data.ET_VBAL.NO_DAY, this.leaveFromDate, this.leaveToDate, tempLeaveFromTime, tempLeaveToTime);
-          }else if(resultData.data.ET_VBAL.FLAG == "E"){
-            this.utilService.showCustomPopup4Error(this.title, resultData.data.ET_VBAL.REASON, "FAILURE");
+          }else{
+            this.utilService.dismissLoader();
+            this.utilService.showCustomPopup4Error(this.title, resultData.message, "FAILURE");
           }
-        }else{
-          this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error(this.title, resultData.message, "FAILURE");
-        }
-  
-      };
-    }, (error)=> {
-      console.log("Data readed from jsonstore error", error);
-      this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error(this.title, error, "FAILURE");
-    });
+    
+        };
+      }, (error)=> {
+        console.log("Data readed from jsonstore error", error);
+        this.utilService.dismissLoader();
+        this.utilService.showCustomPopup4Error(this.title, error, "FAILURE");
+      });
+    }else{
+      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    }
+    
   }
 
   showCustomPopup4List(noDays, leaveFromDate, leaveToDate, LeaveFromTime, LeaveToTime){
@@ -227,7 +232,6 @@ export class AllLeavesPage {
       text: 'APPLY',
       handler: data => {
        console.log("Apply clicked..!!");
-       this.utilService.showLoader("Please wait..");
        var payloadData = {
                           "IP_LTYP": this.leaveType,
                           "IP_FDATE": moment(leaveFromDate).format("YYYYMMDD"),
@@ -239,44 +243,49 @@ export class AllLeavesPage {
                           "IP_REQ_TYPE": "NEW",
                           "IP_WF_STATUS": "Submitted"
                         }
-       this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
-         if(resultData){
-             console.log(JSON.stringify(resultData.data));
-             if(resultData.status_code == 200){
-              this.utilService.dismissLoader();
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please wait..");
+        this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData){
               console.log(JSON.stringify(resultData.data));
-              if(resultData.data.EP_REASON.TYPE == "S"){
-                const alert = this.alertCtrl.create({
-                  title: "",
-                  message: "<p class='header'>"+this.title+" !</p> <p>"+resultData.data.EP_REASON.MESSAGE+"</p>",
-                  cssClass: "SUCCESS",
-                  enableBackdropDismiss: false,
-                });
-                alert.addButton({
-                  text: 'OK',
-                  handler: data => {
-                    this.mainService.attendanceN_NP1_DataFlag = true;
-                    this.mainService.attendanceNP2_DataFlag = true;
-                    this.mainService.attendanceNA1_DataFlag = true;
-                    this.mainService.attendanceNA2_DataFlag = true;
-                    this.mainService.attendanceCallFlag = true;
-                    this.navCtrl.setRoot("HomePage");
-                  }
-                });
-                alert.present();
-              }else if(resultData.data.EP_REASON.TYPE == "E"){
-                this.utilService.showCustomPopup4Error(this.title, resultData.data.EP_REASON.MESSAGE, "FAILURE");
-              }
-            }else{
-              this.utilService.dismissLoader();
-              this.utilService.showCustomPopup4Error(this.title, resultData.message, "FAILURE");
-            }
-         }
-       }, (error)=>{
-         console.log("Data readed from jsonstore error",error);
-         this.utilService.dismissLoader();
-         this.utilService.showCustomPopup4Error(this.title, error, "FAILURE")
-       });
+              if(resultData.status_code == 200){
+               this.utilService.dismissLoader();
+               console.log(JSON.stringify(resultData.data));
+               if(resultData.data.EP_REASON.TYPE == "S"){
+                 const alert = this.alertCtrl.create({
+                   title: "",
+                   message: "<p class='header'>"+this.title+" !</p> <p>"+resultData.data.EP_REASON.MESSAGE+"</p>",
+                   cssClass: "SUCCESS",
+                   enableBackdropDismiss: false,
+                 });
+                 alert.addButton({
+                   text: 'OK',
+                   handler: data => {
+                     this.mainService.attendanceN_NP1_DataFlag = true;
+                     this.mainService.attendanceNP2_DataFlag = true;
+                     this.mainService.attendanceNA1_DataFlag = true;
+                     this.mainService.attendanceNA2_DataFlag = true;
+                     this.mainService.attendanceCallFlag = true;
+                     this.navCtrl.setRoot("HomePage");
+                   }
+                 });
+                 alert.present();
+               }else if(resultData.data.EP_REASON.TYPE == "E"){
+                 this.utilService.showCustomPopup4Error(this.title, resultData.data.EP_REASON.MESSAGE, "FAILURE");
+               }
+             }else{
+               this.utilService.dismissLoader();
+               this.utilService.showCustomPopup4Error(this.title, resultData.message, "FAILURE");
+             }
+          }
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup4Error(this.title, error, "FAILURE")
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
       }
     });
 

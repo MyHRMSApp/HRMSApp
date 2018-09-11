@@ -124,8 +124,6 @@ export class ApplyFtpPage {
       this.utilService.showCustomPopup4Error("Apply FTP","Please select proper Mid Out Punch", "FAILURE");
     }else{
 
-      this.utilService.showLoader("Please wait..");
-
       var payloadData = {
         "DATUM": this.selectedDate,
         "SFT_IN": this.inPunch+":00",
@@ -140,46 +138,51 @@ export class ApplyFtpPage {
       }
 
       console.log(payloadData);
-    
-    this.service.invokeAdapterCall('commonAdapterServices', 'applyFTPRequest', 'post', {payload : true, length:10, payloadData: payloadData}).then((resultData:any)=>{
-      if(resultData){
-        if(resultData.status_code == 200){
-          if(resultData.data.ET_DATA.item.TYPE == "E"){
-            this.utilService.dismissLoader();
-            this.utilService.showCustomPopup4Error("Apply FTP", resultData.data.ET_DATA.item.MESSAGE, "FAILURE");
-          }else if(resultData.data.ET_DATA.item.TYPE == "S"){
-            const alert = this.alertCtrl.create({
-              title: "",
-              message: "<p class='header'>Apply FTP</p> <p>"+resultData.data.ET_DATA.item.MESSAGE+"</p>",
-              cssClass: "SUCCESS",
-              enableBackdropDismiss: false,
-            });
-            alert.addButton({
-              text: 'OK',
-              handler: data => {
-                this.mainService.attendanceN_NP1_DataFlag = true;
-                this.mainService.attendanceNP2_DataFlag = true;
-                this.mainService.attendanceNA1_DataFlag = true;
-                this.mainService.attendanceNA2_DataFlag = true;
-                this.mainService.attendanceCallFlag = true;
-                this.navCtrl.setRoot("HomePage");
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please wait..");
+        this.service.invokeAdapterCall('commonAdapterServices', 'applyFTPRequest', 'post', {payload : true, length:10, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 200){
+              if(resultData.data.ET_DATA.item.TYPE == "E"){
+                this.utilService.dismissLoader();
+                this.utilService.showCustomPopup4Error("Apply FTP", resultData.data.ET_DATA.item.MESSAGE, "FAILURE");
+              }else if(resultData.data.ET_DATA.item.TYPE == "S"){
+                const alert = this.alertCtrl.create({
+                  title: "",
+                  message: "<p class='header'>Apply FTP</p> <p>"+resultData.data.ET_DATA.item.MESSAGE+"</p>",
+                  cssClass: "SUCCESS",
+                  enableBackdropDismiss: false,
+                });
+                alert.addButton({
+                  text: 'OK',
+                  handler: data => {
+                    this.mainService.attendanceN_NP1_DataFlag = true;
+                    this.mainService.attendanceNP2_DataFlag = true;
+                    this.mainService.attendanceNA1_DataFlag = true;
+                    this.mainService.attendanceNA2_DataFlag = true;
+                    this.mainService.attendanceCallFlag = true;
+                    this.navCtrl.setRoot("HomePage");
+                  }
+                });
+                this.utilService.dismissLoader();
+                alert.present();
+                
               }
-            });
-            this.utilService.dismissLoader();
-            alert.present();
-            
-          }
-        }else{
+            }else{
+              this.utilService.dismissLoader();
+              this.utilService.showCustomPopup4Error("Apply FTP", resultData.message, "FAILURE");
+            }
+      
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error("Apply FTP", resultData.message, "FAILURE");
-        }
-  
-      };
-    }, (error)=>{
-      console.log("Data readed from jsonstore error",error);
-      this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error("Apply FTP", error.statusText, "FAILURE");
-    });
+          this.utilService.showCustomPopup4Error("Apply FTP", error.statusText, "FAILURE");
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
+    
 
     }
 

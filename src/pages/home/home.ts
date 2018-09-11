@@ -119,24 +119,28 @@ attendanceDataFetch(){
     "IP_SMONTH": -1,
     "IP_EMONTH": 0
   }
-  this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-    if(resultData){
-      if(resultData.status_code == 200){
-        this.mainService.attanancePageData = resultData.data;
-        this.mainService.attendanceN_NP1_Data = resultData.data;
-        this.mainService.attendanceN_NP1_DataFlag = false;
-        console.log(JSON.stringify(this.mainService.attanancePageData));
-        this.navCtrl.push("AttendanceViewPage");
-      }else{
-        this.utilService.showPopup("Attendance", resultData.message);
-      }
-
-    };
-  }, (error)=>{
-    console.log("Data readed from jsonstore error",error);
-    this.utilService.dismissLoader();
-    this.utilService.showPopup("Attendance",error.statusText);
-  });
+  if(this.mainService.internetConnectionCheck){
+    this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+      if(resultData){
+        if(resultData.status_code == 200){
+          this.mainService.attanancePageData = resultData.data;
+          this.mainService.attendanceN_NP1_Data = resultData.data;
+          this.mainService.attendanceN_NP1_DataFlag = false;
+          console.log(JSON.stringify(this.mainService.attanancePageData));
+          this.navCtrl.push("AttendanceViewPage");
+        }else{
+          this.utilService.showPopup("Attendance", resultData.message);
+        }
+  
+      };
+    }, (error)=>{
+      console.log("Data readed from jsonstore error",error);
+      this.utilService.dismissLoader();
+      this.utilService.showPopup("Attendance",error.statusText);
+    });
+  }else{
+    this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+  }
 }
 
 routerOnDeactivate() {
@@ -147,91 +151,98 @@ routerOnDeactivate() {
   Method for pushing 
   */
 coupons() {
-  this.utilService.showLoader("Loading Coupons...");
-  this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : false}).then((resultData:any)=>{
-    if(resultData) {
-      if(resultData.status_code == 200){
-        this.mainService.couponPageData = resultData;
-        
-        /**
-         * ET_EYEWEAR
-         */
-        if(resultData.data.ET_EYEWEAR !== ""){
-          if(resultData.data.ET_EYEWEAR.item.length === undefined) {
-            this.eyeWearCounts.push(resultData.data.ET_EYEWEAR.item);
-            this.eyeWearLength = this.eyeWearCounts.length;
-          }else {
-            for (let i=0; resultData.data.ET_EYEWEAR.item[i]; i++ ){
-              this.eyeWearCounts.push(resultData.data.ET_EYEWEAR.item[i]);
+  if(this.mainService.internetConnectionCheck){
+    this.utilService.showLoader("Loading Coupons...");
+    this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : false}).then((resultData:any)=>{
+      if(resultData) {
+        if(resultData.status_code == 200){
+          this.mainService.couponPageData = resultData;
+          
+          /**
+           * ET_EYEWEAR
+           */
+          if(resultData.data.ET_EYEWEAR !== ""){
+            if(resultData.data.ET_EYEWEAR.item.length === undefined) {
+              this.eyeWearCounts.push(resultData.data.ET_EYEWEAR.item);
+              this.eyeWearLength = this.eyeWearCounts.length;
+            }else {
+              for (let i=0; resultData.data.ET_EYEWEAR.item[i]; i++ ){
+                this.eyeWearCounts.push(resultData.data.ET_EYEWEAR.item[i]);
+              }
+              this.eyeWearLength = this.eyeWearCounts.length;
             }
-            this.eyeWearLength = this.eyeWearCounts.length;
-          }
-          }else{
-            this.eyeWearLength = 0;
-          }
-
-         /**
-         * ET_JEWELLERY
-         */
-        if(resultData.data.ET_JEWELLERY !== ""){
-          if(resultData.data.ET_JEWELLERY.item.length === undefined) {
-            this.jewelleryCounts.push(resultData.data.ET_JEWELLERY.item);
-            this.jewelleryLength = this.jewelleryCounts.length;
-            console.log(this.jewelleryLength);
-          }else {
-            for (let i=0; resultData.data.ET_JEWELLERY.item[i]; i++ ){
-              this.jewelleryCounts.push(resultData.data.ET_JEWELLERY.item[i]);
+            }else{
+              this.eyeWearLength = 0;
             }
-            this.jewelleryLength = this.jewelleryCounts.length;
-          }
-          }else{
-            this.jewelleryLength = 0;
-          }
 
-        /**
-         * ET_TANEIRA
-         */
-        if(resultData.data.ET_TANEIRA !== ""){
-          if(resultData.data.ET_TANEIRA.item.length === undefined) {
-            this.taneiraCounts.push(resultData.data.ET_TANEIRA.item);
-            this.taneiraLength = this.taneiraCounts.length;
-          }else {
-            for (let i=0; resultData.data.ET_TANEIRA.item[i]; i++ ){
-              this.taneiraCounts.push(resultData.data.ET_TANEIRA.item[i]);
+          /**
+           * ET_JEWELLERY
+           */
+          if(resultData.data.ET_JEWELLERY !== ""){
+            if(resultData.data.ET_JEWELLERY.item.length === undefined) {
+              this.jewelleryCounts.push(resultData.data.ET_JEWELLERY.item);
+              this.jewelleryLength = this.jewelleryCounts.length;
+              console.log(this.jewelleryLength);
+            }else {
+              for (let i=0; resultData.data.ET_JEWELLERY.item[i]; i++ ){
+                this.jewelleryCounts.push(resultData.data.ET_JEWELLERY.item[i]);
+              }
+              this.jewelleryLength = this.jewelleryCounts.length;
             }
-            this.taneiraLength = this.taneiraCounts.length;
-          }
-          }else{
-            this.taneiraLength = 0;
-          }
-
-        /**
-         * ET_WATCH
-         */
-        if(resultData.data.ET_WATCH !== ""){
-          if(resultData.data.ET_WATCH.item.length === undefined) {
-            this.watchCounts.push(resultData.data.ET_WATCH.item);
-            this.watchLength = this.watchCounts.length;
-          }else {
-            for (let i=0; resultData.data.ET_WATCH.item[i]; i++ ){
-              this.watchCounts.push(resultData.data.ET_WATCH.item[i]);
+            }else{
+              this.jewelleryLength = 0;
             }
-            this.watchLength = this.watchCounts.length;
-          }
-          }else{
-            this.watchLength = 0;
-          }
 
-        this.navCtrl.push("CouponsPage", {"eyeWearLength":this.eyeWearLength, "jewelleryLength": this.jewelleryLength, "taneiraLength":this.taneiraLength, "watchLength":this.watchLength,});
+          /**
+           * ET_TANEIRA
+           */
+          if(resultData.data.ET_TANEIRA !== ""){
+            if(resultData.data.ET_TANEIRA.item.length === undefined) {
+              this.taneiraCounts.push(resultData.data.ET_TANEIRA.item);
+              this.taneiraLength = this.taneiraCounts.length;
+            }else {
+              for (let i=0; resultData.data.ET_TANEIRA.item[i]; i++ ){
+                this.taneiraCounts.push(resultData.data.ET_TANEIRA.item[i]);
+              }
+              this.taneiraLength = this.taneiraCounts.length;
+            }
+            }else{
+              this.taneiraLength = 0;
+            }
 
-      } else {
-        this.utilService.showPopup("Coupons", resultData.message);
-      }
-    };
-  },
-  (error)=>{
-   console.log(error);
-  });
+          /**
+           * ET_WATCH
+           */
+          if(resultData.data.ET_WATCH !== ""){
+            if(resultData.data.ET_WATCH.item.length === undefined) {
+              this.watchCounts.push(resultData.data.ET_WATCH.item);
+              this.watchLength = this.watchCounts.length;
+            }else {
+              for (let i=0; resultData.data.ET_WATCH.item[i]; i++ ){
+                this.watchCounts.push(resultData.data.ET_WATCH.item[i]);
+              }
+              this.watchLength = this.watchCounts.length;
+            }
+            }else{
+              this.watchLength = 0;
+            }
+
+          this.navCtrl.push("CouponsPage", {"eyeWearLength":this.eyeWearLength, "jewelleryLength": this.jewelleryLength, "taneiraLength":this.taneiraLength, "watchLength":this.watchLength,});
+
+        } else {
+          this.utilService.showPopup("Coupons", resultData.message);
+        }
+      };
+    },
+    (error)=>{
+      console.log("Data readed from jsonstore error",error);
+      this.utilService.dismissLoader();
+      this.utilService.showPopup("Attendance",error.statusText);
+    });
+  }else{
+    this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+  }
+  
 }
 
 ionViewCanEnter() {
@@ -249,41 +260,46 @@ ionViewCanEnter() {
         "IP_SMONTH": -1,
         "IP_EMONTH": 0
       }
-      this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-        if(resultData) {
-          if(resultData.status_code == 200){
-            this.mainService.attanancePageData = resultData.data;
-            this.mainService.attendanceN_NP1_Data = resultData.data;
-            this.mainService.attendanceN_NP1_DataFlag = false;
-          } else {
-            // this.utilService.showPopup("Attendance", resultData.message);
+      if(this.mainService.internetConnectionCheck){
+        this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData) {
+            if(resultData.status_code == 200){
+              this.mainService.attanancePageData = resultData.data;
+              this.mainService.attendanceN_NP1_Data = resultData.data;
+              this.mainService.attendanceN_NP1_DataFlag = false;
+            } else {
+              // this.utilService.showPopup("Attendance", resultData.message);
+            }
+      
+          };
+        }, (error)=>{
+          console.log("Error",error);
+        });
+
+        this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
+          if(resultData){
+              if(resultData.customMessage != "false"){
+                this.customMsg = resultData.customMessage;
+                setTimeout(() => {
+                  this.showTasks = true;
+                  this.ref.detectChanges();
+                }, 100);
+              }else{
+                this.customMsg = "false";
+                setTimeout(() => {
+                  this.showTasks = false;
+                  this.ref.detectChanges();
+                }, 100);
+              } 
           }
-    
-        };
-      }, (error)=>{
-        console.log("Error",error);
-      });
-  }
-    this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
-      if(resultData){
-          if(resultData.customMessage != "false"){
-            this.customMsg = resultData.customMessage;
-            setTimeout(() => {
-              this.showTasks = true;
-              this.ref.detectChanges();
-            }, 100);
-          }else{
-            this.customMsg = "false";
-            setTimeout(() => {
-              this.showTasks = false;
-              this.ref.detectChanges();
-            }, 100);
-          } 
+        }, (error)=>{
+          console.log("Error",error);
+          this.utilService.showCustomPopup("FAILURE",error.statusText);
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
       }
-    }, (error)=>{
-      console.log("Error",error);
-      this.utilService.showCustomPopup("FAILURE",error.statusText);
-    });
+  }
     
   } catch (error) {
     console.log("catch-->>",error);
@@ -393,71 +409,15 @@ removePhoto(){
 applyLeave() {
 
 try {
-  this.utilService.showLoader("Please wait..");
-  this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
-    if(resultData){
-      if(resultData.status_code == 200) {
-        this.mainService.userLeaveBalanceListData = resultData.data;
-        console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
-        this.utilService.dismissLoader();
-        this.navCtrl.push("ApplyLeavePage");
-      }
-      else {
-        this.utilService.dismissLoader();
-        this.utilService.showCustomPopup("FAILURE",resultData.message);
-      }
-    };
-  }, (error)=>{
-    console.log("Data readed from jsonstore error",error);
-    this.utilService.dismissLoader();
-    this.utilService.showCustomPopup("FAILURE",error.statusText);
-  });
-  
-} catch (error) {
-  console.log("catch-->>",error);
-}
-
-}
-
-myRequest() {
-  
-try {
-  this.utilService.showLoader("Please wait..");
-  this.service.invokeAdapterCall('commonAdapterServices', 'getMyRequestDetails', 'get', {payload : false}).then((resultData:any)=>{
-    if(resultData){
-      if(resultData.status_code == 200) {
-        this.mainService.myRequestData = resultData.data;
-        console.log(JSON.stringify(this.mainService.myRequestData));
-        this.utilService.dismissLoader();
-        this.navCtrl.push("MyRequestPage");
-      }
-      else {
-        this.utilService.dismissLoader();
-        this.utilService.showCustomPopup("FAILURE",resultData.message);
-      }
-    };
-  }, (error)=>{
-    console.log("Data readed from jsonstore error",error);
-    this.utilService.dismissLoader();
-    this.utilService.showCustomPopup("FAILURE",error.statusText);
-  });
-  
-} catch (error) {
-  console.log("catch-->>",error);
-}
-  
-}
-
-myTask() {
-  try {
+  if(this.mainService.internetConnectionCheck){
     this.utilService.showLoader("Please wait..");
-    this.service.invokeAdapterCall('commonAdapterServices', 'getMyTaskDetails', 'get', {payload : false}).then((resultData:any)=>{
+    this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData){
         if(resultData.status_code == 200) {
-          this.mainService.myTaskData = resultData.data;
-          console.log(JSON.stringify(this.mainService.myTaskData));
+          this.mainService.userLeaveBalanceListData = resultData.data;
+          console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
           this.utilService.dismissLoader();
-          this.navCtrl.push("MyTasksPage");
+          this.navCtrl.push("ApplyLeavePage");
         }
         else {
           this.utilService.dismissLoader();
@@ -469,7 +429,72 @@ myTask() {
       this.utilService.dismissLoader();
       this.utilService.showCustomPopup("FAILURE",error.statusText);
     });
-    
+  }else{
+    this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+  } 
+} catch (error) {
+  console.log("catch-->>",error);
+}
+
+}
+
+myRequest() {
+  
+try {
+  if(this.mainService.internetConnectionCheck){
+    this.utilService.showLoader("Please wait..");
+    this.service.invokeAdapterCall('commonAdapterServices', 'getMyRequestDetails', 'get', {payload : false}).then((resultData:any)=>{
+      if(resultData){
+        if(resultData.status_code == 200) {
+          this.mainService.myRequestData = resultData.data;
+          console.log(JSON.stringify(this.mainService.myRequestData));
+          this.utilService.dismissLoader();
+          this.navCtrl.push("MyRequestPage");
+        }
+        else {
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup("FAILURE",resultData.message);
+        }
+      };
+    }, (error)=>{
+      console.log("Data readed from jsonstore error",error);
+      this.utilService.dismissLoader();
+      this.utilService.showCustomPopup("FAILURE",error.statusText);
+    });
+  }else{
+    this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+  }  
+} catch (error) {
+  console.log("catch-->>",error);
+}
+  
+}
+
+myTask() {
+  try {
+    if(this.mainService.internetConnectionCheck){
+      this.utilService.showLoader("Please wait..");
+      this.service.invokeAdapterCall('commonAdapterServices', 'getMyTaskDetails', 'get', {payload : false}).then((resultData:any)=>{
+        if(resultData){
+          if(resultData.status_code == 200) {
+            this.mainService.myTaskData = resultData.data;
+            console.log(JSON.stringify(this.mainService.myTaskData));
+            this.utilService.dismissLoader();
+            this.navCtrl.push("MyTasksPage");
+          }
+          else {
+            this.utilService.dismissLoader();
+            this.utilService.showCustomPopup("FAILURE",resultData.message);
+          }
+        };
+      }, (error)=>{
+        console.log("Data readed from jsonstore error",error);
+        this.utilService.dismissLoader();
+        this.utilService.showCustomPopup("FAILURE",error.statusText);
+      });
+    }else{
+      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    }    
   } catch (error) {
     console.log("catch-->>",error);
   }

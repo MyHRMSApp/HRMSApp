@@ -79,6 +79,7 @@ export class AttendanceViewPage {
   onChange($event) {
     console.log(moment($event._d).format("YYYY-MM-DD"));
     var currentDayData = this.mainService.attanancePageData.find(x=>x.LDATE == moment($event._d).format("YYYY-MM-DD"));
+    this.mainService.selectedDateDataFromAttendance = moment($event._d).format("DD-MM-YYYY");
     if(currentDayData){
       this.currentDate = moment(currentDayData.LDATE).format("DD").toString();
       this.currentMonth = moment(currentDayData.LDATE).format("MMM").toString();
@@ -201,7 +202,8 @@ export class AttendanceViewPage {
   applyLeave() {
     
     try {
-      this.utilService.showLoader("Please wait..");
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please wait..");
       this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
           if(resultData.status_code == 200){
@@ -220,7 +222,9 @@ export class AttendanceViewPage {
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup("FAILURE",error.statusText);
       });
-      
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
     } catch (error) {
       console.log("catch-->>",error);
     }
@@ -247,35 +251,40 @@ export class AttendanceViewPage {
   }
 
   loadCalendarForNextMonth(){
-    this.utilService.showLoader("Please Wait..");
-    // this.calenderVIew = false;
-    if(this.mainService.attendanceNA1_DataFlag){
-      var payloadData = {
-        "IP_SMONTH": 1,
-        "IP_EMONTH": 1
-      }
-      this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-        if(resultData){
-          if(resultData.status_code == 200){
-            this.mainService.attanancePageData = resultData.data;
-            this.mainService.attendanceNA1_Data = resultData.data;
-            this.mainService.attendanceNA1_DataFlag = false;
-            this.dateRange = moment(moment().format("YYYY-MM-DD")).add(1, 'M');
-            console.log(JSON.stringify(this.mainService.attanancePageData));
-            this.loadCalendarView();
-          }else{
-            // this.calenderVIew = true;
-            this.mainService.attendanceNA1_DataFlag = true;
-            this.utilService.dismissLoader();
-            this.utilService.showPopup("Attendance", resultData.message);
+
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please Wait..");
+        // this.calenderVIew = false;
+        if(this.mainService.attendanceNA1_DataFlag){
+          var payloadData = {
+            "IP_SMONTH": 1,
+            "IP_EMONTH": 1
           }
-    
-        };
-      }, (error)=>{
-        console.log("Data readed from jsonstore error",error);
-        this.utilService.dismissLoader();
-        this.utilService.showPopup("Attendance",error.statusText);
-      });
+        this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 200){
+              this.mainService.attanancePageData = resultData.data;
+              this.mainService.attendanceNA1_Data = resultData.data;
+              this.mainService.attendanceNA1_DataFlag = false;
+              this.dateRange = moment(moment().format("YYYY-MM-DD")).add(1, 'M');
+              console.log(JSON.stringify(this.mainService.attanancePageData));
+              this.loadCalendarView();
+            }else{
+              // this.calenderVIew = true;
+              this.mainService.attendanceNA1_DataFlag = true;
+              this.utilService.dismissLoader();
+              this.utilService.showPopup("Attendance", resultData.message);
+            }
+      
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
+          this.utilService.dismissLoader();
+          this.utilService.showPopup("Attendance",error.statusText);
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
     }else{
       this.mainService.attanancePageData = this.mainService.attendanceNA1_Data;
       this.dateRange = moment(moment().format("YYYY-MM-DD")).add(1, 'M')
@@ -285,35 +294,39 @@ export class AttendanceViewPage {
   }
 
   loadCalendarForNextAfterMonth(){
-    this.utilService.showLoader("Please Wait..");
-    // this.calenderVIew = false;
-    if(this.mainService.attendanceNA2_DataFlag){
-      var payloadData = {
-        "IP_SMONTH": 2,
-        "IP_EMONTH": 2
-      }
-      this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-        if(resultData){
-          if(resultData.status_code == 200){
-            this.mainService.attanancePageData = resultData.data;
-            this.mainService.attendanceNA2_Data = resultData.data;
-            this.mainService.attendanceNA2_DataFlag = false;
-            this.dateRange = moment(moment().format("YYYY-MM-DD")).add(2, 'M');
-            console.log(JSON.stringify(this.mainService.attanancePageData));
-            this.loadCalendarView();
-          }else{
-            // this.calenderVIew = true;
-            this.mainService.attendanceNA2_DataFlag = true;
-            this.utilService.dismissLoader();
-            this.utilService.showPopup("Attendance", resultData.message);
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please Wait..");
+        // this.calenderVIew = false;
+        if(this.mainService.attendanceNA2_DataFlag){
+          var payloadData = {
+            "IP_SMONTH": 2,
+            "IP_EMONTH": 2
           }
-    
-        };
-      }, (error)=>{
-        console.log("Data readed from jsonstore error",error);
-        this.utilService.dismissLoader();
-        this.utilService.showPopup("Attendance",error.statusText);
-      });
+        this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 200){
+              this.mainService.attanancePageData = resultData.data;
+              this.mainService.attendanceNA2_Data = resultData.data;
+              this.mainService.attendanceNA2_DataFlag = false;
+              this.dateRange = moment(moment().format("YYYY-MM-DD")).add(2, 'M');
+              console.log(JSON.stringify(this.mainService.attanancePageData));
+              this.loadCalendarView();
+            }else{
+              // this.calenderVIew = true;
+              this.mainService.attendanceNA2_DataFlag = true;
+              this.utilService.dismissLoader();
+              this.utilService.showPopup("Attendance", resultData.message);
+            }
+      
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
+          this.utilService.dismissLoader();
+          this.utilService.showPopup("Attendance",error.statusText);
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
     }else{
       this.mainService.attanancePageData = this.mainService.attendanceNA2_Data;
       this.dateRange = moment(moment().format("YYYY-MM-DD")).add(2, 'M');
@@ -323,36 +336,40 @@ export class AttendanceViewPage {
   }
 
   loadCalendarForCurrentPriviousMonths(){
-    
-    this.utilService.showLoader("Please Wait..");
-    // this.calenderVIew = false;
-    if(this.mainService.attendanceN_NP1_DataFlag){
-      var payloadData = {
-        "IP_SMONTH": -1,
-        "IP_EMONTH": 0
-      }
-      this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-        if(resultData){
-          if(resultData.status_code == 200){
-            this.mainService.attanancePageData = resultData.data;
-            this.mainService.attendanceN_NP1_Data = resultData.data;
-            this.mainService.attendanceN_NP1_DataFlag = false;
-            this.dateRange = moment().format("YYYY-MM-DD");
-            console.log(JSON.stringify(this.mainService.attanancePageData));
-            this.loadCalendarView();
-          }else{
-            // this.calenderVIew = true;
-            this.mainService.attendanceN_NP1_DataFlag = true;
-            this.utilService.dismissLoader();
-            this.utilService.showPopup("Attendance", resultData.message);
+  
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please Wait..");
+        // this.calenderVIew = false;
+        if(this.mainService.attendanceN_NP1_DataFlag){
+          var payloadData = {
+            "IP_SMONTH": -1,
+            "IP_EMONTH": 0
           }
-    
-        };
-      }, (error)=>{
-        console.log("Data readed from jsonstore error",error);
-        this.utilService.dismissLoader();
-        this.utilService.showPopup("Attendance",error.statusText);
-      });
+        this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 200){
+              this.mainService.attanancePageData = resultData.data;
+              this.mainService.attendanceN_NP1_Data = resultData.data;
+              this.mainService.attendanceN_NP1_DataFlag = false;
+              this.dateRange = moment().format("YYYY-MM-DD");
+              console.log(JSON.stringify(this.mainService.attanancePageData));
+              this.loadCalendarView();
+            }else{
+              // this.calenderVIew = true;
+              this.mainService.attendanceN_NP1_DataFlag = true;
+              this.utilService.dismissLoader();
+              this.utilService.showPopup("Attendance", resultData.message);
+            }
+      
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
+          this.utilService.dismissLoader();
+          this.utilService.showPopup("Attendance",error.statusText);
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
     }else{
       console.log(JSON.stringify(this.mainService.attendanceN_NP1_Data));
       this.mainService.attanancePageData = this.mainService.attendanceN_NP1_Data;
@@ -364,35 +381,39 @@ export class AttendanceViewPage {
   }
 
   loadCalendarForPriviousBeforeMonth(){
-    this.utilService.showLoader("Please Wait..");
-    // this.calenderVIew = false;
-    if(this.mainService.attendanceNP2_DataFlag){
-      var payloadData = {
-        "IP_SMONTH": -2,
-        "IP_EMONTH": -2
-      }
-      this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-        if(resultData){
-          if(resultData.status_code == 200){
-            this.mainService.attanancePageData = resultData.data;
-            this.mainService.attendanceNP2_Data = resultData.data;
-            this.mainService.attendanceNP2_DataFlag = false;
-            this.dateRange = moment(moment().format("YYYY-MM-DD")).add(-2, 'M');
-            console.log(JSON.stringify(this.mainService.attanancePageData));
-            this.loadCalendarView();
-          }else{
-            // this.calenderVIew = true;
-            this.mainService.attendanceNP2_DataFlag = true;
-            this.utilService.dismissLoader();
-            this.utilService.showPopup("Attendance", resultData.message);
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please Wait..");
+        // this.calenderVIew = false;
+        if(this.mainService.attendanceNP2_DataFlag){
+          var payloadData = {
+            "IP_SMONTH": -2,
+            "IP_EMONTH": -2
           }
-    
-        };
-      }, (error)=>{
-        console.log("Data readed from jsonstore error",error);
-        this.utilService.dismissLoader();
-        this.utilService.showPopup("Attendance",error.statusText);
-      });
+        this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 200){
+              this.mainService.attanancePageData = resultData.data;
+              this.mainService.attendanceNP2_Data = resultData.data;
+              this.mainService.attendanceNP2_DataFlag = false;
+              this.dateRange = moment(moment().format("YYYY-MM-DD")).add(-2, 'M');
+              console.log(JSON.stringify(this.mainService.attanancePageData));
+              this.loadCalendarView();
+            }else{
+              // this.calenderVIew = true;
+              this.mainService.attendanceNP2_DataFlag = true;
+              this.utilService.dismissLoader();
+              this.utilService.showPopup("Attendance", resultData.message);
+            }
+      
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
+          this.utilService.dismissLoader();
+          this.utilService.showPopup("Attendance",error.statusText);
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
     }else{
       this.mainService.attanancePageData = this.mainService.attendanceNP2_Data;
       this.dateRange = moment(moment().format("YYYY-MM-DD")).add(-2, 'M');

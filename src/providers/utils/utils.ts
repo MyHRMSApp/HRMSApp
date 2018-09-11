@@ -39,7 +39,8 @@ export class UtilsProvider {
   showToast(message,duration){
     const toast = this.toast.create({
       message: message,
-      duration: (duration) ? duration : this.commonValues.duration
+      duration: (duration) ? duration : this.commonValues.duration,
+      position: 'top'
     });
     toast.present();
   }
