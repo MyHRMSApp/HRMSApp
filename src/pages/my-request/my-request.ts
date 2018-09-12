@@ -155,44 +155,47 @@ export class MyRequestPage {
     }
 
     applyCancelDeleteRequest(payloadData){
-      this.utilService.showLoader("Please wait..");
 
-      console.log(payloadData);
-    
-    this.service.invokeAdapterCall('commonAdapterServices', 'applyCancelandDeleteRequest', 'post', {payload : true, length:4, payloadData: payloadData}).then((resultData:any)=>{
-      if(resultData){
-        if(resultData.status_code == 200){
-          if(resultData.data.FLAG == "E"){
-            this.utilService.dismissLoader();
-            this.utilService.showCustomPopup4Error("My Request", resultData.data.REASON, "FAILURE");
-          }else if(resultData.data.FLAG == "S"){
-            const alert = this.alertCtrl.create({
-              title: "",
-              message: "<p class='header'>My Request</p> <p>"+resultData.data.REASON+"</p>",
-              cssClass: "SUCCESS",
-              enableBackdropDismiss: false,
-            });
-            alert.addButton({
-              text: 'OK',
-              handler: data => {
-                this.navCtrl.setRoot("HomePage");
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please wait..");
+        console.log(payloadData);
+        this.service.invokeAdapterCall('commonAdapterServices', 'applyCancelandDeleteRequest', 'post', {payload : true, length:4, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 200){
+              if(resultData.data.FLAG == "E"){
+                this.utilService.dismissLoader();
+                this.utilService.showCustomPopup4Error("My Request", resultData.data.REASON, "FAILURE");
+              }else if(resultData.data.FLAG == "S"){
+                const alert = this.alertCtrl.create({
+                  title: "",
+                  message: "<p class='header'>My Request</p> <p>"+resultData.data.REASON+"</p>",
+                  cssClass: "SUCCESS",
+                  enableBackdropDismiss: false,
+                });
+                alert.addButton({
+                  text: 'OK',
+                  handler: data => {
+                    this.navCtrl.setRoot("HomePage");
+                  }
+                });
+                this.utilService.dismissLoader();
+                alert.present();
+                
               }
-            });
-            this.utilService.dismissLoader();
-            alert.present();
-            
-          }
-        }else{
+            }else{
+              this.utilService.dismissLoader();
+              this.utilService.showCustomPopup4Error("My Request", resultData.message, "FAILURE");
+            }
+      
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error("My Request", resultData.message, "FAILURE");
-        }
-  
-      };
-    }, (error)=>{
-      console.log("Data readed from jsonstore error",error);
-      this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error("My Request", error.statusText, "FAILURE");
-    });
+          this.utilService.showCustomPopup4Error("My Request", error.statusText, "FAILURE");
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
     }
     confirmCancelOD(){
       this.cancelButtonOD=false;

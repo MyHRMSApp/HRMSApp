@@ -8,7 +8,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { MyApp } from '../../app/app.component'
 import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
-
+import { NetworkProvider } from '../../providers/network-service/network-service';
 /**
  * Login Functionalities
  * @author Vivek
@@ -41,7 +41,8 @@ export class LoginPage {
   constructor(public alert: AlertController, public service: ServiceProvider, public navCtrl: NavController,
     public navParams: NavParams, public loadingCtrl: LoadingController, public storage: StorageProvider,
     private googlePlus: GooglePlus, public utilService: UtilsProvider, public authHandler: AuthHandlerProvider,
-    public render: Renderer, public mainService: MyApp, public menu: MenuController, public ref:ChangeDetectorRef  ) {
+    public render: Renderer, public mainService: MyApp, public menu: MenuController, public ref:ChangeDetectorRef,
+    public networkProvider: NetworkProvider  ) {
     
     this.menu.swipeEnable(false);
     this.form = new FormGroup({
@@ -79,6 +80,8 @@ export class LoginPage {
       }
 
     }); 
+
+    console.log("internetConnectionCheck-->>"+this.mainService.internetConnectionCheck);
   }
 
   sampleLogin() {
@@ -91,7 +94,8 @@ export class LoginPage {
   }
 
   processForm() {
-    let username = this.form.value.username;
+    if(this.mainService.internetConnectionCheck){
+      let username = this.form.value.username;
     let password = this.form.value.password;
     if (username === "") {
       this.utilService.showCustomPopup("FAILURE", "Username is required..");
@@ -128,6 +132,9 @@ export class LoginPage {
         this.authHandler.login(credentials);
       }, 100);
     }
+    }else{
+      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    }
 
   }
 
@@ -146,28 +153,33 @@ export class LoginPage {
    * Method to handle user login via google plus option
    */
   userLoginViagooglePlus() {
-    this.googlePlus.login({
-      'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',
-      'offline': true
-    }).then((res) => {
-      console.log(res);
-      if (/@titan\.co\.in$/.test(res.email)) {
-          let inputParams = {
-            "vendor": "google",
-            "token": res.idToken,
-            "SECURITY_TYPE": "GMAIL_LOGIN",
-            "GMAIL_ID": "nagarajan@titan.co.in"
-          };
-          this.utilService.showLoader("Please Wait..");
-          setTimeout(() => {
-            this.authHandler.login(inputParams);
-          }, 100);
-      }else{
-        this.googlePlus.disconnect().then((res) => {
-          this.utilService.showCustomPopup("FAILURE", "Please use Titan Mail ID...");
-        })
-      }
-    });
+    if(this.mainService.internetConnectionCheck){
+      this.googlePlus.login({
+        'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',
+        'offline': true
+      }).then((res) => {
+        console.log(res);
+        if (/@titan\.co\.in$/.test(res.email)) {
+            let inputParams = {
+              "vendor": "google",
+              "token": res.idToken,
+              "SECURITY_TYPE": "GMAIL_LOGIN",
+              "GMAIL_ID": "nagarajan@titan.co.in"
+            };
+            this.utilService.showLoader("Please Wait..");
+            setTimeout(() => {
+              this.authHandler.login(inputParams);
+            }, 100);
+        }else{
+          this.googlePlus.disconnect().then((res) => {
+            this.utilService.showCustomPopup("FAILURE", "Please use Titan Mail ID...");
+          })
+        }
+      });
+    }else{
+      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    }
+    
   }
 
   help(){

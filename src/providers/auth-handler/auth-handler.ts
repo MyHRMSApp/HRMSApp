@@ -44,7 +44,6 @@ export class AuthHandlerProvider {
     this.gmailLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.gmailLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
     this.gmailLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
-    this.checkIsLoggedIn();
   }
 
   setHandleChallengeCallback(onHandleChallenge) {

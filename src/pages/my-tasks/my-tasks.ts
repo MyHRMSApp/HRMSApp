@@ -246,45 +246,47 @@ export class MyTasksPage {
   }
 
   approveRejectRequestCall(payloadData){
-    this.utilService.showLoader("Please wait..");
-
     console.log(payloadData);
-  
-  this.service.invokeAdapterCall('commonAdapterServices', 'applyRejectTaskRequest', 'post', {payload : true, length:1, payloadData: {approvedRejectList : payloadData}}).then((resultData:any)=>{
-    if(resultData){
-      if(resultData.status_code == 200){
-        if(resultData.data.ET_DATA.FLAG == "E"){
-          this.utilService.dismissLoader();
-          this.selectAll();
-          this.utilService.showCustomPopup4Error("My Task", resultData.data.ET_DATA.REASON, "FAILURE");
-        }else if(resultData.data.ET_DATA.FLAG == "S"){
-          const alert = this.alertCtrl.create({
-            title: "",
-            message: "<p class='header'>My Task</p> <p>"+resultData.data.ET_DATA.REASON+"</p>",
-            cssClass: "SUCCESS",
-            enableBackdropDismiss: false,
-          });
-          alert.addButton({
-            text: 'OK',
-            handler: data => {
-              this.navCtrl.setRoot("HomePage");
+    if(this.mainService.internetConnectionCheck){
+      this.utilService.showLoader("Please wait..");
+      this.service.invokeAdapterCall('commonAdapterServices', 'applyRejectTaskRequest', 'post', {payload : true, length:1, payloadData: {approvedRejectList : payloadData}}).then((resultData:any)=>{
+        if(resultData){
+          if(resultData.status_code == 200){
+            if(resultData.data.ET_DATA.FLAG == "E"){
+              this.utilService.dismissLoader();
+              this.selectAll();
+              this.utilService.showCustomPopup4Error("My Task", resultData.data.ET_DATA.REASON, "FAILURE");
+            }else if(resultData.data.ET_DATA.FLAG == "S"){
+              const alert = this.alertCtrl.create({
+                title: "",
+                message: "<p class='header'>My Task</p> <p>"+resultData.data.ET_DATA.REASON+"</p>",
+                cssClass: "SUCCESS",
+                enableBackdropDismiss: false,
+              });
+              alert.addButton({
+                text: 'OK',
+                handler: data => {
+                  this.navCtrl.setRoot("HomePage");
+                }
+              });
+              this.utilService.dismissLoader();
+              alert.present();
+              
             }
-          });
-          this.utilService.dismissLoader();
-          alert.present();
-          
-        }
-      }else{
+          }else{
+            this.utilService.dismissLoader();
+            this.utilService.showCustomPopup4Error("My Task", resultData.message, "FAILURE");
+          }
+    
+        };
+      }, (error)=>{
+        console.log("Data readed from jsonstore error",error);
         this.utilService.dismissLoader();
-        this.utilService.showCustomPopup4Error("My Task", resultData.message, "FAILURE");
-      }
-
-    };
-  }, (error)=>{
-    console.log("Data readed from jsonstore error",error);
-    this.utilService.dismissLoader();
-    this.utilService.showCustomPopup4Error("My Task", error.statusText, "FAILURE");
-  });
+        this.utilService.showCustomPopup4Error("My Task", error.statusText, "FAILURE");
+      });
+    }else{
+      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    }
   }
 
   getLeaveTypeValue(leaveType){

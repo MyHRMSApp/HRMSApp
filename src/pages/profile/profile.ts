@@ -52,24 +52,29 @@ export class ProfilePage {
   }
 
   ionViewCanEnter(){
-
-  this.utilService.showLoader("Please wait..");
-  this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
-    if(resultData){
-      if(resultData.status_code == 200){
+    if(this.mainService.internetConnectionCheck){
+      this.utilService.showLoader("Please wait..");
+      this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
+        if(resultData){
+          if(resultData.status_code == 200){
+            console.log(resultData.data.ET_DATA);
+            this.profileDetails = resultData.data.ET_DATA;
+            setTimeout(() => {
+              this.utilService.dismissLoader();
+            }, 1000);
+          }else{
+            this.utilService.dismissLoader();
+            this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
+          }
+        };
+      }, (error)=>{
+        console.log("Data readed from jsonstore error",error);
         this.utilService.dismissLoader();
-        console.log(resultData.data.ET_DATA);
-        this.profileDetails = resultData.data.ET_DATA;
-      }else{
-        this.utilService.dismissLoader();
-        this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
-      }
-    };
-  }, (error)=>{
-    console.log("Data readed from jsonstore error",error);
-    this.utilService.dismissLoader();
-    this.utilService.showCustomPopup4Error("Profile", error.statusText, "FAILURE");
-  });
+        this.utilService.showCustomPopup4Error("Profile", error.statusText, "FAILURE");
+      });
+    }else{
+      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    }
   }
 
   getProfileValue(profileValue){

@@ -123,7 +123,7 @@ export class ApplyOdPage {
       this.utilService.showCustomPopup4Error("Apply OD", "Please enter the Reason field", "FAILURE");
     }else{
 
-      this.utilService.showLoader("Please wait..");
+      
 
       var payloadData = {
         "IP_SDATE": moment(this.startDate, "DD-MM-YYYY").format("YYYYMMDD"),
@@ -137,46 +137,51 @@ export class ApplyOdPage {
       }
 
       console.log(payloadData);
-    
-    this.service.invokeAdapterCall('commonAdapterServices', 'applyOnDutyRequest', 'post', {payload : true, length:8, payloadData: payloadData}).then((resultData:any)=>{
-      if(resultData){
-        if(resultData.status_code == 200){
-          if(resultData.data.LT_VALIDATION.FLAG == "E"){
-            this.utilService.dismissLoader();
-            this.utilService.showCustomPopup4Error("Apply OD", resultData.data.LT_VALIDATION.REASON, "FAILURE");
-          }else if(resultData.data.IT_REQSUCESS.FLAG == "S"){
-            const alert = this.alertCtrl.create({
-              title: "",
-              message: "<p class='header'>Apply OD</p> <p>"+resultData.data.IT_REQSUCESS.REASON+"</p>",
-              cssClass: "SUCCESS",
-              enableBackdropDismiss: false,
-            });
-            alert.addButton({
-              text: 'OK',
-              handler: data => {
-                this.mainService.attendanceN_NP1_DataFlag = true;
-                this.mainService.attendanceNP2_DataFlag = true;
-                this.mainService.attendanceNA1_DataFlag = true;
-                this.mainService.attendanceNA2_DataFlag = true;
-                this.mainService.attendanceCallFlag = true;
-                this.navCtrl.setRoot("HomePage");
+      if(this.mainService.internetConnectionCheck){
+        this.utilService.showLoader("Please wait..");
+        this.service.invokeAdapterCall('commonAdapterServices', 'applyOnDutyRequest', 'post', {payload : true, length:8, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 200){
+              if(resultData.data.LT_VALIDATION.FLAG == "E"){
+                this.utilService.dismissLoader();
+                this.utilService.showCustomPopup4Error("Apply OD", resultData.data.LT_VALIDATION.REASON, "FAILURE");
+              }else if(resultData.data.IT_REQSUCESS.FLAG == "S"){
+                const alert = this.alertCtrl.create({
+                  title: "",
+                  message: "<p class='header'>Apply OD</p> <p>"+resultData.data.IT_REQSUCESS.REASON+"</p>",
+                  cssClass: "SUCCESS",
+                  enableBackdropDismiss: false,
+                });
+                alert.addButton({
+                  text: 'OK',
+                  handler: data => {
+                    this.mainService.attendanceN_NP1_DataFlag = true;
+                    this.mainService.attendanceNP2_DataFlag = true;
+                    this.mainService.attendanceNA1_DataFlag = true;
+                    this.mainService.attendanceNA2_DataFlag = true;
+                    this.mainService.attendanceCallFlag = true;
+                    this.navCtrl.setRoot("HomePage");
+                  }
+                });
+                this.utilService.dismissLoader();
+                alert.present();
+                
               }
-            });
-            this.utilService.dismissLoader();
-            alert.present();
-            
-          }
-        }else{
+            }else{
+              this.utilService.dismissLoader();
+              this.utilService.showCustomPopup4Error("Apply OD", resultData.message, "FAILURE");
+            }
+      
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error("Apply OD", resultData.message, "FAILURE");
-        }
-  
-      };
-    }, (error)=>{
-      console.log("Data readed from jsonstore error",error);
-      this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error("Apply OD", error.statusText, "FAILURE");
-    });
+          this.utilService.showCustomPopup4Error("Apply OD", error.statusText, "FAILURE");
+        });
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
+    
 
     }
 

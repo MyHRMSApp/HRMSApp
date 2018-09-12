@@ -1,5 +1,5 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
-import { Nav, Platform,AlertController, ToastController } from 'ionic-angular';
+import { Nav, Platform,AlertController, ToastController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
@@ -8,7 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { StorageProvider } from '../providers/storage/storage';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { UtilsProvider } from '../providers/utils/utils';
-
+import { NetworkProvider } from '../providers/network-service/network-service'
 declare var WL;
 declare var WLAuthorizationManager;
 declare var document:any;
@@ -40,14 +40,16 @@ export class MyApp {
   public leaveEncashData:any;
   public myRequestData:any;
   public myTaskData:any;
-  
+  public internetConnectionCheck:boolean = (this.network.type=="none")?false:true;
+  public selectedDateDataFromAttendance:any;
   constructor(public platform: Platform,
     public statusBar: StatusBar, public network: Network,
     public render:Renderer,
     private authHandler: AuthHandlerProvider,
     public storage:StorageProvider,
     public alert:AlertController, public toast: ToastController,
-    public splashScreen: SplashScreen, public utilService: UtilsProvider) {
+    public splashScreen: SplashScreen, public utilService: UtilsProvider, 
+    public networkProvider: NetworkProvider, public events: Events) {
     this.initializeApp();
   }
 
@@ -56,84 +58,37 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
+
+      this.network.onDisconnect().subscribe(() => {
+        this.internetConnectionCheck = (this.network.type=="none")?false:true;
+      });
+      this.network.onConnect().subscribe(() => {
+        this.internetConnectionCheck = (this.network.type=="none")?false:true;
+      });
+    
       this.splashScreen.hide();
-      
-      
     });
 
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
-     // this.authHandler.init();
       this.authHandler.gmailAuthInit();
+      if(this.internetConnectionCheck){
+        this.authHandler.checkIsLoggedIn();
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      }
     });
-
-        /* Function to find the network status */
-        this.network.onConnect().subscribe(data => {
-          console.log(data)
-          this.displayNetworkUpdate(data.type);
-        }, error => console.error(error));
-       
-        this.network.onDisconnect().subscribe(data => {
-          console.log(data)
-          this.displayNetworkUpdate(data.type);
-        }, error => console.error(error));
-    // console.log("localStorage.getItem-->>>"+localStorage.getItem("userLogout"));
-    // if(localStorage.getItem("userLogout") === null){
-    //   localStorage.setItem("userLogout", "1");
-    //   console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));
-    // }else{
-    //   console.log("--userLogout-->>>"+localStorage.getItem("userLogout"));
-    // }
-
-  //   document.addEventListener('pause', function () {
-  //     console.log('App going to background');
-
-  //     if(localStorage.getItem("userLogout") == "1"){
-  //       localStorage.setItem("userLogout", "0");
-  //     }else if(localStorage.getItem("userLogout") == "0"){
-  //       localStorage.setItem("userLogout", "1");
-  //     }
-  //   });
-
-  //   document.addEventListener('resume', function () {
-  //     console.log('App coming to foreground');
-  //     if(localStorage.getItem("userLogout") == "1"){
-  //       localStorage.setItem("userLogout", "0");
-  //     }else if(localStorage.getItem("userLogout") == "0"){
-  //       localStorage.setItem("userLogout", "1");
-  //     }
-  // });
   }
 
-    /* This is used for network connection toast via ${networkType}*/
-    displayNetworkUpdate(connectionState: string){
-    let networkType = this.network.type;
-    if(`${connectionState}` == "offline"){
-      this.toast.create({
-        message: `You are in ${connectionState}, check your internet.`,
-        duration: 3000
-      }).present();
-    }
-    else {
-    this.toast.create({
-      message: `You are in ${connectionState}`,
-      duration: 3000
-    }).present();
-  }
-  }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
-    //this.storage.jsonstoreInitialize();
   }
 
   /**
    * Method for logging out user from app and MFP Server
    */
   logout() {
-    //let checkName = sessionStorage.getItem("securityName");
     this.authHandler.logout().then((resp)=>{
       if(resp) {
         localStorage.setItem("userLogout", "1");
