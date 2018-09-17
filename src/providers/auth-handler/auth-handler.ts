@@ -112,6 +112,7 @@ export class AuthHandlerProvider {
   login(credentialData) {
     console.log('--> AuthHandler login called. isChallenged = ', this.isChallenged);
     console.log("input parameters are",credentialData);
+    this.isChallenged = true;
     if (this.isChallenged) {
       if(credentialData){
         // (securityName == "socialLogin") ? this.userLoginChallengeHandler.submitChallengeAnswer(credentialData) : this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);

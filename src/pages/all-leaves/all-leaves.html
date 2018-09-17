@@ -28,18 +28,18 @@
             <span item-end *ngIf="allLeaveData === undefined">0</span>
         </ion-item>
 
-        <ion-item>
+        <ion-item (click)="fromDateCalendar()">
             From
             <span item-end *ngIf="fromDateFlag">{{leaveFromDate}} - {{leaveFromTimeStr}}</span>
             <span item-end *ngIf="fromDateFlag"></span>
-            <ion-icon name="md-calendar" item-end (click)="fromDateCalendar()"></ion-icon>
+            <ion-icon name="md-calendar" item-end ></ion-icon>
         </ion-item>
 
-        <ion-item>
+        <ion-item (click)="toDateCalendar()">
             To
             <span item-end *ngIf="toDateFlag">{{leaveToDate}} - {{leaveToTimeStr}}</span>
             <span item-end *ngIf="toDateFlag"></span>
-            <ion-icon name="md-calendar" item-end (click)="toDateCalendar()"></ion-icon>
+            <ion-icon name="md-calendar" item-end ></ion-icon>
         </ion-item>
 
         <ion-item>

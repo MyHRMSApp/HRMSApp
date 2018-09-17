@@ -37,8 +37,6 @@ export class ApplyOdPage {
     public service: ServiceProvider, public utilService: UtilsProvider,  public mainService: MyApp) {
     
       this.menu.swipeEnable(false);
-      this.startDate = moment().format("DD-MM-YYYY");
-      this.endDate = moment().format("DD-MM-YYYY");
       this.inTime = "00:00";
       this.outTime = "00:00";
       this.placeVisited = "";
@@ -67,6 +65,14 @@ export class ApplyOdPage {
     this.attendanceIcon = ("./assets/homePageIcons/attendance.svg");
     this.hamburger = ("./assets/homePageIcons/hamburger.svg");
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
+
+    if(this.mainService.selectedDateDataFromAttendance !== undefined && this.mainService.selectedDateDataFromAttendance.LDATE !== undefined){
+      this.startDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY").toString();
+      this.endDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY").toString();
+    }else{
+      this.startDate = moment().format("DD-MM-YYYY");
+      this.endDate = moment().format("DD-MM-YYYY");
+    }
   }
 
   inTimeSelection(){
@@ -88,16 +94,17 @@ export class ApplyOdPage {
   }
 
   fromDateSelection(){
-    let fromDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
+    let fromDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", selectedDate: this.startDate, quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
     fromDatePicker.present();
     fromDatePicker.onDidDismiss((data) => {
       console.log(data);
       this.startDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
+      this.endDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
     });
   }
 
   toDateSelection(){
-    let toDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
+    let toDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", selectedDate: this.endDate, quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
     toDatePicker.present();
     toDatePicker.onDidDismiss((data) => {
       console.log(data);

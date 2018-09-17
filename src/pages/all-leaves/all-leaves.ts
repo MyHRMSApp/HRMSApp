@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -40,21 +40,75 @@ export class AllLeavesPage {
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
-    public utilService: UtilsProvider, public service: ServiceProvider, public mainService: MyApp) {
+    public utilService: UtilsProvider, public service: ServiceProvider, public mainService: MyApp,
+    public ref: ChangeDetectorRef) {
 
     this.menu.swipeEnable(false);
     this.title = this.navParams.get("titleName");
-    this.leaveFromDate = " ";
-    this.leaveToDate = " ";
+    // this.leaveFromDate = " ";
+    // this.leaveToDate = " ";
     this.resonForLeave = "";
     this.leaveType = this.navParams.get("leaveType");
     this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    
   }
 
   ionViewDidLoad() {
     this.hamburger = ("./assets/homePageIcons/hamburger.svg");
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
     console.log('ionViewDidLoad AllLeavesPage');
+    if(this.mainService.selectedDateDataFromAttendance.LDATE !== undefined && this.mainService.selectedDateDataFromAttendance.cssClass !== undefined){
+      this.leaveFromDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY").toString();
+    this.leaveToDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY").toString();
+    switch (this.mainService.selectedDateDataFromAttendance.cssClass) {
+      case "ATT1_Approved_ATT2_UA":
+        this.leaveFromTimeStr = "2nd half";
+        this.leaveToTimeStr = "2nd half";
+        break;
+      case "ATT1_Pending_ATT2_UA":
+        this.leaveFromTimeStr = "2nd half";
+        this.leaveToTimeStr = "2nd half";
+        break;
+      case "ATT1_Holliday_ATT2_UA":
+        this.leaveFromTimeStr = "2nd half";
+        this.leaveToTimeStr = "2nd half";
+        break;
+      case "ATT1_NormalPunch_ATT2_UA":
+        this.leaveFromTimeStr = "2nd half";
+        this.leaveToTimeStr = "2nd half";
+        break;
+      case "ATT1_NomalPunch_ATT2_UA":
+        this.leaveFromTimeStr = "2nd half";
+        this.leaveToTimeStr = "2nd half";
+        break;
+      case "ATT1_UA_ATT2_Holliday":
+        this.leaveFromTimeStr = "1st half";
+        this.leaveToTimeStr = "1st half";
+        break;
+      case "ATT1_UA_ATT2_NormalPunch":
+        this.leaveFromTimeStr = "1st half";
+        this.leaveToTimeStr = "1st half";
+        break;
+      case "ATT1_UA_ATT2_Approved":
+        this.leaveFromTimeStr = "1st half";
+        this.leaveToTimeStr = "1st half";
+        break;
+      case "ATT1_UA_ATT2_Pending":
+        this.leaveFromTimeStr = "1st half";
+        this.leaveToTimeStr = "1st half";
+        break;
+      default :
+        this.leaveFromTimeStr = "full day";
+        this.leaveToTimeStr = "full day";
+        break;
+    }
+      this.fromDateFlag = true;
+      this.toDateFlag = true;
+    }else{
+      this.fromDateFlag = false;
+      this.toDateFlag = false;
+    }
+    
   }
 
   openMenu() {
@@ -72,31 +126,40 @@ export class AllLeavesPage {
   }
 
   fromDateCalendar(){
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "from", quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP = "E" && this.leaveType == "0001")?"true":"false" });
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "from", selectedDate: this.leaveFromDate, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP = "E" && this.leaveType == "0001")?"true":"false" });
       myCalendar.present();
       myCalendar.onDidDismiss((data) => {
         console.log(data);
         if(data !== undefined && data.leaveFromDate !== undefined && data.leaveFromTime !== undefined){
-          this.leaveFromDate = data.leaveFromDate;
+          this.leaveFromDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
+          this.leaveToDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
           this.leaveFromTime = data.leaveFromTime;
           this.fromDateFlag = true;
+          this.toDateFlag = true;
           switch (this.leaveFromTime) {
             case "FD":
               this.leaveFromTimeStr = "full day";
+              this.leaveToTimeStr = "full day";
               break;
             case "FH":
               this.leaveFromTimeStr = "1st half";
+              this.leaveToTimeStr = "1st half";
             break;
             case "SH":
               this.leaveFromTimeStr = "2nd half";
+              this.leaveToTimeStr = "2nd half";
             break;
             case "FQ":
               this.leaveFromTimeStr = "1st Quarter";
+              this.leaveToTimeStr = "1st Quarter";
               break;
             case "LQ":
               this.leaveFromTimeStr = "2nd Quarter";
+              this.leaveToTimeStr = "2nd Quarter";
               break;
           }
+        }else if(this.leaveFromDate !== undefined){
+          this.fromDateFlag = true;
         }else{
           this.fromDateFlag = false;
         }
@@ -106,13 +169,13 @@ export class AllLeavesPage {
 
   toDateCalendar(){
     if(this.leaveFromDate !== undefined && this.leaveFromTime !== undefined ){
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "to", "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP = "E" && this.leaveType == "0001")?"true":"false" });
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "to", selectedDate: this.leaveToDate, "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP = "E" && this.leaveType == "0001")?"true":"false" });
       myCalendar.present();
       myCalendar.onDidDismiss((data) => {
         console.log(data);
         if(data !== undefined && data.leaveToDate !== undefined && data.leaveToTime !== undefined){
-          this.leaveToDate = data.leaveToDate;
-          this.leaveToTime = data.leaveToTime;
+          this.leaveToDate = moment(data.leaveToDate).format("DD-MM-YYYY");
+          this.leaveToTime = moment(data.leaveToDate).format("DD-MM-YYYY");
           this.toDateFlag = true;
           switch (this.leaveToTime) {
             case "FD":
@@ -131,7 +194,11 @@ export class AllLeavesPage {
               this.leaveToTimeStr = "2nd Quarter";
               break;
           }
-        }else{this.toDateFlag = false;}
+        }else if(this.leaveToDate !== undefined){
+          this.toDateFlag = true;
+        }else{
+          this.toDateFlag = false;
+        }
       });
     }else{
       this.utilService.showCustomPopup4Error(this.title, "Please select From Date..", "FAILURE");

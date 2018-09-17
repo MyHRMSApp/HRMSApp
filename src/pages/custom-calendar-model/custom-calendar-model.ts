@@ -31,11 +31,15 @@ export class CustomCalendarModelPage {
   public quarterWiseSelectionFlag:any = true;
   public dayWiseSelectionFlag:any = true;
   public fromPage:any;
+  public selecedDate:any;
   constructor(public menu: MenuController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
               public utilService: UtilsProvider, public alert:AlertController, public ref: ChangeDetectorRef) {
     
     this.menu.swipeEnable(false);
     this.calendarFor = this.navParams.get('Cal');
+    this.dateRange = (this.navParams.get('selectedDate') !== undefined)?new Date(moment(this.navParams.get('selectedDate').toString(), "DD-MM-YYYY").format("YYYY, MM, DD").toString()):new Date(moment().format("YYYY, MM, DD").toString());
+    this.leaveFromDate = this.dateRange;
+    this.leaveToDate = this.dateRange;
     if(this.calendarFor == "to"){
       this.leaveFromDate = this.navParams.get('leaveFromDate');
       this.leaveFromTime = this.navParams.get('leaveFromTime');
@@ -248,13 +252,15 @@ export class CustomCalendarModelPage {
   dismiss(val) {
     if(val == 'k'){
       if(this.calendarFor == "to"){
-        if(this.leaveToDate === undefined){
-          this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
-        }else if(this.leaveToTime === undefined){
+        // if(this.leaveToDate === undefined){
+        //   this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
+        // }else 
+        
+        if(this.leaveToTime === undefined){
           this.utilService.showCustomPopup4Error("Apply Leave", "please select the period..", "FAILURE");
         }else{
           let data = { leaveFromDate: this.leaveFromDate,
-            leaveToDate: this.leaveToDate,  
+            leaveToDate: (this.leaveToDate !== undefined)?this.leaveToDate:this.dateRange,  
             leaveFromTime: this.leaveFromTime, 
             leaveToTime: this.leaveToTime
            };
@@ -263,12 +269,14 @@ export class CustomCalendarModelPage {
       }
 
       if(this.calendarFor == "from"){
-        if(this.leaveFromDate === undefined){
-          this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
-        }else if(this.leaveFromTime === undefined && this.fromPage != "ODApply"){
+        // if(this.leaveFromDate === undefined){
+        //   this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
+        // }else 
+        
+        if(this.leaveFromTime === undefined && this.fromPage != "ODApply"){
           this.utilService.showCustomPopup4Error("Apply Leave", "please select the period..", "FAILURE");
         }else{
-          let data = { leaveFromDate: this.leaveFromDate,
+          let data = { leaveFromDate: (this.leaveFromDate !== undefined)?this.leaveFromDate:this.dateRange,  
             leaveToDate: this.leaveToDate,  
             leaveFromTime: this.leaveFromTime, 
             leaveToTime: this.leaveToTime
