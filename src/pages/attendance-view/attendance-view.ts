@@ -79,7 +79,7 @@ export class AttendanceViewPage {
   onChange($event) {
     console.log(moment($event._d).format("YYYY-MM-DD"));
     var currentDayData = this.mainService.attanancePageData.find(x=>x.LDATE == moment($event._d).format("YYYY-MM-DD"));
-    this.mainService.selectedDateDataFromAttendance = moment($event._d).format("DD-MM-YYYY");
+    this.mainService.selectedDateDataFromAttendance = currentDayData;
     if(currentDayData){
       this.currentDate = moment(currentDayData.LDATE).format("DD").toString();
       this.currentMonth = moment(currentDayData.LDATE).format("MMM").toString();
@@ -104,6 +104,8 @@ export class AttendanceViewPage {
       this.totalHoursWorked = "0";
       this.requests_ATT_1 = null;
       this.requests_ATT_2 = null;
+      this.mainService.selectedDateDataFromAttendance.LDATE = moment($event._d).format("DD-MM-YYYY");
+      this.mainService.selectedDateDataFromAttendance.cssClass = "custom";
     }
     
   }
@@ -194,6 +196,7 @@ export class AttendanceViewPage {
       console.log("this.calStartDate: "+this.calStartDate+"this.calEndDate :"+this.calEndDate,);
       this.optionsRange = tempoptionsRange;
       this.calenderVIew = true;
+      this.mainService.selectedDateDataFromAttendance = undefined;
       this.utilService.dismissLoader();
     }, 100);
   }
