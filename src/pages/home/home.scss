@@ -85,7 +85,7 @@ page-home {
     //   }
     // }
     .customMsg {
-      width: 100%;
+        width: 100%;
       p {
         padding: 1% 1% !important;
         text-align: left !important;
@@ -120,6 +120,7 @@ page-home {
         color: white !important;
       }
     }
+    //Media Query for Sony-Xperia-G3116
     @media only screen and (min-height: 568px) and (min-width: 320px) {
       .userAvatar {
         margin-top: 10%;
@@ -153,7 +154,7 @@ page-home {
         }
       }
       .withoutCustomMsg {
-        ion-row{
+        ion-row {
           height: 50% !important;
         }
         .gridImageDiv {
@@ -174,10 +175,10 @@ page-home {
         }
       }
     }
-    .customMsgTrue{
+    .customMsgTrue {
       padding: 10% 5% 10% 5%;
     }
-    .customMsgFalse{
+    .customMsgFalse {
       padding: 5% 5% 0% 5%;
     }
   }

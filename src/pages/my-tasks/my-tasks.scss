@@ -191,6 +191,28 @@ page-my-tasks {
             opacity: 1 !important;
         }
     }
+
+    //Media query for iPhone 6, 6s, 7, 8
+    @media only screen and (min-height: 667px) and (min-width: 375px)  {
+        .card-ios {
+            background-color: transparent !important;;
+            margin: 0px !important;
+            width: 100% !important;
+            margin-top: 2% !important;
+            -webkit-box-shadow: unset !important;
+            box-shadow:  unset !important;
+            height:5em !important;
+            .rowBg{
+                background-image: url(../assets/couponsImages/my-Task-BG.svg) !important;
+                background-size: cover  !important; 
+                background-position: center center  !important; 
+                margin: 0 auto  !important;
+                width:100% !important;
+                top: 0%;
+                width: 100%;
+            }
+        } 
+        }
     
     }
 

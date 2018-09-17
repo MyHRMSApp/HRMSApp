@@ -1110,8 +1110,8 @@ page-custom-calendar-model {
 }
 
 
- //Media query for iPhone-X
- @media only screen and (min-height: 812px) and (min-width: 375px) {
+//Media query for iPhone-X
+@media only screen and (min-height: 812px) and (min-width: 375px)  {
     
     page-custom-calendar-model {
 
@@ -1167,7 +1167,122 @@ page-custom-calendar-model {
             min-width: calc(1em + 2px)
         }
     }
+}
 
+//Media query for iPhone 6+, 6s+, 7+, 8+
+@media only screen and (min-height: 736px) and (min-width: 414px)  {
+    
+    page-custom-calendar-model {
 
+        max-width: 85%;
+        max-height: 70%;
+        display: block !important;
+        position: relative !important;
+        margin: 30% auto; 
 
- }
+        .toolbar-background-ios{
+            background: unset !important;
+        }
+
+        .toolbar-title-ios {
+            color: white !important;
+            text-align: left !important;
+        }
+        
+        .toolbar-ios ion-title {
+            padding: 0 10px 1px !important;
+        }
+
+        .toolbar-ios {
+            padding: 4px !important;
+            min-height: 65px;
+            padding-top: unset !important;
+        }
+
+        ion-title {
+            padding-top: unset !important;
+        }
+
+        ion-calendar-month .primary .days ion-button.on-selected{
+            background-color: #019F9E;
+            p{
+                color: #fff !important;
+                background: #019F9E;
+                width: 30px;
+                height: 30px;
+                border-radius: 67px;
+                padding: 15%;
+                margin-top: -15%;
+                font-size: 0.9em !important;
+            }
+        }
+
+        .pretty .state label {
+            position: initial;
+            display: inline-block;
+            font-weight: 400;
+            margin: -3px;
+            text-indent: 1.8em;
+            min-width: calc(1em + 2px)
+        }
+    }
+}
+
+//Media query for iPhone 6, 6s, 7, 8
+@media only screen and (min-height: 667px) and (min-width: 375px)  {
+    
+    page-custom-calendar-model {
+
+        max-width: 85%;
+        max-height: 78%;
+        display: block !important;
+        position: relative !important;
+        margin: 20% auto; 
+
+        .toolbar-background-ios{
+            background: unset !important;
+        }
+
+        .toolbar-title-ios {
+            color: white !important;
+            text-align: left !important;
+        }
+        
+        .toolbar-ios ion-title {
+            padding: 0 10px 1px !important;
+        }
+
+        .toolbar-ios {
+            padding: 4px !important;
+            min-height: 65px;
+            padding-top: unset !important;
+        }
+
+        ion-title {
+            padding-top: unset !important;
+        }
+
+        ion-calendar-month .primary .days ion-button.on-selected{
+            background-color: #019F9E;
+            p{
+                color: #fff !important;
+                background: #019F9E;
+                width: 30px;
+                height: 30px;
+                border-radius: 67px;
+                padding: 15%;
+                margin-top: -15%;
+                font-size: 0.9em !important;
+            }
+        }
+
+        .pretty .state label {
+            position: initial;
+            display: inline-block;
+            font-weight: 400;
+            margin: -3px;
+            text-indent: 1.8em;
+            min-width: calc(1em + 2px)
+        }
+    }
+}

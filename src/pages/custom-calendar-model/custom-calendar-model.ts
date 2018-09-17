@@ -118,7 +118,8 @@ export class CustomCalendarModelPage {
 
     if(this.calendarFor == "from"){
       this.leaveFromDate = moment($event._d).format("YYYY-MM-DD");
-    }else if(this.calendarFor == "to"){
+    }
+    else if(this.calendarFor == "to"){
       if(moment($event._d).format("YYYY-MM-DD") == moment(this.leaveFromDate).format("YYYY-MM-DD")){
         if(this.leaveFromTime == "FD"){
           this.quarterFlag = true;

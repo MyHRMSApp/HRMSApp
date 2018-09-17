@@ -212,8 +212,8 @@ ion-nav{
         .alert-radio-icon{
             left: 13px;
             top: 0;
-            border-radius: 4px;
             position: relative;
+            border-radius: 4px;
             width: 22px;
             height: 20px;
             border-width: 1px;
@@ -276,6 +276,42 @@ ion-nav{
 
   //Media query for iPhone-X
   @media only screen and (min-height: 812px) and (min-width: 375px) {
+
+    .alert-radio-icon{
+        left: 0px !important;
+        top: 0;
+        border-radius: 4px;
+        position: relative;
+        width: 22px;
+        height: 20px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #009688;
+        min-width: 22px !important;
+    }
+
+}
+
+  //Media query for iPhone 6+, 6s+, 7+, 8+
+  @media only screen and (min-height: 736px) and (min-width: 414px) {
+
+    .alert-radio-icon{
+        left: 0px !important;
+        top: 0;
+        border-radius: 4px;
+        position: relative;
+        width: 22px;
+        height: 20px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #009688;
+        min-width: 22px !important;
+    }
+
+}
+
+  //Media query for iPhone 6, 6s, 7, 8
+  @media only screen and (min-height: 667px) and (min-width: 375px) {
 
     .alert-radio-icon{
         left: 0px !important;
