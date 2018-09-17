@@ -46,8 +46,13 @@
     </ion-row>
     </ion-card>
 
-    <div class="applyButtonParent" [ngClass]="{'disableBtn': applyBtnFlag === true}">
+    <!-- <div class="applyButtonParent" [ngClass]="{'disableBtn': applyBtnFlag === true}">
       <button class="applyButton" ion-button (click)="applyEncashmentRequest()">Apply</button>
+    </div> 
+  -->
+
+    <div class="btn-layout" [ngClass]="{'disableBtn': applyBtnFlag === true}">
+      <button class="confirm" ion-button (click)="applyEncashmentRequest()">APPLY</button>
     </div>
 
     <p class="notifyMsg">*Claimed cancellation on portal only</p>

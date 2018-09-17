@@ -85,6 +85,25 @@ page-my-tasks {
             }
         }
 
+        .card-ios {
+            background-color: transparent !important;;
+            margin: 0px !important;
+            width: 100% !important;
+            margin-top: 2% !important;
+            -webkit-box-shadow: unset !important;
+            box-shadow:  unset !important;
+            height:5em !important;
+            .rowBg{
+                background-image: url(../assets/couponsImages/my-Task-BG.svg) !important;
+                background-size: cover  !important; 
+                background-position: center center  !important; 
+                margin: 0 auto  !important;
+                width:93% !important;
+                top: 0%;
+                width: 100%;
+            }
+        }
+
         ion-card {
             background-color: transparent !important;;
             margin: 0px !important;
@@ -92,7 +111,9 @@ page-my-tasks {
             margin-top: 2% !important;
             -webkit-box-shadow: unset !important;
             box-shadow:  unset !important;
-            ion-row {
+            .rowBg {
+                background-image: url(../assets/couponsImages/my-Task-BG.svg);
+                background-size: 100% 100%;
                 top: 0%;
                 width: 100%;
             .item{
@@ -154,7 +175,7 @@ page-my-tasks {
         }
     }
 
-    .button{
+    .button {
         width: 60%;
     } 
 

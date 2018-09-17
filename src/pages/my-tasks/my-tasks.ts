@@ -175,7 +175,7 @@ export class MyTasksPage {
       case "SH":
         periodRes = "2nd half";
         break;
-    }
+    } 
 
     return periodRes;
   }
