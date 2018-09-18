@@ -52,7 +52,7 @@ export class ProfilePage {
   }
 
   ionViewCanEnter(){
-    if(this.mainService.internetConnectionCheck){
+    // if(this.mainService.internetConnectionCheck){
       this.utilService.showLoader("Please wait..");
       this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
@@ -72,9 +72,9 @@ export class ProfilePage {
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup4Error("Profile", error.statusText, "FAILURE");
       });
-    }else{
-      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-    }
+    // }else{
+    //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    // }
   }
 
   getProfileValue(profileValue){

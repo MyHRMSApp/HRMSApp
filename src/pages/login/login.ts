@@ -94,7 +94,7 @@ export class LoginPage {
   }
 
   processForm() {
-    if(this.mainService.internetConnectionCheck){
+    // if(this.mainService.internetConnectionCheck){
       let username = this.form.value.username;
     let password = this.form.value.password;
     if (username === "") {
@@ -132,9 +132,9 @@ export class LoginPage {
         this.authHandler.login(credentials);
       }, 100);
     }
-    }else{
-      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-    }
+    // }else{
+    //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    // }
 
   }
 
@@ -153,7 +153,7 @@ export class LoginPage {
    * Method to handle user login via google plus option
    */
   userLoginViagooglePlus() {
-    if(this.mainService.internetConnectionCheck){
+    // if(this.mainService.internetConnectionCheck){
       this.googlePlus.login({
         'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',
         'offline': true
@@ -176,9 +176,9 @@ export class LoginPage {
           })
         }
       });
-    }else{
-      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-    }
+    // }else{
+    //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    // }
     
   }
 

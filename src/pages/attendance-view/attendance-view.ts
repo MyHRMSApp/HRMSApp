@@ -205,7 +205,7 @@ export class AttendanceViewPage {
   applyLeave() {
     
     try {
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please wait..");
       this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
@@ -225,9 +225,9 @@ export class AttendanceViewPage {
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup("FAILURE",error.statusText);
       });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
     } catch (error) {
       console.log("catch-->>",error);
     }
@@ -255,7 +255,7 @@ export class AttendanceViewPage {
 
   loadCalendarForNextMonth(){
 
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please Wait..");
         // this.calenderVIew = false;
         if(this.mainService.attendanceNA1_DataFlag){
@@ -285,9 +285,9 @@ export class AttendanceViewPage {
           this.utilService.dismissLoader();
           this.utilService.showPopup("Attendance",error.statusText);
         });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
     }else{
       this.mainService.attanancePageData = this.mainService.attendanceNA1_Data;
       this.dateRange = moment(moment().format("YYYY-MM-DD")).add(1, 'M')
@@ -297,7 +297,7 @@ export class AttendanceViewPage {
   }
 
   loadCalendarForNextAfterMonth(){
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please Wait..");
         // this.calenderVIew = false;
         if(this.mainService.attendanceNA2_DataFlag){
@@ -327,9 +327,9 @@ export class AttendanceViewPage {
           this.utilService.dismissLoader();
           this.utilService.showPopup("Attendance",error.statusText);
         });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
     }else{
       this.mainService.attanancePageData = this.mainService.attendanceNA2_Data;
       this.dateRange = moment(moment().format("YYYY-MM-DD")).add(2, 'M');
@@ -340,7 +340,7 @@ export class AttendanceViewPage {
 
   loadCalendarForCurrentPriviousMonths(){
   
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please Wait..");
         // this.calenderVIew = false;
         if(this.mainService.attendanceN_NP1_DataFlag){
@@ -370,9 +370,9 @@ export class AttendanceViewPage {
           this.utilService.dismissLoader();
           this.utilService.showPopup("Attendance",error.statusText);
         });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
     }else{
       console.log(JSON.stringify(this.mainService.attendanceN_NP1_Data));
       this.mainService.attanancePageData = this.mainService.attendanceN_NP1_Data;
@@ -384,7 +384,7 @@ export class AttendanceViewPage {
   }
 
   loadCalendarForPriviousBeforeMonth(){
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please Wait..");
         // this.calenderVIew = false;
         if(this.mainService.attendanceNP2_DataFlag){
@@ -414,9 +414,9 @@ export class AttendanceViewPage {
           this.utilService.dismissLoader();
           this.utilService.showPopup("Attendance",error.statusText);
         });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
     }else{
       this.mainService.attanancePageData = this.mainService.attendanceNP2_Data;
       this.dateRange = moment(moment().format("YYYY-MM-DD")).add(-2, 'M');

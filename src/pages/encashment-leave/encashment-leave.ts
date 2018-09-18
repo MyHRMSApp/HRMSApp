@@ -69,7 +69,7 @@ export class EncashmentLeavePage {
 
   applyEncashmentRequest(){
 
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         if(this.applyEncashDays === undefined || this.applyEncashDays == ""){
           this.utilService.showCustomPopup4Error("Leave Encashment","Please enter the Days..", "FAILURE");
         }else{
@@ -116,9 +116,9 @@ export class EncashmentLeavePage {
           this.utilService.showCustomPopup4Error("Leave Encashment", error.statusText, "FAILURE");
         });
       }
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
   }
 
 }

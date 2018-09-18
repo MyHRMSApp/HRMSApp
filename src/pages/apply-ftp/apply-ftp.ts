@@ -138,7 +138,7 @@ export class ApplyFtpPage {
       }
 
       console.log(payloadData);
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please wait..");
         this.service.invokeAdapterCall('commonAdapterServices', 'applyFTPRequest', 'post', {payload : true, length:10, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
@@ -179,9 +179,9 @@ export class ApplyFtpPage {
           this.utilService.dismissLoader();
           this.utilService.showCustomPopup4Error("Apply FTP", error.statusText, "FAILURE");
         });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
     
 
     }

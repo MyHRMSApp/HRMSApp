@@ -156,7 +156,7 @@ export class MyRequestPage {
 
     applyCancelDeleteRequest(payloadData){
 
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please wait..");
         console.log(payloadData);
         this.service.invokeAdapterCall('commonAdapterServices', 'applyCancelandDeleteRequest', 'post', {payload : true, length:4, payloadData: payloadData}).then((resultData:any)=>{
@@ -193,9 +193,9 @@ export class MyRequestPage {
           this.utilService.dismissLoader();
           this.utilService.showCustomPopup4Error("My Request", error.statusText, "FAILURE");
         });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
     }
     confirmCancelOD(){
       this.cancelButtonOD=false;

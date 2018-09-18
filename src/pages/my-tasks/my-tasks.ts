@@ -247,7 +247,7 @@ export class MyTasksPage {
 
   approveRejectRequestCall(payloadData){
     console.log(payloadData);
-    if(this.mainService.internetConnectionCheck){
+    // if(this.mainService.internetConnectionCheck){
       this.utilService.showLoader("Please wait..");
       this.service.invokeAdapterCall('commonAdapterServices', 'applyRejectTaskRequest', 'post', {payload : true, length:1, payloadData: {approvedRejectList : payloadData}}).then((resultData:any)=>{
         if(resultData){
@@ -284,9 +284,9 @@ export class MyTasksPage {
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup4Error("My Task", error.statusText, "FAILURE");
       });
-    }else{
-      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-    }
+    // }else{
+    //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    // }
   }
 
   getLeaveTypeValue(leaveType){
