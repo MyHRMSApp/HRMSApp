@@ -58,48 +58,68 @@ export class AllLeavesPage {
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
     console.log('ionViewDidLoad AllLeavesPage');
     if(this.mainService.selectedDateDataFromAttendance.LDATE !== undefined && this.mainService.selectedDateDataFromAttendance.cssClass !== undefined){
-      this.leaveFromDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY").toString();
-    this.leaveToDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY").toString();
+      this.leaveFromDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY");
+    this.leaveToDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY");
     switch (this.mainService.selectedDateDataFromAttendance.cssClass) {
       case "ATT1_Approved_ATT2_UA":
         this.leaveFromTimeStr = "2nd half";
         this.leaveToTimeStr = "2nd half";
+        this.leaveFromTime = "SH";
+        this.leaveToTime = "SH";
         break;
       case "ATT1_Pending_ATT2_UA":
         this.leaveFromTimeStr = "2nd half";
         this.leaveToTimeStr = "2nd half";
+        this.leaveFromTime = "SH";
+        this.leaveToTime = "SH";
         break;
       case "ATT1_Holliday_ATT2_UA":
         this.leaveFromTimeStr = "2nd half";
         this.leaveToTimeStr = "2nd half";
+        this.leaveFromTime = "SH";
+        this.leaveToTime = "SH";
         break;
       case "ATT1_NormalPunch_ATT2_UA":
         this.leaveFromTimeStr = "2nd half";
         this.leaveToTimeStr = "2nd half";
+        this.leaveFromTime = "SH";
+        this.leaveToTime = "SH";
         break;
       case "ATT1_NomalPunch_ATT2_UA":
         this.leaveFromTimeStr = "2nd half";
         this.leaveToTimeStr = "2nd half";
+        this.leaveFromTime = "SH";
+        this.leaveToTime = "SH";
         break;
       case "ATT1_UA_ATT2_Holliday":
         this.leaveFromTimeStr = "1st half";
         this.leaveToTimeStr = "1st half";
+        this.leaveFromTime = "FH";
+        this.leaveToTime = "FH";
         break;
       case "ATT1_UA_ATT2_NormalPunch":
         this.leaveFromTimeStr = "1st half";
         this.leaveToTimeStr = "1st half";
+        this.leaveFromTime = "FH";
+        this.leaveToTime = "FH";
         break;
       case "ATT1_UA_ATT2_Approved":
         this.leaveFromTimeStr = "1st half";
         this.leaveToTimeStr = "1st half";
+        this.leaveFromTime = "FH";
+        this.leaveToTime = "FH";
         break;
       case "ATT1_UA_ATT2_Pending":
         this.leaveFromTimeStr = "1st half";
         this.leaveToTimeStr = "1st half";
+        this.leaveFromTime = "FH";
+        this.leaveToTime = "FH";
         break;
       default :
         this.leaveFromTimeStr = "full day";
         this.leaveToTimeStr = "full day";
+        this.leaveFromTime = "FD";
+        this.leaveToTime = "FD";
         break;
     }
       this.fromDateFlag = true;
@@ -207,16 +227,17 @@ export class AllLeavesPage {
   }
 
   calLeaveApplyValidation(){
-    if(this.mainService.internetConnectionCheck){
+    // if(this.mainService.internetConnectionCheck){
       this.utilService.showLoader("Please wait..");
     var leavetypeData = this.leaveType;
     if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ" || this.leaveToTime == "FQ" || this.leaveToTime == "LQ"){
       leavetypeData = "0011";
     }
+    console.log(this.leaveFromDate+""+this.leaveToDate);
     var payloadData = {
       "IP_LTYP": leavetypeData,
-      "IP_FDATE": moment(this.leaveFromDate).format("YYYYMMDD"),
-      "IP_TDATE": moment(this.leaveToDate).format("YYYYMMDD"),
+      "IP_FDATE": moment(this.leaveFromDate, "DD-MM-YYYY").format("YYYYMMDD"),
+      "IP_TDATE": moment(this.leaveToDate, "DD-MM-YYYY").format("YYYYMMDD"),
       "IP_FHALF": this.leaveFromTime,
       "IP_THALF": this.leaveToTime
     };
@@ -276,9 +297,9 @@ export class AllLeavesPage {
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup4Error(this.title, error, "FAILURE");
       });
-    }else{
-      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-    }
+    // }else{
+    //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    // }
     
   }
 
@@ -301,8 +322,8 @@ export class AllLeavesPage {
        console.log("Apply clicked..!!");
        var payloadData = {
                           "IP_LTYP": this.leaveType,
-                          "IP_FDATE": moment(leaveFromDate).format("YYYYMMDD"),
-                          "IP_TDATE": moment(leaveToDate).format("YYYYMMDD"),
+                          "IP_FDATE": moment(leaveFromDate, "DD-MM-YYYY").format("YYYYMMDD"),
+                          "IP_TDATE": moment(leaveToDate, "DD-MM-YYYY").format("YYYYMMDD"),
                           "IP_FHALF": this.leaveFromTime,
                           "IP_THALF": this.leaveToTime,
                           "IP_DAY": noDays,
@@ -310,7 +331,7 @@ export class AllLeavesPage {
                           "IP_REQ_TYPE": "NEW",
                           "IP_WF_STATUS": "Submitted"
                         }
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please wait..");
         this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
@@ -350,9 +371,9 @@ export class AllLeavesPage {
           this.utilService.dismissLoader();
           this.utilService.showCustomPopup4Error(this.title, error, "FAILURE")
         });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
       }
     });
 

@@ -98,6 +98,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     @Override
     protected boolean validateCredentials(Map<String, Object> credentials) {
         JSONObject jsonObject = new JSONObject();
+        AuthenticatedUser user = new AuthenticatedUser();
         if(credentials!=null){
             switch (credentials.get(SECURITY_TYPE).toString()) {
                 case SAP_LOGIN:
@@ -112,7 +113,6 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
                                     displayName = jsonObject.toString();
-                                    AuthenticatedUser user = new AuthenticatedUser();
                                     this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                     return true;
                                 }else if(jsonObject.getInt("EP_RESULT") == 1234510){
@@ -138,11 +138,11 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                         System.out.println(gmailID +"<---->"+vendorName+"<---->"+token);
                         try {
                             if (vendorName != null && token != null) {
-                                LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
-                                if (vendor != null) {
-                                    AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
-                                    System.out.println("-->>firebase-->>"+ user.toString());
-                                    if (user != null) {
+                                // LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
+                                // if (vendor != null) {
+                                //     AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
+                                //     System.out.println("-->>firebase-->>"+ user.toString());
+                                //     if (user != null) {
                                         JSONObject employeeNO = (JSONObject) userManager.getEmployeeNumber(gmailID);
                                         if(employeeNO.getInt("EmpCode") != 0){
                                             empCode = Integer.toString(employeeNO.getInt("EmpCode"));
@@ -150,8 +150,8 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                             if(jsonObject.getInt("EP_RESULT") == 0){
                                                 userId = jsonObject.getString("EP_ENAME");
                                                 displayName = jsonObject.toString();
-                                                AuthenticatedUser userNew = new AuthenticatedUser();
-                                                userNew = new AuthenticatedUser(userId, displayName, this.getName());
+                                                // AuthenticatedUser userNew = new AuthenticatedUser();
+                                                this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                                 return true;
                                             }else if(jsonObject.getInt("EP_RESULT") == 1234510){
                                                 errorMsg = "Internal Server Error, Please try again..";
@@ -165,11 +165,11 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                             errorMsg = "Please try with valid Titan Mail ID";
                                             return false;
                                         }
-                                    }else{
-                                        errorMsg = "token is not giving user details...";
-                                        return false;
-                                    }
-                                }
+                                //     }else{
+                                //         errorMsg = "token is not giving user details...";
+                                //         return false;
+                                //     }
+                                // }
                             }
                         } catch (Exception exception) {
                             LOGGER.log(Level.SEVERE,"\n [ Exception ] : "+exception);

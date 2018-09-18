@@ -59,12 +59,12 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
 
-      this.network.onDisconnect().subscribe(() => {
-        this.internetConnectionCheck = (this.network.type=="none")?false:true;
-      });
-      this.network.onConnect().subscribe(() => {
-        this.internetConnectionCheck = (this.network.type=="none")?false:true;
-      });
+      // this.network.onDisconnect().subscribe(() => {
+      //   this.internetConnectionCheck = (this.network.type=="none")?false:true;
+      // });
+      // this.network.onConnect().subscribe(() => {
+      //   this.internetConnectionCheck = (this.network.type=="none")?false:true;
+      // });
     
       this.splashScreen.hide();
     });
@@ -72,11 +72,11 @@ export class MyApp {
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
       this.authHandler.gmailAuthInit();
-      if(this.internetConnectionCheck){
+      // if(this.internetConnectionCheck){
         this.authHandler.checkIsLoggedIn();
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
     });
   }
 

@@ -119,7 +119,7 @@ attendanceDataFetch(){
     "IP_SMONTH": -1,
     "IP_EMONTH": 0
   }
-  if(this.mainService.internetConnectionCheck){
+  // if(this.mainService.internetConnectionCheck){
     this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
       if(resultData){
         if(resultData.status_code == 200){
@@ -138,9 +138,9 @@ attendanceDataFetch(){
       this.utilService.dismissLoader();
       this.utilService.showPopup("Attendance",error.statusText);
     });
-  }else{
-    this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-  }
+  // }else{
+  //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+  // }
 }
 
 routerOnDeactivate() {
@@ -151,7 +151,7 @@ routerOnDeactivate() {
   Method for pushing 
   */
 coupons() {
-  if(this.mainService.internetConnectionCheck){
+  // if(this.mainService.internetConnectionCheck){
     this.utilService.showLoader("Loading Coupons...");
     this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData) {
@@ -239,9 +239,9 @@ coupons() {
       this.utilService.dismissLoader();
       this.utilService.showPopup("Attendance",error.statusText);
     });
-  }else{
-    this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-  }
+  // }else{
+  //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+  // }
   
 }
 
@@ -260,7 +260,7 @@ ionViewCanEnter() {
         "IP_SMONTH": -1,
         "IP_EMONTH": 0
       }
-      if(this.mainService.internetConnectionCheck){
+      // if(this.mainService.internetConnectionCheck){
         this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData) {
             if(resultData.status_code == 200){
@@ -296,9 +296,9 @@ ionViewCanEnter() {
           console.log("Error",error);
           this.utilService.showCustomPopup("FAILURE",error.statusText);
         });
-      }else{
-        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      }
+      // }else{
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      // }
   }
     
   } catch (error) {
@@ -409,7 +409,7 @@ removePhoto(){
 applyLeave() {
 
 try {
-  if(this.mainService.internetConnectionCheck){
+  // if(this.mainService.internetConnectionCheck){
     this.utilService.showLoader("Please wait..");
     this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData){
@@ -429,9 +429,9 @@ try {
       this.utilService.dismissLoader();
       this.utilService.showCustomPopup("FAILURE",error.statusText);
     });
-  }else{
-    this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-  } 
+  // }else{
+  //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+  // } 
 } catch (error) {
   console.log("catch-->>",error);
 }
@@ -441,7 +441,7 @@ try {
 myRequest() {
   
 try {
-  if(this.mainService.internetConnectionCheck){
+  // if(this.mainService.internetConnectionCheck){
     this.utilService.showLoader("Please wait..");
     this.service.invokeAdapterCall('commonAdapterServices', 'getMyRequestDetails', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData){
@@ -461,9 +461,9 @@ try {
       this.utilService.dismissLoader();
       this.utilService.showCustomPopup("FAILURE",error.statusText);
     });
-  }else{
-    this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-  }  
+  // }else{
+  //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+  // }  
 } catch (error) {
   console.log("catch-->>",error);
 }
@@ -472,7 +472,7 @@ try {
 
 myTask() {
   try {
-    if(this.mainService.internetConnectionCheck){
+    // if(this.mainService.internetConnectionCheck){
       this.utilService.showLoader("Please wait..");
       this.service.invokeAdapterCall('commonAdapterServices', 'getMyTaskDetails', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
@@ -492,9 +492,9 @@ myTask() {
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup("FAILURE",error.statusText);
       });
-    }else{
-      this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-    }    
+    // }else{
+    //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+    // }    
   } catch (error) {
     console.log("catch-->>",error);
   }
