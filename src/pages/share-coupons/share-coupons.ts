@@ -86,15 +86,17 @@ export class ShareCouponsPage {
       console.log("Checked == true");
       this.ref.detectChanges();
       data = {
-        Employee_Number: "EP00432123",
+        Category: "Jewellery",
+        Type: "Special",
         Coupon_Number: data.DCOUPN,
+        Employee_Number: "EP00432123",
       }
       this.selectedCoupons.push(data);
       console.log(this.selectedCoupons.length);
       this.str = '';
-      this.str += "Hurry!" + "\n" + "Your friend has shared you the Coupon of Tanishq Summer Offer," + "\n" + "Employee Number:" + "25842500";
+      this.str += "Hello!" + "\n" + "Details for discount are as below:";
       for (let i = 0; i < this.selectedCoupons.length; i++) {
-        this.str += "\n" + "Coupon Number:" + this.selectedCoupons[i].Coupon_Number;
+        this.str += "\n" + "Category:" + "Jewellery" + "\n" + "Type:" + "Special" + "\n" + "Code:" + this.selectedCoupons[i].Coupon_Number + "\n" + "Emp Code" + "E417574";
         console.log(this.str);
       }
       this.str += "\n" + "\n" + "Regards," + "\n" + "TITAN";
