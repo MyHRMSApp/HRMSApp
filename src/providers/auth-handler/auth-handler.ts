@@ -94,7 +94,7 @@ export class AuthHandlerProvider {
   }
 
   checkIsLoggedIn() {
-    this.utilService.showLoader("Please Wait..");
+    this.utilService.showLoader("Please Wait...");
     console.log('--> AuthHandler checkIsLoggedIn called');
     WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
     .then(
