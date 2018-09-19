@@ -24,7 +24,9 @@
                   description="OAuth 2.0 client ID that was created for your server. Get it from Google Developers Console
                   at https://console.developers.google.com/projectselector/apis/credentials"/>
         <property name="UserCustomMessage" defaultValue="UserCustomMessage" displayName="UserCustomMessage"/>
-
+        <!-- <property name="DEVServer" defaultValue="https://pirdev.titan.co.in:50401/RESTAdapter/" displayName="Development Server URL"/>
+        <property name="UATServer" defaultValue="https://pirqa.titan.co.in:50401/RESTAdapter/" displayName="UAT Server URL"/>
+        <property name="GMAILAUTH_URL" defaultValue="https://script.google.com/macros/s/AKfycbz8ORIE4cyT3TJ9drTSIOoA-EyQdoBSq2wmz-M6ttuPMcx_hvY/exec?email=" displayName="GMAIL Authentication URL [get Employee Number]"/> -->
     </securityCheckDefinition>
 
 </mfp:adapter>
