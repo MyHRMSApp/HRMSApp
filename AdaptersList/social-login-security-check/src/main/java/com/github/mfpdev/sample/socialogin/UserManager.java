@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.*;
 import java.io.*;
+import javax.ws.rs.core.Context;
 
 import com.ibm.mfp.adapter.api.ConfigurationAPI;
 import com.ibm.mfp.adapter.api.OAuthSecurity;
@@ -56,28 +57,36 @@ import org.apache.http.entity.StringEntity;
  * Replace this with your own implementation, such as a DataBase layer.
  */
 public class UserManager {
+    /*
+	 * For more info on JAX-RS see
+	 * https://jax-rs-spec.java.net/nonav/2.0-rev-a/apidocs/index.html
+	 */
+    @Context
+	ConfigurationAPI configurationAPI;
 
     // Define logger (Standard java.util.Logger)
 	private static final Logger LOGGER = Logger.getLogger(UserManager.class.getName());
-
-    private static final String GET_AUTHSTRING = "HCM_SERV_USR" + ":" + "HCM_SERV_USR@123";
-    private static final String GET_USERAUTH_URL = "https://pirdev.titan.co.in:50401/RESTAdapter/UserAuthentication";
+    private static final String SAP_USERNAME = "HCM_SERV_USR";
+    private static final String SAP_PASSWORD = "HCM_SERV_USR@123";
+    private static final String USER_AUTH_CONTEXT_PATH = "UserAuthentication";
+    private static final String GET_USERAUTH_URL = "https://pirqa.titan.co.in:50401/RESTAdapter/";
     private static final String GET_GMAIL_URL = "https://script.google.com/macros/s/AKfycbz8ORIE4cyT3TJ9drTSIOoA-EyQdoBSq2wmz-M6ttuPMcx_hvY/exec?email=";
     JSONObject jsonObject = new JSONObject();
-
+    
     public JSONObject getUser(String IP_EMPID, String IP_PASSWORD) throws Exception{
         // JSONObject jsonObject = new JSONObject();
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
         StringEntity params =new StringEntity("{\"IP_EMPID\":\""+IP_EMPID+"\",\"IP_PASSWORD\":\""+IP_PASSWORD+"\"}");
         LOGGER.log(Level.INFO,"\n SAP Request Sending from MFP Adapter : \n"+ params+"\n");
         credsProvider.setCredentials(
-                new AuthScope("pirdev.titan.co.in", 50401),
-                new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
+                new AuthScope("pirqa.titan.co.in", 50401),
+                new UsernamePasswordCredentials(SAP_USERNAME, SAP_PASSWORD));
         CloseableHttpClient httpclient = HttpClients.custom()
                 .setDefaultCredentialsProvider(credsProvider)
                 .build();
         try {
-            HttpPost httpPost = new HttpPost(GET_USERAUTH_URL);
+            // System.out.println("------>>>"+ configurationAPI.getPropertyValue("maxAttempts"));
+            HttpPost httpPost = new HttpPost(GET_USERAUTH_URL+USER_AUTH_CONTEXT_PATH);
             httpPost.addHeader("User-Agent", "Mozilla/5.0");
             httpPost.setEntity(params);
             

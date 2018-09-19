@@ -78,7 +78,8 @@ public class CommonAdapterServicesResource {
 	private static final String GET_CUSTOMUSER_MSG = "UserCustomMessage";
 	private static final String SAP_USERNAME = "HCM_SERV_USR";
     private static final String SAP_PASSWORD = "HCM_SERV_USR@123";
-	private static final String SAP_COMMON_URL = "https://pirdev.titan.co.in:50401/RESTAdapter/";
+	// private static final String SAP_COMMON_URL = "https://pirdev.titan.co.in:50401/RESTAdapter/"; //Enable this varibale for Dev Server
+	private static final String SAP_COMMON_URL = "https://pirqa.titan.co.in:50401/RESTAdapter/"; //Enable this varibale for UAT Server
 	private static final String AUTH_STRING = SAP_USERNAME + ":" + SAP_PASSWORD;
 	private static final String[] PENDING_LEAVES = {"ODP", "FTP", "CLP", "SLP", "GLP", "QLP", "PLP"};
 	private static final String[] APPROVED_LEAVES = {"ODA", "FTA", "CLA", "SLA", "GLA", "QLA", "PLA"};
