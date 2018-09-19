@@ -24,7 +24,7 @@
     <img [src]="share" style="margin-top:55%" height="25px" width="25px" />
     </ion-col>
   </ion-row>
-  <ion-card *ngFor="let s of specificCoupons" style="background-image: url(./assets/couponsImages/coupons-BG.svg) !important;background-size: 100% 100%;">
+  <ion-card *ngFor="let s of specificCoupons" class="bgImg">
     <ion-row>
     <ion-col col-4>
     <p class="couponNumber">{{s.DCOUPN}}</p>

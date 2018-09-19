@@ -23,6 +23,10 @@ export class ApplyLeavePage {
   public userGLLeave:any;
   public userCLLeave:any;
   public userLeaveEncashment:any;
+  privelage: any;
+  general: any;
+  sick: any;
+  casual: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -99,15 +103,23 @@ export class ApplyLeavePage {
         switch (this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT) {
           case "CL":
             this.userCLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+            this.casual = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            console.log(this.casual);
             break;
           case "SL":
             this.userSLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+            this.sick = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            console.log(this.sick);
             break;
           case "GL":
             this.userGLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+            this.general = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            console.log(this.general);
             break;
           case "PL":
             this.userPLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+            this.privelage = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            console.log(this.privelage);
             break;
         }
       }

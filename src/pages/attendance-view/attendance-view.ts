@@ -42,6 +42,8 @@ export class AttendanceViewPage {
   public homeIcon: string;
   public hamburger: string;
   public attendanceSingleDayData:any;
+  employeeLevel: string;
+  userInformation: any;
   
 
   // dateRange: string[] = ['2018-07-021', '2018-01-02', '2018-01-05'];
@@ -52,6 +54,10 @@ export class AttendanceViewPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
     public utilService: UtilsProvider, public service: ServiceProvider) {
+    
+    this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
+    this.employeeLevel = this.userInformation.EP_EGROUP;
+    console.log(this.employeeLevel);
     
     this.menu.swipeEnable(false);
   }

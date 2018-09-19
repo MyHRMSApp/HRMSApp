@@ -33,6 +33,8 @@ export class MyTasksPage {
   public selectedAllFlag:boolean = false;
   public approvedRequestJSONObject:any = {'IT_INPUT': {'item': ''}};
   public rejectedRequestJSONObject:any = {'IT_INPUT': {'item': ''}};
+  userInformation: any;
+  employeeLevel: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -40,6 +42,10 @@ export class MyTasksPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public ref: ChangeDetectorRef, public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider, public modalCtrl: ModalController ) {
+
+    this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
+    this.employeeLevel = this.userInformation.EP_EGROUP;
+    console.log(this.employeeLevel);
     
     this.menu.swipeEnable(false);
     this.commonLeaveType = [];

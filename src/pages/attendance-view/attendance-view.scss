@@ -48,6 +48,11 @@ page-attendance-view {
       border-radius: 0px 0px 10px 10px;
       box-shadow: 0px 6px 13px 15px rgba(0,0,0,0.4);
     }
+    .withOutMid{
+      pre{
+        opacity:0 !important;
+      }
+    }
     ion-calendar{
       padding: unset;
       background: url('assets/imgs/Calendar-BG.png');

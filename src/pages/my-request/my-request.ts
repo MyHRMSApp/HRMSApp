@@ -24,6 +24,8 @@ export class MyRequestPage {
   public leaveRequestDataList:Array<any>;
   public odRequestDataList:Array<any>;
   public ftpRequestDataList:Array<any>;
+  userInformation: any;
+  employeeLevel: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -32,6 +34,11 @@ export class MyRequestPage {
     public navParams: NavParams, private ref: ChangeDetectorRef, public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider, public modalCtrl: ModalController) { 
     
+    
+    this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
+    this.employeeLevel = this.userInformation.EP_EGROUP;
+    console.log(this.employeeLevel);
+
     this.menu.swipeEnable(false);
     this.leaveRequestDataList = [];
     this.odRequestDataList = [];
