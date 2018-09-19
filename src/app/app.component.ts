@@ -92,7 +92,8 @@ export class MyApp {
     this.authHandler.logout().then((resp)=>{
       if(resp) {
         localStorage.setItem("userLogout", "1");
-        this.nav.setRoot("LoginPage");
+        this.authHandler.checkIsLoggedIn();
+        // this.nav.setRoot("LoginPage");
       }
       else {
         console.log("logout failure");

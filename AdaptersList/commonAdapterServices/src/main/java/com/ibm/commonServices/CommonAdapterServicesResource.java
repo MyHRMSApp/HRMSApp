@@ -1065,7 +1065,7 @@ public class CommonAdapterServicesResource {
 		try {
 			StringEntity params = new StringEntity(inputString);
 			CredentialsProvider credsProvider = new BasicCredentialsProvider();
-			credsProvider.setCredentials(new AuthScope("pirdev.titan.co.in", 50401),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
+			credsProvider.setCredentials(new AuthScope("pirqa.titan.co.in", 50401),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
 			httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
 			HttpPost httpPost = new HttpPost(restURL);
 			httpPost.addHeader("User-Agent", "Mozilla/5.0");
