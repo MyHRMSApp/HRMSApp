@@ -90,7 +90,7 @@ openMenu() {
   
 attendance() {
 
- this.utilService.showLoader("Please wait..");
+ this.utilService.showLoader("Please wait...");
  console.log("this.mainService.attanancePageData-->"+ this.mainService.attanancePageData);
  
   if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
@@ -152,7 +152,7 @@ routerOnDeactivate() {
   */
 coupons() {
   // if(this.mainService.internetConnectionCheck){
-    this.utilService.showLoader("Loading Coupons...");
+    this.utilService.showLoader("Loading Coupons");
     this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData) {
         if(resultData.status_code == 0){
@@ -353,7 +353,7 @@ takePhoto() {
     saveToPhotoAlbum: true
   }
   this.camera.getPicture(options).then((imageData) => {
-    this.utilService.showLoader("Updating picture..");
+    this.utilService.showLoader("Updating picture");
       if(imageData){
         console.log("getting into if condition",imageData);
         this.base64Image = 'data:image/jpeg;base64,' + imageData;
@@ -381,7 +381,7 @@ uploadPhoto() {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   }).then((imageData) => {
-    this.utilService.showLoader("Updating picture..");
+    this.utilService.showLoader("Updating picture");
       if(imageData){
         console.log("getting into if condition",imageData);
         this.base64Image = 'data:image/jpeg;base64,' + imageData;
@@ -400,7 +400,7 @@ uploadPhoto() {
 
 removePhoto(){
   console.log("Removing picture");
-  this.utilService.showLoader("Removing picture..");
+  this.utilService.showLoader("Removing picture");
   this.photos = ("./assets/icon/avatar.png");
   localStorage.setItem("userPicture", this.photos);
   this.utilService.dismissLoader();
@@ -410,7 +410,7 @@ applyLeave() {
 
 try {
   // if(this.mainService.internetConnectionCheck){
-    this.utilService.showLoader("Please wait..");
+    this.utilService.showLoader("Please wait...");
     this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData){
         if(resultData.status_code == 0) {
@@ -442,7 +442,7 @@ myRequest() {
   
 try {
   // if(this.mainService.internetConnectionCheck){
-    this.utilService.showLoader("Please wait..");
+    this.utilService.showLoader("Please wait...");
     this.service.invokeAdapterCall('commonAdapterServices', 'getMyRequestDetails', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData){
         if(resultData.status_code == 0) {
@@ -473,7 +473,7 @@ try {
 myTask() {
   try {
     // if(this.mainService.internetConnectionCheck){
-      this.utilService.showLoader("Please wait..");
+      this.utilService.showLoader("Please wait...");
       this.service.invokeAdapterCall('commonAdapterServices', 'getMyTaskDetails', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
           if(resultData.status_code == 0) {

@@ -23,6 +23,10 @@ export class ApplyLeavePage {
   public userGLLeave:any;
   public userCLLeave:any;
   public userLeaveEncashment:any;
+  privelage: any;
+  general: any;
+  sick: any;
+  casual: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -59,7 +63,7 @@ export class ApplyLeavePage {
   
       try {
         if(this.mainServices.internetConnectionCheck){
-          this.utilService.showLoader("Please wait..");
+          this.utilService.showLoader("Please wait...");
         this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveEncashBalance', 'get', {payload : false}).then((resultData:any)=>{
           if(resultData){
             if(resultData.status_code == 0){
@@ -79,7 +83,7 @@ export class ApplyLeavePage {
           this.utilService.showCustomPopup("FAILURE",error.statusText);
         });
         }else{
-          this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+          this.utilService.showCustomPopup("FAILURE", "You are in offline, please check you internet");
         }        
       } catch (error) {
         console.log("catch-->>",error);
@@ -99,15 +103,23 @@ export class ApplyLeavePage {
         switch (this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT) {
           case "CL":
             this.userCLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+            this.casual = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            console.log(this.casual);
             break;
           case "SL":
             this.userSLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+            this.sick = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            console.log(this.sick);
             break;
           case "GL":
             this.userGLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+            this.general = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            console.log(this.general);
             break;
           case "PL":
             this.userPLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+            this.privelage = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            console.log(this.privelage);
             break;
         }
       }

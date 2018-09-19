@@ -75,26 +75,33 @@ page-coupons {
             padding-top: 4px;
         }
     }
+}
     
     //Media query for iPhone-X
     @media only screen and (min-height: 812px) and (min-width: 375px) {
-    .couponCounts {
-        margin-left: 12px;
+    .content-ios {
+       .couponCounts {
+           margin-left: 12px;
     }
+}
         }
     //Media query for iPhone 6+, 6s+, 7+, 8+
     @media only screen and (min-height: 736px) and (min-width: 414px)  {
+        .content-ios {
     .couponCounts {
         margin-left: 12px;
     }
+}
         }
     //Media query for iPhone 6, 6s, 7, 8
     @media only screen and (min-height: 667px) and (min-width: 375px)  {
+        .content-ios {
     .couponCounts {
         margin-left: 12px;
-    }   
+    }  
+} 
     }
-  }
+  
   ion-footer {
     height:3.5em !important; 
     text-align: center !important; 

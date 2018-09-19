@@ -66,12 +66,12 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-6>
+          <ion-col col-6 [ngClass]="employeeLevel == 'L'? 'withOutMid' : 'withMid'">
             <span class="label-time">
               <pre><b style="font-size: 1.1em;">Mid-In : </b><span style="color: #068C61;font-weight: 900;font-size: 1.1em;">{{midIN}}</span></pre>
             </span>
           </ion-col>
-          <ion-col col-6>
+          <ion-col col-6 [ngClass]="employeeLevel == 'L'? 'withOutMid' : 'withMid'">
             <span class="label-time">
               <pre><b style="font-size: 1.1em;">Mid-Out : </b><span style="color: #068C61;font-weight: 900;font-size: 1.1em;">{{midOUT}}</span></pre>
             </span>

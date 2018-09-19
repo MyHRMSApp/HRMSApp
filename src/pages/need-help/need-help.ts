@@ -30,9 +30,9 @@ export class NeedHelpPage {
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
   }
 
-  openMenu() {
-    this.menu.toggle();
-  }
+  // openMenu() {
+  //   this.menu.toggle();
+  // }
   
   back(){
     this.navCtrl.pop();

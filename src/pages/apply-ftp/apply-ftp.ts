@@ -31,6 +31,8 @@ export class ApplyFtpPage {
   public selectedDate:any;
   public ftpObject:any;
   public requestTypeSelection:any;
+  userInformation: any;
+  employeeLevel: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -38,6 +40,10 @@ export class ApplyFtpPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
     public service: ServiceProvider, public utilService: UtilsProvider, public mainService: MyApp) {
+
+      this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
+      this.employeeLevel = this.userInformation.EP_EGROUP;
+      console.log(this.employeeLevel);
     
     this.menu.swipeEnable(false);  
     if(this.navParams.get("ftpData")) this.ftpObject =  this.navParams.get("ftpData");
@@ -139,7 +145,7 @@ export class ApplyFtpPage {
 
       console.log(payloadData);
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please wait..");
+        this.utilService.showLoader("Please wait...");
         this.service.invokeAdapterCall('commonAdapterServices', 'applyFTPRequest', 'post', {payload : true, length:10, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
             if(resultData.status_code == 0){

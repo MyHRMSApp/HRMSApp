@@ -153,6 +153,7 @@ page-my-tasks {
         border-radius:7px;
         p{
         margin-left: 3% !important;
+        color: white;
         }
         ion-icon{
             font-size: 2.4em !important;
@@ -214,6 +215,19 @@ page-my-tasks {
         } 
         }
     
+    }
+
+    //Media query for Nokia 8
+    @media only screen and (min-height: 667px) and (min-width: 375px)  {
+        .content-md {
+            .rowBg {
+                background-image: url(../assets/couponsImages/my-Task-BG.svg) !important;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                height: 4.75em;
+            }
+        } 
     }
 
     ion-footer {

@@ -218,7 +218,7 @@
                   <ion-col col-6 class="fromPeriod" [ngClass]="{'changeClr': getTimeDetailsChange(leaveItem.SFT_IN) == 'Y', 'normalClr': getTimeDetailsChange(leaveItem.SFT_IN) == 'N'}"><span >IN - {{getTimeDetails(leaveItem.SFT_IN) | date :  "HH:mm"}}</span></ion-col>
                   <ion-col col-6 class="toPeriod" [ngClass]="{'changeClr': getTimeDetailsChange(leaveItem.SFT_OUT) == 'Y', 'normalClr': getTimeDetailsChange(leaveItem.SFT_OUT) == 'N'}"><span >OUT - {{getTimeDetails(leaveItem.SFT_OUT) | date :  "HH:mm"}}</span></ion-col>
                 </ion-col>
-                <ion-col col-12 class="timeDetails">
+                <ion-col *ngIf="employeeLevel == 'E'" col-12 class="timeDetails">
                     <ion-col col-6 class="fromPeriod" [ngClass]="{'changeClr': getTimeDetailsChange(leaveItem.LUN_IN) == 'Y', 'normalClr': getTimeDetailsChange(leaveItem.LUN_IN) == 'N'}"><span >MID-IN - {{getTimeDetails(leaveItem.LUN_IN) | date :  "HH:mm"}}</span></ion-col>
                     <ion-col col-6 class="toPeriod" [ngClass]="{'changeClr': getTimeDetailsChange(leaveItem.LUN_OUT) == 'Y', 'normalClr': getTimeDetailsChange(leaveItem.LUN_OUT) == 'N'}"><span >MID-OUT - {{getTimeDetails(leaveItem.LUN_OUT) | date :  "HH:mm"}}</span></ion-col>
                   </ion-col>
