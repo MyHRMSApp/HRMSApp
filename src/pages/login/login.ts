@@ -55,7 +55,7 @@ export class LoginPage {
     this.authHandler.setLoginFailureCallback((error) => {
           this.utilService.dismissLoader();
           if(error.status == 403 && error.statusText == "Forbidden"){
-            this.utilService.showCustomPopup("FAILURE", "Your account is Locked, Please try again after 60 Sec..");
+            this.utilService.showCustomPopup("FAILURE", "Your account is Locked, Please try again after 60 Sec");
           }else if(error.errorMsg !== undefined && error.errorMsg !== null){
             this.utilService.showCustomPopup("FAILURE", error.errorMsg);
           } 
@@ -98,13 +98,13 @@ export class LoginPage {
       let username = this.form.value.username;
     let password = this.form.value.password;
     if (username === "") {
-      this.utilService.showCustomPopup("FAILURE", "Username is required..");
+      this.utilService.showCustomPopup("FAILURE", "Username is required");
       return;
     }else if(username.length < 4){
-      this.utilService.showCustomPopup("FAILURE", "Username must be min 4 and max 8 characters..");
+      this.utilService.showCustomPopup("FAILURE", "Username must be min 4 and max 8 characters");
       return;
     }else if (password === "") {
-      this.utilService.showCustomPopup("FAILURE", "Password is required..");
+      this.utilService.showCustomPopup("FAILURE", "Password is required");
       return;
     }else{
       var userNameLength = username;
@@ -122,7 +122,7 @@ export class LoginPage {
           username = "E000"+username;
           break;
       }
-      this.utilService.showLoader("Please Wait..");
+      this.utilService.showLoader("Please Wait...");
       setTimeout(() => {
         let credentials = {
           "username": username,
@@ -166,13 +166,13 @@ export class LoginPage {
               "SECURITY_TYPE": "GMAIL_LOGIN",
               "GMAIL_ID": "nagarajan@titan.co.in"
             };
-            this.utilService.showLoader("Please Wait..");
+            this.utilService.showLoader("Please Wait...");
             setTimeout(() => {
               this.authHandler.login(inputParams);
             }, 100);
         }else{
           this.googlePlus.disconnect().then((res) => {
-            this.utilService.showCustomPopup("FAILURE", "Please use Titan Mail ID...");
+            this.utilService.showCustomPopup("FAILURE", "Please use Titan Mail ID");
           })
         }
       });

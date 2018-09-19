@@ -145,7 +145,7 @@ export class ApplyFtpPage {
 
       console.log(payloadData);
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please wait..");
+        this.utilService.showLoader("Please wait...");
         this.service.invokeAdapterCall('commonAdapterServices', 'applyFTPRequest', 'post', {payload : true, length:10, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
             if(resultData.status_code == 200){

@@ -145,7 +145,7 @@ export class ApplyOdPage {
 
       console.log(payloadData);
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please wait..");
+        this.utilService.showLoader("Please wait...");
         this.service.invokeAdapterCall('commonAdapterServices', 'applyOnDutyRequest', 'post', {payload : true, length:8, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
             if(resultData.status_code == 200){

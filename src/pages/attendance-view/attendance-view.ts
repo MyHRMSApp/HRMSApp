@@ -212,7 +212,7 @@ export class AttendanceViewPage {
     
     try {
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please wait..");
+        this.utilService.showLoader("Please wait...");
       this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
           if(resultData.status_code == 200){
@@ -247,12 +247,12 @@ export class AttendanceViewPage {
       var value = moment(this.dateRange, "YYYY-MM-DD").format("YYYY-MM-DD").toString();
       var monthDifferCheck = moment().diff(moment(value, "YYYY-MM-DD"), 'months', true);
       if(monthDifferCheck < 0){
-        this.utilService.showCustomPopup4Error("Apply FTP", "Invalid Date Selection..", "FAILURE");
+        this.utilService.showCustomPopup4Error("Apply FTP", "Invalid Date Selection", "FAILURE");
       }else{
         this.navCtrl.push("ApplyFtpPage",{"ftpData": this.attendanceSingleDayData});
       }
     }else{
-      this.utilService.showCustomPopup4Error("Apply FTP", "Please select date..", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply FTP", "Please select date", "FAILURE");
     }
 
 
@@ -262,7 +262,7 @@ export class AttendanceViewPage {
   loadCalendarForNextMonth(){
 
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please Wait..");
+        this.utilService.showLoader("Please Wait...");
         // this.calenderVIew = false;
         if(this.mainService.attendanceNA1_DataFlag){
           var payloadData = {
@@ -304,7 +304,7 @@ export class AttendanceViewPage {
 
   loadCalendarForNextAfterMonth(){
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please Wait..");
+        this.utilService.showLoader("Please Wait...");
         // this.calenderVIew = false;
         if(this.mainService.attendanceNA2_DataFlag){
           var payloadData = {
@@ -347,7 +347,7 @@ export class AttendanceViewPage {
   loadCalendarForCurrentPriviousMonths(){
   
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please Wait..");
+        this.utilService.showLoader("Please Wait...");
         // this.calenderVIew = false;
         if(this.mainService.attendanceN_NP1_DataFlag){
           var payloadData = {
@@ -391,7 +391,7 @@ export class AttendanceViewPage {
 
   loadCalendarForPriviousBeforeMonth(){
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please Wait..");
+        this.utilService.showLoader("Please Wait...");
         // this.calenderVIew = false;
         if(this.mainService.attendanceNP2_DataFlag){
           var payloadData = {

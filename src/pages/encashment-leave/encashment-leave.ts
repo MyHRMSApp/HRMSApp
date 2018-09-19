@@ -71,10 +71,10 @@ export class EncashmentLeavePage {
 
       // if(this.mainService.internetConnectionCheck){
         if(this.applyEncashDays === undefined || this.applyEncashDays == ""){
-          this.utilService.showCustomPopup4Error("Leave Encashment","Please enter the Days..", "FAILURE");
+          this.utilService.showCustomPopup4Error("Leave Encashment","Please enter the Days", "FAILURE");
         }else{
     
-          this.utilService.showLoader("Please wait..");
+          this.utilService.showLoader("Please wait...");
     
           var payloadData = {
             "IP_NO_DAYS": this.applyEncashDays,

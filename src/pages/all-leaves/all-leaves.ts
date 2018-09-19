@@ -221,14 +221,14 @@ export class AllLeavesPage {
         }
       });
     }else{
-      this.utilService.showCustomPopup4Error(this.title, "Please select From Date..", "FAILURE");
+      this.utilService.showCustomPopup4Error(this.title, "Please select From Date", "FAILURE");
     }
     
   }
 
   calLeaveApplyValidation(){
     // if(this.mainService.internetConnectionCheck){
-      this.utilService.showLoader("Please wait..");
+      this.utilService.showLoader("Please wait...");
     var leavetypeData = this.leaveType;
     if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ" || this.leaveToTime == "FQ" || this.leaveToTime == "LQ"){
       leavetypeData = "0011";
@@ -319,7 +319,7 @@ export class AllLeavesPage {
     alert.addButton({
       text: 'APPLY',
       handler: data => {
-       console.log("Apply clicked..!!");
+       console.log("Apply clicked");
        var payloadData = {
                           "IP_LTYP": this.leaveType,
                           "IP_FDATE": moment(leaveFromDate, "DD-MM-YYYY").format("YYYYMMDD"),
@@ -332,7 +332,7 @@ export class AllLeavesPage {
                           "IP_WF_STATUS": "Submitted"
                         }
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please wait..");
+        this.utilService.showLoader("Please wait...");
         this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
               console.log(JSON.stringify(resultData.data));

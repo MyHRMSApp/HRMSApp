@@ -53,7 +53,7 @@ export class ProfilePage {
 
   ionViewCanEnter(){
     // if(this.mainService.internetConnectionCheck){
-      this.utilService.showLoader("Please wait..");
+      this.utilService.showLoader("Please wait...");
       this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
           if(resultData.status_code == 200){

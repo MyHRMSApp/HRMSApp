@@ -63,7 +63,7 @@ export class ApplyLeavePage {
   
       try {
         if(this.mainServices.internetConnectionCheck){
-          this.utilService.showLoader("Please wait..");
+          this.utilService.showLoader("Please wait...");
         this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveEncashBalance', 'get', {payload : false}).then((resultData:any)=>{
           if(resultData){
             if(resultData.status_code == 200){
@@ -83,7 +83,7 @@ export class ApplyLeavePage {
           this.utilService.showCustomPopup("FAILURE",error.statusText);
         });
         }else{
-          this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+          this.utilService.showCustomPopup("FAILURE", "You are in offline, please check you internet");
         }        
       } catch (error) {
         console.log("catch-->>",error);

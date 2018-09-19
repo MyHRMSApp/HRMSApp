@@ -25,7 +25,7 @@ export class AlertPageFortextareaPage {
     if(this.deleteReason !== undefined || this.deleteReason == ""){
       this.viewCtrl.dismiss({deleteReason: this.deleteReason});
     }else{
-      this.utilService.showCustomPopup4Error("My Request", "Please enter Reason..", "FAILURE");
+      this.utilService.showCustomPopup4Error("My Request", "Please enter Reason", "FAILURE");
     }
     
   }

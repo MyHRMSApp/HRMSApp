@@ -254,7 +254,7 @@ export class MyTasksPage {
   approveRejectRequestCall(payloadData){
     console.log(payloadData);
     // if(this.mainService.internetConnectionCheck){
-      this.utilService.showLoader("Please wait..");
+      this.utilService.showLoader("Please wait...");
       this.service.invokeAdapterCall('commonAdapterServices', 'applyRejectTaskRequest', 'post', {payload : true, length:1, payloadData: {approvedRejectList : payloadData}}).then((resultData:any)=>{
         if(resultData){
           if(resultData.status_code == 200){

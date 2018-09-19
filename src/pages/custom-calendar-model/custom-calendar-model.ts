@@ -163,7 +163,7 @@ export class CustomCalendarModelPage {
           this.firstHalfFlag = true;
           this.secHalfFlag = true;
           this.ref.detectChanges();
-          this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection..", "FAILURE");
+          this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
         }else if(this.leaveFromTime == "SH"){
           this.quarterFlag = true;
           this.fulldayFlag = false;
@@ -176,7 +176,7 @@ export class CustomCalendarModelPage {
           this.firstHalfFlag = true;
           this.secHalfFlag = true;
           this.ref.detectChanges();
-          this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection..", "FAILURE");
+          this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
         }else if(this.leaveFromTime == "LQ"){
           if(moment(this.leaveFromDate).diff($event._d, 'days') == 0 || moment(this.leaveFromDate).diff($event._d, 'days') == -1){
             this.quarterFlag = false;
@@ -190,13 +190,13 @@ export class CustomCalendarModelPage {
             this.firstHalfFlag = true;
             this.secHalfFlag = true;
             this.ref.detectChanges();
-            this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection..", "FAILURE");
+            this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
           }
           
         }
         
       }else if(moment(this.leaveFromDate).diff($event._d, 'days') > 0){
-        this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection..", "FAILURE");
+        this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
       }
       this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
     }
@@ -227,7 +227,7 @@ export class CustomCalendarModelPage {
         if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') == 0){
           this.showCustomPopupWithCheckBox(true, false, true, true);
         }else if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') < 0){
-          this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection..", "FAILURE");
+          this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
         }
       }else{
         this.showCustomPopupWithCheckBox((this.leaveFromTime == "FQ")? true:false , (this.leaveFromTime == "LQ")? true:false, false, false);
@@ -239,7 +239,7 @@ export class CustomCalendarModelPage {
         }else if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') == -1){
           this.showCustomPopupWithCheckBox(true, false, true, true);
         }else if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') < -1){
-          this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection..", "FAILURE");
+          this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
         }
       }else{
         this.showCustomPopupWithCheckBox((this.leaveFromTime == "FQ")? true:false , (this.leaveFromTime == "LQ")? true:false, false, false);
@@ -257,7 +257,7 @@ export class CustomCalendarModelPage {
         // }else 
         
         if(this.leaveToTime === undefined){
-          this.utilService.showCustomPopup4Error("Apply Leave", "please select the period..", "FAILURE");
+          this.utilService.showCustomPopup4Error("Apply Leave", "please select the period", "FAILURE");
         }else{
           let data = { leaveFromDate: this.leaveFromDate,
             leaveToDate: (this.leaveToDate !== undefined)?this.leaveToDate:this.dateRange,  
@@ -274,7 +274,7 @@ export class CustomCalendarModelPage {
         // }else 
         
         if(this.leaveFromTime === undefined && this.fromPage != "ODApply"){
-          this.utilService.showCustomPopup4Error("Apply Leave", "please select the period..", "FAILURE");
+          this.utilService.showCustomPopup4Error("Apply Leave", "please select the period", "FAILURE");
         }else{
           let data = { leaveFromDate: (this.leaveFromDate !== undefined)?this.leaveFromDate:this.dateRange,  
             leaveToDate: this.leaveToDate,  

@@ -164,7 +164,7 @@ export class MyRequestPage {
     applyCancelDeleteRequest(payloadData){
 
       // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please wait..");
+        this.utilService.showLoader("Please wait...");
         console.log(payloadData);
         this.service.invokeAdapterCall('commonAdapterServices', 'applyCancelandDeleteRequest', 'post', {payload : true, length:4, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
