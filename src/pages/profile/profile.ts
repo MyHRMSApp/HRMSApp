@@ -56,7 +56,7 @@ export class ProfilePage {
       this.utilService.showLoader("Please wait..");
       this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
-          if(resultData.status_code == 200){
+          if(resultData.status_code == 0){
             console.log(resultData.data.ET_DATA);
             this.profileDetails = resultData.data.ET_DATA;
             setTimeout(() => {

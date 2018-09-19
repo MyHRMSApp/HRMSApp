@@ -85,7 +85,7 @@
         <ion-col col-6><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
     </ion-row>
 
-    <div *ngIf="odRequestDataList.length > 0"></div>
+    <div *ngIf="odRequestDataList.length > 0">
     <div *ngFor="let leaveItem of odRequestDataList">
       <ion-row *ngIf="isGroupOD()" class="accordionRow">
           <ion-col class="accordionColOne" col-2>
@@ -137,8 +137,9 @@
 
       </ion-row>
     </div>
+  </div>
 
-    <ion-row *ngIf="isGroupOD() && leaveRequestDataList.length == 0">
+    <ion-row *ngIf="isGroupOD() && odRequestDataList.length == 0">
       <ion-col col-12>
         <span class="noresponce">No Request Available..</span>
       </ion-col>

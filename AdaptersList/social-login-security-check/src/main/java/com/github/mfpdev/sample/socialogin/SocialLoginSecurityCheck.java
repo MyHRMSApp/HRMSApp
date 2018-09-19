@@ -108,7 +108,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                 
                             //Look for this user in the database
                             try {
-                                jsonObject = (JSONObject) userManager.getUser(username, password);
+                                jsonObject = (JSONObject) userManager.getUserDetials(username, password, "", this.getConfiguration().getQaServerURL(), true);
                                 errorMsg = "sample";
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
@@ -143,10 +143,10 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                 //     AuthenticatedUser user = vendor.validateTokenAndCreateUser(token, getName());
                                 //     System.out.println("-->>firebase-->>"+ user.toString());
                                 //     if (user != null) {
-                                        JSONObject employeeNO = (JSONObject) userManager.getEmployeeNumber(gmailID);
+                                        JSONObject employeeNO = (JSONObject) userManager.getUserDetials("", "", gmailID, this.getConfiguration().getGmailAuthURL(), false);
                                         if(employeeNO.getInt("EmpCode") != 0){
                                             empCode = Integer.toString(employeeNO.getInt("EmpCode"));
-                                            jsonObject = (JSONObject) userManager.getUser("Gmail", "E0477072");
+                                            jsonObject = (JSONObject) userManager.getUserDetials("Gmail", "E0477072", "", this.getConfiguration().getQaServerURL(), true);
                                             if(jsonObject.getInt("EP_RESULT") == 0){
                                                 userId = jsonObject.getString("EP_ENAME");
                                                 displayName = jsonObject.toString();

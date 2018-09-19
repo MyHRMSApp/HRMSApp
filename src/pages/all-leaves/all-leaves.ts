@@ -243,7 +243,7 @@ export class AllLeavesPage {
     };
       this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: payloadData}).then((resultData:any)=>{
         if(resultData){
-          if(resultData.status_code == 200){
+          if(resultData.status_code == 0){
             this.utilService.dismissLoader();
             console.log(JSON.stringify(resultData.data));
             if(resultData.data.ET_VBAL.FLAG == "S"){
@@ -336,7 +336,7 @@ export class AllLeavesPage {
         this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
               console.log(JSON.stringify(resultData.data));
-              if(resultData.status_code == 200){
+              if(resultData.status_code == 0){
                this.utilService.dismissLoader();
                console.log(JSON.stringify(resultData.data));
                if(resultData.data.EP_REASON.TYPE == "S"){

@@ -148,7 +148,7 @@ export class ApplyOdPage {
         this.utilService.showLoader("Please wait..");
         this.service.invokeAdapterCall('commonAdapterServices', 'applyOnDutyRequest', 'post', {payload : true, length:8, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               if(resultData.data.LT_VALIDATION.FLAG == "E"){
                 this.utilService.dismissLoader();
                 this.utilService.showCustomPopup4Error("Apply OD", resultData.data.LT_VALIDATION.REASON, "FAILURE");

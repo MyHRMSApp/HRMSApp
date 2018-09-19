@@ -83,7 +83,7 @@ export class EncashmentLeavePage {
           console.log(payloadData);
         this.service.invokeAdapterCall('commonAdapterServices', 'applyEncashmentRequest', 'post', {payload : true, length:1, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               if(resultData.data.EP_RETURN.TYPE == "E"){
                 this.utilService.dismissLoader();
                 this.utilService.showCustomPopup4Error("Leave Encashment", resultData.data.EP_RETURN.MESSAGE, "FAILURE");

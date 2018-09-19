@@ -36,9 +36,15 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
 
     public static final String KEEP_ORIGINAL_TOKEN = "keepOriginalToken";
     private static final String CUSTOM_MSG_CONFIG_PROPERTY = "UserCustomMessage";
+    private static final String DEVServer_URL_CONFIG_PROPERTY = "DEVServer";
+    private static final String UATServer_URL_CONFIG_PROPERTY = "UATServer";
+    private static final String GMAILAUTH_URL_CONFIG_PROPERTY = "GMAILAUTH_URL";
 
     private boolean keepOriginalToken;
     private String userCustomMessage;
+    private String devServerURL;
+    private String qaServerURL;
+    private String gmailAuthURL;
     private Map<String, LoginVendor> vendors;
     private SSLSocketFactory sslSocketFactory;
 
@@ -53,6 +59,9 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
         keepOriginalToken = Boolean.parseBoolean(getStringProperty(KEEP_ORIGINAL_TOKEN, properties, "false"));
 
         userCustomMessage = getStringProperty(CUSTOM_MSG_CONFIG_PROPERTY, properties, null);
+        devServerURL = getStringProperty(DEVServer_URL_CONFIG_PROPERTY, properties, null);
+        qaServerURL = getStringProperty(UATServer_URL_CONFIG_PROPERTY, properties, null);
+        gmailAuthURL = getStringProperty(GMAILAUTH_URL_CONFIG_PROPERTY, properties, null);
 
         try {
             TrustManagerFactory factory = TrustManagerFactory.getInstance("PKIX");
@@ -96,6 +105,18 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
 
     public String getUserCustomMessage() {
         return userCustomMessage;
+    }
+
+    public String getDevServerURL() {
+        return devServerURL;
+    }
+
+    public String getQaServerURL() {
+        return qaServerURL;
+    }
+
+    public String getGmailAuthURL() {
+        return gmailAuthURL;
     }
 
     private void createVendors() {
