@@ -243,7 +243,7 @@ export class AttendanceViewPage {
   }
   applyFTP(){
 
-    if(this.dateRange !== undefined){
+    if(this.attendanceSingleDayData !== undefined){
       var value = moment(this.dateRange, "YYYY-MM-DD").format("YYYY-MM-DD").toString();
       var monthDifferCheck = moment().diff(moment(value, "YYYY-MM-DD"), 'months', true);
       if(monthDifferCheck < 0){
@@ -445,8 +445,13 @@ export class AttendanceViewPage {
   }
 
   getTimeValue(timeData){
-    timeData = timeData.toString().replace(/:/g, "");
-    return timeData;
+    var res = timeData.slice(0, 5);
+    return res;
+  }
+
+  getRequestString(string){
+    var res = string.slice(0, 2);
+    return res;
   }
   
 }

@@ -229,8 +229,13 @@ export class AllLeavesPage {
 
   calLeaveApplyValidation(){
     // if(this.mainService.internetConnectionCheck){
-      this.utilService.showLoader("Please wait...");
-    var leavetypeData = this.leaveType;
+      if(this.leaveFromTime === undefined || this.leaveFromDate === undefined){
+        this.utilService.showCustomPopup4Error(this.title, "Please select the From Date and Period", "FAILURE");
+      }else if(this.leaveToTime === undefined ||  this.leaveToDate === undefined){
+        this.utilService.showCustomPopup4Error(this.title, "Please select the To Date and Period", "FAILURE");
+      }else{
+        this.utilService.showLoader("Please wait...");
+        var leavetypeData = this.leaveType;
     if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ" || this.leaveToTime == "FQ" || this.leaveToTime == "LQ"){
       leavetypeData = "0011";
     }
@@ -298,6 +303,8 @@ export class AllLeavesPage {
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup4Error(this.title, error, "FAILURE");
       });
+      }
+    
     // }else{
     //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
     // }

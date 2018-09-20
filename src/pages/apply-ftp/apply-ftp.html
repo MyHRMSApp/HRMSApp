@@ -22,28 +22,28 @@
                 <ion-card [ngClass]="inPunch != '00:00:00'?'inCard':'outCard'" (click)="punchInTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>IN</P>
-                    <p [ngClass]="inPunch != '00:00:00'?'inTime':'outTime'">{{inPunch}}</p>
+                    <p [ngClass]="inPunch != '00:00:00'?'inTime':'outTime'">{{getRequestString(inPunch)}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6>
                 <ion-card [ngClass]="outPunch != '00:00:00'?'inCard':'outCard'" (click)="punchOutTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>OUT</P>
-                    <p [ngClass]="outPunch != '00:00:00'?'inTime':'outTime'">{{outPunch}}</p>
+                    <p [ngClass]="outPunch != '00:00:00'?'inTime':'outTime'">{{getRequestString(outPunch)}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6 *ngIf="employeeLevel == 'E'">
                 <ion-card [ngClass]="midInPunch != '00:00:00'?'inCard':'outCard'" (click)="midInTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>MID-IN</P>
-                    <p [ngClass]="midInPunch != '00:00:00'?'inTime':'outTime'">{{midInPunch}}</p>
+                    <p [ngClass]="midInPunch != '00:00:00'?'inTime':'outTime'">{{getRequestString(midInPunch)}}</p>
                 </ion-card>
               </ion-col>
               <ion-col col-6 *ngIf="employeeLevel == 'E'">
                 <ion-card [ngClass]="midOutPunch != '00:00:00'?'inCard':'outCard'" (click)="midOutTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>MID-OUT</P>
-                    <p [ngClass]="midOutPunch != '00:00:00'?'inTime':'outTime'">{{midOutPunch}}</p>
+                    <p [ngClass]="midOutPunch != '00:00:00'?'inTime':'outTime'">{{getRequestString(midOutPunch)}}</p>
                 </ion-card>
               </ion-col>
         </ion-row>
