@@ -215,7 +215,7 @@ export class AttendanceViewPage {
         this.utilService.showLoader("Please wait...");
       this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
         if(resultData){
-          if(resultData.status_code == 200){
+          if(resultData.status_code == 0){
             this.mainService.userLeaveBalanceListData = resultData.data;
             console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
             this.utilService.dismissLoader();
@@ -271,7 +271,7 @@ export class AttendanceViewPage {
           }
         this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               this.mainService.attanancePageData = resultData.data;
               this.mainService.attendanceNA1_Data = resultData.data;
               this.mainService.attendanceNA1_DataFlag = false;
@@ -313,7 +313,7 @@ export class AttendanceViewPage {
           }
         this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               this.mainService.attanancePageData = resultData.data;
               this.mainService.attendanceNA2_Data = resultData.data;
               this.mainService.attendanceNA2_DataFlag = false;
@@ -356,7 +356,7 @@ export class AttendanceViewPage {
           }
         this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               this.mainService.attanancePageData = resultData.data;
               this.mainService.attendanceN_NP1_Data = resultData.data;
               this.mainService.attendanceN_NP1_DataFlag = false;
@@ -400,7 +400,7 @@ export class AttendanceViewPage {
           }
         this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               this.mainService.attanancePageData = resultData.data;
               this.mainService.attendanceNP2_Data = resultData.data;
               this.mainService.attendanceNP2_DataFlag = false;
@@ -442,6 +442,11 @@ export class AttendanceViewPage {
   ionViewCanEnter() {
     this.dateRange = moment().format("YYYY-MM-DD");
     this.loadCalendarView();
+  }
+
+  getTimeValue(timeData){
+    timeData = timeData.toString().replace(/:/g, "");
+    return timeData;
   }
   
 }

@@ -257,7 +257,7 @@ export class MyTasksPage {
       this.utilService.showLoader("Please wait...");
       this.service.invokeAdapterCall('commonAdapterServices', 'applyRejectTaskRequest', 'post', {payload : true, length:1, payloadData: {approvedRejectList : payloadData}}).then((resultData:any)=>{
         if(resultData){
-          if(resultData.status_code == 200){
+          if(resultData.status_code == 0){
             if(resultData.data.ET_DATA.FLAG == "E"){
               this.utilService.dismissLoader();
               this.selectAll();

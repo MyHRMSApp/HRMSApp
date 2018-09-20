@@ -66,7 +66,7 @@ export class ApplyLeavePage {
           this.utilService.showLoader("Please wait...");
         this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveEncashBalance', 'get', {payload : false}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               this.mainServices.leaveEncashData = resultData.data;
               console.log(JSON.stringify(this.mainServices.userLeaveBalanceListData));
               this.utilService.dismissLoader();

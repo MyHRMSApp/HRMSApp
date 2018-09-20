@@ -154,6 +154,7 @@ export class AllLeavesPage {
           this.leaveFromDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
           this.leaveToDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
           this.leaveFromTime = data.leaveFromTime;
+          this.leaveToTime = data.leaveFromTime;
           this.fromDateFlag = true;
           this.toDateFlag = true;
           switch (this.leaveFromTime) {
@@ -195,7 +196,7 @@ export class AllLeavesPage {
         console.log(data);
         if(data !== undefined && data.leaveToDate !== undefined && data.leaveToTime !== undefined){
           this.leaveToDate = moment(data.leaveToDate).format("DD-MM-YYYY");
-          this.leaveToTime = moment(data.leaveToDate).format("DD-MM-YYYY");
+          this.leaveToTime = data.leaveToTime;
           this.toDateFlag = true;
           switch (this.leaveToTime) {
             case "FD":
@@ -243,7 +244,7 @@ export class AllLeavesPage {
     };
       this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: payloadData}).then((resultData:any)=>{
         if(resultData){
-          if(resultData.status_code == 200){
+          if(resultData.status_code == 0){
             this.utilService.dismissLoader();
             console.log(JSON.stringify(resultData.data));
             if(resultData.data.ET_VBAL.FLAG == "S"){
@@ -336,7 +337,7 @@ export class AllLeavesPage {
         this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
               console.log(JSON.stringify(resultData.data));
-              if(resultData.status_code == 200){
+              if(resultData.status_code == 0){
                this.utilService.dismissLoader();
                console.log(JSON.stringify(resultData.data));
                if(resultData.data.EP_REASON.TYPE == "S"){

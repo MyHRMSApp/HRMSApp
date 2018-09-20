@@ -69,83 +69,80 @@ public class UserManager {
     private static final String SAP_USERNAME = "HCM_SERV_USR";
     private static final String SAP_PASSWORD = "HCM_SERV_USR@123";
     private static final String USER_AUTH_CONTEXT_PATH = "UserAuthentication";
-    private static final String GET_USERAUTH_URL = "https://pirqa.titan.co.in:50401/RESTAdapter/";
-    private static final String GET_GMAIL_URL = "https://script.google.com/macros/s/AKfycbz8ORIE4cyT3TJ9drTSIOoA-EyQdoBSq2wmz-M6ttuPMcx_hvY/exec?email=";
+    private static final String AUTH_SCOPE_URL = "pirqa.titan.co.in";
+	private static final int AUTH_SCOPE_PORT = 50401;
+	private static final int TIMEOUT_MILLIS = 30000;
     JSONObject jsonObject = new JSONObject();
-    
-    public JSONObject getUser(String IP_EMPID, String IP_PASSWORD) throws Exception{
-        // JSONObject jsonObject = new JSONObject();
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-        StringEntity params =new StringEntity("{\"IP_EMPID\":\""+IP_EMPID+"\",\"IP_PASSWORD\":\""+IP_PASSWORD+"\"}");
-        LOGGER.log(Level.INFO,"\n SAP Request Sending from MFP Adapter : \n"+ params+"\n");
-        credsProvider.setCredentials(
-                new AuthScope("pirqa.titan.co.in", 50401),
-                new UsernamePasswordCredentials(SAP_USERNAME, SAP_PASSWORD));
-        CloseableHttpClient httpclient = HttpClients.custom()
-                .setDefaultCredentialsProvider(credsProvider)
-                .build();
-        try {
-            // System.out.println("------>>>"+ configurationAPI.getPropertyValue("maxAttempts"));
-            HttpPost httpPost = new HttpPost(GET_USERAUTH_URL+USER_AUTH_CONTEXT_PATH);
-            httpPost.addHeader("User-Agent", "Mozilla/5.0");
-            httpPost.setEntity(params);
+
+       public JSONObject getUserDetials(String IP_EMPID, String IP_PASSWORD, String EMP_MAILID, String REQ_URL, Boolean FLAG) throws Exception{
+              System.out.println(IP_EMPID+"--"+IP_PASSWORD+"--"+EMP_MAILID+"--"+REQ_URL+USER_AUTH_CONTEXT_PATH+"--"+FLAG);
+            if(FLAG){
+                CredentialsProvider credsProvider = new BasicCredentialsProvider();
+                StringEntity params =new StringEntity("{\"IP_EMPID\":\""+IP_EMPID+"\",\"IP_PASSWORD\":\""+IP_PASSWORD+"\"}");
+                LOGGER.log(Level.INFO,"\n SAP Request Sending from MFP Adapter : \n"+ params+"\n");
+                credsProvider.setCredentials(
+                        new AuthScope(AUTH_SCOPE_URL, AUTH_SCOPE_PORT),
+                        new UsernamePasswordCredentials(SAP_USERNAME, SAP_PASSWORD));
+                CloseableHttpClient httpclient = HttpClients.custom()
+                        .setDefaultCredentialsProvider(credsProvider)
+                        .build();
+                try {
+                    HttpPost httpPost = new HttpPost(REQ_URL+USER_AUTH_CONTEXT_PATH);
+                    httpPost.addHeader("User-Agent", "Mozilla/5.0");
+                    httpPost.setEntity(params);
+                    
+                    ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+        
+                        @Override
+                        public String handleResponse(
+                                final HttpResponse response) throws ClientProtocolException, IOException {
+                            int status = response.getStatusLine().getStatusCode();
+                            if (status >= 200 && status < 300) {
+                                HttpEntity entity = response.getEntity();
+                                return entity != null ? EntityUtils.toString(entity) : null;
+                            } else {
+                                jsonObject.put("EP_RESULT", 1234510);
+                                throw new ClientProtocolException("Unexpected response status: " + status);
+                            }
+                        }
             
-            ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-   
-                @Override
-                public String handleResponse(
-                        final HttpResponse response) throws ClientProtocolException, IOException {
-                    int status = response.getStatusLine().getStatusCode();
-                    if (status >= 200 && status < 300) {
-                        HttpEntity entity = response.getEntity();
-                        return entity != null ? EntityUtils.toString(entity) : null;
-                    } else {
-                        jsonObject.put("EP_RESULT", 1234510);
-                        throw new ClientProtocolException("Unexpected response status: " + status);
-                    }
+                    };
+                    String responseBody = httpclient.execute(httpPost, responseHandler);
+                    jsonObject = new JSONObject(responseBody);
+                    LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
+
+                } finally {
+                    httpclient.close();
                 }
-    
-            };
-            String responseBody = httpclient.execute(httpPost, responseHandler);
-            jsonObject = new JSONObject(responseBody);
-            LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
 
-         } finally {
-            httpclient.close();
-        }
-
-        return jsonObject;
-       }
-
-    public JSONObject getEmployeeNumber(String EMP_MAILID) throws Exception{
-        // Create an instance of HttpClient.
-        // JSONObject response = new JSONObject();
-
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        try {
-           HttpGet httpget = new HttpGet(GET_GMAIL_URL+EMP_MAILID); 
-           LOGGER.log(Level.INFO,"\n SAP Request Sending from MFP Adapter : \n"+ GET_GMAIL_URL+EMP_MAILID+"\n");
-           ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-   
-               @Override
-               public String handleResponse(
-                       final HttpResponse response) throws ClientProtocolException, IOException {
-                   int status = response.getStatusLine().getStatusCode();
-                   if (status >= 200 && status < 300) {
-                       HttpEntity entity = response.getEntity();
-                       return entity != null ? EntityUtils.toString(entity) : null;
-                   } else {
-                       throw new ClientProtocolException("Unexpected response status: " + status);
-                   }
-               }
-   
-           };
-           String responseBody = httpclient.execute(httpget, responseHandler);
-           jsonObject = new JSONObject(responseBody);
-           LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
-        }finally {
-           httpclient.close();
-        } 
-        return jsonObject;
+                return jsonObject;
+            }else{
+                CloseableHttpClient httpclient = HttpClients.createDefault();
+                try {
+                HttpGet httpget = new HttpGet(REQ_URL+EMP_MAILID); 
+                LOGGER.log(Level.INFO,"\n SAP Request Sending from MFP Adapter : \n"+ REQ_URL+EMP_MAILID+"\n");
+                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+        
+                    @Override
+                    public String handleResponse(
+                            final HttpResponse response) throws ClientProtocolException, IOException {
+                        int status = response.getStatusLine().getStatusCode();
+                        if (status >= 200 && status < 300) {
+                            HttpEntity entity = response.getEntity();
+                            return entity != null ? EntityUtils.toString(entity) : null;
+                        } else {
+                            throw new ClientProtocolException("Unexpected response status: " + status);
+                        }
+                    }
+        
+                };
+                String responseBody = httpclient.execute(httpget, responseHandler);
+                jsonObject = new JSONObject(responseBody);
+                LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
+                }finally {
+                httpclient.close();
+                } 
+                return jsonObject;
+            }
        }
 }

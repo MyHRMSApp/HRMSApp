@@ -148,7 +148,7 @@ export class ApplyFtpPage {
         this.utilService.showLoader("Please wait...");
         this.service.invokeAdapterCall('commonAdapterServices', 'applyFTPRequest', 'post', {payload : true, length:10, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               if(resultData.data.ET_DATA.item.TYPE == "E"){
                 this.utilService.dismissLoader();
                 this.utilService.showCustomPopup4Error("Apply FTP", resultData.data.ET_DATA.item.MESSAGE, "FAILURE");

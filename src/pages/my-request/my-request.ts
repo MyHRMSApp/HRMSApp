@@ -168,7 +168,7 @@ export class MyRequestPage {
         console.log(payloadData);
         this.service.invokeAdapterCall('commonAdapterServices', 'applyCancelandDeleteRequest', 'post', {payload : true, length:4, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
-            if(resultData.status_code == 200){
+            if(resultData.status_code == 0){
               if(resultData.data.FLAG == "E"){
                 this.utilService.dismissLoader();
                 this.utilService.showCustomPopup4Error("My Request", resultData.data.REASON, "FAILURE");

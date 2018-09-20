@@ -41,7 +41,7 @@
         <pre><p style="text-align: center; color: #fff;"><span>Eligible     :     </span><span>{{encashmentEP_NDAY}} days</span></p></pre>
       </ion-col>
       <ion-col col-12 class="applybtn">
-          <pre><span>   Apply     :     <ion-input [(ngModel)]="applyEncashDays" style="color: #000;"></ion-input>   Days</span></pre>
+          <pre><span>   Apply     :     <ion-input [(ngModel)]="applyEncashDays" [ngClass]="{'disableBtn': applyBtnFlag === true}" style="color: #000;"></ion-input>   Days</span></pre>
       </ion-col>
     </ion-row>
     </ion-card>
