@@ -154,6 +154,7 @@ export class AllLeavesPage {
           this.leaveFromDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
           this.leaveToDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
           this.leaveFromTime = data.leaveFromTime;
+          this.leaveToTime = data.leaveFromTime;
           this.fromDateFlag = true;
           this.toDateFlag = true;
           switch (this.leaveFromTime) {
@@ -195,7 +196,7 @@ export class AllLeavesPage {
         console.log(data);
         if(data !== undefined && data.leaveToDate !== undefined && data.leaveToTime !== undefined){
           this.leaveToDate = moment(data.leaveToDate).format("DD-MM-YYYY");
-          this.leaveToTime = moment(data.leaveToDate).format("DD-MM-YYYY");
+          this.leaveToTime = data.leaveToTime;
           this.toDateFlag = true;
           switch (this.leaveToTime) {
             case "FD":

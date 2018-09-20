@@ -40,36 +40,39 @@ export class CustomCalendarModelPage {
     this.dateRange = (this.navParams.get('selectedDate') !== undefined)?new Date(moment(this.navParams.get('selectedDate').toString(), "DD-MM-YYYY").format("YYYY, MM, DD").toString()):new Date(moment().format("YYYY, MM, DD").toString());
     this.leaveFromDate = this.dateRange;
     this.leaveToDate = this.dateRange;
+    if(this.calendarFor == "from"){
+
+    }
     if(this.calendarFor == "to"){
       this.leaveFromDate = this.navParams.get('leaveFromDate');
       this.leaveFromTime = this.navParams.get('leaveFromTime');
 
-      this.quarterFlag = true;
-      this.fulldayFlag = true;
-      this.firstHalfFlag = true;
-      this.secHalfFlag = true;
+      // this.quarterFlag = true;
+      // this.fulldayFlag = true;
+      // this.firstHalfFlag = true;
+      // this.secHalfFlag = true;
 
-      // if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ"){
-      //     this.quarterFlag = false;
-      //     this.fulldayFlag = true;
-      //     this.firstHalfFlag = true;
-      //     this.secHalfFlag = true;
-      // }else if(this.leaveFromTime == "FD"){
-      //   this.quarterFlag = true;
-      //   this.fulldayFlag = false;
-      //   this.firstHalfFlag = false;
-      //   this.secHalfFlag = true;
-      // }else if(this.leaveFromTime == "FH"){
-      //   this.quarterFlag = true;
-      //   this.fulldayFlag = true;
-      //   this.firstHalfFlag = false;
-      //   this.secHalfFlag = true;
-      // }else if(this.leaveFromTime == "SH"){
-      //   this.quarterFlag = true;
-      //   this.fulldayFlag = false;
-      //   this.firstHalfFlag = false;
-      //   this.secHalfFlag = false;
-      // }
+      if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ"){
+          this.quarterFlag = false;
+          this.fulldayFlag = true;
+          this.firstHalfFlag = true;
+          this.secHalfFlag = true;
+      }else if(this.leaveFromTime == "FD"){
+        this.quarterFlag = true;
+        this.fulldayFlag = false;
+        this.firstHalfFlag = false;
+        this.secHalfFlag = true;
+      }else if(this.leaveFromTime == "FH"){
+        this.quarterFlag = true;
+        this.fulldayFlag = true;
+        this.firstHalfFlag = false;
+        this.secHalfFlag = true;
+      }else if(this.leaveFromTime == "SH"){
+        this.quarterFlag = true;
+        this.fulldayFlag = false;
+        this.firstHalfFlag = false;
+        this.secHalfFlag = false;
+      }
     }
     if(this.navParams.get('quarterWiseSelectionFlag') == "false"){
       this.quarterWiseSelectionFlag = false;

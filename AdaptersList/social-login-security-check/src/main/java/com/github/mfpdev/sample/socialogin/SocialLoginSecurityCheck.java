@@ -154,11 +154,14 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                                 this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                                 return true;
                                             }else if(jsonObject.getInt("EP_RESULT") == 1234510){
-                                                errorMsg = "Internal Server Error, Please try again..";
+                                                errorMsg = "Internal Server Error, Please try again";
+                                                return false;
+                                            }else{
+                                                errorMsg = "Please try with valid Titan Mail ID";
                                                 return false;
                                             }
                                         }else if(employeeNO.getInt("EmpCode") != 00){
-                                            errorMsg = "Login process getting error, Please try again..";
+                                            errorMsg = "Login process getting error, Please try again";
                                             return false;
                                         }
                                         else{

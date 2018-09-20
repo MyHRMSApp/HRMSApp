@@ -443,5 +443,10 @@ export class AttendanceViewPage {
     this.dateRange = moment().format("YYYY-MM-DD");
     this.loadCalendarView();
   }
+
+  getTimeValue(timeData){
+    timeData = timeData.toString().replace(/:/g, "");
+    return timeData;
+  }
   
 }

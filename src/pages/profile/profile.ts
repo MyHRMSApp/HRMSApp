@@ -61,7 +61,7 @@ export class ProfilePage {
             this.profileDetails = resultData.data.ET_DATA;
             setTimeout(() => {
               this.utilService.dismissLoader();
-            }, 1000);
+            }, 2000);
           }else{
             this.utilService.dismissLoader();
             this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
