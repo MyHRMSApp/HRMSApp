@@ -32,6 +32,27 @@ page-need-help {
             padding: 0px !important;
 
         }
+
+        ion-row {
+            background-color: #265865 !important;
+            border-bottom: 2px solid #0d4655;
+        }
+
+        p {
+            color: white !important;
+        }
+
+        span {
+            color: white !important;
+        }
+
+        a{
+            color: yellow !important;
+        }
+
+        [col-12] {
+            padding: 16px !important;
+        }
     }
 
 }

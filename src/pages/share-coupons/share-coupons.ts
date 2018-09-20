@@ -28,6 +28,9 @@ export class ShareCouponsPage {
   shareData: {};
   str: string;
   shareIcon: boolean = false;
+  userInformation: any;
+  employeeName: any;
+  employeeCode: any;
 
   constructor(public menu: MenuController, public events: Events, public actionSheetCtrl: ActionSheetController,
     private toast: ToastController, private network: Network, public loadingCtrl: LoadingController, public platform: Platform,
@@ -39,6 +42,11 @@ export class ShareCouponsPage {
     this.specificCoupons = this.navParams.get("coupons");
     this.couponCounts = this.navParams.get("length");
     console.log(this.specificCoupons);
+
+    this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
+    this.employeeName = this.userInformation.EP_ENAME;
+    this.employeeCode = this.userInformation.EP_PERNR;
+    console.log(this.employeeName, this.employeeCode);
   }
 
   ionViewDidLoad() {
@@ -64,7 +72,7 @@ export class ShareCouponsPage {
   }
   gmail() {
     var msg = this.str;
-    this.socialSharing.shareVia("com.google.android.gm", msg, null, null);
+    this.socialSharing.shareVia("com.google.android.gm", msg, "TITAN DISCOUNT COUPONS", null);
   }
   whatsapp() {
     var msg = this.str;
@@ -86,23 +94,22 @@ export class ShareCouponsPage {
       console.log("Checked == true");
       this.ref.detectChanges();
       data = {
-        Category: "Jewellery",
-        Type: "Special",
+        Category: data.CCTGRY,
+        Type: data.CTYP,
         Coupon_Number: data.DCOUPN,
-        Employee_Number: "EP00432123",
       }
       this.selectedCoupons.push(data);
       console.log(this.selectedCoupons.length);
       this.str = '';
-      this.str += "Hello!" + "\n" + "Details for discount are as below:";
+      this.str += "Hi," + "\n" + "Details for discount are as below:";
       for (let i = 0; i < this.selectedCoupons.length; i++) {
-        this.str += "\n" + "Category:" + "Jewellery" + "\n" + "Type:" + "Special" + "\n" + "Code:" + this.selectedCoupons[i].Coupon_Number + "\n" + "Emp Code" + "E417574";
+        this.str += "\n" + "\n" + "Category:" + this.selectedCoupons[i].Category + "\n" + "Type:" + this.selectedCoupons[i].Type + "\n" + "Code:" + this.selectedCoupons[i].Coupon_Number;
         console.log(this.str);
       }
-      this.str += "\n" + "\n" + "Regards," + "\n" + "TITAN";
+      this.str += "\n" + "\n" + "Emp Code:" + this.employeeCode + "\n" + "\n" + "Regards," + "\n" + this.employeeName;
     } else {
       this.str = '';
-      this.str += "Hurry!" + "\n" + "Your friend has shared you the Coupon of Tanishq Summer Offer," + "\n" + "Employee Number:" + "25842500";
+      this.str += "Hi," + "\n" + "Details for discount are as below:";
       let uncheckedCoupon = data.DCOUPN;
       console.log("Checked == false", uncheckedCoupon);
       this.ref.detectChanges();
@@ -121,7 +128,7 @@ export class ShareCouponsPage {
         this.str += "\n" + "Coupon Number:" + this.selectedCoupons[i].Coupon_Number;
         console.log(this.str);
       }
-        this.str += "\n" + "\n" + "Regards," + "\n" + "TITAN";
+        this.str += "\n" + "\n" + "Regards," + "\n" + this.employeeName;
     }
 
   }

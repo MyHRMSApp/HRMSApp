@@ -131,7 +131,6 @@ attendanceDataFetch(){
         }else{
           this.utilService.showPopup("Attendance", resultData.message);
         }
-  
       };
     }, (error)=>{
       console.log("Data readed from jsonstore error",error);
@@ -152,7 +151,7 @@ routerOnDeactivate() {
   */
 coupons() {
   // if(this.mainService.internetConnectionCheck){
-    this.utilService.showLoader("Loading Coupons");
+    this.utilService.showLoader("Please wait...");
     this.service.invokeAdapterCall('commonAdapterServices', 'getCouponsList', 'get', {payload : false}).then((resultData:any)=>{
       if(resultData) {
         if(resultData.status_code == 200){

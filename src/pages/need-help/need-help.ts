@@ -30,6 +30,54 @@ export class NeedHelpPage {
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
   }
 
+  /*Acordion function for SAP*/ 
+  shownGroupSap = null;
+  toggleSap(group) {
+    this.shownGroupGmail = null;
+    this.shownGroupOthers = null;
+    if (this.isGroupSap(group)) {
+        this.shownGroupSap = null;
+    } else {
+        this.shownGroupSap = group;
+    }
+    this.ref.detectChanges();
+  };
+  isGroupSap(group) {
+    return this.shownGroupSap === group;
+  };
+
+  /*Acordion function for GMAIL*/ 
+  shownGroupGmail = null;
+  toggleGmail(group) {
+    this.shownGroupSap = null;
+    this.shownGroupOthers = null;
+    if (this.isGroupGmail(group)) {
+        this.shownGroupGmail = null;
+    } else {
+        this.shownGroupGmail = group;
+    }
+    this.ref.detectChanges();
+  };
+  isGroupGmail(group) {
+    return this.shownGroupGmail === group;
+  };
+
+  /*Acordion function for Others*/ 
+  shownGroupOthers = null;
+toggleOthers(group) {
+  this.shownGroupGmail = null;
+  this.shownGroupSap = null;
+  if (this.isGroupOthers(group)) {
+      this.shownGroupOthers = null;
+  } else {
+      this.shownGroupOthers = group;
+  }
+  this.ref.detectChanges();
+};
+isGroupOthers(group) {
+  return this.shownGroupOthers === group;
+};
+
   // openMenu() {
   //   this.menu.toggle();
   // }

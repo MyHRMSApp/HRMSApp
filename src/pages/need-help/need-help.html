@@ -10,6 +10,43 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding no-bounce>
+
+    <ion-grid>
+        <ion-row text-wrap (click)="toggleSap()" [ngClass]="{active: isGroupSap()}">
+            <ion-col col-11><p>MY COMPASS LOGIN CREDENTIALS</p></ion-col>
+            <ion-col col-1><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
+        </ion-row>
+
+        <ion-row style="background-color: #457c8a !important;" *ngIf="isGroupSap()">
+            <ion-col col-12>
+              <span>To reset MyCompass password, please check in mycompass portal page.
+                  For any clarifications contact MyHR team at <a href="mailto:hrhelp@titan.co.in">hrhelp@titan.co.in</a></span>
+            </ion-col>
+        </ion-row>
+
+        <ion-row text-wrap (click)="toggleGmail()" [ngClass]="{active: isGroupGmail()}">
+            <ion-col col-11><p>GMAIL LOGIN CREDENTIALS</p></ion-col>
+            <ion-col col-1><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
+        </ion-row>
+
+        <ion-row style="background-color: #457c8a !important;" *ngIf="isGroupGmail()">
+            <ion-col col-12>
+              <span> Please contact <a href="mailto:pts@titan.co.in">pts@titan.co.in</a> for titan Gmail login related queries.</span>
+            </ion-col>
+        </ion-row>
+
+        <ion-row text-wrap (click)="toggleOthers()" [ngClass]="{active: isGroupOthers()}">
+            <ion-col col-11><p>APP RELATED SUPPORT</p></ion-col>
+            <ion-col col-1><p class="right"><ion-icon name="ios-arrow-down"></ion-icon></p></ion-col>
+        </ion-row>
+
+        <ion-row style="background-color: #457c8a !important;" *ngIf="isGroupOthers()">
+            <ion-col col-12>
+              <span> Please reach us at <a href="mailto:tclmob@titan.co.in">tclmob@titan.co.in</a></span>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
 
 </ion-content>
