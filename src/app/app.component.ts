@@ -18,7 +18,7 @@ declare var document:any;
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = "LoginPage";
+  
 
   pages: Array<{title: string, component: any}>;
   jsondata: any;
@@ -42,6 +42,7 @@ export class MyApp {
   public myTaskData:any;
   public internetConnectionCheck:boolean = (this.network.type=="none")?false:true;
   public selectedDateDataFromAttendance:any;
+  rootPage: any;
   constructor(public platform: Platform,
     public statusBar: StatusBar, public network: Network,
     public render:Renderer,
@@ -51,6 +52,13 @@ export class MyApp {
     public splashScreen: SplashScreen, public utilService: UtilsProvider, 
     public networkProvider: NetworkProvider, public events: Events) {
     this.initializeApp();
+    let rootLocation = localStorage.getItem("rootPage");
+    if(rootLocation == "true"){
+        this.rootPage = "HomePage";
+    }
+    else{
+      this.rootPage = "LoginPage";
+    }
   }
 
   initializeApp() {
@@ -65,7 +73,6 @@ export class MyApp {
       // this.network.onConnect().subscribe(() => {
       //   this.internetConnectionCheck = (this.network.type=="none")?false:true;
       // });
-    
       this.splashScreen.hide();
     });
 

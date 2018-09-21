@@ -35,5 +35,8 @@ export class HrHelplinePage {
   back(){
     this.navCtrl.pop();
   }
+  home() {
+    this.navCtrl.setRoot("HomePage");
+  }
 
 }

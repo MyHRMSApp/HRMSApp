@@ -221,6 +221,10 @@ export class MyRequestPage {
     this.navCtrl.pop();
   }
 
+  home() {
+    this.navCtrl.setRoot("HomePage");
+  }
+
   ionViewCanEnter() {
     
     if(this.mainService.myRequestData.ET_LEAVE !== ""){

@@ -57,6 +57,7 @@ export class AllLeavesPage {
     this.hamburger = ("./assets/homePageIcons/hamburger.svg");
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
     console.log('ionViewDidLoad AllLeavesPage');
+    
     if(this.mainService.selectedDateDataFromAttendance.LDATE !== undefined && this.mainService.selectedDateDataFromAttendance.cssClass !== undefined){
       this.leaveFromDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY");
     this.leaveToDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY");

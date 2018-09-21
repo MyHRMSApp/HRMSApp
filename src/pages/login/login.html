@@ -23,7 +23,7 @@
             <ion-col class="rememberMeCol" col-8>
               <ion-item class="rememberMeItem">
                 <ion-label>Remember me</ion-label>
-                <ion-checkbox (click)="rememberMe()" [(ngModel)]="remember"></ion-checkbox>
+                <ion-checkbox checked="false" (ionChange)="rememberMe($event)" [(ngModel)]="remember"></ion-checkbox>
               </ion-item>
             </ion-col>
             <ion-col (click)="help()" class="needHelp" col-4>

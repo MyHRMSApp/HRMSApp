@@ -44,6 +44,8 @@ export class LoginPage {
     public render: Renderer, public mainService: MyApp, public menu: MenuController, public ref:ChangeDetectorRef,
     public networkProvider: NetworkProvider  ) {
     
+    localStorage.setItem("rememberMe", "disabled");
+    
     this.menu.swipeEnable(false);
     this.form = new FormGroup({
       // username: new FormControl("E1596739", Validators.required),
@@ -75,10 +77,8 @@ export class LoginPage {
       if(error.remainingAttempts !== undefined && error.remainingAttempts != 3){
         if(error.errorMsg !== undefined && error.errorMsg !== null){
           this.utilService.showCustomPopup("FAILURE", error.errorMsg);
-        }
-        
+        }  
       }
-
     }); 
 
     console.log("internetConnectionCheck-->>"+this.mainService.internetConnectionCheck);
@@ -88,8 +88,14 @@ export class LoginPage {
     this.navCtrl.setRoot("HomePage");
   }
   
-  rememberMe() {
-    this.remember = true;
+  rememberMe(e:any) {
+    console.log("remember", e.checked);
+    if(e.checked == true) {
+      localStorage.setItem("rememberMe", "enabled");
+    }
+    else {
+      localStorage.setItem("rememberMe", "disabled");
+    }
     this.ref.detectChanges();
   }
 

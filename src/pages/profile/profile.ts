@@ -50,6 +50,9 @@ export class ProfilePage {
   back(){
     this.navCtrl.pop();
   }
+  home() {
+    this.navCtrl.setRoot("HomePage");
+  }
 
   ionViewCanEnter(){
     // if(this.mainService.internetConnectionCheck){

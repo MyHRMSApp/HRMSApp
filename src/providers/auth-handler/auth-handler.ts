@@ -21,7 +21,7 @@ export class AuthHandlerProvider {
   }
 
   // init() {
-  //   console.log('--> userAuthInit'); 
+  //   console.log('--> userAuthInit');
   //   if (this.initialized) {
   //     return;
   //   }
@@ -101,6 +101,7 @@ export class AuthHandlerProvider {
       (accessToken) => {
         console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
         this.loginSuccessCallback(accessToken);
+        localStorage.setItem("rootPage", "true");
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
@@ -146,6 +147,7 @@ export class AuthHandlerProvider {
     .then(
       (success) => {
         console.log('--> AuthHandler: logout success');
+        localStorage.setItem("rootPage", "false");
         resolve(true);
       },
       (failure) => {

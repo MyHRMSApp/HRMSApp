@@ -79,6 +79,10 @@ back(){
   this.navCtrl.pop();
 }
 
+home() {
+  this.navCtrl.setRoot("HomePage");
+}
+
 watch() {
   if(this.eyeWearCounts == 0){
     this.utilService.showCustomPopup("FAILURE", "No coupons available");
