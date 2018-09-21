@@ -52,13 +52,13 @@ export class MyApp {
     public splashScreen: SplashScreen, public utilService: UtilsProvider, 
     public networkProvider: NetworkProvider, public events: Events) {
     this.initializeApp();
-    let rootLocation = localStorage.getItem("rootPage");
-    if(rootLocation == "true"){
-        this.rootPage = "HomePage";
-    }
-    else{
+    // let rootLocation = localStorage.getItem("rootPage");
+    // if(rootLocation == "true"){
+    //     this.rootPage = "HomePage";
+    // }
+    // else{
       this.rootPage = "LoginPage";
-    }
+    // }
   }
 
   initializeApp() {
