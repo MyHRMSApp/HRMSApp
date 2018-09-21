@@ -146,7 +146,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                         JSONObject employeeNO = (JSONObject) userManager.getUserDetials("", "", gmailID, this.getConfiguration().getGmailAuthURL(), false);
                                         if(employeeNO.getInt("EmpCode") != 0){
                                             empCode = Integer.toString(employeeNO.getInt("EmpCode"));
-                                            jsonObject = (JSONObject) userManager.getUserDetials("Gmail", "E0477072", "", this.getConfiguration().getQaServerURL(), true);
+                                            jsonObject = (JSONObject) userManager.getUserDetials("Gmail", empCode, "", this.getConfiguration().getQaServerURL(), true);
                                             if(jsonObject.getInt("EP_RESULT") == 0){
                                                 userId = jsonObject.getString("EP_ENAME");
                                                 displayName = jsonObject.toString();

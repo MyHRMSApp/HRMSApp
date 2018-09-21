@@ -120,14 +120,16 @@ export class ApplyFtpPage {
 
   callApplyFTPFunction(){
 
-    if(this.inPunch === undefined || this.inPunch == "00:00"){
+    if(this.inPunch === undefined || this.inPunch == "00:00:00"){
       this.utilService.showCustomPopup4Error("Apply FTP","Please select proper In Punch", "FAILURE");
-    }else if(this.outPunch === undefined || this.outPunch == "00:00"){
+    }else if(this.outPunch === undefined || this.outPunch == "00:00:00"){
       this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Out Punch", "FAILURE");
-    }else if(this.midInPunch === undefined || this.midInPunch == "00:00"){
+    }else if(this.employeeLevel == "E" && this.midInPunch === undefined || this.employeeLevel == "E" && this.midInPunch == "00:00:00"){
       this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Mid In Punch", "FAILURE");
-    }else if(this.midOutPunch === undefined || this.midOutPunch == "00:00"){
+    }else if(this.employeeLevel == "E" &&  this.midOutPunch === undefined || this.employeeLevel == "E" && this.midOutPunch == "00:00:00"){
       this.utilService.showCustomPopup4Error("Apply FTP","Please select proper Mid Out Punch", "FAILURE");
+    }else if(this.requestTypeSelection === undefined){
+      this.utilService.showCustomPopup4Error("Apply FTP","Please select Request Type", "FAILURE");
     }else{
 
       var payloadData = {
@@ -188,12 +190,11 @@ export class ApplyFtpPage {
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
       // }
-    
-
     }
-
-    
-
   }
 
+  getRequestString(string){
+    var res = string.slice(0, 5);
+    return res;
+  }
 }
