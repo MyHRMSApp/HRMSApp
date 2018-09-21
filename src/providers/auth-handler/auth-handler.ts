@@ -96,12 +96,13 @@ export class AuthHandlerProvider {
   checkIsLoggedIn() {
     this.utilService.showLoader("Please Wait...");
     console.log('--> AuthHandler checkIsLoggedIn called');
+
     WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
     .then(
       (accessToken) => {
         console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
         this.loginSuccessCallback(accessToken);
-        localStorage.setItem("rootPage", "true");
+        //localStorage.setItem("rootPage", "true");
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
@@ -147,7 +148,6 @@ export class AuthHandlerProvider {
     .then(
       (success) => {
         console.log('--> AuthHandler: logout success');
-        localStorage.setItem("rootPage", "false");
         resolve(true);
       },
       (failure) => {

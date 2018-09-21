@@ -61,31 +61,31 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider, public ref: ChangeDetectorRef,
-    public authHandler: AuthHandlerProvider,) {
+    public authHandler: AuthHandlerProvider) {
 
-    this.authHandler.setLoginFailureCallback((error) => {
-      this.utilService.dismissLoader();
-      if(error.status == 403 && error.statusText == "Forbidden"){
-        this.utilService.showCustomPopup("FAILURE", "Your account is Locked, Please try again after 60 Sec");
-      }else if(error.errorMsg !== undefined && error.errorMsg !== null){
-        this.utilService.showCustomPopup("FAILURE", error.errorMsg);
-      } 
-    });
+    // this.authHandler.setLoginFailureCallback((error) => {
+    //   this.utilService.dismissLoader();
+    //   if(error.status == 403 && error.statusText == "Forbidden"){
+    //     this.utilService.showCustomPopup("FAILURE", "Your account is Locked, Please try again after 60 Sec");
+    //   }else if(error.errorMsg !== undefined && error.errorMsg !== null){
+    //     this.utilService.showCustomPopup("FAILURE", error.errorMsg);
+    //   } 
+    // });
 
-    this.authHandler.setLoginSuccessCallback(() => {
-      this.utilService.dismissLoader();
-    });
+    // this.authHandler.setLoginSuccessCallback(() => {
+    //   this.utilService.dismissLoader();
+    // });
 
-    this.authHandler.setHandleChallengeCallback((error) => {
-    this.utilService.dismissLoader();
-    this.navCtrl.setRoot("LoginPage");
-    //this.utilService.showCustomPopup("FAILURE", "Your session is expired. Please login again.");
-    if(error.remainingAttempts !== undefined && error.remainingAttempts != 3){
-      if(error.errorMsg !== undefined && error.errorMsg !== null){
-        this.utilService.showCustomPopup("FAILURE", error.errorMsg);
-      }  
-    }
-    }); 
+    // this.authHandler.setHandleChallengeCallback((error) => {
+    // this.utilService.dismissLoader();
+    // this.navCtrl.setRoot("LoginPage");
+    // //this.utilService.showCustomPopup("FAILURE", "Your session is expired. Please login again.");
+    // if(error.remainingAttempts !== undefined && error.remainingAttempts != 3){
+    //   if(error.errorMsg !== undefined && error.errorMsg !== null){
+    //     this.utilService.showCustomPopup("FAILURE", error.errorMsg);
+    //   }  
+    // }
+    // }); 
 
     this.menu.swipeEnable(false);
     this.eyeWearCounts = [];
