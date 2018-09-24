@@ -92,7 +92,7 @@ page-my-tasks {
             margin-top: 2% !important;
             -webkit-box-shadow: unset !important;
             box-shadow:  unset !important;
-            height:5em !important;
+            //height:5em !important;
             .rowBg{
                 background-image: url(../assets/couponsImages/my-Task-BG.svg) !important;
                 background-size: cover  !important; 
@@ -100,7 +100,6 @@ page-my-tasks {
                 margin: 0 auto  !important;
                 width:93% !important;
                 top: 0%;
-                width: 100%;
             }
         }
 
@@ -193,6 +192,8 @@ page-my-tasks {
         }
     }
 
+}
+
     //Media query for iPhone 6, 6s, 7, 8
     @media only screen and (min-height: 667px) and (min-width: 375px)  {
         .card-ios {
@@ -202,20 +203,41 @@ page-my-tasks {
             margin-top: 2% !important;
             -webkit-box-shadow: unset !important;
             box-shadow:  unset !important;
-            height:5em !important;
+            height:unset !important;
             .rowBg{
                 background-image: url(../assets/couponsImages/my-Task-BG.svg) !important;
                 background-size: cover  !important; 
                 background-position: center center  !important; 
                 margin: 0 auto  !important;
-                width:100% !important;
+                width:93% !important;
                 top: 0%;
                 width: 100%;
             }
         } 
         }
-    
-    }
+
+
+        //Media query for iPhone 6+, 6s+, 7+, 8+
+        @media only screen and (min-height: 736px) and (min-width: 414px)  {
+            .card-ios {
+                background-color: transparent !important;;
+                margin: 0px !important;
+                width: 100% !important;
+                margin-top: 2% !important;
+                -webkit-box-shadow: unset !important;
+                box-shadow:  unset !important;
+                height:unset !important;
+                .rowBg{
+                    background-image: url(../assets/couponsImages/my-Task-BG.svg) !important;
+                    background-size: cover  !important; 
+                    background-position: center center  !important; 
+                    margin: 0 auto  !important;
+                    width:93% !important;
+                    top: 0%;
+                    width: 100%;
+                }
+            }
+            }
 
     //Media query for Nokia 8
     @media only screen and (min-height: 667px) and (min-width: 375px)  {

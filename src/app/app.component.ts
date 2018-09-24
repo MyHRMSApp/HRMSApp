@@ -17,6 +17,7 @@ declare var document:any;
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  rootPage:any = "LoginPage";
 
   
 
@@ -42,7 +43,6 @@ export class MyApp {
   public myTaskData:any;
   public internetConnectionCheck:boolean = (this.network.type=="none")?false:true;
   public selectedDateDataFromAttendance:any;
-  rootPage: any;
   constructor(public platform: Platform,
     public statusBar: StatusBar, public network: Network,
     public render:Renderer,
@@ -52,12 +52,25 @@ export class MyApp {
     public splashScreen: SplashScreen, public utilService: UtilsProvider, 
     public networkProvider: NetworkProvider, public events: Events) {
     this.initializeApp();
+
     // let rootLocation = localStorage.getItem("rootPage");
+    // console.log("rootPage", rootLocation);
+    // let remember = localStorage.getItem("rememberMe");
+    
     // if(rootLocation == "true"){
+    //   if(remember === "enabled"){
     //     this.rootPage = "HomePage";
+    //   }
+    //   else {
+    //     setTimeout(()=> {
+    //       this.rootPage = "LoginPage"; 
+    //       this.logout(); 
+    //     }, 1500);
+       
+    //   }
     // }
     // else{
-      this.rootPage = "LoginPage";
+    //   this.rootPage = "LoginPage";
     // }
   }
 
@@ -78,7 +91,7 @@ export class MyApp {
 
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
-      this.authHandler.gmailAuthInit();
+        this.authHandler.gmailAuthInit();
       // if(this.internetConnectionCheck){
         this.authHandler.checkIsLoggedIn();
       // }else{
@@ -96,6 +109,8 @@ export class MyApp {
    * Method for logging out user from app and MFP Server
    */
   logout() {
+    //localStorage.setItem("rememberMe", "disabled");
+    //console.log("came to logout");
     this.authHandler.logout().then((resp)=>{
       if(resp) {
         localStorage.setItem("userLogout", "1");

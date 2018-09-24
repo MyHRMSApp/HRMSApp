@@ -54,6 +54,8 @@ export class MyRequestPage {
     /*Acordion function for Leave*/ 
     shownLeave = null;
     toggleLeave(group) {
+      this.shownOD = null;
+      this.shownFTP = null;
       if (this.isGroupLeave(group)) {
           this.shownLeave = null;
       } else {
@@ -68,6 +70,8 @@ export class MyRequestPage {
     /*Acordion function for OD*/  
     shownOD = null;
     toggleOD(group) {
+      this.shownLeave = null;
+      this.shownFTP = null;
       if (this.isGroupOD(group)) {
           this.shownOD = null;
       } else {
@@ -82,6 +86,8 @@ export class MyRequestPage {
     /*Acordion function for FTP*/ 
     shownFTP = null;
     toggleFTP(group) {
+      this.shownLeave = null;
+      this.shownOD = null;
       if (this.isGroupFTP(group)) {
           this.shownFTP = null;
       } else {
@@ -94,15 +100,15 @@ export class MyRequestPage {
     };
 
     cancelLeave(eventID){
-      this.cancelButtonLeave=!this.cancelButtonLeave;
-      if(!this.cancelButtonLeave){
-        var cancelBtn = document.getElementById(eventID);
-        cancelBtn.className = "cancel displayNone";
-      }else{
-        var cancelBtn = document.getElementById(eventID);
-        cancelBtn.className = "cancel";
-      }
-      this.ref.detectChanges();
+      // this.cancelButtonLeave=!this.cancelButtonLeave;
+      // if(!this.cancelButtonLeave){
+      //   var cancelBtn = document.getElementById(eventID);
+      //   cancelBtn.className = "cancel displayNone";
+      // }else{
+      //   var cancelBtn = document.getElementById(eventID);
+      //   cancelBtn.className = "cancel";
+      // }
+      // this.ref.detectChanges();
     }
     cancelOD(){
       this.cancelButtonOD=true;
