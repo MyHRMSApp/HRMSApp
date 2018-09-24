@@ -84,7 +84,7 @@ home() {
 }
 
 watch() {
-  if(this.eyeWearCounts == 0){
+  if(this.watchCounts == 0){
     this.utilService.showCustomPopup("FAILURE", "No coupons available");
   }
   else{
@@ -94,7 +94,7 @@ watch() {
 }
 
 jewellery() {
-  if(this.eyeWearCounts == 0){
+  if(this.jewelleryCounts == 0){
     this.utilService.showCustomPopup("FAILURE", "No coupons available");
   }
   else{
@@ -114,7 +114,7 @@ eyewear() {
 }
 
 taneira() {
-  if(this.eyeWearCounts == 0){
+  if(this.taneiraCounts == 0){
     this.utilService.showCustomPopup("FAILURE", "No coupons available");
   }
   else{
