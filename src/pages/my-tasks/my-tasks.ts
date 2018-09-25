@@ -73,6 +73,18 @@ export class MyTasksPage {
     }, 100);
   }
 
+  unSelectAll() {
+    this.selectedAllFlag = false;
+    this.approvedFlag = this.selectedAllFlag;
+    for(var i=0; i<this.commonLeaveType.length; i++){
+      this.commonLeaveType[i].selected = this.selectedAllFlag;
+      console.log("this.commonLeaveType[i].selected--->>>"+JSON.stringify(this.commonLeaveType[i]));
+    }
+    setTimeout(() => {
+      this.ref.detectChanges();
+    }, 100);
+  }
+
   selectMe(indexValue) {
     var count = 0;
     this.commonLeaveType[indexValue].selected = !this.commonLeaveType[indexValue].selected;
@@ -260,7 +272,7 @@ export class MyTasksPage {
           if(resultData.status_code == 0){
             if(resultData.data.ET_DATA.FLAG == "E"){
               this.utilService.dismissLoader();
-              this.selectAll();
+              this.unSelectAll();
               this.utilService.showCustomPopup4Error("My Task", resultData.data.ET_DATA.REASON, "FAILURE");
             }else if(resultData.data.ET_DATA.FLAG == "S"){
               const alert = this.alertCtrl.create({
