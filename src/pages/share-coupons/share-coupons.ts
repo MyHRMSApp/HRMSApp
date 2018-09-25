@@ -21,7 +21,7 @@ export class ShareCouponsPage {
   cardBg: string;
   title: any;
   counts: any;
-  specificCoupons: any;
+  specificCoupons: any = [];
   couponCounts: any;
   selectedCoupons: any = [];
   newArray: any = [];
@@ -38,8 +38,13 @@ export class ShareCouponsPage {
     public navParams: NavParams, public mainService: MyApp, public socialSharing: SocialSharing, private ref: ChangeDetectorRef) {
     
     this.menu.swipeEnable(false);
+    this.selectedCoupons = [];
+    this.specificCoupons = [];
     this.title = this.navParams.get("titleName");
     this.specificCoupons = this.navParams.get("coupons");
+    for(var i=0; i<this.specificCoupons.length; i++){
+      this.specificCoupons[i].checked = false;
+    }
     this.couponCounts = this.navParams.get("length");
     console.log(this.specificCoupons);
 
@@ -47,6 +52,8 @@ export class ShareCouponsPage {
     this.employeeName = this.userInformation.EP_ENAME;
     this.employeeCode = this.userInformation.EP_PERNR;
     console.log(this.employeeName, this.employeeCode);
+
+    
   }
 
   ionViewDidLoad() {
@@ -55,6 +62,7 @@ export class ShareCouponsPage {
     this.share = ("./assets/couponsImages/share.svg");
     this.cardBg = ("./assets/couponsImages/coupons-BG.svg");
     console.log('ionViewDidLoad ShareCouponsPage');
+    this.ref.detectChanges();
   }
 
   openMenu() {

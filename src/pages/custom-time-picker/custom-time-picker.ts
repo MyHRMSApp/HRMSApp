@@ -67,7 +67,8 @@ export class CustomTimePickerPage {
       }
     }else if(flag == "S"){
       if(this.minuteValue < 59 && this.minuteValue >= 0){
-        this.minuteValue = (this.minuteValue - 5 == 0)?55:this.minuteValue - 5;
+        this.minuteValue = this.minuteValue-5;
+        this.minuteValue = (this.minuteValue == -5)?55:this.minuteValue;
         this.ref.detectChanges();
       }
     }

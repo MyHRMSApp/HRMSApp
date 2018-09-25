@@ -319,7 +319,7 @@ ionViewCanEnter() {
           }
         }, (error)=>{
           console.log("Error",error);
-          this.utilService.showCustomPopup("FAILURE",error.statusText);
+          // this.utilService.showCustomPopup("FAILURE",error.statusText);
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");

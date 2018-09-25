@@ -17,16 +17,25 @@ import { UtilsProvider } from '../../providers/utils/utils';
 export class ProfilePage {
   hamburger: string;
   homeIcon: string;
-  public profileDetails:any = {
-    "ENAME": undefined,
-    "EMP_HR": undefined,
-    "BTRTL_TXT": undefined,
-    "PERSK": undefined,
-    "ORGEH_TXT": undefined,
-    "PERSG_TXT": undefined,
-    "EP_MANAGER": undefined,
-    "EMPCODE": undefined
-};
+//   public profileDetails:any = {
+//     "ENAME": undefined,
+//     "EMP_HR": undefined,
+//     "BTRTL_TXT": undefined,
+//     "PERSK": undefined,
+//     "ORGEH_TXT": undefined,
+//     "PERSG_TXT": undefined,
+//     "EP_MANAGER": undefined,
+//     "EMPCODE": undefined
+// };
+
+ENAME:any = "";
+EMP_HR:any = "";
+BTRTL_TXT:any = "";
+PERSK:any = "";
+ORGEH_TXT:any = "";
+PERSG_TXT:any = "";
+EP_MANAGER:any = "";
+EMPCODE:any = "";
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -61,7 +70,15 @@ export class ProfilePage {
         if(resultData){
           if(resultData.status_code == 0){
             console.log(resultData.data.ET_DATA);
-            this.profileDetails = resultData.data.ET_DATA;
+            // this.profileDetails = resultData.data.ET_DATA;
+            this.ENAME = resultData.data.ET_DATA.ENAME;
+            this.EMP_HR = resultData.data.ET_DATA.EMP_HR;
+            this.BTRTL_TXT = resultData.data.ET_DATA.BTRTL_TXT;
+            this.PERSK = resultData.data.ET_DATA.PERSK;
+            this.ORGEH_TXT = resultData.data.ET_DATA.ORGEH_TXT;
+            this.PERSG_TXT = resultData.data.ET_DATA.PERSG_TXT;
+            this.EP_MANAGER = resultData.data.ET_DATA.EP_MANAGER;
+            this.EMPCODE = resultData.data.ET_DATA.EMPCODE;
             setTimeout(() => {
               this.utilService.dismissLoader();
             }, 2000);

@@ -192,6 +192,15 @@ page-my-tasks {
         }
     }
 
+    .userName{
+        margin-top: 8% !important;
+        text-align: left;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
 }
 
     //Media query for iPhone 6, 6s, 7, 8

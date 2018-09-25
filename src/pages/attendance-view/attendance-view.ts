@@ -201,9 +201,9 @@ export class AttendanceViewPage {
     setTimeout(() => {
       console.log("this.calStartDate: "+this.calStartDate+"this.calEndDate :"+this.calEndDate,);
       this.optionsRange = tempoptionsRange;
-      this.calenderVIew = true;
       this.mainService.selectedDateDataFromAttendance = undefined;
       this.utilService.dismissLoader();
+      this.calenderVIew = true;
     }, 100);
   }
   
@@ -440,7 +440,7 @@ export class AttendanceViewPage {
   }
 
   ionViewCanEnter() {
-    this.dateRange = moment().format("YYYY-MM-DD");
+    this.dateRange = (this.mainService.selectedDateDataFromAttendance !== undefined)?moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("YYYY-MM-DD"):moment().format("YYYY-MM-DD");
     this.loadCalendarView();
   }
 
