@@ -66,6 +66,7 @@ export class MyApp {
     //       this.rootPage = "LoginPage"; 
     //       this.logout(); 
     //     }, 1500);
+    
        
     //   }
     // }

@@ -71,13 +71,10 @@ export class ProfilePage {
           }
         };
       }, (error)=>{
-        console.log("Data readed from jsonstore error",error);
+        console.log("Error",error);
         this.utilService.dismissLoader();
         this.utilService.showCustomPopup4Error("Profile", error.statusText, "FAILURE");
       });
-    // }else{
-    //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-    // }
   }
 
   getProfileValue(profileValue){
