@@ -34,6 +34,9 @@ export class ApplyFtpPage {
   public requestTypeSelection:any;
   userInformation: any;
   employeeLevel: any;
+  select: boolean = true;
+  forgot: boolean = false;
+
 
   public jsonData:any = {
     Hours: [
@@ -215,6 +218,17 @@ export class ApplyFtpPage {
       );
   }
 
+  requestType(){
+    this.select = false;
+    this.requestTypeSelection = "Forgot to record my attendance";
+    this.ref.detectChanges();
+  }
+
+  onCancel(data){
+    console.log("cancel", data);
+    this.select = true;
+    this.ref.detectChanges();
+  }
 
   callApplyFTPFunction(){
 

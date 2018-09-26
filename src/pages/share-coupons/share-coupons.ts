@@ -6,6 +6,7 @@ import { Network } from '@ionic-native/network';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { MyApp } from '../../app/app.component';
+import { UtilsProvider } from '../../providers/utils/utils';
 
 @IonicPage()
 @Component({
@@ -31,11 +32,14 @@ export class ShareCouponsPage {
   userInformation: any;
   employeeName: any;
   employeeCode: any;
+  iosMail: string;
+  showScrolling: boolean = true;
 
   constructor(public menu: MenuController, public events: Events, public actionSheetCtrl: ActionSheetController,
     private toast: ToastController, private network: Network, public loadingCtrl: LoadingController, public platform: Platform,
     private http: Http, public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController,
-    public navParams: NavParams, public mainService: MyApp, public socialSharing: SocialSharing, private ref: ChangeDetectorRef) {
+    public navParams: NavParams, public mainService: MyApp, public socialSharing: SocialSharing, private ref: ChangeDetectorRef,
+    public utilService: UtilsProvider) {
     
     this.menu.swipeEnable(false);
     this.selectedCoupons = [];
@@ -76,25 +80,35 @@ export class ShareCouponsPage {
   }
   shareCoupon() {
     this.shareWhatsapp = true;
+    this.showScrolling = false;
     this.ref.detectChanges();
   }
   gmail() {
     var msg = this.str;
-    this.socialSharing.shareVia("com.google.android.gm", msg, "TITAN DISCOUNT COUPONS", null);
+    this.socialSharing.shareVia("com.google.android.gm", msg, "TITAN DISCOUNT COUPONS", null).then(() => {
+    }).catch(() => {
+      this.utilService.showCustomPopup("FAILURE", "Email is not installed");
+    });
   }
   whatsapp() {
     var msg = this.str;
-    this.socialSharing.shareViaWhatsApp(msg, null, null);
+    this.socialSharing.shareViaWhatsApp(msg, null, null).then(() => {
+    }).catch(() => {
+      this.utilService.showCustomPopup("FAILURE", "Whatsapp is not installed");
+    });
   }
   sms() {
     var msg = this.str;
-    this.socialSharing.shareViaSMS(msg, null);
+    this.socialSharing.shareViaSMS(msg, null).then(() => {
+    }).catch(() => {
+      this.utilService.showCustomPopup("FAILURE", "Messaging is not installed");
+    });
   }
   cancel() {
     this.shareWhatsapp = false;
+    this.showScrolling = true;
     this.ref.detectChanges();
   }
-
   shareMe(data) {
       console.log(data);
     if (data.checked == true) {

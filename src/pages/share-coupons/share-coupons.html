@@ -11,7 +11,7 @@
 </ion-header>
 
 
-<ion-content padding no-bounce>
+<ion-content padding no-bounce [ngClass]="showScrolling ? 'withScrolling' : 'withoutScrolling'">
   <ion-grid>
   <ion-row>
     <ion-col col-8 style="text-align:left">

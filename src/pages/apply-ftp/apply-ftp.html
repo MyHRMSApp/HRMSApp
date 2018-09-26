@@ -52,10 +52,11 @@
             <ion-col col-12>
                 <ion-list class="list-View">
                     <p>Request Type</p>
-                    <ion-item class="item-leave-height item-view">
+                    <ion-item (tap)="requestType()" class="item-leave-height item-view">
                         <ion-label>Request Type</ion-label>
-                        <ion-select [(ngModel)]="requestTypeSelection">
-                            <ion-option value="Forgot to record my attendance">Forgot to record my attanance</ion-option>
+                        <ion-select (ionCancel)="onCancel($event)" [(ngModel)]="requestTypeSelection" data-live-search="true">
+                            <ion-option *ngIf="select == true" selected>Select</ion-option>
+                            <ion-option value="Forgot to record my attendance">Forgot to record my attendance</ion-option>
                             <ion-option value="Forgot to bring my punch Card">Forgot to bring my punch Card</ion-option>
                             <ion-option value="Access Reader / Technical Issue">Access Reader / Technical Issue</ion-option>
                         </ion-select>
