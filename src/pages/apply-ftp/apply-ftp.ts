@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,13 +33,17 @@ export class ApplyFtpPage {
   public requestTypeSelection:any;
   userInformation: any;
   employeeLevel: any;
+  select: boolean = true;
+  forgot: boolean = false;
+
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
-    public service: ServiceProvider, public utilService: UtilsProvider, public mainService: MyApp) {
+    public service: ServiceProvider, public utilService: UtilsProvider, public mainService: MyApp,
+    private ref: ChangeDetectorRef) {
 
       this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
       this.employeeLevel = this.userInformation.EP_EGROUP;
@@ -117,6 +121,17 @@ export class ApplyFtpPage {
     });
   }
 
+  requestType(){
+    this.select = false;
+    this.requestTypeSelection = "Forgot to record my attendance";
+    this.ref.detectChanges();
+  }
+
+  onCancel(data){
+    console.log("cancel", data);
+    this.select = true;
+    this.ref.detectChanges();
+  }
 
   callApplyFTPFunction(){
 

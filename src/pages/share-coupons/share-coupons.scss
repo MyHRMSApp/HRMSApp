@@ -137,7 +137,18 @@ page-share-coupons {
                     height: 4.75em;
                 }
             } 
+        }
+
+        .withScrolling{
+            .scroll-content{
+                overflow-y: scroll !important;
             }
+        }
+        .withoutScrolling{
+            .scroll-content{
+                overflow-y: hidden !important;
+            }
+        }
 
 
 

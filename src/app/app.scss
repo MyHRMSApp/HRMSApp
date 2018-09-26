@@ -270,15 +270,24 @@ ion-nav{
             color:#009688;
         }
      }
-
-
  }
+
+ .select-icon {
+    position: absolute !important;
+    width: 12px;
+    height: 19px;
+    right: 15px;
+}
+
+.alert-wrapper {
+    max-width: 300px !important;
+}
 
   //Media query for iPhone-X
   @media only screen and (min-height: 812px) and (min-width: 375px) {
 
     .alert-radio-icon{
-        left: 0px !important;
+        left: -10px !important;
         top: 0;
         border-radius: 4px;
         position: relative;
@@ -288,6 +297,9 @@ ion-nav{
         border-style: solid;
         border-color: #009688;
         min-width: 22px !important;
+        .alert-radio-inner{
+            top: 0px !important;
+        }
     }
 
 }
@@ -296,7 +308,7 @@ ion-nav{
   @media only screen and (min-height: 736px) and (min-width: 414px) {
 
     .alert-radio-icon{
-        left: 0px !important;
+        left: -10px !important;
         top: 0;
         border-radius: 4px;
         position: relative;
@@ -306,15 +318,18 @@ ion-nav{
         border-style: solid;
         border-color: #009688;
         min-width: 22px !important;
+        .alert-radio-inner{
+            top: 0px !important;
+        }
     }
 
 }
 
   //Media query for iPhone 6, 6s, 7, 8
   @media only screen and (min-height: 667px) and (min-width: 375px) {
-
+    .alert-ios {
     .alert-radio-icon{
-        left: 0px !important;
+        left: -10px !important;
         top: 0;
         border-radius: 4px;
         position: relative;
@@ -324,6 +339,31 @@ ion-nav{
         border-style: solid;
         border-color: #009688;
         min-width: 22px !important;
+        .alert-radio-inner{
+            top: 0px !important;
+        }
     }
+}
+}
 
+  //Media query for Nokia 8
+  @media only screen and (min-height: 667px) and (min-width: 375px) {
+    .alert-md {
+    .alert-radio-icon{
+        left: 8px !important;
+        top: 0;
+        border-radius:50%;
+        position: relative;
+        width: 17px;
+        height: 17px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #009688;
+        //min-width: 22px !important;
+        .alert-radio-inner{
+            left: 4px !important;
+            top: 4px !important;
+        }
+    }
+}
 }
