@@ -15,7 +15,7 @@
   <ion-grid>
   <div *ngIf="!calenderVIew" class="calendarStaticHeight"></div>
   <ion-calendar *ngIf="calenderVIew" [(ngModel)]="dateRange" (onChange)="onChange($event)" (monthChange)="monthChange()" [options]="optionsRange" [type]="string"
-    [format]="'YYYY-MM-DD'">
+    [format]="'YYYY-MM-DD'" id="attendancePage">
   </ion-calendar>
     <ion-card style="height:12%" class="clrBoxParent">
       <ion-row>

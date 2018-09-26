@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -10,6 +10,7 @@ import moment from 'moment';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { MyApp } from '../../app/app.component';
+import { WheelSelector } from '@ionic-native/wheel-selector';
 
 @IonicPage()
 @Component({
@@ -34,12 +35,56 @@ export class ApplyFtpPage {
   userInformation: any;
   employeeLevel: any;
 
+  public jsonData:any = {
+    Hours: [
+      { description: "00" },
+      { description: "01" },
+      { description: "02" },
+      { description: "03" },
+      { description: "04" },
+      { description: "05" },
+      { description: "06" },
+      { description: "07" },
+      { description: "08" },
+      { description: "09" },
+      { description: "10" },
+      { description: "11" },
+      { description: "12" },
+      { description: "13" },
+      { description: "14" },
+      { description: "15" },
+      { description: "16" },
+      { description: "14" },
+      { description: "18" },
+      { description: "19" },
+      { description: "20" },
+      { description: "21" },
+      { description: "22" },
+      { description: "23" }
+    ],
+    Minutes: [
+      { description: "00" },
+      { description: "05" },
+      { description: "10" },
+      { description: "15" },
+      { description: "20" },
+      { description: "25" },
+      { description: "30" },
+      { description: "35" },
+      { description: "40" },
+      { description: "45" },
+      { description: "50" },
+      { description: "55" }
+    ]
+  };
+
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
-    public service: ServiceProvider, public utilService: UtilsProvider, public mainService: MyApp) {
+    public service: ServiceProvider, public utilService: UtilsProvider, public mainService: MyApp,
+    public selector: WheelSelector, private ref: ChangeDetectorRef) {
 
       this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
       this.employeeLevel = this.userInformation.EP_EGROUP;
@@ -78,56 +123,125 @@ export class ApplyFtpPage {
   }
 
   punchInTimeSelection(){
-    let inTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "PUNCH IN"});
-    inTimePicker.present();
-    inTimePicker.onDidDismiss((data) => {
-      console.log(data);
-      this.inPunch = data.time+":00";
-      this.inPunchFlag = "X";
-    });
+    // let inTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "PUNCH IN"});
+    // inTimePicker.present();
+    // inTimePicker.onDidDismiss((data) => {
+    //   console.log(data);
+    //   this.inPunch = data.time+":00";
+    //   this.inPunchFlag = "X";
+    // });
+
+    this.selector.show({
+      title: "PUNCH IN",
+      items: [this.jsonData.Hours, this.jsonData.Minutes],
+    }).then(
+      result => {
+        console.log(result[0].description+':'+result[1].description);
+        this.inPunch = result[0].description+':'+result[1].description+":00";
+        if(this.inPunch != "00:00:00")this.inPunchFlag = "X";
+        this.ref.detectChanges();
+      },
+      err => console.log('Error: ', err)
+      );
+
   }
 
   punchOutTimeSelection(){
-    let outTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "PUNCH OUT"});
-    outTimePicker.present();
-    outTimePicker.onDidDismiss((data) => {
-      console.log(data);
-      this.outPunch = data.time+":00";
-      this.outPunchFlag = "X";
-    });
+    // let outTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "PUNCH OUT"});
+    // outTimePicker.present();
+    // outTimePicker.onDidDismiss((data) => {
+    //   console.log(data);
+    //   this.outPunch = data.time+":00";
+    //   this.outPunchFlag = "X";
+    // });
+
+    this.selector.show({
+      title: "PUNCH OUT",
+      items: [this.jsonData.Hours, this.jsonData.Minutes],
+    }).then(
+      result => {
+        console.log(result[0].description+':'+result[1].description);
+        this.outPunch = result[0].description+':'+result[1].description+":00";
+        if(this.outPunch != "00:00:00")this.outPunchFlag = "X";
+        this.ref.detectChanges();
+      },
+      err => console.log('Error: ', err)
+      );
   }
 
   midInTimeSelection(){
-    let outTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "MID IN"});
-    outTimePicker.present();
-    outTimePicker.onDidDismiss((data) => {
-      console.log(data);
-      this.midInPunch = data.time+":00";
-      this.midInPunchFlag = "X";
-    });
+    // let outTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "MID IN"});
+    // outTimePicker.present();
+    // outTimePicker.onDidDismiss((data) => {
+    //   console.log(data);
+    //   this.midInPunch = data.time+":00";
+    //   this.midInPunchFlag = "X";
+    // });
+
+    this.selector.show({
+      title: "MID IN",
+      items: [this.jsonData.Hours, this.jsonData.Minutes],
+    }).then(
+      result => {
+        console.log(result[0].description+':'+result[1].description);
+        this.midInPunch = result[0].description+':'+result[1].description+":00";
+        if(this.midInPunch != "00:00:00")this.midInPunchFlag = "X";
+        this.ref.detectChanges();
+      },
+      err => console.log('Error: ', err)
+      );
   }
 
   midOutTimeSelection(){
-    let outTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "MID OUT"});
-    outTimePicker.present();
-    outTimePicker.onDidDismiss((data) => {
-      console.log(data);
-      this.midOutPunch = data.time+":00";
-      this.midOutPunchFlag = "X";
-    });
+    // let outTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "MID OUT"});
+    // outTimePicker.present();
+    // outTimePicker.onDidDismiss((data) => {
+    //   console.log(data);
+    //   this.midOutPunch = data.time+":00";
+    //   this.midOutPunchFlag = "X";
+    // });
+
+    this.selector.show({
+      title: "MID OUT",
+      items: [this.jsonData.Hours, this.jsonData.Minutes],
+    }).then(
+      result => {
+        console.log(result[0].description+':'+result[1].description);
+        this.midOutPunch = result[0].description+':'+result[1].description+":00";
+        if(this.midOutPunch != "00:00:00")this.midOutPunchFlag = "X";
+        this.ref.detectChanges();
+      },
+      err => console.log('Error: ', err)
+      );
   }
 
 
   callApplyFTPFunction(){
 
+    if(this.inPunch !== undefined && this.outPunch !== undefined){
+      var beginningTimeInPunch = moment(this.inPunch, 'HH:mm');
+      var endTimeOutPunch = moment(this.outPunch, 'HH:mm');
+      console.log("beginningTime.isBefore==>>"+beginningTimeInPunch.isBefore(endTimeOutPunch)); // true
+    }
+
+    if(this.employeeLevel == "E" && this.midInPunch !== undefined && this.midOutPunch !== undefined){
+      var beginningTimemidInPunch = moment(this.midInPunch, 'HH:mm');
+      var endTimemidOutPunch = moment(this.midOutPunch, 'HH:mm');
+      console.log("beginningTime.isBefore==>>"+beginningTimemidInPunch.isBefore(endTimemidOutPunch)); // true
+    }
+
     if(this.inPunch === undefined || this.inPunch == "00:00:00"){
       this.utilService.showCustomPopup4Error("Apply FTP","Please select proper In Punch", "FAILURE");
     }else if(this.outPunch === undefined || this.outPunch == "00:00:00"){
       this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Out Punch", "FAILURE");
+    }else if(!beginningTimeInPunch.isBefore(endTimeOutPunch)){
+      this.utilService.showCustomPopup4Error("Apply FTP", "Please enter the valid In & Out Time", "FAILURE");
     }else if(this.employeeLevel == "E" && this.midInPunch === undefined || this.employeeLevel == "E" && this.midInPunch == "00:00:00"){
       this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Mid In Punch", "FAILURE");
     }else if(this.employeeLevel == "E" &&  this.midOutPunch === undefined || this.employeeLevel == "E" && this.midOutPunch == "00:00:00"){
       this.utilService.showCustomPopup4Error("Apply FTP","Please select proper Mid Out Punch", "FAILURE");
+    }else if(this.employeeLevel == "E" &&  !endTimemidOutPunch.isBefore(beginningTimemidInPunch)){
+      this.utilService.showCustomPopup4Error("Apply FTP","Please enter the valid MidIn & MidOut Time", "FAILURE");
     }else if(this.requestTypeSelection === undefined){
       this.utilService.showCustomPopup4Error("Apply FTP","Please select Request Type", "FAILURE");
     }else{

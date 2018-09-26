@@ -12,9 +12,10 @@
     </description>
 
     <securityCheckDefinition name="socialLogin" class="com.github.mfpdev.sample.socialogin.SocialLoginSecurityCheck">
-        <property name="successStateExpirationSec" defaultValue="60"/>
+        <property name="successStateExpirationSec" defaultValue="3600"/>
         <property name="blockedStateExpirationSec" defaultValue="60"/>
         <property name="maxAttempts" defaultValue="3"/>
+        <property name="rememberMeDurationSec" defaultValue="3600" description="How long is the user remembered by the RememberMe feature (seconds)."/>
         <property name="keepOriginalToken" type="boolean" defaultValue="false"
                   displayName="keep original token"
                   description="If true, the token submitted by the client is stored in the Authenticated User as an attribute 'originalToken'"/>

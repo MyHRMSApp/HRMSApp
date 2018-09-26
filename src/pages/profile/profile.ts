@@ -28,14 +28,7 @@ export class ProfilePage {
 //     "EMPCODE": undefined
 // };
 
-ENAME:any = "";
-EMP_HR:any = "";
-BTRTL_TXT:any = "";
-PERSK:any = "";
-ORGEH_TXT:any = "";
-PERSG_TXT:any = "";
-EP_MANAGER:any = "";
-EMPCODE:any = "";
+public profileDetails:any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -66,32 +59,40 @@ EMPCODE:any = "";
   ionViewCanEnter(){
     // if(this.mainService.internetConnectionCheck){
       this.utilService.showLoader("Please wait...");
-      this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
-        if(resultData){
-          if(resultData.status_code == 0){
-            console.log(resultData.data.ET_DATA);
-            // this.profileDetails = resultData.data.ET_DATA;
-            this.ENAME = resultData.data.ET_DATA.ENAME;
-            this.EMP_HR = resultData.data.ET_DATA.EMP_HR;
-            this.BTRTL_TXT = resultData.data.ET_DATA.BTRTL_TXT;
-            this.PERSK = resultData.data.ET_DATA.PERSK;
-            this.ORGEH_TXT = resultData.data.ET_DATA.ORGEH_TXT;
-            this.PERSG_TXT = resultData.data.ET_DATA.PERSG_TXT;
-            this.EP_MANAGER = resultData.data.ET_DATA.EP_MANAGER;
-            this.EMPCODE = resultData.data.ET_DATA.EMPCODE;
-            setTimeout(() => {
-              this.utilService.dismissLoader();
-            }, 2000);
-          }else{
-            this.utilService.dismissLoader();
-            this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
-          }
-        };
-      }, (error)=>{
-        console.log("Error",error);
+      if(this.mainService.globalProfileData !== undefined){
+        this.profileDetails = this.mainService.globalProfileData;
         this.utilService.dismissLoader();
-        this.utilService.showCustomPopup4Error("Profile", error.statusText, "FAILURE");
-      });
+      }else{
+        this.profileDetails = {
+              "ENAME": "",
+              "EMP_HR": "",
+              "BTRTL_TXT": "",
+              "PERSK": "",
+              "ORGEH_TXT": "",
+              "PERSG_TXT": "",
+              "EP_MANAGER": "",
+              "EMPCODE": "",
+          };
+        this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 0){
+              console.log(resultData.data.ET_DATA);
+              this.profileDetails = resultData.data.ET_DATA;
+              setTimeout(() => {
+                this.utilService.dismissLoader();
+              }, 2000);
+            }else{
+              this.utilService.dismissLoader();
+              this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
+            }
+          };
+        }, (error)=>{
+          console.log("Error",error);
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup4Error("Profile", error.statusText, "FAILURE");
+        });
+      }
+
   }
 
   getProfileValue(profileValue){

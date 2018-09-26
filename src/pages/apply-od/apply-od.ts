@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -10,6 +10,7 @@ import moment from 'moment';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { MyApp } from '../../app/app.component';
+import { WheelSelector } from '@ionic-native/wheel-selector';
 
 @IonicPage()
 @Component({
@@ -29,12 +30,56 @@ export class ApplyOdPage {
   public OrgVisited:any;
   public reasonForOD:any;
 
+  public jsonData:any = {
+  Hours: [
+    { description: "00" },
+    { description: "01" },
+    { description: "02" },
+    { description: "03" },
+    { description: "04" },
+    { description: "05" },
+    { description: "06" },
+    { description: "07" },
+    { description: "08" },
+    { description: "09" },
+    { description: "10" },
+    { description: "11" },
+    { description: "12" },
+    { description: "13" },
+    { description: "14" },
+    { description: "15" },
+    { description: "16" },
+    { description: "14" },
+    { description: "18" },
+    { description: "19" },
+    { description: "20" },
+    { description: "21" },
+    { description: "22" },
+    { description: "23" }
+  ],
+  Minutes: [
+    { description: "00" },
+    { description: "05" },
+    { description: "10" },
+    { description: "15" },
+    { description: "20" },
+    { description: "25" },
+    { description: "30" },
+    { description: "35" },
+    { description: "40" },
+    { description: "45" },
+    { description: "50" },
+    { description: "55" }
+  ]
+};
+
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
-    public service: ServiceProvider, public utilService: UtilsProvider,  public mainService: MyApp) {
+    public service: ServiceProvider, public utilService: UtilsProvider,  public mainService: MyApp,
+    public selector: WheelSelector, private ref: ChangeDetectorRef) {
     
       this.menu.swipeEnable(false);
       this.inTime = "00:00";
@@ -76,21 +121,45 @@ export class ApplyOdPage {
   }
 
   inTimeSelection(){
-    let inTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "START TIME"});
-    inTimePicker.present();
-    inTimePicker.onDidDismiss((data) => {
-      console.log(data);
-      this.inTime = data.time;
-    });
+    // let inTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "START TIME"});
+    // inTimePicker.present();
+    // inTimePicker.onDidDismiss((data) => {
+    //   console.log(data);
+    //   this.inTime = data.time;
+    // });
+
+    this.selector.show({
+      title: "START TIME",
+      items: [this.jsonData.Hours, this.jsonData.Minutes],
+    }).then(
+      result => {
+        console.log(result[0].description+':'+result[1].description);
+        this.inTime = result[0].description+':'+result[1].description;
+        this.ref.detectChanges();
+      },
+      err => console.log('Error: ', err)
+      );
   }
 
   toTimeSelection(){
-    let outTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "END TIME"});
-    outTimePicker.present();
-    outTimePicker.onDidDismiss((data) => {
-      console.log(data);
-      this.outTime = data.time;
-    });
+    // let outTimePicker = this.modalCtrl.create("CustomTimePickerPage", {title: "END TIME"});
+    // outTimePicker.present();
+    // outTimePicker.onDidDismiss((data) => {
+    //   console.log(data);
+    //   this.outTime = data.time;
+    // });
+
+    this.selector.show({
+      title: "END TIME",
+      items: [this.jsonData.Hours, this.jsonData.Minutes],
+    }).then(
+      result => {
+        console.log(result[0].description+':'+result[1].description);
+        this.outTime = result[0].description+':'+result[1].description;
+        this.ref.detectChanges();
+      },
+      err => console.log('Error: ', err)
+      );
   }
 
   fromDateSelection(){
@@ -113,15 +182,28 @@ export class ApplyOdPage {
   }
 
   callODApplyFunction(){
-
+    if(this.startDate !== undefined && this.endDate !== undefined){
+      var sDate = this.startDate.toString().replace(/-/g, "");
+      var eDate = this.endDate.toString().replace(/-/g, "");
+      var beginningDate = moment(sDate, 'DDMMYYYY');
+      var endDate = moment(eDate, 'DDMMYYYY');
+      var beginningTime = moment(sDate+this.inTime, 'DDMMYYYYHH:mm');
+      var endTime = moment(eDate+this.outTime, 'DDMMYYYYHH:mm');
+      console.log("beginningTime.isBefore==>>"+beginningTime.isBefore(endTime)); // true
+    }
+    
     if(this.startDate === undefined || this.startDate == ""){
-      this.utilService.showCustomPopup4Error("Apply OD","Please enter proper Start Date", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD","Please enter valid Start Date", "FAILURE");
     }else if(this.endDate === undefined || this.endDate == ""){
-      this.utilService.showCustomPopup4Error("Apply OD", "Please enter proper End Date", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD", "Please enter valid End Date", "FAILURE");
+    }else if(this.startDate != this.endDate && !beginningDate.isBefore(endDate)){
+      this.utilService.showCustomPopup4Error("Apply OD","Please enter the valid In & Out Date", "FAILURE");
     }else if(this.inTime === undefined || this.inTime == "00:00"){
-      this.utilService.showCustomPopup4Error("Apply OD", "Please enter proper In Time", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD", "Please enter valid In Time", "FAILURE");
     }else if(this.outTime === undefined || this.outTime == "00:00"){
-      this.utilService.showCustomPopup4Error("Apply OD","Please enter proper Out Time", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD","Please enter valid Out Time", "FAILURE");
+    }else if(!beginningTime.isBefore(endTime)){
+      this.utilService.showCustomPopup4Error("Apply OD","Please enter the valid In & Out Time", "FAILURE");
     }else if(this.placeVisited === undefined || this.placeVisited == ""){
       this.utilService.showCustomPopup4Error("Apply OD", "Please enter the Place Visisted field", "FAILURE");
     }else if(this.OrgVisited === undefined || this.OrgVisited == ""){
@@ -195,5 +277,20 @@ export class ApplyOdPage {
     
 
   }
+
+  // basic number selection, index is always returned in the result
+ selectANumber() {
+  this.selector.show({
+    title: "How Many?",
+    items: [
+      this.jsonData.Hours, this.jsonData.Minutes
+    ],
+  }).then(
+    result => {
+      console.log(result[0].description + ' at index: ' + result[0].index);
+    },
+    err => console.log('Error: ', err)
+    );
+}
 
 }

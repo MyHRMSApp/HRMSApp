@@ -13,7 +13,7 @@
 <ion-content no-bounce>
     <div class="tempCalender" *ngIf="!calenderVIew"></div>
   <ion-calendar *ngIf="calenderVIew" (onChange)="onChange($event)" (monthChange)="monthChange()" [(ngModel)]="dateRange" [options]="optionsRange" [type]="string"
-  [format]="'YYYY-MM-DD'">
+  [format]="'YYYY-MM-DD'" id="customCalendarPage">
 </ion-calendar>
 
   <ion-grid>

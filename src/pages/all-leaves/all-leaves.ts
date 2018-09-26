@@ -147,7 +147,7 @@ export class AllLeavesPage {
   }
 
   fromDateCalendar(){
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "from", selectedDate: this.leaveFromDate, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP = "E" && this.leaveType == "0001")?"true":"false" });
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "from", selectedDate: this.leaveFromDate, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP == "E" && this.leaveType == "0001")?"true":"false" });
       myCalendar.present();
       myCalendar.onDidDismiss((data) => {
         console.log(data);
@@ -191,7 +191,7 @@ export class AllLeavesPage {
 
   toDateCalendar(){
     if(this.leaveFromDate !== undefined && this.leaveFromTime !== undefined ){
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "to", selectedDate: this.leaveToDate, "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP = "E" && this.leaveType == "0001")?"true":"false" });
+      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "to", selectedDate: this.leaveToDate, "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP == "E" && this.leaveType == "0001")?"true":"false" });
       myCalendar.present();
       myCalendar.onDidDismiss((data) => {
         console.log(data);

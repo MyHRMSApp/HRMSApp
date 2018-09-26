@@ -4,6 +4,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { ConsoleServiceProvider } from '../../providers/console-service/console-service';
 import { UtilsProvider } from '../utils/utils';
 
+declare var MFPPush:any;
 @Injectable()
 export class AuthHandlerProvider {
   securityCheckName = 'socialLogin';
@@ -15,6 +16,7 @@ export class AuthHandlerProvider {
   handleChallengeCallback = null;
   loginSuccessCallback = null;
   loginFailureCallback = null;
+  rememberMeOptionFlag = true;
 
   constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider, public utilService: UtilsProvider) {
     console.log('--> AuthHandlerProvider called');
@@ -64,6 +66,7 @@ export class AuthHandlerProvider {
   handleChallenge(challenge) {
     console.log('--> AuthHandler handleChallenge called.\n', JSON.stringify(challenge));
     this.isChallenged = true;
+    this.rememberMeOptionFlag = false;
     if (this.handleChallengeCallback != null) {
       this.handleChallengeCallback(challenge);
     } else {
@@ -74,10 +77,29 @@ export class AuthHandlerProvider {
   handleSuccess(data) {
     console.log('--> AuthHandler handleSuccess called');
     console.log("-->>"+data.user.displayName);
+    console.log("-->>"+data.user.displayName.rememberMe);
+    console.log("this.rememberMeOptionFlag-->>"+this.rememberMeOptionFlag);
     this.isChallenged = false;
     if (this.loginSuccessCallback != null) {
         localStorage.setItem("userInfo", data.user.displayName.replace(/'/g, '"'));
-        this.loginSuccessCallback();
+        // setTimeout(() => {
+          var userInfo:any = JSON.parse(localStorage.getItem("userInfo"));
+          console.log("userInfo.rememberMe=======>>"+userInfo.rememberMe);
+          if(userInfo.rememberMe == true){
+            this.loginSuccessCallback();
+          }else{
+            // (this.rememberMeOptionFlag == false)? this.loginSuccessCallback():
+            if(this.rememberMeOptionFlag){
+              setTimeout(() => {
+                this.utilService.dismissLoader();
+                this.logout();
+              }, 1000);
+            }else{
+              this.loginSuccessCallback()
+            }
+          }
+        // }, 1000);
+        
     } else {
       console.log('--> AuthHandler: loginSuccessCallback not set!');
     }
@@ -100,9 +122,22 @@ export class AuthHandlerProvider {
     WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
     .then(
       (accessToken) => {
+        // this.rememberMeOptionFlag = true;
         console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
-        this.loginSuccessCallback(accessToken);
+        // this.loginSuccessCallback(accessToken);
         //localStorage.setItem("rootPage", "true");
+
+        
+      //   MFPPush.registerDevice(
+      //     null,
+      //     function(successResponse) {
+      //       console.log("Successfully registered : "+ JSON.stringify(successResponse));
+      //     },
+      //     function(failureResponse) {
+      //       console.log("Failed to register device:" + JSON.stringify(failureResponse));
+      //     }
+      // )
+
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
@@ -148,6 +183,8 @@ export class AuthHandlerProvider {
     .then(
       (success) => {
         console.log('--> AuthHandler: logout success');
+        localStorage.setItem("rememberMe", "disabled");
+        this.checkIsLoggedIn();
         resolve(true);
       },
       (failure) => {

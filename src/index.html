@@ -33,6 +33,19 @@
     var wlEvent = new CustomEvent("wlInitFinished");
     console.log("dispatch starting wlInitFinished event");
     document.dispatchEvent(wlEvent);
+
+    // var notificationReceived = function(message) {
+    //   alert(JSON.stringify(message));
+    // };
+
+    // MFPPush.initialize(
+    //    function(successResponse) {
+    //     WL.Logger.debug("Successfully intialized");
+    //     MFPPush.registerNotificationsCallback(notificationReceived);
+    // }, function(failureResponse) {
+    //     navigator.notification.alert("Failed to initialize");
+    // });
+
   }
   </script>
 

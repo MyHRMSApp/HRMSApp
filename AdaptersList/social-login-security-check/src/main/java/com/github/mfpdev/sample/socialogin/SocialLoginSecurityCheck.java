@@ -60,6 +60,8 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     private transient AuthenticatedUser user;
     private String userId, displayName, empCode;
     private String errorMsg;
+    private boolean rememberMe = false;
+
 
     private static UserManager userManager = new UserManager();
 
@@ -105,13 +107,14 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                         if(credentials.containsKey(USER_NAME) && credentials.containsKey(PASSWORD)){
                             String username = (String) credentials.get(USER_NAME);
                             String password = (String) credentials.get(PASSWORD);
-                
+                            rememberMe = Boolean.valueOf(credentials.get("rememberMe").toString());
                             //Look for this user in the database
                             try {
                                 jsonObject = (JSONObject) userManager.getUserDetials(username, password, "", this.getConfiguration().getQaServerURL(), true);
                                 errorMsg = "sample";
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
+                                    jsonObject.put("rememberMe", rememberMe);
                                     displayName = jsonObject.toString();
                                     this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                     return true;
@@ -149,6 +152,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                             jsonObject = (JSONObject) userManager.getUserDetials("Gmail", empCode, "", this.getConfiguration().getQaServerURL(), true);
                                             if(jsonObject.getInt("EP_RESULT") == 0){
                                                 userId = jsonObject.getString("EP_ENAME");
+                                                jsonObject.put("rememberMe", rememberMe);
                                                 displayName = jsonObject.toString();
                                                 // AuthenticatedUser userNew = new AuthenticatedUser();
                                                 this.user = new AuthenticatedUser(userId, displayName, this.getName());
@@ -204,5 +208,10 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     @Override
     protected SocialLoginConfiguration getConfiguration() {
         return (SocialLoginConfiguration) super.getConfiguration();
+    }
+
+    @Override
+    protected boolean rememberCreatedUser() {
+        return rememberMe;
     }
 }

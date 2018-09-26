@@ -43,6 +43,7 @@ export class MyApp {
   public myTaskData:any;
   public internetConnectionCheck:boolean = (this.network.type=="none")?false:true;
   public selectedDateDataFromAttendance:any;
+  public globalProfileData:any;
   constructor(public platform: Platform,
     public statusBar: StatusBar, public network: Network,
     public render:Renderer,
@@ -73,6 +74,11 @@ export class MyApp {
     // else{
     //   this.rootPage = "LoginPage";
     // }
+    console.log("localStorage.getItem(rememberMe)-------------->>"+localStorage.getItem("rememberMe"));
+      if(localStorage.getItem("rememberMe") === null){
+        localStorage.setItem("rememberMe", "disabled");
+      }
+
   }
 
   initializeApp() {
@@ -115,7 +121,7 @@ export class MyApp {
     this.authHandler.logout().then((resp)=>{
       if(resp) {
         localStorage.setItem("userLogout", "1");
-        this.authHandler.checkIsLoggedIn();
+        // this.authHandler.checkIsLoggedIn();
         // this.nav.setRoot("LoginPage");
       }
       else {

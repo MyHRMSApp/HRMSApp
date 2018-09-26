@@ -22,6 +22,7 @@ import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { ConsoleServiceProvider } from '../providers/console-service/console-service';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { NetworkProvider } from '../providers/network-service/network-service';
+import { WheelSelector } from '@ionic-native/wheel-selector';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDc0EYCDmJ3SZh5fiyk9M3qeYqDTBAYXgY",
@@ -64,7 +65,7 @@ firebase.initializeApp(firebaseConfig)
     ConsoleServiceProvider,
     MyApp,
     SocialSharing, Nav,
-    NetworkProvider
+    NetworkProvider,WheelSelector
   ]
 })
 export class AppModule {}

@@ -277,7 +277,7 @@ ionViewCanEnter() {
     this.mainService.attendanceNA1_DataFlag = true;
     this.mainService.attendanceNA2_DataFlag = true;
     this.mainService.attendanceCallFlag = true;
-    
+    this.mainService.selectedDateDataFromAttendance = undefined;
     if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
       this.mainService.attendanceCallFlag = false;
       this.mainService.attendanceN_NP1_DataFlag = false;
@@ -321,6 +321,19 @@ ionViewCanEnter() {
           console.log("Error",error);
           // this.utilService.showCustomPopup("FAILURE",error.statusText);
         });
+
+        this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 0){
+              this.mainService.globalProfileData = resultData.data.ET_DATA;
+            }
+          };
+        }, (error)=>{
+          this.mainService.globalProfileData = undefined;
+          console.log("Error",error);
+          // this.utilService.showCustomPopup("FAILURE",error.statusText);
+        });
+
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
       // }

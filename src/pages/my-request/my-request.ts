@@ -9,6 +9,7 @@ import { MyApp } from '../../app/app.component';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
 import {AlertPageFortextareaPage } from '../alert-page-fortextarea/alert-page-fortextarea';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -309,8 +310,12 @@ export class MyRequestPage {
     console.log("getTimeDetails------->>"+timeData);
     if (timeData.toString().includes("@")){
       var result = timeData.toString().split("@");
-      return result[0];
+      result = result[0].toString().replace(/:/g, "");
+      result = moment(result, "HHmmss").format();
+      return result;
     }else{
+      timeData = timeData.toString().replace(/:/g, "");
+      timeData = moment(timeData, "HHmmss").format();
       return timeData;
     }
 
@@ -331,6 +336,7 @@ export class MyRequestPage {
 
   getTimeValue(timeData){
     timeData = timeData.toString().replace(/:/g, "");
+    timeData = moment(timeData, "HHmmss").format();
     return timeData;
   }
 

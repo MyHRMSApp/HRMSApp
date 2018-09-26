@@ -127,7 +127,9 @@ export class CustomCalendarModelPage {
       this.leaveFromDate = moment($event._d).format("YYYY-MM-DD");
     }
     else if(this.calendarFor == "to"){
-      if(moment($event._d).format("YYYY-MM-DD") == moment(this.leaveFromDate).format("YYYY-MM-DD")){
+      console.log(moment($event._d).format("YYYY-MM-DD")+"---"+moment(this.leaveFromDate).format("YYYY-DD-MM"));
+      console.log("---->>"+ moment(this.leaveFromDate).diff($event._d, 'days'));
+      if(moment($event._d).format("YYYY-MM-DD") == moment(this.leaveFromDate).format("YYYY-DD-MM")){
         if(this.leaveFromTime == "FD"){
           this.quarterFlag = true;
           this.fulldayFlag = false;
@@ -351,9 +353,9 @@ export class CustomCalendarModelPage {
   }
 
   monthChange(){
-    var elements:any = document.getElementsByClassName("switch-btn");
-    var backArrow = document.getElementById("backArrow");
-    var frontArrow = document.getElementById("frontArrow");
+    var elements:any = document.getElementById("customCalendarPage").querySelectorAll(".switch-btn");
+    var backArrow:any = document.getElementById("customCalendarPage").querySelector("#backArrow");
+    var frontArrow:any = document.getElementById("customCalendarPage").querySelector("#frontArrow");
     frontArrow.className = "forward disable-btn";
     backArrow.className = "back disable-btn";
     setTimeout(() => {

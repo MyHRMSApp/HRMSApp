@@ -117,9 +117,9 @@ export class AttendanceViewPage {
   }
 
   monthChange(){
-    var elements:any = document.getElementsByClassName("switch-btn");
-    var backArrow = document.getElementById("backArrow");
-    var frontArrow = document.getElementById("frontArrow");
+    var elements:any = document.getElementById("attendancePage").querySelectorAll(".switch-btn");
+    var backArrow:any = document.getElementById("attendancePage").querySelector("#backArrow");
+    var frontArrow:any = document.getElementById("attendancePage").querySelector("#frontArrow");
     frontArrow.className = "forward disable-btn";
     backArrow.className = "back disable-btn";
     setTimeout(() => {
