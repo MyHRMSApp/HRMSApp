@@ -56,7 +56,6 @@ export class ShareCouponsPage {
     this.employeeName = this.userInformation.EP_ENAME;
     this.employeeCode = this.userInformation.EP_PERNR;
     console.log(this.employeeName, this.employeeCode);
-
     
   }
 
@@ -85,16 +84,14 @@ export class ShareCouponsPage {
   }
   gmail() {
     var msg = this.str;
-    this.socialSharing.shareVia("com.google.android.gm", msg, "TITAN DISCOUNT COUPONS", null).then(() => {
-    }).catch(() => {
-      this.utilService.showCustomPopup("FAILURE", "Email is not installed");
-    });
+    var mailToLink = "mailto:?cc=&subject=TITAN%20DISCOUNT%20COUPONS&body=" + encodeURIComponent(msg);
+    window.location.href = mailToLink;
   }
   whatsapp() {
     var msg = this.str;
     this.socialSharing.shareViaWhatsApp(msg, null, null).then(() => {
     }).catch(() => {
-      this.utilService.showCustomPopup("FAILURE", "Whatsapp is not installed");
+    this.utilService.showCustomPopup("FAILURE", "Whatsapp is not installed");
     });
   }
   sms() {

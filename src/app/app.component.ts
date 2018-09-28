@@ -8,7 +8,8 @@ import { HomePage } from '../pages/home/home';
 import { StorageProvider } from '../providers/storage/storage';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { UtilsProvider } from '../providers/utils/utils';
-import { NetworkProvider } from '../providers/network-service/network-service'
+import { NetworkProvider } from '../providers/network-service/network-service';
+import { AppAvailability } from '@ionic-native/app-availability';
 declare var WL;
 declare var WLAuthorizationManager;
 declare var document:any;
@@ -51,7 +52,7 @@ export class MyApp {
     public storage:StorageProvider,
     public alert:AlertController, public toast: ToastController,
     public splashScreen: SplashScreen, public utilService: UtilsProvider, 
-    public networkProvider: NetworkProvider, public events: Events) {
+    public networkProvider: NetworkProvider, public events: Events, private appAvailability: AppAvailability) {
     this.initializeApp();
 
     // let rootLocation = localStorage.getItem("rootPage");
@@ -104,6 +105,26 @@ export class MyApp {
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
       // }
     });
+
+let app;
+if (this.platform.is('ios')) {
+  app = 'whatsapp://';
+} else if (this.platform.is('android')) {
+  app = 'com.whatsapp.android';
+}
+
+this.appAvailability.check(app)
+  .then(
+    (yes: boolean) => {
+      console.log(app + ' is available');
+      localStorage.setItem("platform", "yes");
+    },
+
+    (no: boolean) =>  {
+      console.log(app + ' is NOT available');
+      localStorage.setItem("platform", "no");
+    } 
+  );
   }
 
 
