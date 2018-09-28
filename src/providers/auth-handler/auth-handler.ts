@@ -17,7 +17,7 @@ export class AuthHandlerProvider {
   loginSuccessCallback = null;
   loginFailureCallback = null;
   rememberMeOptionFlag = true;
-
+  userInfo:any
   constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider, public utilService: UtilsProvider) {
     console.log('--> AuthHandlerProvider called');
   }
@@ -79,26 +79,31 @@ export class AuthHandlerProvider {
     console.log("-->>"+data.user.displayName);
     console.log("-->>"+data.user.displayName.rememberMe);
     console.log("this.rememberMeOptionFlag-->>"+this.rememberMeOptionFlag);
+    localStorage.setItem("userInfo", data.user.displayName.replace(/'/g, '"'));
     this.isChallenged = false;
     if (this.loginSuccessCallback != null) {
-        localStorage.setItem("userInfo", data.user.displayName.replace(/'/g, '"'));
-        // setTimeout(() => {
-          var userInfo:any = JSON.parse(localStorage.getItem("userInfo"));
-          console.log("userInfo.rememberMe=======>>"+userInfo.rememberMe);
-          if(userInfo.rememberMe == true){
-            this.loginSuccessCallback();
-          }else{
-            // (this.rememberMeOptionFlag == false)? this.loginSuccessCallback():
-            if(this.rememberMeOptionFlag){
-              setTimeout(() => {
-                this.utilService.dismissLoader();
-                this.logout();
-              }, 1000);
-            }else{
-              this.loginSuccessCallback()
-            }
-          }
-        // }, 1000);
+        // localStorage.setItem("userInfo", data.user.displayName.replace(/'/g, '"'));
+        // // setTimeout(() => {
+        //  this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        //   console.log("userInfo.rememberMe=======>>"+this.userInfo.rememberMe);
+        //   if(this.userInfo.rememberMe == true){
+        //     this.loginSuccessCallback();
+        //   }else{
+        //     // (this.rememberMeOptionFlag == false)? this.loginSuccessCallback():
+        //     if(this.rememberMeOptionFlag){
+        //       setTimeout(() => {
+        //         this.utilService.dismissLoader();
+        //         this.logout();
+        //       }, 3000);
+        //     }else{
+        //       this.loginSuccessCallback()
+        //     }
+        //   }
+        // // }, 1000);
+
+        if(!this.rememberMeOptionFlag){
+          this.loginSuccessCallback();
+        }
         
     } else {
       console.log('--> AuthHandler: loginSuccessCallback not set!');
@@ -138,10 +143,29 @@ export class AuthHandlerProvider {
       //     }
       // )
 
+
+      // setTimeout(() => {
+       this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        console.log("userInfo.rememberMe=======>>"+this.userInfo.rememberMe);
+        if(this.userInfo.rememberMe == true){
+          this.loginSuccessCallback();
+        }else{
+          // (this.rememberMeOptionFlag == false)? this.loginSuccessCallback():
+          if(this.rememberMeOptionFlag){
+            // setTimeout(() => {
+              this.utilService.dismissLoader();
+              this.logout();
+            // }, 3000);
+          }else{
+            this.loginSuccessCallback()
+          }
+        }
+      // }, 1000);
+
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
-        this.loginFailureCallback(error);
+        //this.loginFailureCallback(error);
       }
     );
   }

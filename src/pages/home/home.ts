@@ -52,6 +52,7 @@ export class HomePage {
   jewelleryLength: number;
   taneiraLength: number;
   watchLength: number;
+  public attanaceCallFlag:boolean = false;
 
   
 
@@ -119,7 +120,7 @@ attendance() {
  this.utilService.showLoader("Please wait...");
  console.log("this.mainService.attanancePageData-->"+ this.mainService.attanancePageData);
  
-  if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
+  if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag && !this.attanaceCallFlag){
     this.attendanceDataFetch();
   }else{
     var counter = 0;
@@ -279,6 +280,7 @@ ionViewCanEnter() {
     this.mainService.attendanceCallFlag = true;
     this.mainService.selectedDateDataFromAttendance = undefined;
     if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
+      this.attanaceCallFlag = true;
       this.mainService.attendanceCallFlag = false;
       this.mainService.attendanceN_NP1_DataFlag = false;
       var payloadData = {

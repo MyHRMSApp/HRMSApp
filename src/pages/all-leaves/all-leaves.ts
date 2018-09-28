@@ -329,8 +329,12 @@ export class AllLeavesPage {
       text: 'APPLY',
       handler: data => {
        console.log("Apply clicked");
+       var leavetypeData = this.leaveType;
+    if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ" || this.leaveToTime == "FQ" || this.leaveToTime == "LQ"){
+      leavetypeData = "0011";
+    }
        var payloadData = {
-                          "IP_LTYP": this.leaveType,
+                          "IP_LTYP": leavetypeData,
                           "IP_FDATE": moment(leaveFromDate, "DD-MM-YYYY").format("YYYYMMDD"),
                           "IP_TDATE": moment(leaveToDate, "DD-MM-YYYY").format("YYYYMMDD"),
                           "IP_FHALF": this.leaveFromTime,
