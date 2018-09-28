@@ -310,16 +310,43 @@ export class MyTasksPage {
   getLeaveTypeValue(leaveType){
     var leaveTypevalue = "";
       switch (leaveType) {
-        case 'CL':
+        case 'ML':
           leaveTypevalue = "01";
           break;
-        case 'SL':
+        case 'FP':
+          leaveTypevalue = "01";
+          break;
+        case 'SP':
+          leaveTypevalue = "01";
+          break;
+        case 'ES':
+          leaveTypevalue = "01";
+          break;
+        case 'LP':
+          leaveTypevalue = "01";
+          break;
+        case 'MC':
+          leaveTypevalue = "01";
+          break;
+        case 'VL':
+          leaveTypevalue = "01";
+          break;
+        case 'GL':
+          leaveTypevalue = "01";
+          break;
+        case 'QC':
+          leaveTypevalue = "01";
+          break;
+        case 'QL':
           leaveTypevalue = "01";
           break;
         case 'PL':
           leaveTypevalue = "01";
           break;
-        case 'GL':
+        case 'CL':
+          leaveTypevalue = "01";
+          break;
+        case 'SL':
           leaveTypevalue = "01";
           break;
         case 'OD':

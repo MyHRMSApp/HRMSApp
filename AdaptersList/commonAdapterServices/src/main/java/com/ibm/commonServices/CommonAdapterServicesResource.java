@@ -316,6 +316,22 @@ public class CommonAdapterServicesResource {
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", false);
 				}
+				else if(SHIFT.equals("") && ATT_1.equals("HO") && ATT_2.equals("HO")){
+					resultJSON.put("cssClass", "HollydayClass");
+					resultJSON.put("LDATE", LDATE);
+					resultJSON.put("PUN_P10", PUNIN);
+					resultJSON.put("PUN_P15", MIDOUT);
+					resultJSON.put("PUN_P20", PUNOUT);
+					resultJSON.put("PUN_P25", MIDIN);
+					resultJSON.put("ATT", ATT);
+					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
+					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
+					resultJSON.put("Holiday", true);
+					resultJSON.put("Absence", false);
+					resultJSON.put("RequestState", false);
+				}
 				else if(SHIFT.equals("OFF") && temp_reqState_ATT_1 != null || temp_reqState_ATT_2 != null){
 					List ATT_1_Req = new ArrayList(); 
 					List ATT_2_Req = new ArrayList();

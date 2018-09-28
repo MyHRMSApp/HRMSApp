@@ -450,7 +450,11 @@ export class AttendanceViewPage {
   }
 
   getRequestString(string){
-    var res = string.slice(0, 2);
+    console.log(string);
+    if(string.toString() == "FTP" || string.toString() == "FTA"){
+      return "FTP";
+    }
+    var res = string.toString().slice(0, 2);
     return res;
   }
   
