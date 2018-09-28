@@ -250,11 +250,15 @@ export class ApplyFtpPage {
       this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Out Punch", "FAILURE");
     }else if(!beginningTimeInPunch.isBefore(endTimeOutPunch)){
       this.utilService.showCustomPopup4Error("Apply FTP", "Please enter the valid In & Out Time", "FAILURE");
-    }else if(this.employeeLevel == "E" && this.midInPunch === undefined || this.employeeLevel == "E" && this.midInPunch == "00:00:00"){
+    }else if(this.employeeLevel == "E" && this.midOutPunch !== undefined && this.midOutPunch !== "00:00:00" && this.midInPunch == undefined){
       this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Mid In Punch", "FAILURE");
-    }else if(this.employeeLevel == "E" &&  this.midOutPunch === undefined || this.employeeLevel == "E" && this.midOutPunch == "00:00:00"){
-      this.utilService.showCustomPopup4Error("Apply FTP","Please select proper Mid Out Punch", "FAILURE");
-    }else if(this.employeeLevel == "E" &&  !endTimemidOutPunch.isBefore(beginningTimemidInPunch)){
+    }else if(this.employeeLevel == "E" && this.midOutPunch !== undefined && this.midOutPunch !== "00:00:00" && this.midInPunch == "00:00:00"){
+      this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Mid In Punch", "FAILURE");
+    }else if(this.employeeLevel == "E" && this.midInPunch !== undefined && this.midInPunch !== "00:00:00" && this.midOutPunch === undefined){
+      this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Mid Out Punch", "FAILURE");
+    }else if(this.employeeLevel == "E" && this.midInPunch !== undefined && this.midInPunch !== "00:00:00" && this.midOutPunch == "00:00:00"){
+      this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Mid Out Punch", "FAILURE");
+    }else if(this.employeeLevel == "E" && this.midOutPunch !== undefined && this.midInPunch !== undefined && this.midOutPunch !== "00:00:00" && this.midInPunch !== "00:00:00" && !endTimemidOutPunch.isBefore(beginningTimemidInPunch)){
       this.utilService.showCustomPopup4Error("Apply FTP","Please enter the valid MidIn & MidOut Time", "FAILURE");
     }else if(this.requestTypeSelection === undefined){
       this.utilService.showCustomPopup4Error("Apply FTP","Please select Request Type", "FAILURE");
@@ -319,6 +323,18 @@ export class ApplyFtpPage {
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
       // }
     }
+    
+    
+    // else if(this.employeeLevel == "E" && this.midInPunch === undefined || this.employeeLevel == "E" && this.midInPunch == "00:00:00"){
+    //   this.utilService.showCustomPopup4Error("Apply FTP", "Please select proper Mid In Punch", "FAILURE");
+    // }else if(this.employeeLevel == "E" &&  this.midOutPunch === undefined || this.employeeLevel == "E" && this.midOutPunch == "00:00:00"){
+    //   this.utilService.showCustomPopup4Error("Apply FTP","Please select proper Mid Out Punch", "FAILURE");
+    // }else if(this.employeeLevel == "E" &&  !endTimemidOutPunch.isBefore(beginningTimemidInPunch)){
+    //   this.utilService.showCustomPopup4Error("Apply FTP","Please enter the valid MidIn & MidOut Time", "FAILURE");
+    // }else if(this.requestTypeSelection === undefined){
+    //   this.utilService.showCustomPopup4Error("Apply FTP","Please select Request Type", "FAILURE");
+    // }
+    
   }
 
   getRequestString(string){
