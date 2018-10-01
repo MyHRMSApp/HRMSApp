@@ -82,7 +82,11 @@
     </platform>
     <mfp:android>
         <mfp:sdkChecksum>3727668345</mfp:sdkChecksum>
+<<<<<<< HEAD
         <mfp:appChecksum>1217162531</mfp:appChecksum>
+=======
+        <mfp:appChecksum>1937875676</mfp:appChecksum>
+>>>>>>> 94fe0f1df54a612919c6b88eb887a650d4e461b9
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
@@ -117,7 +121,11 @@
     </mfp:windows>
     <mfp:platformVersion>8.0.0.00-20180630-023429</mfp:platformVersion>
     <mfp:clientCustomInit enabled="false" />
+<<<<<<< HEAD
     <mfp:server runtime="mfp" url="http://192.168.43.158:9080" />
+=======
+    <mfp:server runtime="mfp" url="https://devapps.titan.in:8443" />
+>>>>>>> 94fe0f1df54a612919c6b88eb887a650d4e461b9
     <mfp:directUpdateAuthenticityPublicKey />
     <mfp:languagePreferences>en</mfp:languagePreferences>
     <engine name="android" spec="^7.0.0" />

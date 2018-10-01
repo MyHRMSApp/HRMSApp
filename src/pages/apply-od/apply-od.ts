@@ -197,13 +197,13 @@ export class ApplyOdPage {
     }else if(this.endDate === undefined || this.endDate == ""){
       this.utilService.showCustomPopup4Error("Apply OD", "Please enter valid End Date", "FAILURE");
     }else if(this.startDate != this.endDate && !beginningDate.isBefore(endDate)){
-      this.utilService.showCustomPopup4Error("Apply OD","Please enter the valid In & Out Date", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD","Please enter the valid Start & End Date", "FAILURE");
     }else if(this.inTime === undefined || this.inTime == "00:00"){
-      this.utilService.showCustomPopup4Error("Apply OD", "Please enter valid In Time", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD", "Please enter valid From Time", "FAILURE");
     }else if(this.outTime === undefined || this.outTime == "00:00"){
-      this.utilService.showCustomPopup4Error("Apply OD","Please enter valid Out Time", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD","Please enter valid TO Time", "FAILURE");
     }else if(!beginningTime.isBefore(endTime)){
-      this.utilService.showCustomPopup4Error("Apply OD","Please enter the valid In & Out Time", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD","Please enter the valid From & To Time", "FAILURE");
     }else if(this.placeVisited === undefined || this.placeVisited == ""){
       this.utilService.showCustomPopup4Error("Apply OD", "Please enter the Place Visisted field", "FAILURE");
     }else if(this.OrgVisited === undefined || this.OrgVisited == ""){

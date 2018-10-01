@@ -145,10 +145,36 @@ export class AuthHandlerProvider {
 
 
       // setTimeout(() => {
+
+
        this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
         console.log("userInfo.rememberMe=======>>"+this.userInfo.rememberMe);
         if(this.userInfo.rememberMe == true){
           this.loginSuccessCallback();
+
+          MFPPush.registerDevice(
+            null,
+            function(successResponse) {
+              console.log("Successfully registered-->>"+successResponse);
+              var tags = ['Manager'];
+              if(this.userInfo.EP_USERTYPE == "ESS"){
+                tags = ['Employee'];
+              }
+                MFPPush.subscribe(
+                  tags,
+                  function(tags) {
+                    console.log("Subscribed successfully-->>"+tags);
+                  },
+                  function(failureResponse) {
+                    console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
+                  }
+                );
+            },
+            function(failureResponse) {
+                console.log("Failed to register-->>"+JSON.stringify(failureResponse));
+            }
+        );
+
         }else{
           // (this.rememberMeOptionFlag == false)? this.loginSuccessCallback():
           if(this.rememberMeOptionFlag){
@@ -157,7 +183,28 @@ export class AuthHandlerProvider {
               this.logout();
             // }, 3000);
           }else{
-            this.loginSuccessCallback()
+            this.loginSuccessCallback();
+
+            MFPPush.registerDevice(
+              null,
+              function(successResponse) {
+                console.log("Successfully registered-->>"+successResponse);
+              },
+              function(failureResponse) {
+                  console.log("Failed to register-->>"+JSON.stringify(failureResponse));
+              }
+          );
+          var tags = ['Manager'];
+          MFPPush.subscribe(
+            tags,
+            function(tags) {
+              console.log("Subscribed successfully-->>"+tags);
+            },
+            function(failureResponse) {
+              console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
+            }
+          );
+
           }
         }
       // }, 1000);
@@ -165,6 +212,8 @@ export class AuthHandlerProvider {
       },
       (error) => {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup("FAILURE", "Request timed out, Please restart the application");
         //this.loginFailureCallback(error);
       }
     );

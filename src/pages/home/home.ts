@@ -53,7 +53,7 @@ export class HomePage {
   jewelleryLength: number;
   taneiraLength: number;
   watchLength: number;
-  public attanaceCallFlag:boolean = false;
+  public attanaceCallFlag:boolean = true;
 
   
 
@@ -133,7 +133,10 @@ attendance() {
           this.routerOnDeactivate();
       }else if(counter == 29){
         this.utilService.dismissLoader();
-        this.utilService.showPopup("Attendance", "Internal Server Error, Please try again");
+        this.utilService.showCustomPopup4Error("Attendance", "Internal Server Error, Please try again", "FAILURE");
+        this.mainService.attendanceCallFlag = true;
+        this.mainService.attendanceN_NP1_DataFlag = true; 
+        this.attanaceCallFlag = false;
         this.routerOnDeactivate();
       }
       counter++;
@@ -157,13 +160,13 @@ attendanceDataFetch(){
           console.log(JSON.stringify(this.mainService.attanancePageData));
           this.navCtrl.push("AttendanceViewPage");
         }else{
-          this.utilService.showPopup("Attendance", resultData.message);
+          this.utilService.showCustomPopup4Error("Attendance", "Internal Server Error, Please try again", "FAILURE");
         }
       };
     }, (error)=>{
       console.log("Data readed from jsonstore error",error);
       this.utilService.dismissLoader();
-      this.utilService.showPopup("Attendance",error.statusText);
+      this.utilService.showCustomPopup4Error("Attendance", "Internal Server Error, Please try again", "FAILURE");
     });
   // }else{
   //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -257,14 +260,17 @@ coupons() {
           this.navCtrl.push("CouponsPage", {"eyeWearLength":this.eyeWearLength, "jewelleryLength": this.jewelleryLength, "taneiraLength":this.taneiraLength, "watchLength":this.watchLength,});
 
         } else {
-          this.utilService.showPopup("Coupons", resultData.message);
+          // this.utilService.showPopup("Coupons", resultData.message);
+          this.utilService.showCustomPopup4Error("Coupons", "Internal Server Error, Please try again", "FAILURE");
         }
       };
     },
     (error)=>{
       console.log("Data readed from jsonstore error",error);
       this.utilService.dismissLoader();
-      this.utilService.showPopup("Attendance",error.statusText);
+      // this.utilService.showPopup("Attendance",error.statusText);
+      this.utilService.showCustomPopup4Error("Coupons", "Internal Server Error, Please try again", "FAILURE");
+      
     });
   // }else{
   //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -280,6 +286,7 @@ ionViewCanEnter() {
     this.mainService.attendanceNA2_DataFlag = true;
     this.mainService.attendanceCallFlag = true;
     this.mainService.selectedDateDataFromAttendance = undefined;
+    this.mainService.attanancePageData = undefined;
     if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag){
       this.attanaceCallFlag = true;
       this.mainService.attendanceCallFlag = false;
@@ -302,6 +309,9 @@ ionViewCanEnter() {
           };
         }, (error)=>{
           console.log("Error",error);
+          this.mainService.attendanceCallFlag = true;
+          this.mainService.attendanceN_NP1_DataFlag = true;
+          this.attanaceCallFlag = false;
         });
 
         this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
@@ -478,13 +488,15 @@ try {
         }
         else {
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup("FAILURE",resultData.message);
+          // this.utilService.showCustomPopup("FAILURE",resultData.message);
+          this.utilService.showCustomPopup4Error("Leaves", resultData.message, "FAILURE");
         }
       };
     }, (error)=>{
       console.log("Data readed from jsonstore error",error);
       this.utilService.dismissLoader();
-      this.utilService.showCustomPopup("FAILURE",error.statusText);
+      // this.utilService.showCustomPopup("FAILURE",error.statusText);
+      this.utilService.showCustomPopup4Error("Leaves", "Internal Server Error, Please try again", "FAILURE");
     });
   // }else{
   //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -510,13 +522,15 @@ try {
         }
         else {
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup("FAILURE",resultData.message);
+          // this.utilService.showCustomPopup("FAILURE",resultData.message);
+          this.utilService.showCustomPopup4Error("My Request", resultData.message, "FAILURE");
         }
       };
     }, (error)=>{
       console.log("Data readed from jsonstore error",error);
       this.utilService.dismissLoader();
-      this.utilService.showCustomPopup("FAILURE",error.statusText);
+      // this.utilService.showCustomPopup("FAILURE",error.statusText);
+      this.utilService.showCustomPopup4Error("My Request", "Internal Server Error, Please try again", "FAILURE");
     });
   // }else{
   //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -541,13 +555,15 @@ myTask() {
           }
           else {
             this.utilService.dismissLoader();
-            this.utilService.showCustomPopup("FAILURE",resultData.message);
+            // this.utilService.showCustomPopup("FAILURE",resultData.message);
+            this.utilService.showCustomPopup4Error("My Task", resultData.message, "FAILURE");
           }
         };
       }, (error)=>{
         console.log("Data readed from jsonstore error",error);
         this.utilService.dismissLoader();
-        this.utilService.showCustomPopup("FAILURE",error.statusText);
+        // this.utilService.showCustomPopup("FAILURE",error.statusText);
+        this.utilService.showCustomPopup4Error("My Task", "Internal Server Error, Please try again", "FAILURE");
       });
     // }else{
     //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");

@@ -15,6 +15,7 @@ import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 declare var WL;
 declare var WLAuthorizationManager;
 declare var document:any;
+declare var MFPPush;
 @Component({
   templateUrl: 'app.html'
 })
@@ -106,6 +107,33 @@ export class MyApp {
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
       // }
+
+      var notificationReceived = (message) => {
+        // alert(JSON.stringify(message));
+        this.utilService.showCustomPopup4Error("Notification", message.alert, "NOTIFY");
+    };
+
+    MFPPush.isPushSupported (
+      function(successResponse) {
+          console.log("Push Supported-->>"+successResponse);
+          MFPPush.initialize (
+            function(successResponse) {
+              console.log("Successfully initialize-->>"+successResponse);
+                MFPPush.registerNotificationsCallback(notificationReceived);
+            },
+            function(failureResponse) {
+              console.log("Failed to initialize===>>"+failureResponse);
+            }
+        );
+      },
+      function(failureResponse) {
+        console.log("Failed to get push support status===>"+failureResponse);
+      }
+  );
+
+
+
+    
     });
 
 let app;
