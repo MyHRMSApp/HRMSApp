@@ -283,6 +283,14 @@ ion-nav{
     max-width: 300px !important;
 }
 
+.alert-head {
+    text-align: left;
+    text-align: center !important;
+    padding: 24px 24px 20px;
+    color: white !important;
+    background-color: #019F9E !important;
+}
+
   //Media query for iPhone-X
   @media only screen and (min-height: 812px) and (min-width: 375px) {
 

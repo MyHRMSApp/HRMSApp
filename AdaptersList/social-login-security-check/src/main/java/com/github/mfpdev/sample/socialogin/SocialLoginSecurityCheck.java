@@ -110,7 +110,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                             rememberMe = Boolean.valueOf(credentials.get("rememberMe").toString());
                             //Look for this user in the database
                             try {
-                                jsonObject = (JSONObject) userManager.getUserDetials(username, password, "", this.getConfiguration().getQaServerURL(), true);
+                                jsonObject = (JSONObject) userManager.getUserDetials(username, password, "", this.getConfiguration().getDevServerURL(), true);
                                 errorMsg = "sample";
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
@@ -149,7 +149,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                         JSONObject employeeNO = (JSONObject) userManager.getUserDetials("", "", gmailID, this.getConfiguration().getGmailAuthURL(), false);
                                         if(employeeNO.getInt("EmpCode") != 0){
                                             empCode = Integer.toString(employeeNO.getInt("EmpCode"));
-                                            jsonObject = (JSONObject) userManager.getUserDetials("Gmail", empCode, "", this.getConfiguration().getQaServerURL(), true);
+                                            jsonObject = (JSONObject) userManager.getUserDetials("Gmail", empCode, "", this.getConfiguration().getDevServerURL(), true);
                                             if(jsonObject.getInt("EP_RESULT") == 0){
                                                 userId = jsonObject.getString("EP_ENAME");
                                                 jsonObject.put("rememberMe", rememberMe);

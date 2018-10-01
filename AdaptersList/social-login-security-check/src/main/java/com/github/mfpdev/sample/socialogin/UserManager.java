@@ -69,7 +69,7 @@ public class UserManager {
     private static final String SAP_USERNAME = "HCM_SERV_USR";
     private static final String SAP_PASSWORD = "HCM_SERV_USR@123";
     private static final String USER_AUTH_CONTEXT_PATH = "UserAuthentication";
-    private static final String AUTH_SCOPE_URL = "pirqa.titan.co.in";
+    private static final String AUTH_SCOPE_URL = "pirdev.titan.co.in";
 	private static final int AUTH_SCOPE_PORT = 50401;
 	private static final int TIMEOUT_MILLIS = 30000;
     JSONObject jsonObject = new JSONObject();

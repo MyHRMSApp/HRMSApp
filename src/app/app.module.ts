@@ -24,6 +24,7 @@ import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { NetworkProvider } from '../providers/network-service/network-service';
 import { WheelSelector } from '@ionic-native/wheel-selector';
 import { AppAvailability } from '@ionic-native/app-availability';
+import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDc0EYCDmJ3SZh5fiyk9M3qeYqDTBAYXgY",
@@ -68,7 +69,8 @@ firebase.initializeApp(firebaseConfig)
     SocialSharing, Nav,
     NetworkProvider,
     WheelSelector,
-    AppAvailability
+    AppAvailability,
+    ImageResizer
   ]
 })
 export class AppModule {}

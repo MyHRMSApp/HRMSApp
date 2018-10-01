@@ -10,6 +10,7 @@ import { MyApp } from '../../app/app.component';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
+import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import moment from 'moment';
 
 /**
@@ -62,7 +63,7 @@ constructor(public menu: MenuController, public events: Events, private camera: 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public mainService: MyApp, 
     public service: ServiceProvider, public utilService: UtilsProvider, public ref: ChangeDetectorRef,
-    public authHandler: AuthHandlerProvider) {
+    public authHandler: AuthHandlerProvider,private imageResizer: ImageResizer) {
 
     // this.authHandler.setLoginFailureCallback((error) => {
     //   this.utilService.dismissLoader();
@@ -390,9 +391,17 @@ takePhoto() {
     destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
-    saveToPhotoAlbum: true
+    saveToPhotoAlbum: true,
+    allowEdit:true,
+    correctOrientation: true
   }
   this.camera.getPicture(options).then((imageData) => {
+    this.imageResizer.resize({
+      uri: imageData,
+      quality: 30,
+      width: 1000,
+      height: 1000
+      })
     this.utilService.showLoader("Updating picture");
       if(imageData){
         console.log("getting into if condition",imageData);
@@ -419,8 +428,16 @@ uploadPhoto() {
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
     destinationType: this.camera.DestinationType.DATA_URL, quality: 30,
     encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE
+    mediaType: this.camera.MediaType.PICTURE,
+    allowEdit:true,
+    correctOrientation: true
   }).then((imageData) => {
+    this.imageResizer.resize({
+    uri: imageData,
+    quality: 30,
+    width: 1000,
+    height: 1000
+    })
     this.utilService.showLoader("Updating picture");
       if(imageData){
         console.log("getting into if condition",imageData);

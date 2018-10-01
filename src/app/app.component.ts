@@ -10,6 +10,8 @@ import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { UtilsProvider } from '../providers/utils/utils';
 import { NetworkProvider } from '../providers/network-service/network-service';
 import { AppAvailability } from '@ionic-native/app-availability';
+import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
+
 declare var WL;
 declare var WLAuthorizationManager;
 declare var document:any;
