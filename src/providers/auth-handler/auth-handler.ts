@@ -151,15 +151,15 @@ export class AuthHandlerProvider {
         console.log("userInfo.rememberMe=======>>"+this.userInfo.rememberMe);
         if(this.userInfo.rememberMe == true){
           this.loginSuccessCallback();
-
+          var tags = ['Manager'];
+              if(this.userInfo.EP_USERTYPE == "ESS"){
+                tags = ['Employee'];
+              }
           MFPPush.registerDevice(
             null,
             function(successResponse) {
               console.log("Successfully registered-->>"+successResponse);
-              var tags = ['Manager'];
-              if(this.userInfo.EP_USERTYPE == "ESS"){
-                tags = ['Employee'];
-              }
+              
                 MFPPush.subscribe(
                   tags,
                   function(tags) {
@@ -184,25 +184,28 @@ export class AuthHandlerProvider {
             // }, 3000);
           }else{
             this.loginSuccessCallback();
-
+            var tags = ['Manager'];
+            if(this.userInfo.EP_USERTYPE == "ESS"){
+              tags = ['Employee'];
+            }
             MFPPush.registerDevice(
               null,
               function(successResponse) {
                 console.log("Successfully registered-->>"+successResponse);
+               
+                  MFPPush.subscribe(
+                    tags,
+                    function(tags) {
+                      console.log("Subscribed successfully-->>"+tags);
+                    },
+                    function(failureResponse) {
+                      console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
+                    }
+                  );
               },
               function(failureResponse) {
                   console.log("Failed to register-->>"+JSON.stringify(failureResponse));
               }
-          );
-          var tags = ['Manager'];
-          MFPPush.subscribe(
-            tags,
-            function(tags) {
-              console.log("Subscribed successfully-->>"+tags);
-            },
-            function(failureResponse) {
-              console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
-            }
           );
 
           }
@@ -251,16 +254,19 @@ export class AuthHandlerProvider {
   logout() {
     console.log('--> AuthHandler logout called');
     // this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
+    this.utilService.showLoader("Please Wait...");
     return new Promise((resolve,reject)=>{
       WLAuthorizationManager.logout(this.securityCheckName)
     .then(
       (success) => {
         console.log('--> AuthHandler: logout success');
         localStorage.setItem("rememberMe", "disabled");
+        this.utilService.dismissLoader();
         this.checkIsLoggedIn();
         resolve(true);
       },
       (failure) => {
+        this.utilService.dismissLoader();
         console.log('--> AuthHandler: logout failure: ' + JSON.stringify(failure));
         reject(false);
       }
