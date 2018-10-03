@@ -98,7 +98,7 @@ public class CommonAdapterServicesResource {
 	private static final String GetMyTask = "GetMyTask";
 	private static final String MyTaskApprove = "MyTaskApprove";
 	private static final String GetMyProfile = "GetMyProfile";
-	private static final String AUTH_SCOPE_URL = "pirdev.titan.co.in";
+	private static final String AUTH_SCOPE_URL = "pirqa.titan.co.in";
 	private static final int AUTH_SCOPE_PORT = 50401;
 	private static final int TIMEOUT_MILLIS = 30000;
 	
@@ -1103,7 +1103,7 @@ public class CommonAdapterServicesResource {
 		JSONObject resultJSON = new JSONObject();
 		commonServerResponce = new JSONObject(commonResponceStr);
 		LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Name : " + methodName + "\n");
-	    LOGGER.log(Level.INFO, "\n SAP Request Sending from URL : " + configurationAPI.getPropertyValue(DEVServer)+contextPathName + "\n");
+	    LOGGER.log(Level.INFO, "\n SAP Request Sending from URL : " + configurationAPI.getPropertyValue(UATServer)+contextPathName + "\n");
 		LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Inputs : " + inputString + "\n");
 		
 		try {
@@ -1111,7 +1111,7 @@ public class CommonAdapterServicesResource {
 			CredentialsProvider credsProvider = new BasicCredentialsProvider();
 			credsProvider.setCredentials(new AuthScope(AUTH_SCOPE_URL, AUTH_SCOPE_PORT),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
 			httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
-			HttpPost httpPost = new HttpPost(configurationAPI.getPropertyValue(DEVServer)+contextPathName);
+			HttpPost httpPost = new HttpPost(configurationAPI.getPropertyValue(UATServer)+contextPathName);
 			// httpPost.addHeader("User-Agent", "Mozilla/5.0");
 			httpPost.setEntity(params);
 			RequestConfig requestConfig = RequestConfig.custom()
