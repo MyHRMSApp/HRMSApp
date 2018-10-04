@@ -25,6 +25,7 @@ import { NetworkProvider } from '../providers/network-service/network-service';
 import { WheelSelector } from '@ionic-native/wheel-selector';
 import { AppAvailability } from '@ionic-native/app-availability';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
+import { CommonStringsProvider } from '../providers/common-strings/common-strings';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDc0EYCDmJ3SZh5fiyk9M3qeYqDTBAYXgY",
@@ -65,6 +66,7 @@ firebase.initializeApp(firebaseConfig)
     UtilsProvider,
     AuthHandlerProvider,
     ConsoleServiceProvider,
+    CommonStringsProvider,
     MyApp,
     SocialSharing,
     Nav,

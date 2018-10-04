@@ -89,15 +89,23 @@ export class ShareCouponsPage {
   }
   whatsapp() {
     var msg = this.str;
-    this.socialSharing.shareViaWhatsApp(msg, null, null).then(() => {
-    }).catch(() => {
-    this.utilService.showCustomPopup("FAILURE", "Whatsapp is not installed");
-    });
+    // this.socialSharing.shareViaWhatsApp(msg, null, null).then((response:any) => {
+    // }).catch(() => {
+    // this.utilService.showCustomPopup("FAILURE", "Whatsapp is not installed");
+    // });
+    this.socialSharing.shareViaWhatsApp(msg, null, null).then((response:any) => {
+      console.log(response);
+    },
+    (error)=>{
+        console.log("Failure: " + error);
+    })
   }
   sms() {
     var msg = this.str;
     this.socialSharing.shareViaSMS(msg, null).then(() => {
+      console.log("Success");
     }).catch(() => {
+      console.log("Failure");
       this.utilService.showCustomPopup("FAILURE", "Messaging is not installed");
     });
   }
