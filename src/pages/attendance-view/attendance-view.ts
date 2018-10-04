@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, BlockerOptions } from 'ionic-angular';
 import { Nav, Platform, MenuController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
@@ -44,6 +44,7 @@ export class AttendanceViewPage {
   public attendanceSingleDayData:any;
   employeeLevel: string;
   userInformation: any;
+  public allLeaveApplyFlag:boolean = false;
   
 
   // dateRange: string[] = ['2018-07-021', '2018-01-02', '2018-01-05'];
@@ -113,6 +114,37 @@ export class AttendanceViewPage {
       this.mainService.selectedDateDataFromAttendance.LDATE = moment($event._d).format("DD-MM-YYYY");
       this.mainService.selectedDateDataFromAttendance.cssClass = "custom";
     }
+
+      var value = moment($event._d).format("MMYYYY").toString();
+      var selectedDateOnly:any = moment($event._d).format("DD");
+      var CurrentDateOnly:any = moment().format("DD");
+      var monthDifferCheck = moment().diff(moment(value, "MMYYYY"), 'months', true);
+      if(monthDifferCheck >= 0 && monthDifferCheck < 1){
+        console.log("monthDifferCheck-->> "+"Current Month");
+        this.allLeaveApplyFlag = true;
+      }else if(monthDifferCheck < 0 && monthDifferCheck > -1){
+        console.log("monthDifferCheck-->> "+"Next Month");
+        this.allLeaveApplyFlag = true;
+      }else if(monthDifferCheck < -1 && monthDifferCheck > -2){
+        console.log("monthDifferCheck-->> "+"Next after Month");
+        this.allLeaveApplyFlag = true;
+      }else if(monthDifferCheck >= 1 && monthDifferCheck < 2){
+        console.log("monthDifferCheck-->> "+"Privious Month");
+        if(CurrentDateOnly >= 15 && selectedDateOnly >= 15){
+          this.allLeaveApplyFlag = true;
+        }else if(CurrentDateOnly <= 14){
+          this.allLeaveApplyFlag = true;
+        }else{
+          this.allLeaveApplyFlag = false;
+        }
+      }else if(monthDifferCheck >= 2 && monthDifferCheck < 3){
+        console.log("monthDifferCheck-->> "+"Privious before Month");
+        if(CurrentDateOnly <= 14 && selectedDateOnly >= 15){
+          this.allLeaveApplyFlag = true;
+        }else{
+          this.allLeaveApplyFlag = false;
+        }
+      }
     
   }
 
@@ -209,52 +241,63 @@ export class AttendanceViewPage {
   
 
   applyLeave() {
-    
-    try {
-      // if(this.mainService.internetConnectionCheck){
-        this.utilService.showLoader("Please wait...");
-      this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
-        if(resultData){
-          if(resultData.status_code == 0){
-            this.mainService.userLeaveBalanceListData = resultData.data;
-            console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
-            this.utilService.dismissLoader();
-            this.navCtrl.push("ApplyLeavePage");
-          }else{
-            this.utilService.dismissLoader();
-            this.utilService.showCustomPopup("FAILURE",resultData.message);
-          }
-
-        };
-      }, (error)=>{
-        console.log("Data readed from jsonstore error",error);
-        this.utilService.dismissLoader();
-        this.utilService.showCustomPopup("FAILURE",error.statusText);
-      });
-      // }else{
-      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
-      // }
-    } catch (error) {
-      console.log("catch-->>",error);
-    }
-  }
-  applyOD(){
-    this.navCtrl.push("ApplyOdPage");
-  }
-  applyFTP(){
-
-    if(this.attendanceSingleDayData !== undefined){
-      var value = moment(this.dateRange, "YYYY-MM-DD").format("YYYY-MM-DD").toString();
-      var monthDifferCheck = moment().diff(moment(value, "YYYY-MM-DD"), 'months', true);
-      if(monthDifferCheck < 0){
-        this.utilService.showCustomPopup4Error("Apply FTP", "Invalid Date Selection", "FAILURE");
-      }else{
-        this.navCtrl.push("ApplyFtpPage",{"ftpData": this.attendanceSingleDayData});
+    if( this.allLeaveApplyFlag){
+      try {
+        // if(this.mainService.internetConnectionCheck){
+          this.utilService.showLoader("Please wait...");
+        this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveBalance', 'get', {payload : false}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 0){
+              this.mainService.userLeaveBalanceListData = resultData.data;
+              console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
+              this.utilService.dismissLoader();
+              this.navCtrl.push("ApplyLeavePage");
+            }else{
+              this.utilService.dismissLoader();
+              this.utilService.showCustomPopup4Error("Apply Leave", resultData.message, "FAILURE");
+            }
+  
+          };
+        }, (error)=>{
+          console.log("Data readed from jsonstore error",error);
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup4Error("Apply Leave", "Oops! Something went wrong, Please try again", "FAILURE");
+        });
+        // }else{
+        //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+        // }
+      } catch (error) {
+        console.log("catch-->>",error);
       }
     }else{
-      this.utilService.showCustomPopup4Error("Apply FTP", "Please select date", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
     }
-
+    
+  }
+  applyOD(){
+    if( this.allLeaveApplyFlag){
+      this.navCtrl.push("ApplyOdPage");
+    }else{
+      this.utilService.showCustomPopup4Error("Apply OD", "Invalid Date Selection", "FAILURE");
+    }
+  }
+  applyFTP(){
+    if( this.allLeaveApplyFlag){
+      if(this.attendanceSingleDayData !== undefined){
+        var value = moment(this.dateRange, "YYYY-MM-DD").format("YYYY-MM-DD").toString();
+        var monthDifferCheck = moment().diff(moment(value, "YYYY-MM-DD"), 'months', true);
+        if(monthDifferCheck < 0){
+          this.utilService.showCustomPopup4Error("Apply FTP", "Invalid Date Selection", "FAILURE");
+        }else{
+          this.navCtrl.push("ApplyFtpPage",{"ftpData": this.attendanceSingleDayData});
+        }
+      }else{
+        this.utilService.showCustomPopup4Error("Apply FTP", "Please select date", "FAILURE");
+      }
+    }else{
+      this.utilService.showCustomPopup4Error("Apply FTP", "Invalid Date Selection", "FAILURE");
+    }
+    
 
     
   }

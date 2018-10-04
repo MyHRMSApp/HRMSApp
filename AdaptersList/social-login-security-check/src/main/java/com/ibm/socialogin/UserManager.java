@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.mfpdev.sample.socialogin;
+package com.ibm.socialogin;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -71,7 +71,13 @@ public class UserManager {
     private static final String USER_AUTH_CONTEXT_PATH = "UserAuthentication";
     private static final String AUTH_SCOPE_URL = "pirqa.titan.co.in";
 	private static final int AUTH_SCOPE_PORT = 50401;
-	private static final int TIMEOUT_MILLIS = 30000;
+    private static final int TIMEOUT_MILLIS = 30000;
+    
+    public int STATUS_CODE_SUCCESS = 0;
+	public int STATUS_CODE_FAILURE = 1;
+	public long startTime;
+    public int loggerStatus = STATUS_CODE_FAILURE;
+    
     JSONObject jsonObject = new JSONObject();
 
        public JSONObject getUserDetials(String IP_EMPID, String IP_PASSWORD, String EMP_MAILID, String REQ_URL, Boolean FLAG) throws Exception{
@@ -87,6 +93,8 @@ public class UserManager {
                         .setDefaultCredentialsProvider(credsProvider)
                         .build();
                 try {
+                    startTime = System.currentTimeMillis();
+			        loggerStatus = STATUS_CODE_FAILURE;
                     HttpPost httpPost = new HttpPost(REQ_URL+USER_AUTH_CONTEXT_PATH);
                     httpPost.addHeader("User-Agent", "Mozilla/5.0");
                     httpPost.setEntity(params);
@@ -98,27 +106,42 @@ public class UserManager {
                                 final HttpResponse response) throws ClientProtocolException, IOException {
                             int status = response.getStatusLine().getStatusCode();
                             if (status >= 200 && status < 300) {
+                                loggerStatus = STATUS_CODE_SUCCESS;
                                 HttpEntity entity = response.getEntity();
                                 return entity != null ? EntityUtils.toString(entity) : null;
                             } else {
+                                loggerStatus = STATUS_CODE_FAILURE;
                                 jsonObject.put("EP_RESULT", 1234510);
-                                throw new ClientProtocolException("Unexpected response status: " + status);
+                                // throw new ClientProtocolException("Unexpected response status: " + status);
+                                return null;
                             }
                         }
             
                     };
                     String responseBody = httpclient.execute(httpPost, responseHandler);
                     jsonObject = new JSONObject(responseBody);
-                    LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
+                    // LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
 
+                }catch(IOException ioException){
+                    LOGGER.log(Level.SEVERE, "EXCEPTION : PernrNo : "+IP_EMPID+" | ProcedureName : "+USER_AUTH_CONTEXT_PATH+" |"+ ioException.toString());
+                    // commonServerResponce.put(message, configurationAPI.getPropertyValue(ErrorMessage));
                 } finally {
-                    httpclient.close();
+                    try {
+                        httpclient.close();
+                        long elapsedTime = System.currentTimeMillis() - startTime;
+                        LOGGER.log(Level.INFO, "PernrNo : "+IP_EMPID+" | ProcedureName : "+USER_AUTH_CONTEXT_PATH+"| StatusCode : "+loggerStatus+"| ResponceTime : "+elapsedTime);
+                        LOGGER.log(Level.FINE, "SAP Responce outPuts : " + jsonObject.toString() + "\n");
+                    } catch (IOException ioException) {
+                        LOGGER.log(Level.SEVERE, "[ IOException httpclient Close]  : "+ioException.toString());
+                    }
                 }
 
                 return jsonObject;
             }else{
                 CloseableHttpClient httpclient = HttpClients.createDefault();
                 try {
+                startTime = System.currentTimeMillis();
+			    loggerStatus = STATUS_CODE_FAILURE;
                 HttpGet httpget = new HttpGet(REQ_URL+EMP_MAILID); 
                 LOGGER.log(Level.INFO,"\n SAP Request Sending from MFP Adapter : \n"+ REQ_URL+EMP_MAILID+"\n");
                 ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
@@ -128,19 +151,32 @@ public class UserManager {
                             final HttpResponse response) throws ClientProtocolException, IOException {
                         int status = response.getStatusLine().getStatusCode();
                         if (status >= 200 && status < 300) {
+                            loggerStatus = STATUS_CODE_SUCCESS;
                             HttpEntity entity = response.getEntity();
                             return entity != null ? EntityUtils.toString(entity) : null;
                         } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
+                            loggerStatus = STATUS_CODE_FAILURE;
+                            // throw new ClientProtocolException("Unexpected response status: " + status);
+                            return null;
                         }
                     }
         
                 };
                 String responseBody = httpclient.execute(httpget, responseHandler);
                 jsonObject = new JSONObject(responseBody);
-                LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
+                // LOGGER.log(Level.INFO,"\n SAP Responce : "+jsonObject.toString() +"\n\n");
+                }catch(IOException ioException){
+                    LOGGER.log(Level.SEVERE, "EXCEPTION : PernrNo : "+IP_EMPID+" | ProcedureName : "+USER_AUTH_CONTEXT_PATH+" |"+ ioException.toString());
+                    // commonServerResponce.put(message, configurationAPI.getPropertyValue(ErrorMessage));
                 }finally {
-                httpclient.close();
+                    try {
+                        httpclient.close();
+                        long elapsedTime = System.currentTimeMillis() - startTime;
+                        LOGGER.log(Level.INFO, "PernrNo : "+IP_EMPID+" | ProcedureName : "+USER_AUTH_CONTEXT_PATH+"| StatusCode : "+loggerStatus+"| ResponceTime : "+elapsedTime);
+                        LOGGER.log(Level.FINE, "SAP Responce outPuts : " + jsonObject.toString() + "\n");
+                    } catch (IOException ioException) {
+                        LOGGER.log(Level.SEVERE, "[ IOException httpclient Close]  : "+ioException.toString());
+                    }
                 } 
                 return jsonObject;
             }

@@ -80,34 +80,39 @@ export class AuthHandlerProvider {
     console.log("-->>"+data.user.displayName.rememberMe);
     console.log("this.rememberMeOptionFlag-->>"+this.rememberMeOptionFlag);
     localStorage.setItem("userInfo", data.user.displayName.replace(/'/g, '"'));
-    this.isChallenged = false;
-    if (this.loginSuccessCallback != null) {
-        // localStorage.setItem("userInfo", data.user.displayName.replace(/'/g, '"'));
-        // // setTimeout(() => {
-        //  this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        //   console.log("userInfo.rememberMe=======>>"+this.userInfo.rememberMe);
-        //   if(this.userInfo.rememberMe == true){
-        //     this.loginSuccessCallback();
-        //   }else{
-        //     // (this.rememberMeOptionFlag == false)? this.loginSuccessCallback():
-        //     if(this.rememberMeOptionFlag){
-        //       setTimeout(() => {
-        //         this.utilService.dismissLoader();
-        //         this.logout();
-        //       }, 3000);
-        //     }else{
-        //       this.loginSuccessCallback()
-        //     }
-        //   }
-        // // }, 1000);
+    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+     // this.loginSuccessCallback();
 
-        if(!this.rememberMeOptionFlag){
-          this.loginSuccessCallback();
-        }
-        
-    } else {
-      console.log('--> AuthHandler: loginSuccessCallback not set!');
-    }
+//      var tags = [this.userInfo.EP_EGROUP, this.userInfo.EP_USERTYPE];
+//     //  if(this.userInfo.EP_USERTYPE == "ESS"){
+//     //    tags = ['Employee'];
+//     //  }
+//  MFPPush.registerDevice(
+//    null,
+//    function(successResponse) {
+//      console.log("Successfully registered-->>"+successResponse);
+     
+//        MFPPush.subscribe(
+//          tags,
+//          function(tags) {
+//            console.log("Subscribed successfully-->>"+tags);
+//          },
+//          function(failureResponse) {
+//            console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
+//          }
+//        );
+//    },
+//    function(failureResponse) {
+//        console.log("Failed to register-->>"+JSON.stringify(failureResponse));
+//    }
+// );
+
+    // this.isChallenged = false;
+    // if (this.loginSuccessCallback != null) {
+    //       this.loginSuccessCallback();  
+    // } else {
+    //   console.log('--> AuthHandler: loginSuccessCallback not set!');
+    // }
   }
 
   handleFailure(error) {
@@ -123,103 +128,49 @@ export class AuthHandlerProvider {
   checkIsLoggedIn() {
     this.utilService.showLoader("Please Wait...");
     console.log('--> AuthHandler checkIsLoggedIn called');
+    if(localStorage.getItem("rememberMe") == "enabled"){
+      WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
+      .then(
+        (accessToken) => {
+  
+          console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
 
-    WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
-    .then(
-      (accessToken) => {
-        // this.rememberMeOptionFlag = true;
-        console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
-        // this.loginSuccessCallback(accessToken);
-        //localStorage.setItem("rootPage", "true");
-
-        
-      //   MFPPush.registerDevice(
-      //     null,
-      //     function(successResponse) {
-      //       console.log("Successfully registered : "+ JSON.stringify(successResponse));
-      //     },
-      //     function(failureResponse) {
-      //       console.log("Failed to register device:" + JSON.stringify(failureResponse));
-      //     }
-      // )
-
-
-      // setTimeout(() => {
-
-
-       this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        console.log("userInfo.rememberMe=======>>"+this.userInfo.rememberMe);
-        if(this.userInfo.rememberMe == true){
+          var tags = [this.userInfo.EP_EGROUP, this.userInfo.EP_USERTYPE];
+          //  if(this.userInfo.EP_USERTYPE == "ESS"){
+          //    tags = ['Employee'];
+          //  }
+       MFPPush.registerDevice(
+         null,
+         function(successResponse) {
+           console.log("Successfully registered-->>"+successResponse);
+           
+             MFPPush.subscribe(
+               tags,
+               function(tags) {
+                 console.log("Subscribed successfully-->>"+tags);
+               },
+               function(failureResponse) {
+                 console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
+               }
+             );
+         },
+         function(failureResponse) {
+             console.log("Failed to register-->>"+JSON.stringify(failureResponse));
+         }
+      );
+      
           this.loginSuccessCallback();
-          var tags = ['Manager'];
-              if(this.userInfo.EP_USERTYPE == "ESS"){
-                tags = ['Employee'];
-              }
-          MFPPush.registerDevice(
-            null,
-            function(successResponse) {
-              console.log("Successfully registered-->>"+successResponse);
-              
-                MFPPush.subscribe(
-                  tags,
-                  function(tags) {
-                    console.log("Subscribed successfully-->>"+tags);
-                  },
-                  function(failureResponse) {
-                    console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
-                  }
-                );
-            },
-            function(failureResponse) {
-                console.log("Failed to register-->>"+JSON.stringify(failureResponse));
-            }
-        );
-
-        }else{
-          // (this.rememberMeOptionFlag == false)? this.loginSuccessCallback():
-          if(this.rememberMeOptionFlag){
-            // setTimeout(() => {
-              this.utilService.dismissLoader();
-              this.logout();
-            // }, 3000);
-          }else{
-            this.loginSuccessCallback();
-            var tags = ['Manager'];
-            if(this.userInfo.EP_USERTYPE == "ESS"){
-              tags = ['Employee'];
-            }
-            MFPPush.registerDevice(
-              null,
-              function(successResponse) {
-                console.log("Successfully registered-->>"+successResponse);
-               
-                  MFPPush.subscribe(
-                    tags,
-                    function(tags) {
-                      console.log("Subscribed successfully-->>"+tags);
-                    },
-                    function(failureResponse) {
-                      console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
-                    }
-                  );
-              },
-              function(failureResponse) {
-                  console.log("Failed to register-->>"+JSON.stringify(failureResponse));
-              }
-          );
-
-          }
+        },
+        (error) => {
+          console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
+            this.utilService.dismissLoader();
+            this.utilService.showCustomPopup("FAILURE", "Request timed out, Please restart the application");
+          //this.loginFailureCallback(error);
         }
-      // }, 1000);
-
-      },
-      (error) => {
-        console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
-          this.utilService.dismissLoader();
-          this.utilService.showCustomPopup("FAILURE", "Request timed out, Please restart the application");
-        //this.loginFailureCallback(error);
-      }
-    );
+      );
+    }else{
+      this.logout();
+    }
   }
 
   login(credentialData) {
@@ -229,6 +180,7 @@ export class AuthHandlerProvider {
     if (this.isChallenged) {
       if(credentialData){
         // (securityName == "socialLogin") ? this.userLoginChallengeHandler.submitChallengeAnswer(credentialData) : this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
+        console.log("this.gmailLoginChallengeHandler.submitChallengeAnswer Peocessing..........");
         this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
       }else{
         console.log("input data missing");
@@ -245,7 +197,9 @@ export class AuthHandlerProvider {
         },
         (failure) => {
           console.log('--> AuthHandler: login failure: ' + JSON.stringify(failure));
-          self.loginFailureCallback(failure.errorMsg);
+          this.utilService.dismissLoader();
+            this.utilService.showCustomPopup("FAILURE", JSON.stringify(failure));
+          // self.loginFailureCallback(failure.errorMsg);
         }
       );
     }
@@ -260,7 +214,7 @@ export class AuthHandlerProvider {
     .then(
       (success) => {
         console.log('--> AuthHandler: logout success');
-        localStorage.setItem("rememberMe", "disabled");
+        localStorage.setItem("rememberMe", "enabled");
         this.utilService.dismissLoader();
         this.checkIsLoggedIn();
         resolve(true);

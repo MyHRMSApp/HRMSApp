@@ -32,6 +32,8 @@ export class CustomCalendarModelPage {
   public dayWiseSelectionFlag:any = true;
   public fromPage:any;
   public selecedDate:any;
+  public allLeaveApplyFlag:boolean = false;
+
   constructor(public menu: MenuController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
               public utilService: UtilsProvider, public alert:AlertController, public ref: ChangeDetectorRef) {
     
@@ -205,6 +207,38 @@ export class CustomCalendarModelPage {
       }
       this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
     }
+
+    var value = moment($event._d).format("MMYYYY").toString();
+    var selectedDateOnly:any = moment($event._d).format("DD");
+    var CurrentDateOnly:any = moment().format("DD");
+    var monthDifferCheck = moment().diff(moment(value, "MMYYYY"), 'months', true);
+    if(monthDifferCheck >= 0 && monthDifferCheck < 1){
+      console.log("monthDifferCheck-->> "+"Current Month");
+      this.allLeaveApplyFlag = true;
+    }else if(monthDifferCheck < 0 && monthDifferCheck > -1){
+      console.log("monthDifferCheck-->> "+"Next Month");
+      this.allLeaveApplyFlag = true;
+    }else if(monthDifferCheck < -1 && monthDifferCheck > -2){
+      console.log("monthDifferCheck-->> "+"Next after Month");
+      this.allLeaveApplyFlag = true;
+    }else if(monthDifferCheck >= 1 && monthDifferCheck < 2){
+      console.log("monthDifferCheck-->> "+"Privious Month");
+      if(CurrentDateOnly >= 15 && selectedDateOnly >= 15){
+        this.allLeaveApplyFlag = true;
+      }else if(CurrentDateOnly <= 14){
+        this.allLeaveApplyFlag = true;
+      }else{
+        this.allLeaveApplyFlag = false;
+      }
+    }else if(monthDifferCheck >= 2 && monthDifferCheck < 3){
+      console.log("monthDifferCheck-->> "+"Privious before Month");
+      if(CurrentDateOnly <= 14 && selectedDateOnly >= 15){
+        this.allLeaveApplyFlag = true;
+      }else{
+        this.allLeaveApplyFlag = false;
+      }
+    }
+
   }
 
   setTimingFunction(timeStr){
@@ -255,44 +289,49 @@ export class CustomCalendarModelPage {
   }
 
   dismiss(val) {
-    if(val == 'k'){
-      if(this.calendarFor == "to"){
-        // if(this.leaveToDate === undefined){
-        //   this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
-        // }else 
-        
-        if(this.leaveToTime === undefined){
-          this.utilService.showCustomPopup4Error("Apply Leave", "please select the period", "FAILURE");
-        }else{
-          let data = { leaveFromDate: this.leaveFromDate,
-            leaveToDate: (this.leaveToDate !== undefined)?this.leaveToDate:this.dateRange,  
-            leaveFromTime: this.leaveFromTime, 
-            leaveToTime: this.leaveToTime
-           };
-          this.viewCtrl.dismiss(data);
+    if(this.allLeaveApplyFlag){
+      if(val == 'k'){
+        if(this.calendarFor == "to"){
+          // if(this.leaveToDate === undefined){
+          //   this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
+          // }else 
+          
+          if(this.leaveToTime === undefined){
+            this.utilService.showCustomPopup4Error("Apply Leave", "please select the period", "FAILURE");
+          }else{
+            let data = { leaveFromDate: this.leaveFromDate,
+              leaveToDate: (this.leaveToDate !== undefined)?this.leaveToDate:this.dateRange,  
+              leaveFromTime: this.leaveFromTime, 
+              leaveToTime: this.leaveToTime
+             };
+            this.viewCtrl.dismiss(data);
+          }
         }
-      }
-
-      if(this.calendarFor == "from"){
-        // if(this.leaveFromDate === undefined){
-        //   this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
-        // }else 
-        
-        if(this.leaveFromTime === undefined && this.fromPage != "ODApply"){
-          this.utilService.showCustomPopup4Error("Apply Leave", "please select the period", "FAILURE");
-        }else{
-          let data = { leaveFromDate: (this.leaveFromDate !== undefined)?this.leaveFromDate:this.dateRange,  
-            leaveToDate: this.leaveToDate,  
-            leaveFromTime: this.leaveFromTime, 
-            leaveToTime: this.leaveToTime
-           };
-          this.viewCtrl.dismiss(data);
+  
+        if(this.calendarFor == "from"){
+          // if(this.leaveFromDate === undefined){
+          //   this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
+          // }else 
+          
+          if(this.leaveFromTime === undefined && this.fromPage != "ODApply"){
+            this.utilService.showCustomPopup4Error("Apply Leave", "please select the period", "FAILURE");
+          }else{
+            let data = { leaveFromDate: (this.leaveFromDate !== undefined)?this.leaveFromDate:this.dateRange,  
+              leaveToDate: this.leaveToDate,  
+              leaveFromTime: this.leaveFromTime, 
+              leaveToTime: this.leaveToTime
+             };
+            this.viewCtrl.dismiss(data);
+          }
         }
+       
+      }else{
+        this.viewCtrl.dismiss();
       }
-     
     }else{
-      this.viewCtrl.dismiss();
+      this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
     }
+   
     
   }
 

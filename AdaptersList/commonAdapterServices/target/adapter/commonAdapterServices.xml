@@ -18,5 +18,6 @@
 	<property name="UserCustomMessage" defaultValue="false" displayName="User Custom Message"/>
 	<property name="DEVServer" defaultValue="https://pirdev.titan.co.in:50401/RESTAdapter/" displayName="Development Server URL"/>
 	<property name="UATServer" defaultValue="https://pirqa.titan.co.in:50401/RESTAdapter/" displayName="UAT Server URL"/>
+	<property name="ErrorMessage" defaultValue="Oops! Something went wrong, Please try again" displayName="Error Message"/>
 
 </mfp:adapter>

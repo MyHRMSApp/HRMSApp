@@ -80,6 +80,12 @@ export class LoginPage {
     }); 
 
     console.log("internetConnectionCheck-->>"+ this.mainService.internetConnectionCheck);
+
+    if(localStorage.getItem("rememberMe") == "enabled"){
+      this.remember = true;
+    }else{
+      this.remember = false;
+    }
   }
 
   sampleLogin() {

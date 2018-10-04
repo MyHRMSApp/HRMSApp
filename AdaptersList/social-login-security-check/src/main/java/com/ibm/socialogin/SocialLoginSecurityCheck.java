@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.github.mfpdev.sample.socialogin;
+package com.ibm.socialogin;
 
 import com.ibm.mfp.security.checks.base.UserAuthenticationSecurityCheck;
 import com.ibm.mfp.server.registration.external.model.AuthenticatedUser;
@@ -111,7 +111,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                             //Look for this user in the database
                             try {
                                 jsonObject = (JSONObject) userManager.getUserDetials(username, password, "", this.getConfiguration().getQaServerURL(), true);
-                                errorMsg = "sample";
+                                // errorMsg = "sample";
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
                                     jsonObject.put("rememberMe", rememberMe);
@@ -119,7 +119,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                     this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                     return true;
                                 }else if(jsonObject.getInt("EP_RESULT") == 1234510){
-                                    errorMsg = "Internal Server Error, Please try again";
+                                    errorMsg = this.getConfiguration().getErrorMessage();
                                     return false;
                                 }else{
                                     errorMsg = "Please provide valid Username or Password";
@@ -127,7 +127,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                 }
                             } catch (Exception exception) {
                                 LOGGER.log(Level.SEVERE,"\n [ Exception ] : "+exception);
-                                errorMsg = "Please provide valid Username or Password";
+                                errorMsg = this.getConfiguration().getErrorMessage();
                                 return false;
                             }
                         }
@@ -158,7 +158,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                                 this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                                 return true;
                                             }else if(jsonObject.getInt("EP_RESULT") == 1234510){
-                                                errorMsg = "Internal Server Error, Please try again";
+                                                errorMsg = this.getConfiguration().getErrorMessage();
                                                 return false;
                                             }else{
                                                 errorMsg = "Please try with valid Titan Mail ID";
@@ -180,7 +180,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                             }
                         } catch (Exception exception) {
                             LOGGER.log(Level.SEVERE,"\n [ Exception ] : "+exception);
-                            errorMsg = "Internal Server Error, Please try again";
+                            errorMsg = this.getConfiguration().getErrorMessage();
                             return false;
                         }
                     }

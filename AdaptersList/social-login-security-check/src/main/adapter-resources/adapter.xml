@@ -11,7 +11,7 @@
         The security check verifies the token with its vendor, and creates an MFP Authenticated User.
     </description>
 
-    <securityCheckDefinition name="socialLogin" class="com.github.mfpdev.sample.socialogin.SocialLoginSecurityCheck">
+    <securityCheckDefinition name="socialLogin" class="com.ibm.socialogin.SocialLoginSecurityCheck">
         <property name="successStateExpirationSec" defaultValue="3600"/>
         <property name="blockedStateExpirationSec" defaultValue="60"/>
         <property name="maxAttempts" defaultValue="3"/>
@@ -27,6 +27,7 @@
         <property name="UserCustomMessage" defaultValue="UserCustomMessage" displayName="UserCustomMessage"/>
         <property name="DEVServer" defaultValue="https://pirdev.titan.co.in:50401/RESTAdapter/" displayName="Development Server URL"/>
         <property name="UATServer" defaultValue="https://pirqa.titan.co.in:50401/RESTAdapter/" displayName="UAT Server URL"/>
+        <property name="ErrorMessage" defaultValue="Oops! Something went wrong, Please try again" displayName="Error Message"/>
         <property name="GMAILAUTH_URL" defaultValue="https://script.google.com/macros/s/AKfycbz8ORIE4cyT3TJ9drTSIOoA-EyQdoBSq2wmz-M6ttuPMcx_hvY/exec?email=" displayName="GMAIL Authentication URL [get Employee Number]"/>
     </securityCheckDefinition>
 

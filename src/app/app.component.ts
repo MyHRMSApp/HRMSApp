@@ -79,7 +79,7 @@ export class MyApp {
     // }
     console.log("localStorage.getItem(rememberMe)-------------->>"+localStorage.getItem("rememberMe"));
       if(localStorage.getItem("rememberMe") === null){
-        localStorage.setItem("rememberMe", "disabled");
+        localStorage.setItem("rememberMe", "enabled");
       }
 
   }

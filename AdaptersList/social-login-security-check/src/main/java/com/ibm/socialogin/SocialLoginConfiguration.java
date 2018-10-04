@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.github.mfpdev.sample.socialogin;
+package com.ibm.socialogin;
 
 import com.ibm.mfp.security.checks.base.UserAuthenticationSecurityCheckConfig;
 
@@ -39,12 +39,14 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
     private static final String DEVServer_URL_CONFIG_PROPERTY = "DEVServer";
     private static final String UATServer_URL_CONFIG_PROPERTY = "UATServer";
     private static final String GMAILAUTH_URL_CONFIG_PROPERTY = "GMAILAUTH_URL";
+    private static final String ErrorMessage_CONFIG_PROPERTY = "ErrorMessage";
 
     private boolean keepOriginalToken;
     private String userCustomMessage;
     private String devServerURL;
     private String qaServerURL;
     private String gmailAuthURL;
+    private String ErrorMessage;
     private Map<String, LoginVendor> vendors;
     private SSLSocketFactory sslSocketFactory;
 
@@ -62,6 +64,7 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
         devServerURL = getStringProperty(DEVServer_URL_CONFIG_PROPERTY, properties, null);
         qaServerURL = getStringProperty(UATServer_URL_CONFIG_PROPERTY, properties, null);
         gmailAuthURL = getStringProperty(GMAILAUTH_URL_CONFIG_PROPERTY, properties, null);
+        ErrorMessage = getStringProperty(ErrorMessage_CONFIG_PROPERTY, properties, null);
 
         try {
             TrustManagerFactory factory = TrustManagerFactory.getInstance("PKIX");
@@ -117,6 +120,10 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
 
     public String getGmailAuthURL() {
         return gmailAuthURL;
+    }
+
+    public String getErrorMessage() {
+        return ErrorMessage;
     }
 
     private void createVendors() {
