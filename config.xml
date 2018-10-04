@@ -89,7 +89,7 @@
     </mfp:android>
     <mfp:ios>
         <mfp:sdkChecksum>4145390992</mfp:sdkChecksum>
-        <mfp:appChecksum>3828765901</mfp:appChecksum>
+        <mfp:appChecksum>451126313</mfp:appChecksum>
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
@@ -121,6 +121,7 @@
     <mfp:directUpdateAuthenticityPublicKey />
     <mfp:languagePreferences>en</mfp:languagePreferences>
     <engine name="android" spec="^7.0.0" />
+    <engine name="ios" spec="^4.3.0" />
     <plugin name="cordova-plugin-appavailability" spec="^0.4.2" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />

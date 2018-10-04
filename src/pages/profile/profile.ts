@@ -17,16 +17,6 @@ import { UtilsProvider } from '../../providers/utils/utils';
 export class ProfilePage {
   hamburger: string;
   homeIcon: string;
-//   public profileDetails:any = {
-//     "ENAME": undefined,
-//     "EMP_HR": undefined,
-//     "BTRTL_TXT": undefined,
-//     "PERSK": undefined,
-//     "ORGEH_TXT": undefined,
-//     "PERSG_TXT": undefined,
-//     "EP_MANAGER": undefined,
-//     "EMPCODE": undefined
-// };
 
 public profileDetails:any;
 
