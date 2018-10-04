@@ -84,6 +84,7 @@ public class CommonAdapterServicesResource {
 	private static final String[] APPROVED_LEAVES = {"ODA", "FTA", "CLA", "SLA", "GLA", "QLA", "PLA"};
 	private static final String DEVServer = "DEVServer";
 	private static final String UATServer = "UATServer";
+	private static final String ErrorMessage = "ErrorMessage";
 	private static final String GetCouponDetail = "GetCouponDetail";
 	private static final String GetLeaveBalance = "GetLeaveBalance";
 	private static final String BalanceValidation = "BalanceValidation";
@@ -100,12 +101,67 @@ public class CommonAdapterServicesResource {
 	private static final String GetMyProfile = "GetMyProfile";
 	private static final String AUTH_SCOPE_URL = "pirqa.titan.co.in";
 	private static final int AUTH_SCOPE_PORT = 50401;
-	private static final int TIMEOUT_MILLIS = 30000;
-	
+	private static final int SocketTimeout = 30000;
+	private static final int ConnectTimeout = 30000;
+	private static final int ConnectionRequestTimeout = 30000;
+	private static final String IV_PERNR = "IV_PERNR";
+	private static final String IP_PERNR = "IP_PERNR";
+	private static final String EP_PERNR = "EP_PERNR";
+	private static final String IP_EMPTYP = "IP_EMPTYP";
+	private static final String EP_USERTYPE = "EP_USERTYPE";
+	private static final String IP_LTYP = "IP_LTYP";
+	private static final String IP_FDATE = "IP_FDATE";
+	private static final String IP_TDATE = "IP_TDATE";
+	private static final String IP_FHALF = "IP_FHALF";
+	private static final String IP_THALF = "IP_THALF";
+	private static final String IP_DAY = "IP_DAY";
+	private static final String R_LEAVE = "R_LEAVE";
+	private static final String IP_REQ_TYPE = "IP_REQ_TYPE";
+	private static final String IP_WF_STATUS = "IP_WF_STATUS";
+	private static final String IP_CREATE_DATE = "IP_CREATE_DATE";
+	private static final String IP_CREATE_TIME = "IP_CREATE_TIME";
+	private static final String IP_ENDDA = "IP_ENDDA";
+	private static final String IP_BEGDA = "IP_BEGDA";
+	private static final String IP_SDATE = "IP_SDATE";
+	private static final String IP_EDATE = "IP_EDATE";
+	private static final String LV_STIME = "LV_STIME";
+	private static final String LV_ETIME = "LV_ETIME";
+	private static final String LV_ORG = "LV_ORG";
+	private static final String LV_PLACE = "LV_PLACE";
+	private static final String LV_PER = "LV_PER";
+	private static final String LV_COMMENTS = "LV_COMMENTS";
+	private static final String PERNR = "PERNR";
+	private static final String DATUM = "DATUM";
+	private static final String SFT_IN = "SFT_IN";
+	private static final String SFT_OUT = "SFT_OUT";
+	private static final String LUN_IN = "LUN_IN";
+	private static final String LUN_OUT = "LUN_OUT";
+	private static final String LUN_IN_FLAG = "LUN_IN_FLAG";
+	private static final String LUN_OUT_FLAG = "LUN_OUT_FLAG";
+	private static final String SFT_IN_FLAG = "SFT_IN_FLAG";
+	private static final String SFT_OUT_FLAG = "SFT_OUT_FLAG";
+	private static final String R_TYPE = "R_TYPE";
+	private static final String IS_FTPString = "IS_FTP";
+	private static final String IP_DATE = "IP_DATE";
+	private static final String IP_TIME = "IP_TIME";
+	private static final String IP_NO_DAYS = "IP_NO_DAYS";
+	private static final String IP_RNO = "IP_RNO";
+	private static final String IP_LTYPE = "IP_LTYPE";
+	private static final String IP_FLAG = "IP_FLAG";
+	private static final String IP_CMNT = "IP_CMNT";
+	private static final String message = "message";
+	private static final String status_code = "status_code";
+	private static final String data = "data";
+	private static final String ET_DATA = "ET_DATA";
+	private static final String item = "item";
+
 	// public Variable declration PART
 	public String authorizationStringEncrypted = null;
-	public String commonResponceStr = "{\"message\": \"\",\"status_code\": 1,\"data\": \"\"}";
-	public int STATUS_CODE = 0;
+	public int STATUS_CODE_SUCCESS = 0;
+	public int STATUS_CODE_FAILURE = 1;
+	public long startTime;
+	public int loggerStatus = STATUS_CODE_FAILURE;
+	public String commonResponceStr = "{\"message\": \"\",\"status_code\": "+STATUS_CODE_FAILURE+",\"data\": \"\"}";
 	public JSONObject commonServerResponce;
 	public CloseableHttpClient httpclient = null;
 	/* *
@@ -123,8 +179,8 @@ public class CommonAdapterServicesResource {
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
 		JSONObject inputJSON = new JSONObject();
 		JSONObject serverResJSON = new JSONObject();
-		inputJSON.put("IV_PERNR", userInformation.getString("EP_PERNR"));
-		serverResJSON = this.postService(inputJSON.toString(), GetCouponDetail, methodName);
+		inputJSON.put(IV_PERNR, userInformation.getString(EP_PERNR));
+		serverResJSON = this.postService(inputJSON.toString(), GetCouponDetail, methodName, userInformation.getString(EP_PERNR));
 		
 		return serverResJSON.toString();
 	}
@@ -142,10 +198,10 @@ public class CommonAdapterServicesResource {
 		JSONObject inputJSON = new JSONObject();
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
-		inputJSON.put("IP_EMPTYP", userInformation.getString("EP_USERTYPE"));
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));						
+		inputJSON.put(IP_EMPTYP, userInformation.getString(EP_USERTYPE));
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));						
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), GetLeaveBalance, methodName);
+		serverResJSON = this.postService(inputJSON.toString(), GetLeaveBalance, methodName, userInformation.getString(EP_PERNR));
 		
 		return serverResJSON.toString();
 	}
@@ -166,14 +222,14 @@ public class CommonAdapterServicesResource {
 		JSONObject inputJSON = new JSONObject();
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
-		inputJSON.put("IP_LTYP", IP_LTYP);	
-		inputJSON.put("IP_FDATE", IP_FDATE);
-		inputJSON.put("IP_TDATE", IP_TDATE);
-		inputJSON.put("IP_FHALF", IP_FHALF);
-		inputJSON.put("IP_THALF", IP_THALF);					
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
+		inputJSON.put(IP_LTYP, IP_LTYP);	
+		inputJSON.put(IP_FDATE, IP_FDATE);
+		inputJSON.put(IP_TDATE, IP_TDATE);
+		inputJSON.put(IP_FHALF, IP_FHALF);
+		inputJSON.put(IP_THALF, IP_THALF);					
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), BalanceValidation, methodName);
+		serverResJSON = this.postService(inputJSON.toString(), BalanceValidation, methodName, userInformation.getString(EP_PERNR));
 
 		return serverResJSON.toString();
 	}
@@ -200,20 +256,20 @@ public class CommonAdapterServicesResource {
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");   
 		Date date = new Date();  
 	
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
-		inputJSON.put("IP_LTYP", IP_LTYP);	
-		inputJSON.put("IP_FDATE", IP_FDATE);
-		inputJSON.put("IP_TDATE", IP_TDATE);
-		inputJSON.put("IP_FHALF", IP_FHALF);
-		inputJSON.put("IP_THALF", IP_THALF);
-		inputJSON.put("IP_DAY", IP_DAY);
-		inputJSON.put("R_LEAVE", R_LEAVE);	
-		inputJSON.put("IP_REQ_TYPE", IP_REQ_TYPE);
-		inputJSON.put("IP_WF_STATUS", IP_WF_STATUS);
-		inputJSON.put("IP_CREATE_DATE", dateFormat.format(date));
-		inputJSON.put("IP_CREATE_TIME", timeFormat.format(date));				
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
+		inputJSON.put(IP_LTYP, IP_LTYP);	
+		inputJSON.put(IP_FDATE, IP_FDATE);
+		inputJSON.put(IP_TDATE, IP_TDATE);
+		inputJSON.put(IP_FHALF, IP_FHALF);
+		inputJSON.put(IP_THALF, IP_THALF);
+		inputJSON.put(IP_DAY, IP_DAY);
+		inputJSON.put(R_LEAVE, R_LEAVE);	
+		inputJSON.put(IP_REQ_TYPE, IP_REQ_TYPE);
+		inputJSON.put(IP_WF_STATUS, IP_WF_STATUS);
+		inputJSON.put(IP_CREATE_DATE, dateFormat.format(date));
+		inputJSON.put(IP_CREATE_TIME, timeFormat.format(date));				
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), ApplyLeave, methodName);
+		serverResJSON = this.postService(inputJSON.toString(), ApplyLeave, methodName, userInformation.getString(EP_PERNR));
 
 		return serverResJSON.toString();
 	}
@@ -238,7 +294,7 @@ public class CommonAdapterServicesResource {
 		Calendar BEGDA = Calendar.getInstance();
 		BEGDA.add(Calendar.MONTH, IP_SMONTH);
 		BEGDA.set(Calendar.DAY_OF_MONTH, 1);
-		inputJSON.put("IP_BEGDA", sdf.format(BEGDA.getTime()));
+		inputJSON.put(IP_BEGDA, sdf.format(BEGDA.getTime()));
 		// inputJSON.put("IP_BEGDA", "20180701");
 		// inputJSON.put("IP_ENDDA", "20180831");
 
@@ -247,12 +303,12 @@ public class CommonAdapterServicesResource {
 		ENDDA.set(Calendar.DATE, 1);
 		int lastDate = ENDDA.getActualMaximum(Calendar.DATE);
 		ENDDA.set(Calendar.DATE, lastDate);
-		inputJSON.put("IP_ENDDA", sdf.format(ENDDA.getTime()));
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
+		inputJSON.put(IP_ENDDA, sdf.format(ENDDA.getTime()));
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
 
-		responceJSON = this.postService(inputJSON.toString(), GetAttendanceStatus, methodName);
-		JSONObject innerObject = responceJSON.getJSONObject("data").getJSONObject("ET_DATA");
-		JSONArray jsonArray = innerObject.getJSONArray("item");
+		responceJSON = this.postService(inputJSON.toString(), GetAttendanceStatus, methodName, userInformation.getString(EP_PERNR));
+		JSONObject innerObject = responceJSON.getJSONObject(data).getJSONObject(ET_DATA);
+		JSONArray jsonArray = innerObject.getJSONArray(item);
 			
 			for (int i = 0, size = jsonArray.length(); i < size; i++)
 			{
@@ -834,7 +890,7 @@ public class CommonAdapterServicesResource {
 
 				resultJSONarrlist.add(resultJSON);
 			}
-			commonServerResponce.put("data", resultJSONarrlist);
+			commonServerResponce.put(data, resultJSONarrlist);
 
 		return commonServerResponce.toString();
 	}
@@ -862,7 +918,7 @@ public class CommonAdapterServicesResource {
 
 		AuthenticatedUser currentUser = securityContext.getAuthenticatedUser();
 		JSONObject userInformation = new JSONObject(currentUser.getDisplayName());
-		LOGGER.log(Level.INFO, "[ USER INFO ]  : "+userInformation.toString());
+		// LOGGER.log(Level.INFO, "[ USER INFO ]  : "+userInformation.toString());
 		return userInformation;
 	}
 
@@ -884,17 +940,17 @@ public class CommonAdapterServicesResource {
 		JSONObject inputJSON = new JSONObject();
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
-		inputJSON.put("IV_PERNR", userInformation.getString("EP_PERNR"));
-		inputJSON.put("IP_SDATE", IP_SDATE);	
-		inputJSON.put("IP_EDATE", IP_EDATE);
-		inputJSON.put("LV_STIME", LV_STIME);
-		inputJSON.put("LV_ETIME", LV_ETIME);
-		inputJSON.put("LV_PLACE", LV_PLACE);	
-		inputJSON.put("LV_ORG", LV_ORG);
-		inputJSON.put("LV_PER", LV_PER);
-		inputJSON.put("LV_COMMENTS", LV_COMMENTS);				
+		inputJSON.put(IV_PERNR, userInformation.getString(EP_PERNR));
+		inputJSON.put(IP_SDATE, IP_SDATE);	
+		inputJSON.put(IP_EDATE, IP_EDATE);
+		inputJSON.put(LV_STIME, LV_STIME);
+		inputJSON.put(LV_ETIME, LV_ETIME);
+		inputJSON.put(LV_PLACE, LV_PLACE);	
+		inputJSON.put(LV_ORG, LV_ORG);
+		inputJSON.put(LV_PER, LV_PER);
+		inputJSON.put(LV_COMMENTS, LV_COMMENTS);				
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), ApplyOnDuty, methodName);
+		serverResJSON = this.postService(inputJSON.toString(), ApplyOnDuty, methodName, userInformation.getString(EP_PERNR));
 
 		return serverResJSON.toString();
 	}
@@ -919,20 +975,20 @@ public class CommonAdapterServicesResource {
 		JSONObject IS_FTP = new JSONObject();
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
-		inputJSON.put("PERNR", userInformation.getString("EP_PERNR"));
-		inputJSON.put("DATUM", DATUM);	
-		inputJSON.put("SFT_IN", SFT_IN);
-		inputJSON.put("SFT_OUT", SFT_OUT);
-		inputJSON.put("LUN_IN", LUN_IN);
-		inputJSON.put("LUN_OUT", LUN_OUT);	
-		inputJSON.put("LUN_IN_FLAG", LUN_IN_FLAG);
-		inputJSON.put("LUN_OUT_FLAG", LUN_OUT_FLAG);
-		inputJSON.put("SFT_IN_FLAG", SFT_IN_FLAG);
-		inputJSON.put("SFT_OUT_FLAG", SFT_OUT_FLAG);
-		inputJSON.put("R_TYPE", R_TYPE);	
-		IS_FTP.put("IS_FTP", inputJSON);		
+		inputJSON.put(PERNR, userInformation.getString(EP_PERNR));
+		inputJSON.put(DATUM, DATUM);	
+		inputJSON.put(SFT_IN, SFT_IN);
+		inputJSON.put(SFT_OUT, SFT_OUT);
+		inputJSON.put(LUN_IN, LUN_IN);
+		inputJSON.put(LUN_OUT, LUN_OUT);	
+		inputJSON.put(LUN_IN_FLAG, LUN_IN_FLAG);
+		inputJSON.put(LUN_OUT_FLAG, LUN_OUT_FLAG);
+		inputJSON.put(SFT_IN_FLAG, SFT_IN_FLAG);
+		inputJSON.put(SFT_OUT_FLAG, SFT_OUT_FLAG);
+		inputJSON.put(R_TYPE, R_TYPE);	
+		IS_FTP.put(IS_FTPString, inputJSON);		
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(IS_FTP.toString(), ApplyFTP, methodName);
+		serverResJSON = this.postService(IS_FTP.toString(), ApplyFTP, methodName, userInformation.getString(EP_PERNR));
 
 		return serverResJSON.toString();
 	}
@@ -952,8 +1008,8 @@ public class CommonAdapterServicesResource {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		JSONObject inputJSON = new JSONObject();
 		JSONObject serverResJSON = new JSONObject();
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
-		serverResJSON = this.postService(inputJSON.toString(), GetLeaveEncashment, methodName);
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
+		serverResJSON = this.postService(inputJSON.toString(), GetLeaveEncashment, methodName, userInformation.getString(EP_PERNR));
 		
 		return serverResJSON.toString();
 	}
@@ -977,12 +1033,12 @@ public class CommonAdapterServicesResource {
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");   
 		Date date = new Date(); 
 		
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
-		inputJSON.put("IP_DATE", dateFormat.format(date));	
-		inputJSON.put("IP_TIME", timeFormat.format(date));
-		inputJSON.put("IP_NO_DAYS", IP_NO_DAYS);		
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
+		inputJSON.put(IP_DATE, dateFormat.format(date));	
+		inputJSON.put(IP_TIME, timeFormat.format(date));
+		inputJSON.put(IP_NO_DAYS, IP_NO_DAYS);		
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), ApplyLeaveEncash, methodName);
+		serverResJSON = this.postService(inputJSON.toString(), ApplyLeaveEncash, methodName, userInformation.getString(EP_PERNR));
 
 		return serverResJSON.toString();
 	}
@@ -1002,8 +1058,8 @@ public class CommonAdapterServicesResource {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		JSONObject inputJSON = new JSONObject();
 		JSONObject serverResJSON = new JSONObject();
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
-		serverResJSON = this.postService(inputJSON.toString(), GetMyRequests, methodName);
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
+		serverResJSON = this.postService(inputJSON.toString(), GetMyRequests, methodName, userInformation.getString(EP_PERNR));
 		
 		return serverResJSON.toString();
 	}
@@ -1023,13 +1079,13 @@ public class CommonAdapterServicesResource {
 		JSONObject inputJSON = new JSONObject();
 		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
-		inputJSON.put("IP_RNO", IP_RNO);	
-		inputJSON.put("IP_LTYPE", IP_LTYPE);
-		inputJSON.put("IP_FLAG", IP_FLAG);		
-		inputJSON.put("IP_CMNT", IP_CMNT);		
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
+		inputJSON.put(IP_RNO, IP_RNO);	
+		inputJSON.put(IP_LTYPE, IP_LTYPE);
+		inputJSON.put(IP_FLAG, IP_FLAG);		
+		inputJSON.put(IP_CMNT, IP_CMNT);		
 		JSONObject serverResJSON = new JSONObject();
-		serverResJSON = this.postService(inputJSON.toString(), ApplyCancelLeave, methodName);
+		serverResJSON = this.postService(inputJSON.toString(), ApplyCancelLeave, methodName, userInformation.getString(EP_PERNR));
 
 		return serverResJSON.toString();
 	}
@@ -1049,8 +1105,8 @@ public class CommonAdapterServicesResource {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		JSONObject inputJSON = new JSONObject();
 		JSONObject serverResJSON = new JSONObject();
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
-		serverResJSON = this.postService(inputJSON.toString(), GetMyTask, methodName);
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
+		serverResJSON = this.postService(inputJSON.toString(), GetMyTask, methodName, userInformation.getString(EP_PERNR));
 		
 		return serverResJSON.toString();
 	}
@@ -1067,8 +1123,9 @@ public class CommonAdapterServicesResource {
 	public String applyRejectTaskRequest(@QueryParam("approvedRejectList") String approvedRejectList) {
 			
 		JSONObject serverResJSON = new JSONObject();
+		JSONObject userInformation = (JSONObject) this.getActiveUserProperties();
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-		serverResJSON = this.postService(approvedRejectList.toString(), MyTaskApprove, methodName);
+		serverResJSON = this.postService(approvedRejectList.toString(), MyTaskApprove, methodName, userInformation.getString(EP_PERNR));
 
 		return serverResJSON.toString();
 	}
@@ -1088,8 +1145,8 @@ public class CommonAdapterServicesResource {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		JSONObject inputJSON = new JSONObject();
 		JSONObject serverResJSON = new JSONObject();
-		inputJSON.put("IP_PERNR", userInformation.getString("EP_PERNR"));
-		serverResJSON = this.postService(inputJSON.toString(), GetMyProfile, methodName);
+		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
+		serverResJSON = this.postService(inputJSON.toString(), GetMyProfile, methodName, userInformation.getString(EP_PERNR));
 		
 		return serverResJSON.toString();
 	}
@@ -1099,14 +1156,17 @@ public class CommonAdapterServicesResource {
 	 * @QueryParam - InputString [This is String format which is having SAP Inputs], restURL [This is also String which is having the REST URL to connect SAP Backend]
 	 * @return - commonServerResponce OBJECT (type - JSONObject format SAP RESPONCE)
 	 * */
-	public JSONObject postService(String inputString, String contextPathName, String methodName){
+	public JSONObject postService(String inputString, String contextPathName, String methodName, String pernrNumber){
 		JSONObject resultJSON = new JSONObject();
 		commonServerResponce = new JSONObject(commonResponceStr);
-		LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Name : " + methodName + "\n");
-	    LOGGER.log(Level.INFO, "\n SAP Request Sending from URL : " + configurationAPI.getPropertyValue(UATServer)+contextPathName + "\n");
-		LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Inputs : " + inputString + "\n");
+		// LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Name : " + methodName + "\n");
+	    // LOGGER.log(Level.INFO, "\n SAP Request Sending from URL : " + configurationAPI.getPropertyValue(UATServer)+contextPathName + "\n");
+		// LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Inputs : " + inputString + "\n");
+		// LOGGER.log(Level.INFO, "PernrNo : | ProcedureName : | StatusCode : | ResponceTime : ");
 		
 		try {
+			startTime = System.currentTimeMillis();
+			loggerStatus = STATUS_CODE_FAILURE;
 			StringEntity params = new StringEntity(inputString);
 			CredentialsProvider credsProvider = new BasicCredentialsProvider();
 			credsProvider.setCredentials(new AuthScope(AUTH_SCOPE_URL, AUTH_SCOPE_PORT),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
@@ -1115,9 +1175,9 @@ public class CommonAdapterServicesResource {
 			// httpPost.addHeader("User-Agent", "Mozilla/5.0");
 			httpPost.setEntity(params);
 			RequestConfig requestConfig = RequestConfig.custom()
-				.setSocketTimeout(TIMEOUT_MILLIS)
-				.setConnectTimeout(TIMEOUT_MILLIS)
-				.setConnectionRequestTimeout(TIMEOUT_MILLIS)
+				.setSocketTimeout(SocketTimeout)
+				.setConnectTimeout(ConnectTimeout)
+				.setConnectionRequestTimeout(ConnectionRequestTimeout)
 				.build();
 			httpPost.setConfig(requestConfig);
 			 
@@ -1129,32 +1189,38 @@ public class CommonAdapterServicesResource {
 					int status = response.getStatusLine().getStatusCode();
 					if (status >= 200 && status < 300) {
 						HttpEntity entity = response.getEntity();
+						loggerStatus = STATUS_CODE_SUCCESS;
 						return entity != null ? EntityUtils.toString(entity) : null;
-					} else {
+					} else if (status == 500){
+						loggerStatus = STATUS_CODE_FAILURE;
 						LOGGER.log(Level.SEVERE, "\n Unexpected response status: " + status + "\n");
-						commonServerResponce.put("message", "Internal Server Error, Please try again");
-						// commonServerResponce.put("status_code", status);
-						// commonServerResponce.put("data", "");
-						throw new ClientProtocolException("Unexpected response status: " + status);
+						commonServerResponce.put(message, configurationAPI.getPropertyValue(ErrorMessage));
+						//throw new ClientProtocolException("EXCEPTION : Unexpected response status: " + status);
+						return null;
+					}else{
+						loggerStatus = STATUS_CODE_FAILURE;
+						LOGGER.log(Level.SEVERE, "\n Unexpected response status: " + status + "\n");
+						commonServerResponce.put(message, configurationAPI.getPropertyValue(ErrorMessage));
+						//throw new ClientProtocolException("EXCEPTION : Unexpected response status: " + status);
+						return null;
 					}
 				}
 	 
 			};
 			String responseBody = httpclient.execute(httpPost, responseHandler);
 			resultJSON = new JSONObject(responseBody);
-			// commonServerResponce.put("message", "");
-			commonServerResponce.put("status_code", STATUS_CODE);
-			commonServerResponce.put("data", resultJSON);
-			LOGGER.log(Level.INFO, "\n SAP Responce outPuts : " + resultJSON.toString() + "\n");
+			commonServerResponce.put(status_code, STATUS_CODE_SUCCESS);
+			commonServerResponce.put(data, resultJSON);
 
 			}catch(IOException ioException){
-				LOGGER.log(Level.SEVERE, "[ IOException ]  : "+ioException.toString());
-				commonServerResponce.put("message", ioException.toString());
-				// commonServerResponce.put("status_code", "400");
-				// commonServerResponce.put("data", "");
+				LOGGER.log(Level.SEVERE, "EXCEPTION : PernrNo : "+pernrNumber+" | ProcedureName : "+methodName+" |"+ ioException.toString());
+				commonServerResponce.put(message, configurationAPI.getPropertyValue(ErrorMessage));
 			}finally {
 				try {
 					httpclient.close();
+					long elapsedTime = System.currentTimeMillis() - startTime;
+					LOGGER.log(Level.INFO, "PernrNo : "+pernrNumber+" | ProcedureName : "+methodName+"| StatusCode : "+loggerStatus+"| ResponceTime : "+elapsedTime);
+					LOGGER.log(Level.FINE, "SAP Responce outPuts : " + resultJSON.toString() + "\n");
 				} catch (IOException ioException) {
 					LOGGER.log(Level.SEVERE, "[ IOException httpclient Close]  : "+ioException.toString());
 				}

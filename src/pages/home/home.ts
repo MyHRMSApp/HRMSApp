@@ -133,7 +133,7 @@ attendance() {
           this.routerOnDeactivate();
       }else if(counter == 29){
         this.utilService.dismissLoader();
-        this.utilService.showCustomPopup4Error("Attendance", "Internal Server Error, Please try again", "FAILURE");
+        this.utilService.showCustomPopup4Error("Attendance", "Oops! Something went wrong, Please try again", "FAILURE");
         this.mainService.attendanceCallFlag = true;
         this.mainService.attendanceN_NP1_DataFlag = true; 
         this.attanaceCallFlag = false;
@@ -160,13 +160,13 @@ attendanceDataFetch(){
           console.log(JSON.stringify(this.mainService.attanancePageData));
           this.navCtrl.push("AttendanceViewPage");
         }else{
-          this.utilService.showCustomPopup4Error("Attendance", "Internal Server Error, Please try again", "FAILURE");
+          this.utilService.showCustomPopup4Error("Attendance", "Oops! Something went wrong, Please try again", "FAILURE");
         }
       };
     }, (error)=>{
       console.log("Data readed from jsonstore error",error);
       this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error("Attendance", "Internal Server Error, Please try again", "FAILURE");
+      this.utilService.showCustomPopup4Error("Attendance", "Oops! Something went wrong, Please try again", "FAILURE");
     });
   // }else{
   //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -261,7 +261,7 @@ coupons() {
 
         } else {
           // this.utilService.showPopup("Coupons", resultData.message);
-          this.utilService.showCustomPopup4Error("Coupons", "Internal Server Error, Please try again", "FAILURE");
+          this.utilService.showCustomPopup4Error("Coupons", "Oops! Something went wrong, Please try again", "FAILURE");
         }
       };
     },
@@ -269,7 +269,7 @@ coupons() {
       console.log("Data readed from jsonstore error",error);
       this.utilService.dismissLoader();
       // this.utilService.showPopup("Attendance",error.statusText);
-      this.utilService.showCustomPopup4Error("Coupons", "Internal Server Error, Please try again", "FAILURE");
+      this.utilService.showCustomPopup4Error("Coupons", "Oops! Something went wrong, Please try again", "FAILURE");
       
     });
   // }else{
@@ -496,7 +496,7 @@ try {
       console.log("Data readed from jsonstore error",error);
       this.utilService.dismissLoader();
       // this.utilService.showCustomPopup("FAILURE",error.statusText);
-      this.utilService.showCustomPopup4Error("Leaves", "Internal Server Error, Please try again", "FAILURE");
+      this.utilService.showCustomPopup4Error("Leaves", "Oops! Something went wrong, Please try again", "FAILURE");
     });
   // }else{
   //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -530,7 +530,7 @@ try {
       console.log("Data readed from jsonstore error",error);
       this.utilService.dismissLoader();
       // this.utilService.showCustomPopup("FAILURE",error.statusText);
-      this.utilService.showCustomPopup4Error("My Request", "Internal Server Error, Please try again", "FAILURE");
+      this.utilService.showCustomPopup4Error("My Request", "Oops! Something went wrong, Please try again", "FAILURE");
     });
   // }else{
   //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -563,7 +563,7 @@ myTask() {
         console.log("Data readed from jsonstore error",error);
         this.utilService.dismissLoader();
         // this.utilService.showCustomPopup("FAILURE",error.statusText);
-        this.utilService.showCustomPopup4Error("My Task", "Internal Server Error, Please try again", "FAILURE");
+        this.utilService.showCustomPopup4Error("My Task", "Oops! Something went wrong, Please try again", "FAILURE");
       });
     // }else{
     //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
