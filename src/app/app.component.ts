@@ -134,7 +134,7 @@ export class MyApp {
 
 let app;
 if (this.platform.is('ios')) {
-  app = 'net.whatsapp.WhatsApp.ShareExtension';
+  app = 'whatsapp://';
 } else if (this.platform.is('android')) {
   app = 'com.whatsapp.android';
 }
