@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { StorageProvider } from '../providers/storage/storage';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { UtilsProvider } from '../providers/utils/utils';
+import { CommonStringsProvider } from '../providers/common-strings/common-strings';
 import { NetworkProvider } from '../providers/network-service/network-service';
 import { AppAvailability } from '@ionic-native/app-availability';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
@@ -89,7 +90,6 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-
       // this.network.onDisconnect().subscribe(() => {
       //   this.internetConnectionCheck = (this.network.type=="none")?false:true;
       // });
@@ -129,11 +129,7 @@ export class MyApp {
       function(failureResponse) {
         console.log("Failed to get push support status===>"+failureResponse);
       }
-  );
-
-
-
-    
+    );
     });
 
 let app;

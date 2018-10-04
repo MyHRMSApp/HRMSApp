@@ -7,6 +7,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
+import { CommonStringsProvider } from '../../providers/common-strings/common-strings';
 import { MyApp } from '../../app/app.component'
 
 
@@ -37,17 +38,19 @@ export class CouponsPage {
   jewelleryCoupons: any;
   eyeWearCoupons: any;
   taneiraCoupons: any;
+  strings: any;
 
 constructor(public menu: MenuController, public events: Events,
   private http: Http, private toast: ToastController, private network: Network, 
   public loadingCtrl: LoadingController, public platform: Platform, public mainService: MyApp, 
   public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
   public navParams: NavParams, public storage:StorageProvider, public service: ServiceProvider, 
-  public utilService: UtilsProvider) {
+  public utilService: UtilsProvider, public commonStrings: CommonStringsProvider) {
     
     this.menu.swipeEnable(false);
     this.counts = this.mainService.couponPageData;
-    console.log("Counts" + JSON.stringify(this.counts));
+    this.strings = this.commonStrings.commonStrings.couponsPage;
+    console.log("Counts" + JSON.stringify(this.counts))
     
     this.eyeWearCounts = this.navParams.get("eyeWearLength");;
     this.jewelleryCounts = this.navParams.get("jewelleryLength");;
@@ -75,7 +78,7 @@ openMenu() {
   this.menu.toggle();
 } 
   
-back(){
+back() {
   this.navCtrl.pop();
 }
 

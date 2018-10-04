@@ -44,6 +44,11 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
+        <config-file parent="LSApplicationQueriesSchemes" platform="ios" target="*-Info.plist">
+            <array>
+                <string>whatsapp</string>
+            </array>
+        </config-file>
         <preference name="UIWebViewBounce" value="false" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -89,7 +94,7 @@
     </mfp:android>
     <mfp:ios>
         <mfp:sdkChecksum>4145390992</mfp:sdkChecksum>
-        <mfp:appChecksum>451126313</mfp:appChecksum>
+        <mfp:appChecksum>834167235</mfp:appChecksum>
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
@@ -120,7 +125,6 @@
     <mfp:server runtime="tclmf" url="https://devapps.titan.in:8443" />
     <mfp:directUpdateAuthenticityPublicKey />
     <mfp:languagePreferences>en</mfp:languagePreferences>
-    <engine name="android" spec="^7.0.0" />
     <engine name="ios" spec="^4.3.0" />
     <plugin name="cordova-plugin-appavailability" spec="^0.4.2" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />

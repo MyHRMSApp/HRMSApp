@@ -8,6 +8,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { MyApp } from '../../app/app.component';
 import { UtilsProvider } from '../../providers/utils/utils';
 
+
 @IonicPage()
 @Component({
   selector: 'page-share-coupons',
@@ -34,6 +35,7 @@ export class ShareCouponsPage {
   employeeCode: any;
   iosMail: string;
   showScrolling: boolean = true;
+  checkWhatsapp: boolean = false;
 
   constructor(public menu: MenuController, public events: Events, public actionSheetCtrl: ActionSheetController,
     private toast: ToastController, private network: Network, public loadingCtrl: LoadingController, public platform: Platform,
@@ -89,15 +91,38 @@ export class ShareCouponsPage {
   }
   whatsapp() {
     var msg = this.str;
-    this.socialSharing.shareViaWhatsApp(msg, null, null).then(() => {
-    }).catch(() => {
-    this.utilService.showCustomPopup("FAILURE", "Whatsapp is not installed");
-    });
+
+    if (this.platform.is('android')) {    
+      this.socialSharing.shareViaWhatsApp(msg, null, null).then(() => {
+        console.log("It works");
+      }).catch(() => {
+        console.log("It doesn't works");
+        this.utilService.showCustomPopup("FAILURE", "Whatsapp is not installed");
+      });
+    }
+
+    else if (this.platform.is('ios')) {
+      this.socialSharing.shareViaWhatsApp(msg, null, null);
+      document.addEventListener('pause', ()=> {
+        console.log('App going to background');
+        this.checkWhatsapp = true;
+      });
+    
+      setTimeout(()=> {
+        if(this.checkWhatsapp == false){
+          this.utilService.showCustomPopup("FAILURE", "Sorry! Unable to open whatsapp");
+        }
+      }, 2000);
+
+  }
+
   }
   sms() {
     var msg = this.str;
     this.socialSharing.shareViaSMS(msg, null).then(() => {
+      console.log("Success");
     }).catch(() => {
+      console.log("Failure");
       this.utilService.showCustomPopup("FAILURE", "Messaging is not installed");
     });
   }

@@ -175,3 +175,42 @@ page-alert-page-fortextarea {
 }
 
 
+.app-root-ios {
+    
+page-alert-page-fortextarea {
+
+    max-width: 85%;
+    max-height: 60%;
+    display: block !important;
+    position: relative !important;
+    margin: 35% auto; 
+
+    .toolbar-background-ios{
+        background: unset !important;
+    }
+
+    .toolbar-title-ios {
+        color: white !important;
+        text-align: left !important;
+    }
+    
+    .toolbar-ios ion-title {
+        padding: 0 10px 1px !important;
+    }
+
+    .toolbar-ios {
+        padding: 4px !important;
+        min-height: 65px;
+        padding-top: unset !important;
+    }
+
+    ion-title {
+        padding-top: unset !important;
+    }
+
+}
+
+
+}
+
+
