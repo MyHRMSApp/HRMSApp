@@ -144,7 +144,7 @@ public class CommonAdapterServicesResource {
 	private static final String IS_FTPString = "IS_FTP";
 	private static final String IP_DATE = "IP_DATE";
 	private static final String IP_TIME = "IP_TIME";
-	private static final String IP_NO_DAYS = "IP_NO_DAYS";
+	private static final String IP_NO_DAYSString = "IP_NO_DAYS";
 	private static final String IP_RNO = "IP_RNO";
 	private static final String IP_LTYPE = "IP_LTYPE";
 	private static final String IP_FLAG = "IP_FLAG";
@@ -1036,7 +1036,7 @@ public class CommonAdapterServicesResource {
 		inputJSON.put(IP_PERNR, userInformation.getString(EP_PERNR));
 		inputJSON.put(IP_DATE, dateFormat.format(date));	
 		inputJSON.put(IP_TIME, timeFormat.format(date));
-		inputJSON.put(IP_NO_DAYS, IP_NO_DAYS);		
+		inputJSON.put(IP_NO_DAYSString, IP_NO_DAYS);		
 		JSONObject serverResJSON = new JSONObject();
 		serverResJSON = this.postService(inputJSON.toString(), ApplyLeaveEncash, methodName, userInformation.getString(EP_PERNR));
 

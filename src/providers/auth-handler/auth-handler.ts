@@ -16,7 +16,7 @@ export class AuthHandlerProvider {
   handleChallengeCallback = null;
   loginSuccessCallback = null;
   loginFailureCallback = null;
-  rememberMeOptionFlag = true;
+  chalengeTriggerFlag = true;
   userInfo:any
   constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider, public utilService: UtilsProvider) {
     console.log('--> AuthHandlerProvider called');
@@ -66,7 +66,6 @@ export class AuthHandlerProvider {
   handleChallenge(challenge) {
     console.log('--> AuthHandler handleChallenge called.\n', JSON.stringify(challenge));
     this.isChallenged = true;
-    this.rememberMeOptionFlag = false;
     if (this.handleChallengeCallback != null) {
       this.handleChallengeCallback(challenge);
     } else {
@@ -78,10 +77,14 @@ export class AuthHandlerProvider {
     console.log('--> AuthHandler handleSuccess called');
     console.log("-->>"+data.user.displayName);
     console.log("-->>"+data.user.displayName.rememberMe);
-    console.log("this.rememberMeOptionFlag-->>"+this.rememberMeOptionFlag);
+    console.log("this.chalengeTriggerFlag-->>"+this.chalengeTriggerFlag);
     localStorage.setItem("userInfo", data.user.displayName.replace(/'/g, '"'));
     this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-     // this.loginSuccessCallback();
+
+    if(this.chalengeTriggerFlag){
+      this.loginSuccessCallback();
+    }
+
 
 //      var tags = [this.userInfo.EP_EGROUP, this.userInfo.EP_USERTYPE];
 //     //  if(this.userInfo.EP_USERTYPE == "ESS"){
@@ -126,6 +129,7 @@ export class AuthHandlerProvider {
   }
 
   checkIsLoggedIn() {
+    this.chalengeTriggerFlag = false;
     this.utilService.showLoader("Please Wait...");
     console.log('--> AuthHandler checkIsLoggedIn called');
     if(localStorage.getItem("rememberMe") == "enabled"){
@@ -134,7 +138,7 @@ export class AuthHandlerProvider {
         (accessToken) => {
   
           console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
-
+          this.chalengeTriggerFlag = true;
           var tags = [this.userInfo.EP_EGROUP, this.userInfo.EP_USERTYPE];
           //  if(this.userInfo.EP_USERTYPE == "ESS"){
           //    tags = ['Employee'];

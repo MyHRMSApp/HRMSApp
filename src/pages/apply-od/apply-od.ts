@@ -152,6 +152,7 @@ export class ApplyOdPage {
     this.selector.show({
       title: "END TIME",
       items: [this.jsonData.Hours, this.jsonData.Minutes],
+      theme: "dark",
     }).then(
       result => {
         console.log(result[0].description+':'+result[1].description);
