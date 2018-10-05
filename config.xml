@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.titan.myhrms" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:mfp="http://www.ibm.com/mobilefirst/cordova-plugin-mfp">
+<widget id="com.titan.myhrms" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:mfp="http://www.ibm.com/mobilefirst/cordova-plugin-mfp">
     <name>MyCompass</name>
     <description>HRMS Application for Titan Employess</description>
     <author email="amit.goyal@in.ibm.com" href="http://ionicframework.com/">IBM Team</author>
@@ -44,10 +44,17 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
-        <config-file parent="LSApplicationQueriesSchemes" platform="ios" target="*-Info.plist">
-            <array>
-                <string>whatsapp</string>
-            </array>
+        <config-file file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+            <string>need camera access to take pictures</string>
+        </config-file>
+        <config-file file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+            <string>need photo library access to get pictures from there</string>
+        </config-file>
+        <config-file file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+            <string>need location access to find things nearby</string>
+        </config-file>
+        <config-file file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
+            <string>need photo library access to save pictures there</string>
         </config-file>
         <preference name="UIWebViewBounce" value="false" />
         <allow-intent href="itms:*" />
@@ -87,14 +94,14 @@
     </platform>
     <mfp:android>
         <mfp:sdkChecksum>3727668345</mfp:sdkChecksum>
-        <mfp:appChecksum>2342274583</mfp:appChecksum>
+        <mfp:appChecksum>4254350610</mfp:appChecksum>
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
     </mfp:android>
     <mfp:ios>
         <mfp:sdkChecksum>4145390992</mfp:sdkChecksum>
-        <mfp:appChecksum>834167235</mfp:appChecksum>
+        <mfp:appChecksum>2335602983</mfp:appChecksum>
         <mfp:security>
             <mfp:testWebResourcesChecksum enabled="false" ignoreFileExtensions="png, jpg, jpeg, gif, mp4, mp3" />
         </mfp:security>
