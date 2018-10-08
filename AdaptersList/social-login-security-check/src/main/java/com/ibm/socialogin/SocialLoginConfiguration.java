@@ -38,6 +38,7 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
     private static final String CUSTOM_MSG_CONFIG_PROPERTY = "UserCustomMessage";
     private static final String DEVServer_URL_CONFIG_PROPERTY = "DEVServer";
     private static final String UATServer_URL_CONFIG_PROPERTY = "UATServer";
+    private static final String PRODServer_URL_CONFIG_PROPERTY = "ProdServer";
     private static final String GMAILAUTH_URL_CONFIG_PROPERTY = "GMAILAUTH_URL";
     private static final String ErrorMessage_CONFIG_PROPERTY = "ErrorMessage";
 
@@ -45,6 +46,7 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
     private String userCustomMessage;
     private String devServerURL;
     private String qaServerURL;
+    private String prodServerURL;
     private String gmailAuthURL;
     private String ErrorMessage;
     private Map<String, LoginVendor> vendors;
@@ -63,6 +65,7 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
         userCustomMessage = getStringProperty(CUSTOM_MSG_CONFIG_PROPERTY, properties, null);
         devServerURL = getStringProperty(DEVServer_URL_CONFIG_PROPERTY, properties, null);
         qaServerURL = getStringProperty(UATServer_URL_CONFIG_PROPERTY, properties, null);
+        prodServerURL = getStringProperty(PRODServer_URL_CONFIG_PROPERTY, properties, null);
         gmailAuthURL = getStringProperty(GMAILAUTH_URL_CONFIG_PROPERTY, properties, null);
         ErrorMessage = getStringProperty(ErrorMessage_CONFIG_PROPERTY, properties, null);
 
@@ -124,6 +127,10 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
 
     public String getErrorMessage() {
         return ErrorMessage;
+    }
+
+    public String getProdServerURL() {
+        return prodServerURL;
     }
 
     private void createVendors() {

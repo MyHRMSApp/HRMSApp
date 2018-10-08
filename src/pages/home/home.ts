@@ -11,6 +11,7 @@ import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
+import { normalizeURL } from 'ionic-angular';
 import moment from 'moment';
 
 /**
@@ -396,9 +397,14 @@ changeImage() {
 * Method to open camera
 */
 takePhoto() {
+  var destinationType:any = this.camera.DestinationType.DATA_URL;
+  if (this.platform.is('ios')){
+    destinationType = this.camera.DestinationType.FILE_URI;
+  }
+
   const options: CameraOptions = {
     quality: 30,
-    destinationType: this.camera.DestinationType.DATA_URL,
+    destinationType: destinationType,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
     saveToPhotoAlbum: true,
@@ -414,8 +420,13 @@ takePhoto() {
       })
     this.utilService.showLoader("Updating picture");
       if(imageData){
-        console.log("getting into if condition",imageData);
-        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+
+        //get photo from the camera based on platform type
+        if (this.platform.is('ios')){
+          this.base64Image = normalizeURL(imageData);
+        }else{
+          this.base64Image = 'data:image/jpeg;base64,' + imageData;
+        }
         this.photos = this.base64Image;
         localStorage.setItem("userPicture", this.photos);
         this.utilService.dismissLoader();
@@ -434,9 +445,15 @@ takePhoto() {
 * Method for open galeery
 */
 uploadPhoto() {
+  var destinationType:any = this.camera.DestinationType.DATA_URL;
+  if (this.platform.is('ios')){
+    destinationType = this.camera.DestinationType.FILE_URI;
+  }
+
   this.camera.getPicture({
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-    destinationType: this.camera.DestinationType.DATA_URL, quality: 30,
+    destinationType: destinationType, 
+    quality: 30,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
     allowEdit:true,
@@ -450,8 +467,13 @@ uploadPhoto() {
     })
     this.utilService.showLoader("Updating picture");
       if(imageData){
-        console.log("getting into if condition",imageData);
-        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+
+        //get photo from the camera based on platform type
+        if (this.platform.is('ios')){
+          this.base64Image = normalizeURL(imageData);
+        }else{
+          this.base64Image = 'data:image/jpeg;base64,' + imageData;
+        }
         this.photos = this.base64Image;
         localStorage.setItem("userPicture", this.photos);
         this.utilService.dismissLoader();

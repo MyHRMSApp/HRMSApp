@@ -84,6 +84,7 @@ public class CommonAdapterServicesResource {
 	private static final String[] APPROVED_LEAVES = {"ODA", "FTA", "CLA", "SLA", "GLA", "QLA", "PLA"};
 	private static final String DEVServer = "DEVServer";
 	private static final String UATServer = "UATServer";
+	private static final String PRODServer = "PRODServer";
 	private static final String ErrorMessage = "ErrorMessage";
 	private static final String GetCouponDetail = "GetCouponDetail";
 	private static final String GetLeaveBalance = "GetLeaveBalance";

@@ -109,8 +109,13 @@ export class MyApp {
       // }
 
       var notificationReceived = (message) => {
-        // alert(JSON.stringify(message));
-        this.utilService.showCustomPopup4Error("Notification", message.alert, "NOTIFY");
+        console.log(JSON.stringify(message));
+        if (this.platform.is('ios')) {
+          this.utilService.showCustomPopup4Error("Notification", message.aps.alert.body, "NOTIFY");
+        } else if (this.platform.is('android')) {
+          this.utilService.showCustomPopup4Error("Notification", message.alert, "NOTIFY");
+        }
+        
     };
 
     MFPPush.isPushSupported (

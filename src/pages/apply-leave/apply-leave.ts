@@ -98,36 +98,89 @@ export class ApplyLeavePage {
   }
 
   ionViewCanEnter(){
-    if(this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.length > 0){
-      for(var i = 0; i < this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.length; i++){
-        switch (this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT) {
+
+    if(this.mainServices.userLeaveBalanceListData.ET_EMPBAL !== ""){
+      if(this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.length === undefined && this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT !== undefined) {
+        switch (this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT) {
           case "CL":
-            this.userCLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
-            this.casual = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            this.userCLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item;
+            this.casual = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT;
             console.log(this.casual);
             break;
           case "SL":
-            this.userSLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
-            this.sick = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            this.userSLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item;
+            this.sick = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT;
             console.log(this.sick);
             break;
           case "GL":
-            this.userGLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
-            this.general = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            this.userGLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item;
+            this.general = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT;
             console.log(this.general);
             break;
           case "PL":
-            this.userPLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
-            this.privelage = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+            this.userPLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item;
+            this.privelage = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT;
             console.log(this.privelage);
             break;
         }
+      }else {
+        for(var i = 0; i < this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.length; i++){
+          switch (this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT) {
+            case "CL":
+              this.userCLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+              this.casual = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+              console.log(this.casual);
+              break;
+            case "SL":
+              this.userSLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+              this.sick = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+              console.log(this.sick);
+              break;
+            case "GL":
+              this.userGLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+              this.general = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+              console.log(this.general);
+              break;
+            case "PL":
+              this.userPLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+              this.privelage = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+              console.log(this.privelage);
+              break;
+          }
+        }
       }
-    }
+
+    // if(this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.length > 0){
+    //   for(var i = 0; i < this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.length; i++){
+    //     switch (this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT) {
+    //       case "CL":
+    //         this.userCLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+    //         this.casual = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+    //         console.log(this.casual);
+    //         break;
+    //       case "SL":
+    //         this.userSLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+    //         this.sick = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+    //         console.log(this.sick);
+    //         break;
+    //       case "GL":
+    //         this.userGLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+    //         this.general = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+    //         console.log(this.general);
+    //         break;
+    //       case "PL":
+    //         this.userPLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
+    //         this.privelage = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
+    //         console.log(this.privelage);
+    //         break;
+    //     }
+    //   }
+    // }
     this.utilService.dismissLoader();
     console.log(this.userCLLeave+"-"+this.userSLLeave+"-"+this.userGLLeave+"-"+this.userPLLeave);
   }
 
   
 
+}
 }
