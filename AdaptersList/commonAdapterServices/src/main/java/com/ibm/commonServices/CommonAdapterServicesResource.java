@@ -100,7 +100,7 @@ public class CommonAdapterServicesResource {
 	private static final String GetMyTask = "GetMyTask";
 	private static final String MyTaskApprove = "MyTaskApprove";
 	private static final String GetMyProfile = "GetMyProfile";
-	private static final String AUTH_SCOPE_URL = "pirqa.titan.co.in";
+	private static final String AUTH_SCOPE_URL = "pirprd.titan.co.in";
 	private static final int AUTH_SCOPE_PORT = 50401;
 	private static final int SocketTimeout = 30000;
 	private static final int ConnectTimeout = 30000;
@@ -341,7 +341,124 @@ public class CommonAdapterServicesResource {
 				String[] temp_reqState_ATT_1 = RS_ATT1.isEmpty()?null:RS_ATT1.split(",");
 				String[] temp_reqState_ATT_2 = RS_ATT2.isEmpty()?null:RS_ATT2.split(",");
 
-				if(SHIFT.equals("OFF") && temp_reqState_ATT_1 == null && temp_reqState_ATT_2 == null){
+				if(SHIFT.equals("G") && ATT_1.equals("G") &&  ATT_2.equals("G")){
+					List ATT_1_Req = new ArrayList(); 
+					List ATT_2_Req = new ArrayList();
+					String cssClass = "";
+					boolean ATT1_CLR = true;
+					boolean ATT2_CLR = true;
+					boolean ATT1_Aprd = true;
+					boolean ATT2_Aprd = true;
+
+					if(temp_reqState_ATT_1 != null){
+						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
+							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_Aprd != false) {
+								ATT1_Aprd = false;
+								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
+							}
+							
+						}
+					}
+
+					if(temp_reqState_ATT_2 != null){
+						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
+							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_Aprd != false) {
+								ATT2_Aprd = false;
+								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
+							}
+							
+						}
+					}
+
+					if(temp_reqState_ATT_1 != null){
+						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
+							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_CLR != false) {
+								ATT1_CLR = false;
+								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
+							}
+							
+						}
+					}
+
+					if(temp_reqState_ATT_2 != null){
+						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
+							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_CLR != false) {
+								ATT2_CLR = false;
+								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
+							}
+							
+						}
+					}
+
+							if(!ATT2_Aprd && !ATT1_Aprd){
+								cssClass = "ATT1_Approved_ATT2_Approved";
+							}else if(ATT2_Aprd && ATT1_Aprd){
+								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
+							}else if(!ATT2_Aprd && ATT1_Aprd){
+								cssClass = "ATT1_NormalPunch_ATT2_Approved";
+							}else if(ATT2_Aprd && !ATT1_Aprd){
+								cssClass = "ATT1_Approved_ATT2_NormalPunch";
+							} else
+							
+							if(!ATT1_CLR && !ATT2_CLR){
+								cssClass = "ATT1_Pending_ATT2_Pending";
+							}else if(ATT1_CLR && ATT2_CLR){
+								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
+							}else if(!ATT1_CLR && ATT2_CLR){
+								cssClass = "ATT1_Pending_ATT2_Approved";
+							}else if(ATT1_CLR && !ATT2_CLR){
+								cssClass = "ATT1_NormalPunch_ATT2_Approved";
+							}
+						
+					
+					resultJSON.put("cssClass", cssClass);
+					resultJSON.put("LDATE", LDATE);
+					resultJSON.put("PUN_P10", PUNIN);
+					resultJSON.put("PUN_P15", MIDOUT);
+					resultJSON.put("PUN_P20", PUNOUT);
+					resultJSON.put("PUN_P25", MIDIN);
+					resultJSON.put("ATT", ATT);
+					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
+					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
+					resultJSON.put("Holiday", false);
+					resultJSON.put("Absence", false);
+					resultJSON.put("RequestState", true);
+				}
+
+				else if(SHIFT.equals("G") && ATT_1.equals("G") && ATT_2.equals("OD")){
+					resultJSON.put("cssClass", "ATT1_NormalPunch_ATT2_Approved");
+					resultJSON.put("LDATE", LDATE);
+					resultJSON.put("PUN_P10", PUNIN);
+					resultJSON.put("PUN_P15", MIDOUT);
+					resultJSON.put("PUN_P20", PUNOUT);
+					resultJSON.put("PUN_P25", MIDIN);
+					resultJSON.put("ATT", ATT);
+					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
+					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
+					resultJSON.put("Holiday", true);
+					resultJSON.put("Absence", false);
+					resultJSON.put("RequestState", false);
+				}else if(SHIFT.equals("G") && ATT_1.equals("OD") &&  ATT_2.equals("G")){
+					resultJSON.put("cssClass", "ATT1_Approved_ATT2_NormalPunch");
+					resultJSON.put("LDATE", LDATE);
+					resultJSON.put("PUN_P10", PUNIN);
+					resultJSON.put("PUN_P15", MIDOUT);
+					resultJSON.put("PUN_P20", PUNOUT);
+					resultJSON.put("PUN_P25", MIDIN);
+					resultJSON.put("ATT", ATT);
+					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
+					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+					resultJSON.put("SHF_IN", SHF_IN);
+					resultJSON.put("SHF_OUT", SHF_OUT);
+					resultJSON.put("Holiday", true);
+					resultJSON.put("Absence", false);
+					resultJSON.put("RequestState", false);
+				}
+				else if(SHIFT.equals("OFF") && temp_reqState_ATT_1 == null && temp_reqState_ATT_2 == null){
 					resultJSON.put("cssClass", "HollydayClass");
 					resultJSON.put("LDATE", LDATE);
 					resultJSON.put("PUN_P10", PUNIN);
@@ -710,8 +827,7 @@ public class CommonAdapterServicesResource {
 					resultJSON.put("Holiday", false);
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", true);
-				}
-				
+				}				
 				else if(ATT_1.equals("G") || ATT_2.equals("G")){
 					List ATT_1_Req = new ArrayList(); 
 					List ATT_2_Req = new ArrayList();
@@ -760,8 +876,18 @@ public class CommonAdapterServicesResource {
 							
 						}
 					}
-
-					if(!ATT1_CLR && !ATT2_CLR){
+					 if(ATT2_Aprd || ATT1_Aprd){
+						if(!ATT2_Aprd && !ATT1_Aprd){
+							cssClass = "ATT1_Approved_ATT2_Approved";
+						}else if(!ATT2_Aprd && !ATT1_Aprd){
+							cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
+						}else if(!ATT2_Aprd && ATT1_Aprd){
+							cssClass = "ATT1_NormalPunch_ATT2_Approved";
+						}else if(ATT2_Aprd && !ATT1_Aprd){
+							cssClass = "ATT1_Approved_ATT2_NormalPunch";
+						}
+					}
+					else if(!ATT1_CLR && !ATT2_CLR){
 						cssClass = "ATT1_Pending_ATT2_Pending";
 					}else if(ATT1_CLR && !ATT2_CLR){
 						if(ATT_1.equals("WO") || ATT_1.equals("HO")){
@@ -1172,7 +1298,7 @@ public class CommonAdapterServicesResource {
 			CredentialsProvider credsProvider = new BasicCredentialsProvider();
 			credsProvider.setCredentials(new AuthScope(AUTH_SCOPE_URL, AUTH_SCOPE_PORT),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
 			httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
-			HttpPost httpPost = new HttpPost(configurationAPI.getPropertyValue(UATServer)+contextPathName);
+			HttpPost httpPost = new HttpPost(configurationAPI.getPropertyValue(PRODServer)+contextPathName);
 			// httpPost.addHeader("User-Agent", "Mozilla/5.0");
 			httpPost.setEntity(params);
 			RequestConfig requestConfig = RequestConfig.custom()

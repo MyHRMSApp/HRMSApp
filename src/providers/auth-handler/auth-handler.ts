@@ -184,7 +184,7 @@ export class AuthHandlerProvider {
     if (this.isChallenged) {
       if(credentialData){
         // (securityName == "socialLogin") ? this.userLoginChallengeHandler.submitChallengeAnswer(credentialData) : this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
-        console.log("this.gmailLoginChallengeHandler.submitChallengeAnswer Peocessing..........");
+        console.log("this.gmailLoginChallengeHandler.submitChallengeAnswer Processing..........");
         this.gmailLoginChallengeHandler.submitChallengeAnswer(credentialData);
       }else{
         console.log("input data missing");

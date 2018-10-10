@@ -187,7 +187,7 @@ export class LoginPage {
               "vendor": "google",
               "token": res.idToken,
               "SECURITY_TYPE": "GMAIL_LOGIN",
-              "GMAIL_ID": "nagarajan@titan.co.in",
+              "GMAIL_ID": res.email,
               "rememberMe": rememberMeOption
             };
             this.utilService.showLoader("Please Wait...");

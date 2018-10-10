@@ -103,9 +103,9 @@ export class MyApp {
       console.log("wlclient init event recieved");
         this.authHandler.gmailAuthInit();
       // if(this.internetConnectionCheck){
-        this.authHandler.checkIsLoggedIn();
+           this.authHandler.checkIsLoggedIn();
       // }else{
-      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
+      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet");
       // }
 
       var notificationReceived = (message) => {

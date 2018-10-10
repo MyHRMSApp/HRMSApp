@@ -49,7 +49,7 @@ export class ApplyOdPage {
     { description: "14" },
     { description: "15" },
     { description: "16" },
-    { description: "14" },
+    { description: "17" },
     { description: "18" },
     { description: "19" },
     { description: "20" },

@@ -50,7 +50,7 @@ constructor(public menu: MenuController, public events: Events,
     this.menu.swipeEnable(false);
     this.counts = this.mainService.couponPageData;
     this.strings = this.commonStrings.commonStrings.couponsPage;
-    console.log("Counts" + JSON.stringify(this.counts))
+    //console.log("Counts" + JSON.stringify(this.counts))
     
     this.eyeWearCounts = this.navParams.get("eyeWearLength");;
     this.jewelleryCounts = this.navParams.get("jewelleryLength");;

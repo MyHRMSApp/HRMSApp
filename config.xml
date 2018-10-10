@@ -129,9 +129,10 @@
     </mfp:windows>
     <mfp:platformVersion>8.0.0.00-20180630-023429</mfp:platformVersion>
     <mfp:clientCustomInit enabled="false" />
-    <mfp:server runtime="tclmf" url="https://devapps.titan.in:8443" />
+    <mfp:server runtime="tclmf" url="https://prodapps.titan.in:8443" />
     <mfp:directUpdateAuthenticityPublicKey />
     <mfp:languagePreferences>en</mfp:languagePreferences>
+    <engine name="android" spec="^7.0.0" />
     <engine name="ios" spec="^4.3.0" />
     <plugin name="cordova-plugin-appavailability" spec="^0.4.2" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
@@ -150,3 +151,4 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
     <plugin name="cordova-wheel-selector-plugin" spec="^1.1.1" />
     <plugin name="info.protonet.imageresizer" spec="^0.1.1" />
+</widget>
