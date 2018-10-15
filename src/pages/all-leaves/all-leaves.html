@@ -28,6 +28,18 @@
             <span item-end *ngIf="allLeaveData === undefined">0</span>
         </ion-item>
 
+        <ion-item *ngIf="employeeLevel == 'E' && KTEXT=='CL'">
+          First Qtr Availed Occasions
+          <span item-end *ngIf="allLeaveData !== undefined">{{allLeaveData.LEAVE_Q1}}</span>
+          <span item-end *ngIf="allLeaveData === undefined">0</span>
+        </ion-item>
+
+        <ion-item *ngIf="employeeLevel == 'E' && KTEXT=='CL'">
+          Last Qtr Availed Occasions
+          <span item-end *ngIf="allLeaveData !== undefined">{{allLeaveData.LEAVE_Q2}}</span>
+          <span item-end *ngIf="allLeaveData === undefined">0</span>
+        </ion-item>
+
         <ion-item (click)="fromDateCalendar()">
             From
             <span item-end *ngIf="fromDateFlag">{{leaveFromDate}} - {{leaveFromTimeStr}}</span>
@@ -43,7 +55,7 @@
         </ion-item>
 
         <ion-item>
-            <ion-label stacked>REASONS</ion-label>
+            <ion-label stacked>* REASONS</ion-label>
             <ion-textarea type="text" rows="5" [(ngModel)]="resonForLeave" maxLength="120"></ion-textarea>
           </ion-item>
             

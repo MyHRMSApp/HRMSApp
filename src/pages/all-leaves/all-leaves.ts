@@ -34,6 +34,9 @@ export class AllLeavesPage {
   public userInfo:any;
   public fromDateFlag:boolean = false;
   public toDateFlag:boolean = false;
+  userInformation: any;
+  employeeLevel: any;
+  KTEXT: any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -42,6 +45,10 @@ export class AllLeavesPage {
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
     public utilService: UtilsProvider, public service: ServiceProvider, public mainService: MyApp,
     public ref: ChangeDetectorRef) {
+
+      this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
+      this.employeeLevel = this.userInformation.EP_EGROUP;
+      console.log(this.employeeLevel);
 
     this.menu.swipeEnable(false);
     this.title = this.navParams.get("titleName");
@@ -144,6 +151,7 @@ export class AllLeavesPage {
 
   ionViewCanEnter(){
     this.allLeaveData = this.navParams.get("userLeave");
+    this.KTEXT = this.allLeaveData.KTEXT;
   }
 
   fromDateCalendar(){

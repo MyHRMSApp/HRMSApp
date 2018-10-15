@@ -11,6 +11,7 @@
         "lint": "ionic-app-scripts lint"
     },
     "dependencies": {
+        "@angular-devkit/build-optimizer": "^0.6.8",
         "@angular/animations": "5.2.11",
         "@angular/common": "5.2.11",
         "@angular/compiler": "5.2.11",
@@ -22,7 +23,8 @@
         "@angular/platform-browser-dynamic": "5.2.11",
         "@ionic-native/app-availability": "^4.15.0",
         "@ionic-native/camera": "^4.10.0",
-        "@ionic-native/core": "~4.9.2",
+        "@ionic-native/core": "^4.9.2",
+        "@ionic-native/google-plus": "^4.15.0",
         "@ionic-native/image-resizer": "^4.15.0",
         "@ionic-native/network": "^4.10.0",
         "@ionic-native/social-sharing": "^4.11.0",
@@ -36,15 +38,15 @@
         "cordova-plugin-camera": "^4.0.3",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^2.0.2",
-        "cordova-plugin-dialogs": "file:node_modules\\cordova-plugin-dialogs",
-        "cordova-plugin-globalization": "file:node_modules\\cordova-plugin-globalization",
+        "cordova-plugin-dialogs": "^2.0.1",
+        "cordova-plugin-globalization": "^1.11.0",
         "cordova-plugin-googleplus": "^5.2.1",
         "cordova-plugin-ionic-keyboard": "^2.0.5",
         "cordova-plugin-ionic-webview": "^1.1.19",
         "cordova-plugin-mfp": "^8.0.2018070216",
         "cordova-plugin-mfp-push": "^8.0.2018040410",
         "cordova-plugin-network-information": "^2.0.1",
-        "cordova-plugin-okhttp": "file:node_modules\\cordova-plugin-okhttp",
+        "cordova-plugin-okhttp": "^2.0.0",
         "cordova-plugin-splashscreen": "^5.0.2",
         "cordova-plugin-whitelist": "^1.3.3",
         "cordova-plugin-x-socialsharing": "^5.4.1",
@@ -54,13 +56,15 @@
         "info.protonet.imageresizer": "^0.1.1",
         "ionic-angular": "3.9.2",
         "ionicons": "3.0.0",
+        "rm": "^0.1.8",
         "rxjs": "5.5.11",
         "sw-toolbox": "3.6.0",
+        "typescript": "^2.6.2",
         "zone.js": "0.8.26"
     },
     "devDependencies": {
-        "@ionic/app-scripts": "3.1.11",
-        "typescript": "~2.6.2"
+        "@ionic/app-scripts": "^3.2.0",
+        "typescript": "2.6.2"
     },
     "description": "An Ionic project",
     "cordova": {

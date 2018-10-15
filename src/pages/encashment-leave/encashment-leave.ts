@@ -91,7 +91,7 @@ export class EncashmentLeavePage {
                 }else if(resultData.data.EP_RETURN.TYPE == "S"){
                   const alert = this.alertCtrl.create({
                     title: "",
-                    message: "<p class='header'>Apply FTP</p> <p>"+resultData.data.EP_RETURN.MESSAGE+"</p>",
+                    message: "<p class='header'>Apply Encashment</p> <p>"+resultData.data.EP_RETURN.MESSAGE+"</p>",
                     cssClass: "SUCCESS",
                     enableBackdropDismiss: false,
                   });

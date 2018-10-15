@@ -32,7 +32,11 @@ export class CustomCalendarModelPage {
   public dayWiseSelectionFlag:any = true;
   public fromPage:any;
   public selecedDate:any;
-  public allLeaveApplyFlag:boolean = false;
+  public allLeaveApplyFlag:boolean = true;
+  public checkFromDate:any;
+  public checkFromMonth:any;
+  public checkToMonth:any;
+  public checkToDate:any;
 
   constructor(public menu: MenuController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
               public utilService: UtilsProvider, public alert:AlertController, public ref: ChangeDetectorRef) {
@@ -119,18 +123,26 @@ export class CustomCalendarModelPage {
   }
 
   onChange($event) {
+    console.log($event);
     console.log(moment($event._d).format("YYYY-MM-DD"));
-    console.log("date different count: "+moment(this.leaveFromDate).diff($event._d, 'days'));
+    console.log("date different count: "+ moment(this.leaveFromDate).diff($event._d, 'days'));
     this.currentDate = moment($event._d).format("ddd,Do MMM");
     this.currentYear = moment($event._d).format("YYYY");
     this.selectedDateFromCal = moment($event._d).format("YYYY-MM-DD");
 
     if(this.calendarFor == "from"){
       this.leaveFromDate = moment($event._d).format("YYYY-MM-DD");
+      this.checkFromDate =  moment($event._d).format("DD");
+      this.checkFromMonth =  moment($event._d).format("MM");
+      console.log(this.checkFromDate, this.checkFromMonth );
     }
     else if(this.calendarFor == "to"){
+      this.checkToDate =  moment($event._d).format("DD");
+      this.checkToMonth =  moment($event._d).format("MM");
+      console.log(this.checkToDate, this.checkToMonth );
       console.log(moment($event._d).format("YYYY-MM-DD")+"---"+moment(this.leaveFromDate).format("YYYY-DD-MM"));
       console.log("---->>"+ moment(this.leaveFromDate).diff($event._d, 'days'));
+      console.log(moment(this.leaveFromDate).format("YYYY-DD-MM")<this.checkToDate,  this.checkToMonth==this.checkFromMonth, this.checkToMonth>this.checkFromMonth);
       if(moment($event._d).format("YYYY-MM-DD") == moment(this.leaveFromDate).format("YYYY-DD-MM")){
         if(this.leaveFromTime == "FD"){
           this.quarterFlag = true;
@@ -157,7 +169,7 @@ export class CustomCalendarModelPage {
           this.secHalfFlag = true;
           this.ref.detectChanges();
         }
-      }else if(moment(this.leaveFromDate).diff($event._d, 'days') < 0){
+      }else if(moment(this.leaveFromDate).diff($event._d, 'days') < 0 || moment(this.leaveFromDate).diff($event._d, 'days') == 29 || moment(this.leaveFromDate).diff($event._d, 'days') == 58){
         if(this.leaveFromTime == "FD"){
           this.quarterFlag = true;
           this.fulldayFlag = false;
@@ -202,11 +214,18 @@ export class CustomCalendarModelPage {
           
         }
         
-      }else if(moment(this.leaveFromDate).diff($event._d, 'days') > 0){
+      }else if(moment(this.leaveFromDate).diff($event._d, 'days') > 0 ){
+        if(moment(this.leaveFromDate).diff($event._d, 'days') == 29 || moment(this.leaveFromDate).diff($event._d, 'days') == 58){
+        //this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+        console.log("29(need to check)");
+      }
+      else{
         this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+      }
       }
       this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
     }
+  
 
     var value = moment($event._d).format("MMYYYY").toString();
     var selectedDateOnly:any = moment($event._d).format("DD");

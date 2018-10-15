@@ -33,17 +33,17 @@
                 </ion-card>
               </ion-col>
               <ion-col col-6 *ngIf="employeeLevel == 'E'">
-                <ion-card [ngClass]="midInPunch != '00:00:00'?'inCard':'outCard'" (click)="midInTimeSelection()">
-                    <p class="ftp">Forgot to Punch</p>
-                    <P>MID-IN</P>
-                    <p [ngClass]="midInPunch != '00:00:00'?'inTime':'outTime'">{{getRequestString(midInPunch)}}</p>
-                </ion-card>
-              </ion-col>
-              <ion-col col-6 *ngIf="employeeLevel == 'E'">
                 <ion-card [ngClass]="midOutPunch != '00:00:00'?'inCard':'outCard'" (click)="midOutTimeSelection()">
                     <p class="ftp">Forgot to Punch</p>
                     <P>MID-OUT</P>
                     <p [ngClass]="midOutPunch != '00:00:00'?'inTime':'outTime'">{{getRequestString(midOutPunch)}}</p>
+                </ion-card>
+              </ion-col>
+              <ion-col col-6 *ngIf="employeeLevel == 'E'">
+                <ion-card [ngClass]="midInPunch != '00:00:00'?'inCard':'outCard'" (click)="midInTimeSelection()">
+                    <p class="ftp">Forgot to Punch</p>
+                    <P>MID-IN</P>
+                    <p [ngClass]="midInPunch != '00:00:00'?'inTime':'outTime'">{{getRequestString(midInPunch)}}</p>
                 </ion-card>
               </ion-col>
         </ion-row>

@@ -136,7 +136,6 @@ export class AuthHandlerProvider {
       WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
       .then(
         (accessToken) => {
-  
           console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
           this.chalengeTriggerFlag = true;
           var tags = [this.userInfo.EP_EGROUP, this.userInfo.EP_USERTYPE];
