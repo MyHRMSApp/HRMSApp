@@ -91,22 +91,28 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       // this.network.onDisconnect().subscribe(() => {
-      //   this.internetConnectionCheck = (this.network.type=="none")?false:true;
+      //   // this.internetConnectionCheck = (this.network.type=="none")?false:true;
       // });
       // this.network.onConnect().subscribe(() => {
-      //   this.internetConnectionCheck = (this.network.type=="none")?false:true;
+      //   // this.internetConnectionCheck = (this.network.type=="none")?false:true;
+      //   let view = this.nav.getActive();
+      //   if (view.instance instanceof LoginPage) {
+      //     this.authHandler.checkIsLoggedIn();
+      //   }
       // });
       this.splashScreen.hide();
     });
 
     this.render.listenGlobal('document','wlInitFinished',()=>{
       console.log("wlclient init event recieved");
+       
+        console.log("this.network.type==>>>"+this.network.type);
+      if(this.network.type !== "none"){
         this.authHandler.gmailAuthInit();
-      // if(this.internetConnectionCheck){
-           this.authHandler.checkIsLoggedIn();
-      // }else{
-      //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet");
-      // }
+        this.authHandler.checkIsLoggedIn();
+      }else{
+        this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet");
+      }
 
       var notificationReceived = (message) => {
         console.log(JSON.stringify(message));

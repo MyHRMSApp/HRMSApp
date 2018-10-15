@@ -9,6 +9,7 @@ import { MyApp } from '../../app/app.component';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
 import {AlertPageFortextareaPage } from '../alert-page-fortextarea/alert-page-fortextarea';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -200,6 +201,7 @@ export class MyTasksPage {
 
   getTimeValue(timeData){
     timeData = timeData.toString().replace(/:/g, "");
+    timeData = moment(timeData, "HHmmss").format();
     return timeData;
   }
 

@@ -32,7 +32,7 @@ export class CustomCalendarModelPage {
   public dayWiseSelectionFlag:any = true;
   public fromPage:any;
   public selecedDate:any;
-  public allLeaveApplyFlag:boolean = true;
+  public allLeaveApplyFlag:boolean = false;
   public checkFromDate:any;
   public checkFromMonth:any;
   public checkToMonth:any;
@@ -52,6 +52,8 @@ export class CustomCalendarModelPage {
     if(this.calendarFor == "to"){
       this.leaveFromDate = this.navParams.get('leaveFromDate');
       this.leaveFromTime = this.navParams.get('leaveFromTime');
+
+      console.log(this.navParams.get('leaveFromDate') +"---"+ this.navParams.get('leaveFromTime'));
 
       // this.quarterFlag = true;
       // this.fulldayFlag = true;
@@ -125,6 +127,7 @@ export class CustomCalendarModelPage {
   onChange($event) {
     console.log($event);
     console.log(moment($event._d).format("YYYY-MM-DD"));
+    console.log("this.leaveFromDate-->>"+this.leaveFromDate+"--"+"$event._d-->>"+$event._d)
     console.log("date different count: "+ moment(this.leaveFromDate).diff($event._d, 'days'));
     this.currentDate = moment($event._d).format("ddd,Do MMM");
     this.currentYear = moment($event._d).format("YYYY");
@@ -132,18 +135,13 @@ export class CustomCalendarModelPage {
 
     if(this.calendarFor == "from"){
       this.leaveFromDate = moment($event._d).format("YYYY-MM-DD");
-      this.checkFromDate =  moment($event._d).format("DD");
-      this.checkFromMonth =  moment($event._d).format("MM");
-      console.log(this.checkFromDate, this.checkFromMonth );
     }
-    else if(this.calendarFor == "to"){
-      this.checkToDate =  moment($event._d).format("DD");
-      this.checkToMonth =  moment($event._d).format("MM");
-      console.log(this.checkToDate, this.checkToMonth );
-      console.log(moment($event._d).format("YYYY-MM-DD")+"---"+moment(this.leaveFromDate).format("YYYY-DD-MM"));
-      console.log("---->>"+ moment(this.leaveFromDate).diff($event._d, 'days'));
-      console.log(moment(this.leaveFromDate).format("YYYY-DD-MM")<this.checkToDate,  this.checkToMonth==this.checkFromMonth, this.checkToMonth>this.checkFromMonth);
-      if(moment($event._d).format("YYYY-MM-DD") == moment(this.leaveFromDate).format("YYYY-DD-MM")){
+    else if(this.calendarFor == "to"){      
+      var fromTempDate = moment(this.leaveFromDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+      var toTempDate = moment($event._d).format("YYYY-MM-DD");
+      console.log(fromTempDate+"---"+toTempDate);
+      console.log("---->>"+ moment(fromTempDate).diff(toTempDate, 'days'));
+      if(toTempDate == fromTempDate){
         if(this.leaveFromTime == "FD"){
           this.quarterFlag = true;
           this.fulldayFlag = false;
@@ -169,7 +167,7 @@ export class CustomCalendarModelPage {
           this.secHalfFlag = true;
           this.ref.detectChanges();
         }
-      }else if(moment(this.leaveFromDate).diff($event._d, 'days') < 0 || moment(this.leaveFromDate).diff($event._d, 'days') == 29 || moment(this.leaveFromDate).diff($event._d, 'days') == 58){
+      }else if(moment(fromTempDate).diff(toTempDate, 'days') < 0 ){
         if(this.leaveFromTime == "FD"){
           this.quarterFlag = true;
           this.fulldayFlag = false;
@@ -214,14 +212,15 @@ export class CustomCalendarModelPage {
           
         }
         
-      }else if(moment(this.leaveFromDate).diff($event._d, 'days') > 0 ){
-        if(moment(this.leaveFromDate).diff($event._d, 'days') == 29 || moment(this.leaveFromDate).diff($event._d, 'days') == 58){
-        //this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
-        console.log("29(need to check)");
-      }
-      else{
+      }else if(moment(fromTempDate).diff(toTempDate, 'days') > 0 ){
+      //   if(moment(this.leaveFromDate).diff($event._d, 'days') == 29 || moment(this.leaveFromDate).diff($event._d, 'days') == 58){
+      //   //this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+      //   console.log("29(need to check)");
+      // }
+      // else
+      // {
         this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
-      }
+      // }
       }
       this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
     }
@@ -308,6 +307,15 @@ export class CustomCalendarModelPage {
   }
 
   dismiss(val) {
+    if(this.calendarFor == "from"){
+        (this.leaveFromDate !== undefined && this.leaveFromDate !== "")?this.allLeaveApplyFlag=true:this.allLeaveApplyFlag=false;
+    }
+
+    if(this.calendarFor == "to"){
+      (this.leaveToDate !== undefined && this.leaveToDate !== "")?this.allLeaveApplyFlag=true:this.allLeaveApplyFlag=false;
+  }
+
+    
     if(this.allLeaveApplyFlag){
       if(val == 'k'){
         if(this.calendarFor == "to"){

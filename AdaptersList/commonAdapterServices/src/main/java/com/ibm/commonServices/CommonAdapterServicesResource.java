@@ -1015,7 +1015,76 @@ public class CommonAdapterServicesResource {
 					resultJSON.put("Absence", false);
 					resultJSON.put("RequestState", true);
 				}else{
-					resultJSON.put("cssClass", "");
+
+					List ATT_1_Req = new ArrayList(); 
+					List ATT_2_Req = new ArrayList();
+					String cssClass = "";
+					boolean ATT1_CLR = true;
+					boolean ATT2_CLR = true;
+					boolean ATT1_Aprd = true;
+					boolean ATT2_Aprd = true;
+
+					if(temp_reqState_ATT_1 != null){
+						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
+							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_Aprd != false) {
+								ATT1_Aprd = false;
+								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
+							}
+							
+						}
+					}
+
+					if(temp_reqState_ATT_2 != null){
+						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
+							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_Aprd != false) {
+								ATT2_Aprd = false;
+								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
+							}
+							
+						}
+					}
+
+					if(temp_reqState_ATT_1 != null){
+						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
+							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_CLR != false) {
+								ATT1_CLR = false;
+								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
+							}
+							
+						}
+					}
+
+					if(temp_reqState_ATT_2 != null){
+						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
+							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_CLR != false) {
+								ATT2_CLR = false;
+								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
+							}
+							
+						}
+					}
+
+							if(!ATT2_Aprd && !ATT1_Aprd){
+								cssClass = "ATT1_Approved_ATT2_Approved";
+							}else if(ATT2_Aprd && ATT1_Aprd){
+								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
+							}else if(!ATT2_Aprd && ATT1_Aprd){
+								cssClass = "ATT1_NormalPunch_ATT2_Approved";
+							}else if(ATT2_Aprd && !ATT1_Aprd){
+								cssClass = "ATT1_Approved_ATT2_NormalPunch";
+							}
+							
+							if(!ATT1_CLR && !ATT2_CLR){
+								cssClass = "ATT1_Pending_ATT2_Pending";
+							}else if(ATT1_CLR && ATT2_CLR){
+								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
+							}else if(!ATT1_CLR && ATT2_CLR){
+								cssClass = "ATT1_Pending_ATT2_NormalPunch";
+							}else if(ATT1_CLR && !ATT2_CLR){
+								cssClass = "ATT1_NormalPunch_ATT2_Pending";
+							}
+
+					resultJSON.put("cssClass", cssClass);
 					resultJSON.put("LDATE", LDATE);
 					resultJSON.put("PUN_P10", PUNIN);
 					resultJSON.put("PUN_P15", MIDOUT);
