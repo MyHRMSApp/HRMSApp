@@ -1,7 +1,7 @@
 import { UtilsProvider } from './../../providers/utils/utils';
 import { Component, Renderer, ChangeDetectorRef } from '@angular/core';
 import { HomePage } from './../home/home';
-import { IonicPage, MenuController, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, Platform, MenuController, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ServiceProvider } from '../../providers/service/service';
 import { StorageProvider } from '../../providers/storage/storage';
@@ -44,7 +44,7 @@ export class LoginPage {
     public navParams: NavParams, public loadingCtrl: LoadingController, public storage: StorageProvider,
     private googlePlus: GooglePlus, public utilService: UtilsProvider, public authHandler: AuthHandlerProvider,
     public render: Renderer, public mainService: MyApp, public menu: MenuController, public ref:ChangeDetectorRef,
-    public networkProvider: NetworkProvider,  public network: Network  ) {
+    public networkProvider: NetworkProvider,  public network: Network, public platform: Platform ) {
     
     this.menu.swipeEnable(false);
     this.form = new FormGroup({
@@ -190,12 +190,18 @@ export class LoginPage {
    */
   userLoginViagooglePlus() {
     // if(this.mainService.internetConnectionCheck){
+      var platform = "android";
+      var webclientID = "29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com"
+      if (this.platform.is('ios')) {
+        platform = "ios";
+        webclientID = "29768228914-ba1ss8q936cpi82mhcu6tdgoi6b99hhk.apps.googleusercontent.com";
+      }
       var rememberMeOption = false;
       if(localStorage.getItem("rememberMe") == "enabled"){
         rememberMeOption = true;
       }
       this.googlePlus.login({
-        'webClientId': '29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com',
+        'webClientId': webclientID,
         'offline': true
       }).then((res) => {
         console.log(res);
@@ -205,7 +211,8 @@ export class LoginPage {
               "token": res.idToken,
               "SECURITY_TYPE": "GMAIL_LOGIN",
               "GMAIL_ID": res.email,
-              "rememberMe": rememberMeOption
+              "rememberMe": rememberMeOption,
+              "platform": platform
             };
             this.utilService.showLoader("Please Wait...");
             setTimeout(() => {

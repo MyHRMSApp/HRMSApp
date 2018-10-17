@@ -18,6 +18,7 @@ export class ServiceProvider {
    * @param method
    */
   invokeAdapterCall(adaptername, adaptermethodname, method, payload){
+    console.log("Input Payload==>>"+ JSON.stringify(payload));
     var methodVal = (method == 'get')?WLResourceRequest.GET : WLResourceRequest.POST;
     var resourceRequest = new WLResourceRequest(
       "/adapters/"+adaptername+"/services/"+adaptermethodname,

@@ -205,7 +205,7 @@ export class ApplyOdPage {
     }else if(!beginningTime.isBefore(endTime)){
       this.utilService.showCustomPopup4Error("Apply OD","Please enter the valid From & To Time", "FAILURE");
     }else if(this.placeVisited === undefined || this.placeVisited == ""){
-      this.utilService.showCustomPopup4Error("Apply OD", "Please enter the Place Visisted field", "FAILURE");
+      this.utilService.showCustomPopup4Error("Apply OD", "Please enter the Place Visited field", "FAILURE");
     }else if(this.OrgVisited === undefined || this.OrgVisited == ""){
       this.utilService.showCustomPopup4Error("Apply OD", "Please enter the Organization Visited field", "FAILURE");
     }else if(this.reasonForOD === undefined || this.reasonForOD == ""){

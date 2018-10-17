@@ -81,14 +81,36 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
 
 
         createVendors();
+        Properties vendorConfig = new Properties();
         for (LoginVendor vendor : vendors.values()) {
-            Properties vendorConfig = new Properties();
-            for (String property : vendor.getConfigurationPropertyNames()) {
+            // Properties vendorConfig = new Properties();
+            for (String property : vendor.getConfigurationPropertyNames_IOS()) {
                 String value = getStringProperty(property, properties, null);
                 vendorConfig.setProperty(property, value);
             }
             vendor.setConfiguration(vendorConfig, sslSocketFactory);
+            for (String property : vendor.getConfigurationPropertyNames_ANDROID()) {
+                String value = getStringProperty(property, properties, null);
+                vendorConfig.setProperty(property, value);
+            }
+
+            vendor.setConfiguration(vendorConfig, sslSocketFactory);
         }
+
+        // for (LoginVendor vendor : vendors.values()) {
+            // Properties vendorConfig = new Properties();
+            // for (String property : vendor.getConfigurationPropertyNames_IOS()) {
+            //     String value = getStringProperty(property, properties, null);
+            //     vendorConfig.setProperty(property, value);
+            // }
+            // vendor.setConfiguration(vendorConfig, sslSocketFactory);
+        //     for (String property : vendor.getConfigurationPropertyNames_ANDROID()) {
+        //         String value = getStringProperty(property, properties, null);
+        //         vendorConfig.setProperty(property, value);
+        //     }
+
+        //     vendor.setConfiguration(vendorConfig, sslSocketFactory);
+        // }
     }
 
     /**

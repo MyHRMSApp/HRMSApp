@@ -41,13 +41,13 @@
             </ion-col>
 
             <ion-col col-12 class="periodDetails">
-                <ion-col col-5 col-5 class="fromPeriod"><span >({{getPeriod(leaveItem.BEGUZ)}})</span></ion-col>
+                <ion-col col-4 class="fromPeriod"><span >({{getPeriod(leaveItem.BEGUZ)}})</span></ion-col>
                 <ion-col col-2 class="till"><span>-</span></ion-col>
-                <ion-col col-5 class="toPeriod"><span >({{getPeriod(leaveItem.ENDUZ)}})</span></ion-col>
+                <ion-col col-4 class="toPeriod"><span >({{getPeriod(leaveItem.ENDUZ)}})</span></ion-col>
               </ion-col>
 
             <ion-col col-12 class="appliedDetails">
-              <span >applied on: {{leaveItem.CREON}}</span>
+              <span >applied on: {{leaveItem.CREON | date :  "dd-MM-y"}}</span>
             </ion-col>
 
             <ion-col col-12 class="statusMsg" *ngIf="getStatusRequest(leaveItem.STATUS) != 'Approved'">

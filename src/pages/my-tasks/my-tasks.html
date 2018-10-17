@@ -49,7 +49,7 @@
         </ion-col>
       </ion-row>
       <ion-row *ngIf="isGroupShown(commonLeave) && commonLeave.type != 'OD' && commonLeave.type != 'FTP'" class="subCard">
-        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON}}</p></ion-col>
+        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON | date :  "dd-MM-y"}}</p></ion-col>
         <ion-col col-3 style="text-align: -webkit-left"><p>From :</p></ion-col>
         <ion-col col-5 style="text-align: -webkit-right"><p>{{commonLeave.BEGDA | date :  "dd-MM-y"}}</p></ion-col>
         <ion-col col-4 style="text-align: -webkit-left"><p>({{getPeriod(commonLeave.BEGUZ)}})</p></ion-col>
@@ -83,7 +83,7 @@
         </ion-col>
       </ion-row>
       <ion-row *ngIf="isGroupShown(commonLeave) && commonLeave.type == 'OD' " class="subCard">
-        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON}}</p></ion-col>
+        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON | date :  "dd-MM-y"}}</p></ion-col>
         <ion-col col-3 style="text-align: -webkit-left"><p>{{commonLeave.BEGDA | date :  "dd-MM-y"}}</p></ion-col>
         <ion-col col-1><p>-</p></ion-col>
         <ion-col col-8 style="text-align: -webkit-left"><p>{{commonLeave.ENGDDA | date :  "dd-MM-y"}}</p></ion-col>
@@ -118,7 +118,7 @@
         </ion-col>
       </ion-row>
       <ion-row *ngIf="isGroupShown(commonLeave) && commonLeave.type == 'FTP' " class="subCard">
-        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON}}</p></ion-col>
+        <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON | date :  "dd-MM-y"}}</p></ion-col>
         <ion-col col-12 style="text-align: -webkit-left"><p>{{commonLeave.DATUM | date :  "dd-MM-y"}}</p></ion-col>
         <ion-col col-3 style="text-align: -webkit-left"><p>IN</p></ion-col>
         <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col>

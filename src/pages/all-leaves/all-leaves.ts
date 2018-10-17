@@ -242,6 +242,8 @@ export class AllLeavesPage {
         this.utilService.showCustomPopup4Error(this.title, "Please select the From Date and Period", "FAILURE");
       }else if(this.leaveToTime === undefined ||  this.leaveToDate === undefined){
         this.utilService.showCustomPopup4Error(this.title, "Please select the To Date and Period", "FAILURE");
+      }else if(this.resonForLeave === undefined || this.resonForLeave == ""){
+        this.utilService.showCustomPopup4Error("Apply Leave", "Please enter the Reason field", "FAILURE");
       }else{
         this.utilService.showLoader("Please wait...");
         var leavetypeData = this.leaveType;
@@ -253,8 +255,8 @@ export class AllLeavesPage {
       "IP_LTYP": leavetypeData,
       "IP_FDATE": moment(this.leaveFromDate, "DD-MM-YYYY").format("YYYYMMDD"),
       "IP_TDATE": moment(this.leaveToDate, "DD-MM-YYYY").format("YYYYMMDD"),
-      "IP_FHALF": this.leaveFromTime,
-      "IP_THALF": this.leaveToTime
+      "IP_FHALF": (this.leaveFromTime == "LQ")? "SQ": this.leaveFromTime,
+      "IP_THALF": (this.leaveToTime == "LQ")? "SQ": this.leaveToTime
     };
       this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: payloadData}).then((resultData:any)=>{
         if(resultData){
@@ -345,8 +347,8 @@ export class AllLeavesPage {
                           "IP_LTYP": leavetypeData,
                           "IP_FDATE": moment(leaveFromDate, "DD-MM-YYYY").format("YYYYMMDD"),
                           "IP_TDATE": moment(leaveToDate, "DD-MM-YYYY").format("YYYYMMDD"),
-                          "IP_FHALF": this.leaveFromTime,
-                          "IP_THALF": this.leaveToTime,
+                          "IP_FHALF": (this.leaveFromTime == "LQ")? "SQ": this.leaveFromTime,
+                          "IP_THALF": (this.leaveToTime == "LQ")? "SQ": this.leaveToTime,
                           "IP_DAY": noDays,
                           "R_LEAVE": this.resonForLeave,
                           "IP_REQ_TYPE": "NEW",

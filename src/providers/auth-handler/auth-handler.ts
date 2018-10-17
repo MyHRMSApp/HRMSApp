@@ -132,7 +132,13 @@ export class AuthHandlerProvider {
 
   checkIsLoggedIn() {
     this.chalengeTriggerFlag = false;
-    this.utilService.showLoader("Please Wait...");
+    // if(this.utilService.loader.data.content == "Please Wait..."){
+
+    // }
+    // console.log("this.utilService.loader====>>>"+this.utilService.loader);
+    if(this.utilService.loader === undefined){
+      this.utilService.showLoader("Please Wait...");
+    }
     console.log('--> AuthHandler checkIsLoggedIn called');
     if(localStorage.getItem("rememberMe") == "enabled"){
       WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
@@ -175,6 +181,7 @@ export class AuthHandlerProvider {
             // this.authHandler.gmailAuthInit();
             this.checkIsLoggedIn();
           }else{
+            this.utilService.dismissLoader();
             this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet");
           }
         }

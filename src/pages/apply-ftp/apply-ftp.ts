@@ -95,7 +95,7 @@ export class ApplyFtpPage {
     
     this.menu.swipeEnable(false);  
     if(this.navParams.get("ftpData")) this.ftpObject =  this.navParams.get("ftpData");
-    this.selectedDate = this.ftpObject.LDATE;
+    this.selectedDate = moment(this.ftpObject.LDATE, "YYYY-MM-DD").format("DD-MM-YYYY");
     this.inPunch = this.ftpObject.PUN_P10;
     this.outPunch = this.ftpObject.PUN_P20;
     this.midInPunch = this.ftpObject.PUN_P25;
@@ -265,11 +265,11 @@ export class ApplyFtpPage {
     }else{
 
       var payloadData = {
-        "DATUM": this.selectedDate,
-        "SFT_IN": this.inPunch+":00",
-        "SFT_OUT": this.outPunch+":00",
-        "LUN_IN": this.midInPunch+":00",
-        "LUN_OUT": this.midOutPunch+":00",
+        "DATUM": moment(this.selectedDate, "DD-MM-YYYY").format("YYYYMMDD"),
+        "SFT_IN": this.inPunch,
+        "SFT_OUT": this.outPunch,
+        "LUN_IN": this.midInPunch,
+        "LUN_OUT": this.midOutPunch,
         "LUN_IN_FLAG": this.midInPunchFlag,
         "LUN_OUT_FLAG": this.midOutPunchFlag,
         "SFT_IN_FLAG": this.inPunchFlag,
