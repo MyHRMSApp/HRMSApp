@@ -575,10 +575,10 @@ myTask() {
             if(resultData.data.ET_OD == "" && resultData.data.ET_FTP == "" && resultData.data.ET_LEAVE == "" ) {
               this.utilService.dismissLoader();
               this.utilService.showCustomPopup4Error("My Task", "No tasks found", "FAILURE");
-            }else{
+              }else{
               this.utilService.dismissLoader();
               this.navCtrl.push("MyTasksPage");
-            }
+              }
           }
           else {
             this.utilService.dismissLoader();

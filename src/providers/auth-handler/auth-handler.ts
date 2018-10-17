@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { StorageProvider } from '../../providers/storage/storage';
 import { ConsoleServiceProvider } from '../../providers/console-service/console-service';
 import { UtilsProvider } from '../utils/utils';
+import { Network } from '@ionic-native/network';
 
 declare var MFPPush:any;
 @Injectable()
@@ -18,7 +19,8 @@ export class AuthHandlerProvider {
   loginFailureCallback = null;
   chalengeTriggerFlag = true;
   userInfo:any
-  constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider, public utilService: UtilsProvider) {
+  constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider, 
+              public utilService: UtilsProvider, public network: Network) {
     console.log('--> AuthHandlerProvider called');
   }
 
@@ -130,7 +132,13 @@ export class AuthHandlerProvider {
 
   checkIsLoggedIn() {
     this.chalengeTriggerFlag = false;
-    this.utilService.showLoader("Please Wait...");
+    // if(this.utilService.loader.data.content == "Please Wait..."){
+
+    // }
+    // console.log("this.utilService.loader====>>>"+this.utilService.loader);
+    if(this.utilService.loader === undefined){
+      this.utilService.showLoader("Please Wait...");
+    }
     console.log('--> AuthHandler checkIsLoggedIn called');
     if(localStorage.getItem("rememberMe") == "enabled"){
       WLAuthorizationManager.obtainAccessToken(this.securityCheckName)
@@ -166,9 +174,16 @@ export class AuthHandlerProvider {
         },
         (error) => {
           console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
-            this.utilService.dismissLoader();
-            this.utilService.showCustomPopup("FAILURE", "Request timed out, Please restart the application");
+            // this.utilService.dismissLoader();
+            // this.utilService.showCustomPopup("FAILURE", "Request timed out, Please restart the application");
           //this.loginFailureCallback(error);
+          if(this.network.type !== "none"){
+            // this.authHandler.gmailAuthInit();
+            this.checkIsLoggedIn();
+          }else{
+            this.utilService.dismissLoader();
+            this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet");
+          }
         }
       );
     }else{

@@ -37,7 +37,8 @@ public interface LoginVendor {
      *
      * @return the array of property names, not null
      */
-    String[] getConfigurationPropertyNames();
+    String[] getConfigurationPropertyNames_IOS();
+    String[] getConfigurationPropertyNames_ANDROID();
 
     /**
      * Invoked on a newly created instance upon adapter deployment or configuration change
@@ -62,5 +63,5 @@ public interface LoginVendor {
      * @param checkName the security check name for creation of AuthenticatedUser
      * @return the authenticated user represented by the token, or null if the token is invalid
      */
-    AuthenticatedUser validateTokenAndCreateUser(String tokenStr, String checkName);
+    AuthenticatedUser validateTokenAndCreateUser(String tokenStr, String checkName, String platform);
 }

@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.mfpdev</groupId>
-    <artifactId>social-login</artifactId>
+    <artifactId>socialLogin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>adapter</packaging>
     <name>socialLogin</name>

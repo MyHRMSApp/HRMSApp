@@ -19,11 +19,24 @@
         <property name="keepOriginalToken" type="boolean" defaultValue="false"
                   displayName="keep original token"
                   description="If true, the token submitted by the client is stored in the Authenticated User as an attribute 'originalToken'"/>
-        <property name="google.clientId"
+        <!-- <property name="google.clientId"
                   defaultValue="29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com"
                   displayName="google client Id"
                   description="OAuth 2.0 client ID that was created for your server. Get it from Google Developers Console
+                  at https://console.developers.google.com/projectselector/apis/credentials"/> -->
+
+        <property name="googleclientId4IOS"
+                  defaultValue="29768228914-ba1ss8q936cpi82mhcu6tdgoi6b99hhk.apps.googleusercontent.com"
+                  displayName="google client Id for IOS"
+                  description="OAuth 2.0 client ID that was created for your server. Get it from Google Developers Console
                   at https://console.developers.google.com/projectselector/apis/credentials"/>
+        
+        <property name="googleclientId4Android"
+                  defaultValue="29768228914-26nbts9h35kghvhckl75lhh7tvgtkv70.apps.googleusercontent.com"
+                  displayName="google client Id for Android"
+                  description="OAuth 2.0 client ID that was created for your server. Get it from Google Developers Console
+                  at https://console.developers.google.com/projectselector/apis/credentials"/>
+
         <property name="UserCustomMessage" defaultValue="UserCustomMessage" displayName="UserCustomMessage"/>
         <property name="DEVServer" defaultValue="https://pirdev.titan.co.in:50401/RESTAdapter/" displayName="Development Server URL"/>
         <property name="UATServer" defaultValue="https://pirqa.titan.co.in:50401/RESTAdapter/" displayName="UAT Server URL"/>

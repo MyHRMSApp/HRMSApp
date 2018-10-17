@@ -153,7 +153,14 @@ public class UserManager {
                         if (status >= 200 && status < 300) {
                             loggerStatus = STATUS_CODE_SUCCESS;
                             HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
+                            System.out.println("String body = handler.handleResponse(response)--->>" + status+"------"+entity.getContentLength());
+                            // if(status == 200 && entity.getContentLength() == -1){
+                            //     // System.out.println("================>>>>{\"EmpCode\":999}");
+                            //     return "{\"EmpCode\":999}";
+                            // }else{
+                                return entity != null ? EntityUtils.toString(entity) : null;
+                            // }
+                            
                         } else {
                             loggerStatus = STATUS_CODE_FAILURE;
                             // throw new ClientProtocolException("Unexpected response status: " + status);

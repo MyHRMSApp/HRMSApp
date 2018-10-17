@@ -23,6 +23,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.ibm.mfp.server.registration.external.model.AuthenticatedUser;
 
 import javax.net.ssl.SSLSocketFactory;
+
+import java.io.Console;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,29 +45,50 @@ public class GoogleSupport implements LoginVendor {
     private static final Logger logger = Logger.getLogger(GoogleSupport.class.getName());
 
     private static final String CLIENT_ID_CONFIG_PROPERTY = "google.clientId";
+    private static final String CLIENT_ID_CONFIG_PROPERTY_IOS = "googleclientId4IOS";
+    private static final String CLIENT_ID_CONFIG_PROPERTY_ANDROID = "googleclientId4Android";
+    private String clientId_IOS = "";
+    private String clientId_ANDROID = "";
 
     private NetHttpTransport transport;
     private JsonFactory jsonFactory;
 
-    private GoogleIdTokenVerifier[] verifiers;
+    private GoogleIdTokenVerifier[] verifiers_IOS;
+    private GoogleIdTokenVerifier[] verifiers_ANDROID;
 
-    public String[] getConfigurationPropertyNames() {
-        return new String[]{CLIENT_ID_CONFIG_PROPERTY};
+    public String[] getConfigurationPropertyNames_IOS() {
+        return new String[]{CLIENT_ID_CONFIG_PROPERTY_IOS};
+    }
+
+    public String[] getConfigurationPropertyNames_ANDROID() {
+        return new String[]{CLIENT_ID_CONFIG_PROPERTY_ANDROID};
     }
 
     @Override
     public void setConfiguration(Properties properties, SSLSocketFactory sslSocketFactory) {
         transport = new NetHttpTransport.Builder().setSslSocketFactory(sslSocketFactory).build();
         jsonFactory = new JacksonFactory();
+        
 
-        String clientId = properties.getProperty(CLIENT_ID_CONFIG_PROPERTY);
-        if (clientId != null && !clientId.isEmpty() && clientId.endsWith("apps.googleusercontent.com")) {
-            verifiers = new GoogleIdTokenVerifier[]{
-                    createTokenVerifier(clientId, "https://accounts.google.com"),
-                    createTokenVerifier(clientId, "accounts.google.com"),
+        clientId_IOS = properties.getProperty(CLIENT_ID_CONFIG_PROPERTY_IOS);
+        clientId_ANDROID = properties.getProperty(CLIENT_ID_CONFIG_PROPERTY_ANDROID);
+
+        if (clientId_IOS != null && !clientId_IOS.isEmpty() && clientId_IOS.endsWith("apps.googleusercontent.com")) {
+            verifiers_IOS = new GoogleIdTokenVerifier[]{
+                    createTokenVerifier(clientId_IOS, "https://accounts.google.com"),
+                    createTokenVerifier(clientId_IOS, "accounts.google.com"),
             };
         } else {
-            verifiers = null;
+            verifiers_IOS = null;
+        }
+
+        if (clientId_ANDROID != null && !clientId_ANDROID.isEmpty() && clientId_ANDROID.endsWith("apps.googleusercontent.com")) {
+            verifiers_ANDROID = new GoogleIdTokenVerifier[]{
+                    createTokenVerifier(clientId_ANDROID, "https://accounts.google.com"),
+                    createTokenVerifier(clientId_ANDROID, "accounts.google.com"),
+            };
+        } else {
+            verifiers_ANDROID = null;
         }
     }
 
@@ -77,20 +100,43 @@ public class GoogleSupport implements LoginVendor {
     }
 
     public boolean isEnabled() {
-        return verifiers != null;
+        return verifiers_IOS != null;
     }
 
-    public AuthenticatedUser validateTokenAndCreateUser(String idTokenStr, String checkName) {
+    public AuthenticatedUser validateTokenAndCreateUser(String idTokenStr, String checkName, String platform) {
+        
         GoogleIdToken idToken = null;
         String errorMsg = "";
-        for (GoogleIdTokenVerifier verifier : verifiers) {
-            try {
-                idToken = verifier.verify(idTokenStr);
-                if (idToken != null) break;
-            } catch (Exception e) {
-                errorMsg = e.toString() + "\n";
+        // int temp = (platform == "android")
+        if(platform.equalsIgnoreCase("android")){
+            System.out.println("DevicePlatform-android===>>>"+ verifiers_ANDROID.toString());
+            for (GoogleIdTokenVerifier verifier : verifiers_ANDROID) {
+                System.out.println("idTokenStr=---------aaaaa->>"+ idTokenStr);
+                try {
+                    idToken = verifier.verify(idTokenStr);
+                    if (idToken != null) break;
+                } catch (Exception e) {
+                    errorMsg = e.toString() + "\n";
+                }
+            }
+        }else{
+            System.out.println("DevicePlatform-ios===>>>"+ verifiers_IOS.toString());
+            int temp = 0;
+            for (GoogleIdTokenVerifier verifier_IOS : verifiers_IOS) {
+                if(temp == 0){
+                    System.out.println("idTokenStr=-----iiiii----->>"+ idTokenStr);
+                    try {
+                        idToken = verifier_IOS.verify(idTokenStr);
+                        if (idToken != null) break;
+                    } catch (Exception e) {
+                        errorMsg = e.toString() + "\n";
+                    }
+                    temp++;
+                }
+                
             }
         }
+        
         if (idToken == null) {
             logger.info("Failed to validate google Id token:\n" + errorMsg);
             return null;

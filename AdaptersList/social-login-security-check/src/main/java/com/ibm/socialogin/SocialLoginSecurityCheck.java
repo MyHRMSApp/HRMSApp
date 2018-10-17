@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import com.ibm.socialogin.GoogleSupport;
 /**
  * Security check that aggregates different login vendors - Google, Facebook, etc.
  * <p/>
@@ -55,6 +55,8 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     private static final String VENDOR_ATTRIBUTE = "socialLoginVendor";
     private static final String ORIGINAL_TOKEN_ATTRIBUTE = "originalToken";
     private static final String GMAIL_ID = "GMAIL_ID"; 
+    private static final String DEVICE_PLATFORM = "platform"; 
+    public JSONObject employeeNO = new JSONObject();
 
     private transient String vendorName;
     private transient AuthenticatedUser user;
@@ -64,6 +66,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
 
 
     private static UserManager userManager = new UserManager();
+    private static GoogleSupport googleSupport = new GoogleSupport();
 
         // Define logger (Standard java.util.Logger)
 	private static final Logger LOGGER = Logger.getLogger(UserManager.class.getName());
@@ -137,17 +140,22 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                         String gmailID = (String) credentials.get(GMAIL_ID);
                         vendorName = (String) credentials.get(VENDOR_KEY);
                         String token = (String) credentials.get(TOKEN_KEY);
+                        String device = (String) credentials.get(DEVICE_PLATFORM);
                         //Look for this user in the database
                         System.out.println(gmailID +"<---->"+vendorName+"<---->"+token);
                         try {
                             if (vendorName != null && token != null) {
                                 LoginVendor vendor = getConfiguration().getEnabledVendors().get(vendorName);
                                 if (vendor != null) {
-                                    AuthenticatedUser resultUser = vendor.validateTokenAndCreateUser(token, getName());
+                                    AuthenticatedUser resultUser = vendor.validateTokenAndCreateUser(token, getName(), device);
                                     System.out.println("-->>firebase-->>"+  resultUser.getId()+"<<-->>"+ resultUser.getDisplayName()+"<<-->>"+ getName());
                                     if (resultUser != null) {
-                                        JSONObject employeeNO = (JSONObject) userManager.getUserDetials("", "", gmailID, this.getConfiguration().getGmailAuthURL(), false);
-                                        if(employeeNO.getInt("EmpCode") != 0){
+                                        employeeNO = new JSONObject();
+                                        employeeNO = (JSONObject) userManager.getUserDetials("", "", gmailID, this.getConfiguration().getGmailAuthURL(), false);
+                                        if(employeeNO.getInt("EmpCode") == 999){
+                                            errorMsg = "This titan email id is not giving valid Employee Number, Please try with valid Titan Mail ID";
+                                            return false;
+                                        }else if(employeeNO.getInt("EmpCode") != 0){
                                             empCode = Integer.toString(employeeNO.getInt("EmpCode"));
                                             jsonObject = (JSONObject) userManager.getUserDetials("Gmail", empCode, "", this.getConfiguration().getQaServerURL(), true);
                                             if(jsonObject.getInt("EP_RESULT") == 0){
@@ -180,8 +188,16 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                             }
                         } catch (Exception exception) {
                             LOGGER.log(Level.SEVERE,"\n [ Exception ] : "+exception);
-                            errorMsg = this.getConfiguration().getErrorMessage();
-                            return false;
+                            int temp = employeeNO.getInt("EmpCode");
+                            if(temp == 999){
+                                errorMsg = "This titan email id is not giving valid Employee Number, Please try with valid Titan Mail ID";
+                                return false;
+                            }else{
+                                // System.out.println("employeeNO===>>"+employeeNO.getString("EmpCode"));
+                                errorMsg = this.getConfiguration().getErrorMessage();
+                                return false;
+                            }
+            
                         }
                     }
                     else{

@@ -7,6 +7,7 @@ import { AlertController ,ToastController,LoadingController} from 'ionic-angular
 export class UtilsProvider {
   loader:any;
   commonValues:any;
+  public showAlertWindow:any;
   constructor(
     public http: HttpClient,
     public alert:AlertController,
@@ -69,14 +70,18 @@ export class UtilsProvider {
    * @param message
    */
   showCustomPopup(alertType, message){
-    const alert = this.alert.create({
+    this.showAlertWindow = this.alert.create({
       title: "",
       message: "<p class='header'>"+alertType+" !</p> <p>"+message+"</p>",
       cssClass: alertType,
       enableBackdropDismiss: false,
       buttons: ['OK']
     });
-    alert.present();
+    this.showAlertWindow.present();
+  }
+
+  showCustomPopupClose(){
+    this.showAlertWindow.dismiss();
   }
 
   /**
