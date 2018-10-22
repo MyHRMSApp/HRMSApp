@@ -67,6 +67,9 @@ export class AuthHandlerProvider {
 
   handleChallenge(challenge) {
     console.log('--> AuthHandler handleChallenge called.\n', JSON.stringify(challenge));
+    if(this.utilService.loader !== undefined){
+      this.utilService.dismissLoader();
+    }
     this.isChallenged = true;
     if (this.handleChallengeCallback != null) {
       this.handleChallengeCallback(challenge);
@@ -146,29 +149,30 @@ export class AuthHandlerProvider {
         (accessToken) => {
           console.log('--> AuthHandler: obtainAccessToken onSuccess' + JSON.stringify(accessToken));
           this.chalengeTriggerFlag = true;
-          var tags = [this.userInfo.EP_EGROUP, this.userInfo.EP_USERTYPE];
-          //  if(this.userInfo.EP_USERTYPE == "ESS"){
-          //    tags = ['Employee'];
-          //  }
-       MFPPush.registerDevice(
-         null,
-         function(successResponse) {
-           console.log("Successfully registered-->>"+successResponse);
-           
-             MFPPush.subscribe(
-               tags,
-               function(tags) {
-                 console.log("Subscribed successfully-->>"+tags);
-               },
-               function(failureResponse) {
-                 console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
-               }
-             );
-         },
-         function(failureResponse) {
-             console.log("Failed to register-->>"+JSON.stringify(failureResponse));
-         }
-      );
+          if(this.userInfo !== undefined){
+            var tags = [this.userInfo.EP_EGROUP, this.userInfo.EP_USERTYPE];
+            MFPPush.registerDevice(
+              null,
+              function(successResponse) {
+                console.log("Successfully registered-->>"+successResponse);
+                
+                  MFPPush.subscribe(
+                    tags,
+                    function(tags) {
+                      console.log("Subscribed successfully-->>"+tags);
+                    },
+                    function(failureResponse) {
+                      console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
+                    }
+                  );
+              },
+              function(failureResponse) {
+                  console.log("Failed to register-->>"+JSON.stringify(failureResponse));
+              }
+           );
+          }
+          
+
       
           this.loginSuccessCallback();
         },
@@ -226,7 +230,9 @@ export class AuthHandlerProvider {
   logout() {
     console.log('--> AuthHandler logout called');
     // this.securityCheckName = (securityName) ? securityName : this.securityCheckName;
-    this.utilService.showLoader("Please Wait...");
+    if(this.utilService.loader === undefined){
+      this.utilService.showLoader("Please Wait...");
+    }
     return new Promise((resolve,reject)=>{
       WLAuthorizationManager.logout(this.securityCheckName)
     .then(

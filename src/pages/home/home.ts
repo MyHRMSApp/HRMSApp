@@ -280,6 +280,31 @@ coupons() {
 }
 
 ionViewCanEnter() {
+
+  this.platform.registerBackButtonAction(() => {
+    let nav = this.navCtrl.getActive();
+    if (nav.instance instanceof HomePage){
+      let message = "<div class='exitApplication'>Do you really want to exit this application?</div>";
+      const alert = this.alertCtrl.create({
+      title: "My Compass",
+      message: message,
+      cssClass: "SHOWALERT",
+      enableBackdropDismiss: false
+      });
+
+      alert.addButton('CANCEL');
+      alert.addButton({
+      text: 'OK',
+      handler: data => {
+        this.platform.exitApp();
+      }
+      });
+
+      alert.present();
+    }
+  });
+
+
   try {
     this.mainService.attendanceN_NP1_DataFlag = true;
     this.mainService.attendanceNP2_DataFlag = true;
@@ -599,5 +624,8 @@ myTask() {
     console.log("catch-->>",error);
   }
 }
+
+
+
      
 }
