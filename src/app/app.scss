@@ -332,6 +332,10 @@ ion-nav{
 
   //Media query for iPhone-X
   @media only screen and (min-height: 812px) and (min-width: 375px) {
+    
+    ion-calendar-month .days{
+        width: 14% !important;
+    }
 
     .alert-radio-icon{
         left: -10px !important;
@@ -354,6 +358,10 @@ ion-nav{
   //Media query for iPhone 6+, 6s+, 7+, 8+
   @media only screen and (min-height: 736px) and (min-width: 414px) {
 
+    ion-calendar-month .days{
+        width: 14% !important;
+    }
+
     .alert-radio-icon{
         left: -10px !important;
         top: 0;
@@ -374,6 +382,11 @@ ion-nav{
 
   //Media query for iPhone 6, 6s, 7, 8
   @media only screen and (min-height: 667px) and (min-width: 375px) {
+    
+    ion-calendar-month .days{
+        width: 14% !important;
+    }
+    
     .alert-ios {
     .alert-radio-icon{
         left: -10px !important;

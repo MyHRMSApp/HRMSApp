@@ -47,15 +47,20 @@ constructor(public menu: MenuController, public events: Events,
   public navParams: NavParams, public storage:StorageProvider, public service: ServiceProvider, 
   public utilService: UtilsProvider, public commonStrings: CommonStringsProvider) {
     
+    this.eyeWearCounts = '';
+    this.jewelleryCounts = '';
+    this.taneiraCounts = '';
+    this.watchCounts = '';
+
     this.menu.swipeEnable(false);
     this.counts = this.mainService.couponPageData;
     this.strings = this.commonStrings.commonStrings.couponsPage;
     //console.log("Counts" + JSON.stringify(this.counts))
     
-    this.eyeWearCounts = this.navParams.get("eyeWearLength");;
-    this.jewelleryCounts = this.navParams.get("jewelleryLength");;
-    this.taneiraCounts = this.navParams.get("taneiraLength");;
-    this.watchCounts = this.navParams.get("watchLength");;
+    this.eyeWearCounts = this.navParams.get("eyeWearLength");
+    this.jewelleryCounts = this.navParams.get("jewelleryLength");
+    this.taneiraCounts = this.navParams.get("taneiraLength");
+    this.watchCounts = this.navParams.get("watchLength");
   }
 
 ionViewDidLoad() {
