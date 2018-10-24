@@ -113,7 +113,7 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                             rememberMe = Boolean.valueOf(credentials.get("rememberMe").toString());
                             //Look for this user in the database
                             try {
-                                jsonObject = (JSONObject) userManager.getUserDetials(username, password, "", this.getConfiguration().getQaServerURL(), true);
+                                jsonObject = (JSONObject) userManager.getUserDetials(username, password, "", this.getConfiguration().getProdServerURL(), true);
                                 // errorMsg = "sample";
                                 if(jsonObject.getInt("EP_RESULT") == 0){
                                     userId = jsonObject.getString("EP_ENAME");
@@ -157,12 +157,13 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                             return false;
                                         }else if(employeeNO.getInt("EmpCode") != 0){
                                             empCode = Integer.toString(employeeNO.getInt("EmpCode"));
-                                            jsonObject = (JSONObject) userManager.getUserDetials("Gmail", empCode, "", this.getConfiguration().getQaServerURL(), true);
+                                            jsonObject = (JSONObject) userManager.getUserDetials("Gmail", empCode, "", this.getConfiguration().getProdServerURL(), true);
                                             if(jsonObject.getInt("EP_RESULT") == 0){
                                                 userId = jsonObject.getString("EP_ENAME");
                                                 jsonObject.put("rememberMe", rememberMe);
                                                 displayName = jsonObject.toString();
-                                                // AuthenticatedUser userNew = new AuthenticatedUser();
+                                                this.user = new AuthenticatedUser(userId, displayName, this.getName());
+                                                System.out.println("-->>Gmail--->>AuthenticatedUser--"+jsonObject.getInt("EP_RESULT")+"->>"+  userId+"<<-->>"+ displayName+"<<-->>"+ this.getName());
                                                 this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                                 return true;
                                             }else if(jsonObject.getInt("EP_RESULT") == 1234510){

@@ -18,7 +18,7 @@ export class AuthHandlerProvider {
   loginSuccessCallback = null;
   loginFailureCallback = null;
   chalengeTriggerFlag = true;
-  userInfo:any
+  userInfo:any;
   constructor(public storage:StorageProvider, public consoleServ: ConsoleServiceProvider, 
               public utilService: UtilsProvider, public network: Network) {
     console.log('--> AuthHandlerProvider called');
@@ -239,13 +239,14 @@ export class AuthHandlerProvider {
       (success) => {
         console.log('--> AuthHandler: logout success');
         localStorage.setItem("rememberMe", "enabled");
-        this.utilService.dismissLoader();
+        // this.utilService.dismissLoader();
         this.checkIsLoggedIn();
         resolve(true);
       },
       (failure) => {
         this.utilService.dismissLoader();
         console.log('--> AuthHandler: logout failure: ' + JSON.stringify(failure));
+        // this.utilService.showCustomPopup("FAILURE", "Logout failure, Please try again");
         reject(false);
       }
     );
