@@ -197,7 +197,5 @@ this.appAvailability.check(app)
   helpline() {
     this.nav.push("HrHelplinePage");
   }
-
-
-  
+ 
 }
