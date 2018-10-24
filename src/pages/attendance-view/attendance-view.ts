@@ -332,7 +332,7 @@ export class AttendanceViewPage {
         }, (error)=>{
           console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showPopup("Attendance",error.statusText);
+          this.utilService.showCustomPopup("FAILURE", "Oops! Something went wrong, Please try again");
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -374,7 +374,8 @@ export class AttendanceViewPage {
         }, (error)=>{
           console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showPopup("Attendance",error.statusText);
+          // this.utilService.showPopup("Attendance",error.statusText);
+          this.utilService.showCustomPopup("FAILURE", "Oops! Something went wrong, Please try again");
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -417,7 +418,7 @@ export class AttendanceViewPage {
         }, (error)=>{
           console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showPopup("Attendance",error.statusText);
+          this.utilService.showCustomPopup("FAILURE", "Oops! Something went wrong, Please try again");
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
@@ -461,7 +462,7 @@ export class AttendanceViewPage {
         }, (error)=>{
           console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showPopup("Attendance",error.statusText);
+          this.utilService.showCustomPopup("FAILURE", "Oops! Something went wrong, Please try again");
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");

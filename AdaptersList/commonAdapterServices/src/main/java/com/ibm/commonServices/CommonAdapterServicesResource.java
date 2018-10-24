@@ -81,8 +81,8 @@ public class CommonAdapterServicesResource {
 	private static final String SAP_USERNAME = "HCM_SERV_USR";
     private static final String SAP_PASSWORD = "HCM_SERV_USR@123";
 	private static final String AUTH_STRING = SAP_USERNAME + ":" + SAP_PASSWORD;
-	private static final String[] PENDING_LEAVES = {"ODP", "FTP", "CLP", "SLP", "GLP", "QLP", "PLP"};
-	private static final String[] APPROVED_LEAVES = {"ODA", "FTA", "CLA", "SLA", "GLA", "QLA", "PLA"};
+	private static final String[] PENDING_LEAVES = {"ODP", "FTP", "CLP", "SLP", "GLP", "QLP", "PLP", "MLP", "FPP", "SPP", "ESP", "LPP", "MCP", "VLP", "QLP"};
+	private static final String[] APPROVED_LEAVES = {"ODA", "FTA", "CLA", "SLA", "GLA", "QLA", "PLA", "MLA", "FPA", "SPA", "ESA", "LPA", "MCA", "VLA", "QLA"};
 	private static final String DEVServer = "DEVServer";
 	private static final String UATServer = "UATServer";
 	private static final String PRODServer = "PRODServer";
@@ -101,7 +101,7 @@ public class CommonAdapterServicesResource {
 	private static final String GetMyTask = "GetMyTask";
 	private static final String MyTaskApprove = "MyTaskApprove";
 	private static final String GetMyProfile = "GetMyProfile";
-	private static final String AUTH_SCOPE_URL = "pirqa.titan.co.in";
+	private static final String AUTH_SCOPE_URL = "pirprd.titan.co.in";
 	private static final int AUTH_SCOPE_PORT = 50401;
 	private static final int SocketTimeout = 30000;
 	private static final int ConnectTimeout = 30000;
@@ -311,10 +311,10 @@ public class CommonAdapterServicesResource {
 		responceJSON = this.postService(inputJSON.toString(), GetAttendanceStatus, methodName, userInformation.getString(EP_PERNR_STR));
 		JSONObject innerObject = responceJSON.getJSONObject(data).getJSONObject(ET_DATA_STR);
 		JSONArray jsonArray = innerObject.getJSONArray(item);
-			
+		JSONObject resultJSON = new JSONObject();
 			for (int i = 0, size = jsonArray.length(); i < size; i++)
 			{
-				JSONObject resultJSON = new JSONObject();
+				resultJSON = new JSONObject();
 				JSONObject objectInArray = jsonArray.getJSONObject(i);
 				String[] elementNames = JSONObject.getNames(objectInArray);
 
@@ -343,7 +343,6 @@ public class CommonAdapterServicesResource {
 				String[] temp_reqState_ATT_1 = RS_ATT1.isEmpty()?null:RS_ATT1.split(",");
 				String[] temp_reqState_ATT_2 = RS_ATT2.isEmpty()?null:RS_ATT2.split(",");
 
-				if(SHIFT.equals("G") && ATT_1.equals("G") &&  ATT_2.equals("G")){
 					List ATT_1_Req = new ArrayList(); 
 					List ATT_2_Req = new ArrayList();
 					String cssClass = "";
@@ -392,6 +391,84 @@ public class CommonAdapterServicesResource {
 						}
 					}
 
+					if(ATT_1.equals("UA") && ATT_2.equals("UA")){
+						cssClass = "ATT1_UA_ATT2_UA";
+					}else if((ATT_1.equals("UA")) && (ATT_2.equals("OD") || ATT_2.equals("CL") || ATT_2.equals("PL") || ATT_2.equals("GL")
+							|| ATT_2.equals("G") || ATT_2.equals("SL") || ATT_2.equals("") || ATT_2.equals("1") || ATT_2.equals("2") || ATT_2.equals("3") || ATT_2.equals("J")
+							|| ATT_2.equals("U") || ATT_2.equals("D1") || ATT_2.equals("G1") || ATT_2.equals("G2") || ATT_2.equals("S1") || ATT_2.equals("D2")
+							|| ATT_2.equals("I") || ATT_2.equals("ML") || ATT_2.equals("FP") || ATT_2.equals("SP") || ATT_2.equals("ES") || ATT_2.equals("LP") 
+							|| ATT_2.equals("MC") || ATT_2.equals("VL") || ATT_2.equals("QL"))){
+						
+								if(!ATT2_Aprd){
+									cssClass = "ATT1_UA_ATT2_Approved";
+								}else if(ATT2_Aprd){
+									cssClass = "ATT1_UA_ATT2_NormalPunch";
+								}else if(!ATT2_CLR){
+									cssClass = "ATT1_UA_ATT2_Pending";
+								}else if(ATT2_CLR){
+									cssClass = "ATT1_UA_ATT2_NormalPunch";
+								}
+					}else if((ATT_2.equals("UA")) && (ATT_1.equals("OD") || ATT_1.equals("CL") || ATT_1.equals("PL") || ATT_1.equals("GL")
+					|| ATT_1.equals("SL") || ATT_1.equals("G") || ATT_1.equals("") || ATT_1.equals("1") || ATT_1.equals("2") || ATT_1.equals("3") || ATT_1.equals("J")
+					|| ATT_1.equals("U") || ATT_1.equals("D1") || ATT_1.equals("G1") || ATT_1.equals("G2") || ATT_1.equals("S1") || ATT_1.equals("D2")
+					|| ATT_1.equals("I") || ATT_1.equals("ML") || ATT_1.equals("FP") || ATT_1.equals("SP") || ATT_1.equals("ES") || ATT_1.equals("LP")
+					|| ATT_1.equals("MC") || ATT_1.equals("VL") || ATT_1.equals("QL"))){
+				
+						if(!ATT1_Aprd){
+							cssClass = "ATT1_Approved_ATT2_UA";
+						}else if(ATT1_Aprd){
+							cssClass = "ATT1_NormalPunch_ATT2_UA";
+						}else if(!ATT1_CLR){
+							cssClass = "ATT1_Pending_ATT2_UA";
+						}else if(ATT1_CLR){
+							cssClass = "ATT1_NormalPunch_ATT2_UA";
+						}
+					}else if((ATT_1.equals("G") || ATT_1.equals("1") || ATT_1.equals("2") || ATT_1.equals("3") || ATT_1.equals("J") || ATT_1.equals("U") || ATT_1.equals("D1")
+					|| ATT_1.equals("G1") || ATT_1.equals("G2") || ATT_1.equals("S1") || ATT_1.equals("D2")	|| ATT_1.equals("I") || ATT_1.equals("") || ATT_1.equals("OD") 
+					|| ATT_1.equals("CL") || ATT_1.equals("PL") || ATT_1.equals("GL") || ATT_1.equals("SL") || ATT_1.equals("ML") || ATT_1.equals("FP") 
+					|| ATT_1.equals("SP") || ATT_1.equals("ES") || ATT_1.equals("LP") || ATT_1.equals("MC") || ATT_1.equals("VL") || ATT_1.equals("QL")) && (ATT_2.equals("G") 
+					|| ATT_2.equals("1") || ATT_2.equals("2") || ATT_2.equals("3") || ATT_2.equals("J") || ATT_2.equals("U") || ATT_2.equals("D1") || ATT_2.equals("G1") || ATT_2.equals("G2") 
+					|| ATT_2.equals("S1") || ATT_2.equals("D2") || ATT_2.equals("I") || ATT_2.equals("") || ATT_2.equals("OD") || ATT_2.equals("CL") 
+					|| ATT_2.equals("PL") || ATT_2.equals("GL") || ATT_2.equals("SL") || ATT_2.equals("ML") || ATT_2.equals("FP") || ATT_2.equals("SP") || ATT_2.equals("ES") 
+					|| ATT_2.equals("LP") || ATT_2.equals("MC") || ATT_2.equals("VL") || ATT_2.equals("QL"))){
+						
+						if(!ATT2_Aprd && !ATT1_Aprd){
+							cssClass = "ATT1_Approved_ATT2_Approved";
+						}else if(ATT2_Aprd && ATT1_Aprd){
+							if(!ATT2_CLR && !ATT1_CLR){
+								cssClass = "ATT1_Pending_ATT2_Pending";
+							}else if(!ATT2_CLR && ATT1_CLR){
+								cssClass = "ATT1_NormalPunch_ATT2_Pending";
+							}else if(ATT2_CLR && !ATT1_CLR){
+								cssClass = "ATT1_Pending_ATT2_NormalPunch";
+							}else{
+								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
+							}
+						}else if(!ATT2_Aprd && ATT1_Aprd){
+							if(!ATT2_CLR && !ATT1_CLR){
+								cssClass = "ATT1_Pending_ATT2_Pending";
+							}else if(!ATT2_CLR && ATT1_CLR){
+								cssClass = "ATT1_NormalPunch_ATT2_Pending";
+							}else if(ATT2_CLR && !ATT1_CLR){
+								cssClass = "ATT1_Pending_ATT2_NormalPunch";
+							}else{
+								cssClass = "ATT1_NormalPunch_ATT2_Approved";
+							}
+						}else if(ATT2_Aprd && !ATT1_Aprd){
+							if(!ATT2_CLR && !ATT1_CLR){
+								cssClass = "ATT1_Pending_ATT2_Pending";
+							}else if(!ATT2_CLR && ATT1_CLR){
+								cssClass = "ATT1_NormalPunch_ATT2_Pending";
+							}else if(ATT2_CLR && !ATT1_CLR){
+								cssClass = "ATT1_Pending_ATT2_NormalPunch";
+							}else{
+								cssClass = "ATT1_Approved_ATT2_NormalPunch";
+							}
+						} else
+						
+						if(!ATT1_CLR && !ATT2_CLR){
+							cssClass = "ATT1_Pending_ATT2_Pending";
+						}else if(ATT1_CLR && ATT2_CLR){
 							if(!ATT2_Aprd && !ATT1_Aprd){
 								cssClass = "ATT1_Approved_ATT2_Approved";
 							}else if(ATT2_Aprd && ATT1_Aprd){
@@ -400,741 +477,79 @@ public class CommonAdapterServicesResource {
 								cssClass = "ATT1_NormalPunch_ATT2_Approved";
 							}else if(ATT2_Aprd && !ATT1_Aprd){
 								cssClass = "ATT1_Approved_ATT2_NormalPunch";
-							} else
-							
-							if(!ATT1_CLR && !ATT2_CLR){
-								cssClass = "ATT1_Pending_ATT2_Pending";
-							}else if(ATT1_CLR && ATT2_CLR){
-								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
-							}else if(!ATT1_CLR && ATT2_CLR){
+							}
+						}else if(!ATT1_CLR && ATT2_CLR){
+							if(!ATT2_Aprd){
 								cssClass = "ATT1_Pending_ATT2_Approved";
-							}else if(ATT1_CLR && !ATT2_CLR){
-								cssClass = "ATT1_NormalPunch_ATT2_Approved";
-							}
-						
-					
-					resultJSON.put("cssClass", cssClass);
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", false);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", true);
-				}
-
-				else if(SHIFT.equals("G") && ATT_1.equals("G") && ATT_2.equals("OD")){
-					resultJSON.put("cssClass", "ATT1_NormalPunch_ATT2_Approved");
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", true);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
-				}else if(SHIFT.equals("G") && ATT_1.equals("OD") &&  ATT_2.equals("G")){
-					resultJSON.put("cssClass", "ATT1_Approved_ATT2_NormalPunch");
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", true);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
-				}else if(SHIFT.equals("G") && ATT_1.equals("OD") &&  ATT_2.equals("OD")){
-					resultJSON.put("cssClass", "ATT1_Approved_ATT2_Approved");
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", true);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
-				}
-				else if(SHIFT.equals("OFF") && temp_reqState_ATT_1 == null && temp_reqState_ATT_2 == null){
-					resultJSON.put("cssClass", "HollydayClass");
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", true);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
-				}
-				else if(SHIFT.equals("G") && ATT_1.equals("HO") && ATT_2.equals("HO")){
-					resultJSON.put("cssClass", "HollydayClass");
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", true);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
-				}
-				else if(SHIFT.equals("") && ATT_1.equals("HO") && ATT_2.equals("HO")){
-					resultJSON.put("cssClass", "HollydayClass");
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", true);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
-				}
-				else if((SHIFT.equalsIgnoreCase("1") || SHIFT.equalsIgnoreCase("2") || SHIFT.equalsIgnoreCase("3") || SHIFT.equalsIgnoreCase("J") || SHIFT.equalsIgnoreCase("U") || SHIFT.equalsIgnoreCase("D1") || SHIFT.equalsIgnoreCase("G1") || SHIFT.equalsIgnoreCase("G2") || SHIFT.equalsIgnoreCase("S1") || SHIFT.equalsIgnoreCase("D2") || SHIFT.equalsIgnoreCase("I")) && ATT_1.equals("HO") && ATT_2.equals("HO")){
-					resultJSON.put("cssClass", "HollydayClass");
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", true);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
-				}
-				else if(SHIFT.equals("OFF")){
-					List ATT_1_Req = new ArrayList(); 
-					List ATT_2_Req = new ArrayList();
-					String cssClass = "";
-					boolean ATT1_CLR = true;
-					boolean ATT2_CLR = true;
-					boolean ATT1_Aprd = true;
-					boolean ATT2_Aprd = true;
-
-					if(temp_reqState_ATT_1 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
-							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_Aprd != false) {
-								ATT1_Aprd = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
-							}	
-						}
-					}
-
-					if(temp_reqState_ATT_2 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
-							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_Aprd != false) {
-								ATT2_Aprd = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
-							}	
-						}
-					}
-
-					if(temp_reqState_ATT_1 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
-							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_CLR != false) {
-								ATT1_CLR = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
-							}	
-						}
-					}
-
-					if(temp_reqState_ATT_2 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
-							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_CLR != false) {
-								ATT2_CLR = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
-							}	
-						}
-					}
-
-					if(!ATT1_CLR && !ATT2_CLR){
-						cssClass = "ATT1_Pending_ATT2_Pending";
-					}else if(ATT1_CLR && !ATT2_CLR){
-						if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-							cssClass = "ATT1_Holliday_ATT2_Pending";
-						}else if(ATT_1.equals("G")){
-							cssClass = "ATT1_NormalPunch_ATT2_Pending";
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-							cssClass = "ATT1_UA_ATT2_Pending";
-						}else{
-							cssClass = "ATT1_Approved_ATT2_Pending";
-						}
-					}else if(!ATT1_CLR && ATT2_CLR){
-						if(ATT_2.equals("WO") || ATT_1.equals("HO")){
-							cssClass = "ATT1_Pending_ATT2_Holliday";
-						}else if(ATT_2.equals("G")){
-							cssClass = "ATT1_Pending_ATT2_NormalPunch";
-						}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-							cssClass = "ATT1_Pending_ATT2_UA";
-						}else{
-							cssClass = "ATT1_Pending_ATT2_Approved";
-						}
-					}else if(ATT1_CLR && ATT2_CLR){
-						if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Holliday_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_Holliday_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Holliday_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_Holliday_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Holliday_ATT2_Approved";
-							}	
-						}else if(ATT_1.equals("G")){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_NomalPunch_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_NomalPunch_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_NomalPunch_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_NomalPunch_ATT2_Approved";
-							}
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_UA_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_UA_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_UA_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_UA_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_UA_ATT2_Approved";
-							}
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 != null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Pending_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
+							}else if(ATT2_Aprd){
 								cssClass = "ATT1_Pending_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Pending_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
+							}else if(!ATT2_CLR){
 								cssClass = "ATT1_Pending_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Pending_ATT2_Approved";
+							}else if(ATT2_CLR){
+								cssClass = "ATT1_Pending_ATT2_NormalPunch";
 							}
-						}else if(!ATT1_Aprd && temp_reqState_ATT_1 != null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Approved_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_Approved_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Approved_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
+						}else if(ATT1_CLR && !ATT2_CLR){
+							if(!ATT1_Aprd){
 								cssClass = "ATT1_Approved_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Approved_ATT2_Approved";
-							}
-						}else if(!ATT2_Aprd && temp_reqState_ATT_2 != null){
-							if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-								cssClass = "ATT1_Holliday_ATT2_Approved";
-							}else if(ATT_1.equals("G")){
-								cssClass = "ATT1_NormalPunch_ATT2_Approved";
-							}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-								cssClass = "ATT1_UA_ATT2_Approved";
-							}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 != null){
-								cssClass = "ATT1_Pending_ATT2_Approved";
-							}else{
-								cssClass = "ATT1_Approved_ATT2_Approved";
-							}
-						}
-					}
-					resultJSON.put("cssClass", cssClass);
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", false);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", true);
-				}
-				
-				else if(ATT_1.equals("UA") || ATT_2.equals("UA")){
-					List ATT_1_Req = new ArrayList(); 
-					List ATT_2_Req = new ArrayList();
-					String cssClass = "";
-					boolean ATT1_CLR = true;
-					boolean ATT2_CLR = true;
-					boolean ATT1_Aprd = true;
-					boolean ATT2_Aprd = true;
-
-					if(temp_reqState_ATT_1 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
-							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_Aprd != false) {
-								ATT1_Aprd = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_2 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
-							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_Aprd != false) {
-								ATT2_Aprd = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_1 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
-							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_CLR != false) {
-								ATT1_CLR = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_2 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
-							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_CLR != false) {
-								ATT2_CLR = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
-							}
-							
-						}
-					}
-					if(!ATT1_CLR && !ATT2_CLR){
-						cssClass = "ATT1_Pending_ATT2_Pending";
-					}else if(ATT1_CLR && !ATT2_CLR){
-						if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-							cssClass = "ATT1_Holliday_ATT2_Pending";
-						}else if(ATT_1.equals("G")){
-							cssClass = "ATT1_NormalPunch_ATT2_Pending";
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-							cssClass = "ATT1_UA_ATT2_Pending";
-						}else{
-							cssClass = "ATT1_Approved_ATT2_Pending";
-						}
-					}else if(!ATT1_CLR && ATT2_CLR){
-						if(ATT_2.equals("WO") || ATT_1.equals("HO")){
-							cssClass = "ATT1_Pending_ATT2_Holliday";
-						}else if(ATT_2.equals("G")){
-							cssClass = "ATT1_Pending_ATT2_NormalPunch";
-						}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-							cssClass = "ATT1_Pending_ATT2_UA";
-						}else{
-							cssClass = "ATT1_Pending_ATT2_Approved";
-						}
-					}else if(ATT1_CLR && ATT2_CLR){
-						if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Holliday_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_Holliday_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Holliday_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_Holliday_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Holliday_ATT2_Approved";
-							}	
-						}else if(ATT_1.equals("G")){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_NomalPunch_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_NomalPunch_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_NomalPunch_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_NomalPunch_ATT2_Approved";
-							}
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_UA_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_UA_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_UA_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_UA_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_UA_ATT2_Approved";
-							}
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 != null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Pending_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_Pending_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Pending_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
+							}else if(ATT1_Aprd){
+								cssClass = "ATT1_NormalPunch_ATT2_Pending";
+							}else if(!ATT1_CLR){
 								cssClass = "ATT1_Pending_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Pending_ATT2_Approved";
-							}
-						}else if(!ATT1_Aprd && temp_reqState_ATT_1 != null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Approved_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_Approved_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Approved_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_Approved_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Approved_ATT2_Approved";
-							}
-						}else if(!ATT2_Aprd && temp_reqState_ATT_2 != null){
-							if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-								cssClass = "ATT1_Holliday_ATT2_Approved";
-							}else if(ATT_1.equals("G")){
-								cssClass = "ATT1_NormalPunch_ATT2_Approved";
-							}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-								cssClass = "ATT1_UA_ATT2_Approved";
-							}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 != null){
-								cssClass = "ATT1_Pending_ATT2_Approved";
-							}else{
-								cssClass = "ATT1_Approved_ATT2_Approved";
-							}
-						}
-
-						if(!ATT2_Aprd && !ATT1_Aprd){
-							cssClass = "ATT1_Approved_ATT2_Approved";
-						}else if(!ATT2_Aprd && ATT1_Aprd){
-							cssClass = "ATT1_NormalPunch_ATT2_Approved";
-						}else if(ATT2_Aprd && !ATT1_Aprd){
-							cssClass = "ATT1_Approved_ATT2_NormalPunch";
-						}
-					}
-					resultJSON.put("cssClass", cssClass);
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", false);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", true);
-				}				
-				else if(ATT_1.equals("G") || ATT_2.equals("G")){
-					List ATT_1_Req = new ArrayList(); 
-					List ATT_2_Req = new ArrayList();
-					String cssClass = "";
-					boolean ATT1_CLR = true;
-					boolean ATT2_CLR = true;
-					boolean ATT1_Aprd = true;
-					boolean ATT2_Aprd = true;
-
-					if(temp_reqState_ATT_1 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
-							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_Aprd != false) {
-								ATT1_Aprd = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_2 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
-							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_Aprd != false) {
-								ATT2_Aprd = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_1 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
-							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_CLR != false) {
-								ATT1_CLR = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_2 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
-							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_CLR != false) {
-								ATT2_CLR = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
-							}
-							
-						}
-					}
-					 if(ATT2_Aprd || ATT1_Aprd){
-						if(!ATT2_Aprd && !ATT1_Aprd){
-							cssClass = "ATT1_Approved_ATT2_Approved";
-						}else if(ATT2_Aprd && ATT1_Aprd){
-							cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
-						}else if(!ATT2_Aprd && ATT1_Aprd){
-							cssClass = "ATT1_NormalPunch_ATT2_Approved";
-						}else if(ATT2_Aprd && !ATT1_Aprd){
-							cssClass = "ATT1_Approved_ATT2_NormalPunch";
-						}
-					}
-					else if(!ATT1_CLR && !ATT2_CLR){
-						cssClass = "ATT1_Pending_ATT2_Pending";
-					}else if(ATT1_CLR && !ATT2_CLR){
-						if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-							cssClass = "ATT1_Holliday_ATT2_Pending";
-						}else if(ATT_1.equals("G")){
-							cssClass = "ATT1_NormalPunch_ATT2_Pending";
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-							cssClass = "ATT1_UA_ATT2_Pending";
-						}else{
-							cssClass = "ATT1_Approved_ATT2_Pending";
-						}
-					}else if(!ATT1_CLR && ATT2_CLR){
-						if(ATT_2.equals("WO") || ATT_1.equals("HO")){
-							cssClass = "ATT1_Pending_ATT2_Holliday";
-						}else if(ATT_2.equals("G")){
-							cssClass = "ATT1_Pending_ATT2_NormalPunch";
-						}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-							cssClass = "ATT1_Pending_ATT2_UA";
-						}else{
-							cssClass = "ATT1_Pending_ATT2_Approved";
-						}
-					}else if(ATT1_CLR && ATT2_CLR){
-						if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Holliday_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_Holliday_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Holliday_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_Holliday_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Holliday_ATT2_Approved";
-							}	
-						}else if(ATT_1.equals("G")){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_NomalPunch_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_NomalPunch_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_NomalPunch_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_NomalPunch_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_NomalPunch_ATT2_Approved";
-							}
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_UA_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_UA_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_UA_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_UA_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_UA_ATT2_Approved";
-							}
-						}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 != null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Pending_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_Pending_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Pending_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_Pending_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Pending_ATT2_Approved";
-							}
-						}else if(!ATT1_Aprd && temp_reqState_ATT_1 != null){
-							if(ATT_2.equals("WO") || ATT_2.equals("HO")){
-								cssClass = "ATT1_Approved_ATT2_Holliday";
-							}else if(ATT_2.equals("G")){
-								cssClass = "ATT1_Approved_ATT2_NormalPunch";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 == null){
-								cssClass = "ATT1_Approved_ATT2_UA";
-							}else if(ATT_2.equals("UA") && temp_reqState_ATT_2 != null){
-								cssClass = "ATT1_Approved_ATT2_Pending";
-							}else{
-								cssClass = "ATT1_Approved_ATT2_Approved";
-							}
-						}else if(!ATT2_Aprd && temp_reqState_ATT_2 != null){
-							if(ATT_1.equals("WO") || ATT_1.equals("HO")){
-								cssClass = "ATT1_Holliday_ATT2_Approved";
-							}else if(ATT_1.equals("G")){
-								cssClass = "ATT1_NormalPunch_ATT2_Approved";
-							}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 == null){
-								cssClass = "ATT1_UA_ATT2_Approved";
-							}else if(ATT_1.equals("UA") && temp_reqState_ATT_1 != null){
-								cssClass = "ATT1_Pending_ATT2_Approved";
-							}else{
-								cssClass = "ATT1_Approved_ATT2_Approved";
-							}
-						}
-					}
-					resultJSON.put("cssClass", cssClass);
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", false);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", true);
-				}else if(SHIFT.equals("") && ATT_1.equals("") &&  ATT_2.equals("")){
-
-					List ATT_1_Req = new ArrayList(); 
-					List ATT_2_Req = new ArrayList();
-					String cssClass = "";
-					boolean ATT1_CLR = true;
-					boolean ATT2_CLR = true;
-					boolean ATT1_Aprd = true;
-					boolean ATT2_Aprd = true;
-
-					if(temp_reqState_ATT_1 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
-							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_Aprd != false) {
-								ATT1_Aprd = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_2 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
-							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_Aprd != false) {
-								ATT2_Aprd = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_1 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
-							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_CLR != false) {
-								ATT1_CLR = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
-							}
-							
-						}
-					}
-
-					if(temp_reqState_ATT_2 != null){
-						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
-							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_CLR != false) {
-								ATT2_CLR = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
-							}
-							
-						}
-					}
-
-							if(!ATT2_Aprd && !ATT1_Aprd){
-								cssClass = "ATT1_Approved_ATT2_Approved";
-							}else if(!ATT2_Aprd && ATT1_Aprd){
-								cssClass = "ATT1_NormalPunch_ATT2_Approved";
-							}else if(ATT2_Aprd && !ATT1_Aprd){
-								cssClass = "ATT1_Approved_ATT2_NormalPunch";
-							}
-							
-							if(!ATT1_CLR && !ATT2_CLR){
-								cssClass = "ATT1_Pending_ATT2_Pending";
-							}else if(!ATT1_CLR && ATT2_CLR){
-								cssClass = "ATT1_Pending_ATT2_NormalPunch";
-							}else if(ATT1_CLR && !ATT2_CLR){
+							}else if(ATT1_CLR){
 								cssClass = "ATT1_NormalPunch_ATT2_Pending";
 							}
+						}
+					}else if((ATT_1.equals("HO") || ATT_1.equals("WO")) && (ATT_2.equals("HO") || ATT_2.equals("WO"))){
+						cssClass = "ATT1_Holliday_ATT2_Holliday";
+					}else if((ATT_1.equals("HO") || ATT_1.equals("WO")) && (ATT_2.equals("OD") || ATT_2.equals("CL") || ATT_2.equals("PL") || ATT_2.equals("GL")
+					|| ATT_2.equals("G") || ATT_2.equals("") || ATT_2.equals("1") || ATT_2.equals("2") || ATT_2.equals("3") || ATT_2.equals("J")
+					|| ATT_2.equals("U") || ATT_2.equals("D1") || ATT_2.equals("G1") || ATT_2.equals("G2") || ATT_2.equals("S1") || ATT_2.equals("D2")
+					|| ATT_2.equals("I"))){
+				
+						if(!ATT2_Aprd){
+							cssClass = "ATT1_Holliday_ATT2_Approved";
+						}else if(ATT2_Aprd){
+							cssClass = "ATT1_Holliday_ATT2_NormalPunch";
+						}else if(!ATT2_CLR){
+							cssClass = "ATT1_Holliday_ATT2_Pending";
+						}else if(ATT2_CLR){
+							cssClass = "ATT1_Holliday_ATT2_NormalPunch";
+						}
+					}else if((ATT_2.equals("HO") || ATT_2.equals("WO")) && (ATT_1.equals("OD") || ATT_1.equals("CL") || ATT_1.equals("PL") || ATT_1.equals("GL")
+					|| ATT_1.equals("G") || ATT_1.equals("") || ATT_1.equals("1") || ATT_1.equals("2") || ATT_1.equals("3") || ATT_1.equals("J")
+					|| ATT_1.equals("U") || ATT_1.equals("D1") || ATT_1.equals("G1") || ATT_1.equals("G2") || ATT_1.equals("S1") || ATT_1.equals("D2")
+					|| ATT_1.equals("I"))){
+						if(!ATT1_Aprd){
+							cssClass = "ATT1_Approved_ATT2_Holliday";
+						}else if(ATT1_Aprd){
+							cssClass = "ATT1_NormalPunch_ATT2_Holliday";
+						}else if(!ATT1_CLR){
+							cssClass = "ATT1_Pending_ATT2_Holliday";
+						}else if(ATT1_CLR){
+							cssClass = "ATT1_NormalPunch_ATT2_Holliday";
+						}
+					}
+				
+						resultJSON.put("cssClass", cssClass);
+						resultJSON.put("LDATE", LDATE);
+						resultJSON.put("PUN_P10", PUNIN);
+						resultJSON.put("PUN_P15", MIDOUT);
+						resultJSON.put("PUN_P20", PUNOUT);
+						resultJSON.put("PUN_P25", MIDIN);
+						resultJSON.put("ATT", ATT);
+						resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
+						resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
+						resultJSON.put("SHF_IN", SHF_IN);
+						resultJSON.put("SHF_OUT", SHF_OUT);
+						resultJSON.put("Holiday", false);
+						resultJSON.put("Absence", false);
+						resultJSON.put("RequestState", true);
 
-					resultJSON.put("cssClass", cssClass);
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", false);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
-				}else{
-					resultJSON.put("cssClass", "");
-					resultJSON.put("LDATE", LDATE);
-					resultJSON.put("PUN_P10", PUNIN);
-					resultJSON.put("PUN_P15", MIDOUT);
-					resultJSON.put("PUN_P20", PUNOUT);
-					resultJSON.put("PUN_P25", MIDIN);
-					resultJSON.put("ATT", ATT);
-					resultJSON.put("RS_ATT1", temp_reqState_ATT_1);
-					resultJSON.put("RS_ATT2", temp_reqState_ATT_2);
-					resultJSON.put("SHF_IN", SHF_IN);
-					resultJSON.put("SHF_OUT", SHF_OUT);
-					resultJSON.put("Holiday", false);
-					resultJSON.put("Absence", false);
-					resultJSON.put("RequestState", false);
+						resultJSONarrlist.add(resultJSON);
 				}
 
-				resultJSONarrlist.add(resultJSON);
-			}
-			commonServerResponce.put(data, resultJSONarrlist);
+				
+				commonServerResponce.put(data, resultJSONarrlist);
 
 		return commonServerResponce.toString();
 	}
@@ -1404,7 +819,7 @@ public class CommonAdapterServicesResource {
 		JSONObject resultJSON = new JSONObject();
 		commonServerResponce = new JSONObject(commonResponceStr);
 		LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Name : " + methodName + "\n");
-	    LOGGER.log(Level.INFO, "\n SAP Request Sending from URL : " + configurationAPI.getPropertyValue(UATServer)+contextPathName + "\n");
+	    LOGGER.log(Level.INFO, "\n SAP Request Sending from URL : " + configurationAPI.getPropertyValue(PRODServer)+contextPathName + "\n");
 		LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Inputs : " + inputString + "\n");
 		// LOGGER.log(Level.INFO, "PernrNo : | ProcedureName : | StatusCode : | ResponceTime : ");
 		
@@ -1415,7 +830,7 @@ public class CommonAdapterServicesResource {
 			CredentialsProvider credsProvider = new BasicCredentialsProvider();
 			credsProvider.setCredentials(new AuthScope(AUTH_SCOPE_URL, AUTH_SCOPE_PORT),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
 			httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
-			HttpPost httpPost = new HttpPost(configurationAPI.getPropertyValue(UATServer)+contextPathName);
+			HttpPost httpPost = new HttpPost(configurationAPI.getPropertyValue(PRODServer)+contextPathName);
 			// httpPost.addHeader("User-Agent", "Mozilla/5.0");
 			httpPost.setEntity(params);
 			RequestConfig requestConfig = RequestConfig.custom()

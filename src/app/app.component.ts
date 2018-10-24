@@ -175,6 +175,7 @@ this.appAvailability.check(app)
   logout() {
     //localStorage.setItem("rememberMe", "disabled");
     //console.log("came to logout");
+    this.utilService.showLoader("Please Wait...");
     this.authHandler.logout().then((resp)=>{
       if(resp) {
         localStorage.setItem("userLogout", "1");
@@ -183,7 +184,7 @@ this.appAvailability.check(app)
       }
       else {
         console.log("logout failure");
-        this.utilService.showCustomPopup("FAILURE","Logout failure, Please try again..");
+        // this.utilService.showCustomPopup("FAILURE","Logout failure, Please try again..");
       }
     });
     this.photos = ("./assets/icon/avatar.png");

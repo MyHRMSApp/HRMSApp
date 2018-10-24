@@ -281,6 +281,16 @@ coupons() {
 
 ionViewCanEnter() {
 
+  this.eyeWearLength = 0;
+  this.jewelleryLength = 0;
+  this.taneiraLength = 0;
+  this.watchLength = 0;
+
+  this.eyeWearCounts = [];
+  this.jewelleryCounts = [];
+  this.taneiraCounts = [];
+  this.watchCounts = [];
+
   this.platform.registerBackButtonAction(() => {
     let nav = this.navCtrl.getActive();
     if (nav.instance instanceof HomePage){
@@ -317,28 +327,28 @@ ionViewCanEnter() {
       this.attanaceCallFlag = true;
       this.mainService.attendanceCallFlag = false;
       this.mainService.attendanceN_NP1_DataFlag = false;
-      var payloadData = {
-        "IP_SMONTH": -1,
-        "IP_EMONTH": 0
-      }
-      // if(this.mainService.internetConnectionCheck){
-        this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-          if(resultData) {
-            if(resultData.status_code == 0){
-              this.mainService.attanancePageData = resultData.data;
-              this.mainService.attendanceN_NP1_Data = resultData.data;
-              this.mainService.attendanceN_NP1_DataFlag = false;
-            } else {
-              // this.utilService.showPopup("Attendance", resultData.message);
-            }
+      // var payloadData = {
+      //   "IP_SMONTH": -1,
+      //   "IP_EMONTH": 0
+      // }
+      // // if(this.mainService.internetConnectionCheck){
+      //   this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+      //     if(resultData) {
+      //       if(resultData.status_code == 0){
+      //         this.mainService.attanancePageData = resultData.data;
+      //         this.mainService.attendanceN_NP1_Data = resultData.data;
+      //         this.mainService.attendanceN_NP1_DataFlag = false;
+      //       } else {
+      //         // this.utilService.showPopup("Attendance", resultData.message);
+      //       }
       
-          };
-        }, (error)=>{
-          console.log("Error",error);
-          this.mainService.attendanceCallFlag = true;
-          this.mainService.attendanceN_NP1_DataFlag = true;
-          this.attanaceCallFlag = false;
-        });
+      //     };
+      //   }, (error)=>{
+      //     console.log("Error",error);
+      //     this.mainService.attendanceCallFlag = true;
+      //     this.mainService.attendanceN_NP1_DataFlag = true;
+      //     this.attanaceCallFlag = false;
+      //   });
 
         this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
           if(resultData){
