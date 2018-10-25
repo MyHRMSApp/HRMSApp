@@ -5,7 +5,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { MyApp } from '../../app/app.component';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
 
@@ -24,10 +23,12 @@ public profileDetails:any;
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public mainService: MyApp, public service: ServiceProvider,
+    public navParams: NavParams, public service: ServiceProvider,
     public utilService: UtilsProvider) {
     
     this.menu.swipeEnable(false);
+
+    this.profileDetails = this.navParams.get('profile');
   }
 
   ionViewDidLoad() {
@@ -46,44 +47,56 @@ public profileDetails:any;
     this.navCtrl.setRoot("HomePage");
   }
 
-  ionViewCanEnter(){
-    // if(this.mainService.internetConnectionCheck){
-      this.utilService.showLoader("Please wait...");
-      if(this.mainService.globalProfileData !== undefined){
-        this.profileDetails = this.mainService.globalProfileData;
-        this.utilService.dismissLoader();
-      }else{
-        this.profileDetails = {
-              "ENAME": "",
-              "EMP_HR": "",
-              "BTRTL_TXT": "",
-              "PERSK": "",
-              "ORGEH_TXT": "",
-              "PERSG_TXT": "",
-              "EP_MANAGER": "",
-              "EMPCODE": "",
-          };
-        this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
-          if(resultData){
-            if(resultData.status_code == 0){
-              console.log(resultData.data.ET_DATA);
-              this.profileDetails = resultData.data.ET_DATA;
-              setTimeout(() => {
-                this.utilService.dismissLoader();
-              }, 2000);
-            }else{
-              this.utilService.dismissLoader();
-              this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
-            }
-          };
-        }, (error)=>{
-          console.log("Error",error);
-          this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error("Profile", error.statusText, "FAILURE");
-        });
-      }
+  // ionViewCanEnter(){
+  //   // if(this.mainService.internetConnectionCheck){
+  //     this.utilService.showLoaderProfile("Please wait...");
+  //     // if(this.mainService.globalProfileData !== undefined){
+  //     //   this.profileDetails = this.mainService.globalProfileData;
+  //     //   this.utilService.dismissLoader();
+  //     // }else{
+  //       this.profileDetails = {
+  //             "ENAME": "",
+  //             "EMP_HR": "",
+  //             "BTRTL_TXT": "",
+  //             "PERSK": "",
+  //             "ORGEH_TXT": "",
+  //             "PERSG_TXT": "",
+  //             "EP_MANAGER": "",
+  //             "EMPCODE": "",
+  //         };
+  //       this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
+  //         if(resultData){
+  //           if(resultData.status_code == 0){
+  //             console.log(resultData.data.ET_DATA);
+  //             // this.profileDetails = resultData.data.ET_DATA;
+  //             this.profileDetails = {
+  //               "ENAME": resultData.data.ET_DATA.ENAME,
+  //               "EMP_HR": resultData.data.ET_DATA.EMP_HR,
+  //               "BTRTL_TXT": resultData.data.ET_DATA.BTRTL_TXT,
+  //               "PERSK": resultData.data.ET_DATA.PERSK,
+  //               "ORGEH_TXT": resultData.data.ET_DATA.ORGEH_TXT,
+  //               "PERSG_TXT": resultData.data.ET_DATA.PERSG_TXT,
+  //               "EP_MANAGER": resultData.data.ET_DATA.EP_MANAGER,
+  //               "EMPCODE": resultData.data.ET_DATA.EMPCODE,
+  //           };
+  //             // setTimeout(() => {
+  //               this.utilService.dismissLoader();
+  //             // }, 2000);
+  //           }else{
+  //             this.utilService.dismissLoader();
+  //             // this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
+  //             this.showErrorAlertWindow(resultData.message);
+  //           }
+  //         };
+  //       }, (error)=>{
+  //         console.log("Error",error);
+  //         this.utilService.dismissLoader();
+  //         this.utilService.showCustomPopup4Error("Profile", "Oops! Something went wrong, Please try again", "FAILURE");
+  //         this.showErrorAlertWindow("Oops! Something went wrong, Please try again");
+  //       });
+  //     // }
 
-  }
+  // }
 
   getProfileValue(profileValue){
     if(profileValue !== undefined){

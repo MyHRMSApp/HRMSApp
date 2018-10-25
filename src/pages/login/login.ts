@@ -64,9 +64,9 @@ export class LoginPage {
     });
     
     this.authHandler.setLoginSuccessCallback(() => {
-      this.utilService.dismissLoader();
       let view = this.navCtrl.getActive();
       if (!(view.instance instanceof HomePage)) {
+        this.utilService.dismissLoader();
         this.navCtrl.setRoot("HomePage");
       }
     });

@@ -57,6 +57,20 @@ export class UtilsProvider {
     });
     this.loader.present();
   }
+
+  /**
+   * Method for showing loader
+   * @param message
+   */
+  showLoaderProfile(message){
+    this.loader = this.loading.create({
+      content: (message) ? message : this.commonValues.loadingMsg,
+      dismissOnPageChange: false
+      // duration: 3000
+    });
+    this.loader.present();
+  }
+
   /**
    * Method for dismissing the loader
    */

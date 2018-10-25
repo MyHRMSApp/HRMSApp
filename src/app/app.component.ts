@@ -13,6 +13,8 @@ import { NetworkProvider } from '../providers/network-service/network-service';
 import { AppAvailability } from '@ionic-native/app-availability';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { ServiceProvider } from '../providers/service/service';
+import { ProfilePage } from '../pages/profile/profile';
+import { HrHelplinePage } from '../pages/hr-helpline/hr-helpline';
 
 declare var WL;
 declare var WLAuthorizationManager;
@@ -50,15 +52,16 @@ export class MyApp {
   public internetConnectionCheck:boolean = (this.network.type=="none")?false:true;
   public selectedDateDataFromAttendance:any;
   public globalProfileData:any;
-  profileDetails: { "ENAME": string; "EMP_HR": string; "BTRTL_TXT": string; "PERSK": string; "ORGEH_TXT": string; "PERSG_TXT": string; "EP_MANAGER": string; "EMPCODE": string; };
+  profileDetails: any;
   constructor(public platform: Platform,
     public statusBar: StatusBar, public network: Network,
     public render:Renderer,
     private authHandler: AuthHandlerProvider,
     public storage:StorageProvider,
-    public alert:AlertController, public service: ServiceProvider, public toast: ToastController,
+    public alert:AlertController, public toast: ToastController,
     public splashScreen: SplashScreen, public utilService: UtilsProvider, 
-    public networkProvider: NetworkProvider, public events: Events, private appAvailability: AppAvailability) {
+    public networkProvider: NetworkProvider, public events: Events, private appAvailability: AppAvailability, 
+    public service: ServiceProvider) {
     this.initializeApp();
 
     // let rootLocation = localStorage.getItem("rootPage");
@@ -194,31 +197,38 @@ this.appAvailability.check(app)
   }
 
   profile() {
-
-this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
-  if(resultData){
-    if(resultData.status_code == 0){
-      console.log(resultData.data.ET_DATA);
-      this.profileDetails = resultData.data.ET_DATA;
-      setTimeout(() => {
-        this.nav.push("ProfilePage");
-        this.utilService.dismissLoader();
-      }, 2000);
+    // this.nav.push("ProfilePage");
+    let view = this.nav.getActive();
+    if(view.instance instanceof ProfilePage){
+      this.utilService.showCustomPopup4Error("Profile", "You are already in Profile page", "FAILURE");
     }else{
-      this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
+      this.utilService.showLoaderProfile("Please wait...");
+      this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
+          if(resultData){
+            if(resultData.status_code == 0){
+              this.nav.push("ProfilePage", {profile : resultData.data.ET_DATA});
+              this.utilService.dismissLoader();
+            }else{
+              this.utilService.dismissLoader();
+              this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
+            }
+          }
+        }, (error)=>{
+          this.utilService.dismissLoader();
+          this.utilService.showCustomPopup4Error("Profile", "Oops! Something went wrong, Please try again", "FAILURE");
+        });
     }
-  };
-}, (error)=>{
-  console.log("Error",error);
-  this.utilService.dismissLoader();
-  this.utilService.showCustomPopup4Error("Profile", error.statusText, "FAILURE");
-});
+
 
   }
 
   helpline() {
+    let view = this.nav.getActive();
+    if(view.instance instanceof HrHelplinePage){
+      this.utilService.showCustomPopup4Error("HR Helpline", "You are already in HR Helpline page", "FAILURE");
+    }else{
     this.nav.push("HrHelplinePage");
+    }
   }
  
 }

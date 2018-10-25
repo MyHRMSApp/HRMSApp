@@ -146,6 +146,7 @@ attendance() {
 }
 
 attendanceDataFetch(){
+  this.utilService.showLoaderProfile("Please wait...");
   console.log("attendanceDataFetch Menthod Called-->>");
   var payloadData = {
     "IP_SMONTH": -1,
@@ -159,8 +160,10 @@ attendanceDataFetch(){
           this.mainService.attendanceN_NP1_Data = resultData.data;
           this.mainService.attendanceN_NP1_DataFlag = false;
           console.log(JSON.stringify(this.mainService.attanancePageData));
+          this.utilService.dismissLoader();
           this.navCtrl.push("AttendanceViewPage");
         }else{
+          this.utilService.dismissLoader();
           this.utilService.showCustomPopup4Error("Attendance", "Oops! Something went wrong, Please try again", "FAILURE");
         }
       };
@@ -327,28 +330,28 @@ ionViewCanEnter() {
       this.attanaceCallFlag = true;
       this.mainService.attendanceCallFlag = false;
       this.mainService.attendanceN_NP1_DataFlag = false;
-      // var payloadData = {
-      //   "IP_SMONTH": -1,
-      //   "IP_EMONTH": 0
-      // }
-      // // if(this.mainService.internetConnectionCheck){
-      //   this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
-      //     if(resultData) {
-      //       if(resultData.status_code == 0){
-      //         this.mainService.attanancePageData = resultData.data;
-      //         this.mainService.attendanceN_NP1_Data = resultData.data;
-      //         this.mainService.attendanceN_NP1_DataFlag = false;
-      //       } else {
-      //         // this.utilService.showPopup("Attendance", resultData.message);
-      //       }
+      var payloadData = {
+        "IP_SMONTH": -1,
+        "IP_EMONTH": 0
+      }
+      // if(this.mainService.internetConnectionCheck){
+        this.service.invokeAdapterCall('commonAdapterServices', 'getEmployeeAttendanceData', 'post', {payload : true, length:2, payloadData: payloadData}).then((resultData:any)=>{
+          if(resultData) {
+            if(resultData.status_code == 0){
+              this.mainService.attanancePageData = resultData.data;
+              this.mainService.attendanceN_NP1_Data = resultData.data;
+              this.mainService.attendanceN_NP1_DataFlag = false;
+            } else {
+              // this.utilService.showPopup("Attendance", resultData.message);
+            }
       
-      //     };
-      //   }, (error)=>{
-      //     console.log("Error",error);
-      //     this.mainService.attendanceCallFlag = true;
-      //     this.mainService.attendanceN_NP1_DataFlag = true;
-      //     this.attanaceCallFlag = false;
-      //   });
+          };
+        }, (error)=>{
+          console.log("Error",error);
+          this.mainService.attendanceCallFlag = true;
+          this.mainService.attendanceN_NP1_DataFlag = true;
+          this.attanaceCallFlag = false;
+        });
 
         this.service.invokeAdapterCall('commonAdapterServices', 'getCustomUserMessage', 'get', {payload : false}).then((resultData:any)=>{
           if(resultData){
@@ -371,17 +374,17 @@ ionViewCanEnter() {
           // this.utilService.showCustomPopup("FAILURE",error.statusText);
         });
 
-        this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
-          if(resultData){
-            if(resultData.status_code == 0){
-              this.mainService.globalProfileData = resultData.data.ET_DATA;
-            }
-          };
-        }, (error)=>{
-          this.mainService.globalProfileData = undefined;
-          console.log("Error",error);
-          // this.utilService.showCustomPopup("FAILURE",error.statusText);
-        });
+        // this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
+        //   if(resultData){
+        //     if(resultData.status_code == 0){
+        //       this.mainService.globalProfileData = resultData.data.ET_DATA;
+        //     }
+        //   };
+        // }, (error)=>{
+        //   this.mainService.globalProfileData = undefined;
+        //   console.log("Error",error);
+        //   // this.utilService.showCustomPopup("FAILURE",error.statusText);
+        // });
 
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
