@@ -157,7 +157,7 @@ public class CommonAdapterServicesResource {
 	private static final String ET_DATA_STR = "ET_DATA";
 	private static final String item = "item";
 
-	// public Variable declration PART
+	//public Variable declration PART
 	public String authorizationStringEncrypted = null;
 	public int STATUS_CODE_SUCCESS = 0;
 	public int STATUS_CODE_FAILURE = 1;
@@ -337,7 +337,8 @@ public class CommonAdapterServicesResource {
 				String ABS = objectInArray.get("ABS").toString();
 				String ATT = objectInArray.get("ATT").toString();
 				String SHF_IN = objectInArray.get("SHF_IN").toString();
-				String SHF_OUT = objectInArray.get("SHF_OUT").toString();
+				String SHF_OUT = objectInArray.get("SHF_OUT"
+				).toString();
 
 				String[] temp_reqState_ATT_1 = RS_ATT1.isEmpty()?null:RS_ATT1.split(",");
 				String[] temp_reqState_ATT_2 = RS_ATT2.isEmpty()?null:RS_ATT2.split(",");
@@ -887,7 +888,4 @@ public class CommonAdapterServicesResource {
 
 		return commonServerResponce;
 	}
-
-
-
 }

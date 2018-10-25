@@ -229,7 +229,5 @@ this.appAvailability.check(app)
     this.nav.push("HrHelplinePage");
     }
   }
-
-
-  
+ 
 }
