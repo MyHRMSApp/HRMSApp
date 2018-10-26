@@ -60,7 +60,8 @@ export class MyApp {
     public storage:StorageProvider,
     public alert:AlertController, public toast: ToastController,
     public splashScreen: SplashScreen, public utilService: UtilsProvider, 
-    public networkProvider: NetworkProvider, public events: Events, private appAvailability: AppAvailability, public service: ServiceProvider) {
+    public networkProvider: NetworkProvider, public events: Events, private appAvailability: AppAvailability, 
+    public service: ServiceProvider) {
     this.initializeApp();
 
     // let rootLocation = localStorage.getItem("rootPage");

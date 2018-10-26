@@ -120,8 +120,8 @@ openMenu() {
   
 attendance() {
 
- this.utilService.showLoader("Please wait...");
- console.log("this.mainService.attanancePageData-->"+ this.mainService.attanancePageData);
+  this.utilService.showLoader("Please wait...");
+  console.log("this.mainService.attanancePageData-->"+ this.mainService.attanancePageData);
  
   if(this.mainService.attendanceCallFlag && this.mainService.attendanceN_NP1_DataFlag && !this.attanaceCallFlag){
     this.attendanceDataFetch();
@@ -653,9 +653,5 @@ myTask() {
   } catch (error) {
     console.log("catch-->>",error);
   }
-}
-
-
-
-     
+}    
 }

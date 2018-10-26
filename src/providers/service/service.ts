@@ -53,10 +53,4 @@ export class ServiceProvider {
     });
   }
 
-
-
-
-
-  
-
 }
