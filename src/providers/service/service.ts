@@ -33,7 +33,7 @@ export class ServiceProvider {
       }
     }
     resourceRequest.setHeaders("Content-Type","application/json");
-    
+    resourceRequest.setTimeout
     return new Promise((resolve,reject)=>{
       console.log("Requesting Service to Server : " +"Method -> "+method +"Payload ->"+ payload);
       resourceRequest.send().then((responseData:any)=>{
