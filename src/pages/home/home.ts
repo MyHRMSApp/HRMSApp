@@ -13,6 +13,7 @@ import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 import { normalizeURL } from 'ionic-angular';
 import moment from 'moment';
+import { LoginPage } from '../login/login';
 
 /**
  * HomePage Functionalities
@@ -55,7 +56,7 @@ export class HomePage {
   taneiraLength: number;
   watchLength: number;
   public attanaceCallFlag:boolean = true;
-
+  public exitAlertFlag:boolean = false;
   
 
 constructor(public menu: MenuController, public events: Events, private camera: Camera, 
@@ -284,6 +285,44 @@ coupons() {
 
 ionViewCanEnter() {
 
+  this.platform.registerBackButtonAction(() => {
+    let nav = this.navCtrl.getActive();
+    if (nav.instance instanceof HomePage){
+      if(!this.exitAlertFlag){
+        this.exitAlertFlag = true;
+        let message = "<div class='exitApplication'>Do you really want to exit this application?</div>";
+        const alert = this.alertCtrl.create({
+        title: "My Compass",
+        message: message,
+        cssClass: "SHOWALERT",
+        enableBackdropDismiss: false
+        });
+  
+        alert.addButton({
+          text: 'CANCEL',
+          handler: data => {
+            this.exitAlertFlag = false;
+          }
+          });
+        alert.addButton({
+        text: 'OK',
+        handler: data => {
+          this.exitAlertFlag = false;
+          this.platform.exitApp();
+        }
+        });
+  
+        alert.present();
+      }
+
+    }else if(nav.instance instanceof LoginPage){
+      this.platform.exitApp();
+    }else{
+      this.navCtrl.pop();
+    }
+  });
+
+
   this.eyeWearLength = 0;
   this.jewelleryLength = 0;
   this.taneiraLength = 0;
@@ -294,28 +333,6 @@ ionViewCanEnter() {
   this.taneiraCounts = [];
   this.watchCounts = [];
 
-  this.platform.registerBackButtonAction(() => {
-    let nav = this.navCtrl.getActive();
-    if (nav.instance instanceof HomePage){
-      let message = "<div class='exitApplication'>Do you really want to exit this application?</div>";
-      const alert = this.alertCtrl.create({
-      title: "My Compass",
-      message: message,
-      cssClass: "SHOWALERT",
-      enableBackdropDismiss: false
-      });
-
-      alert.addButton('CANCEL');
-      alert.addButton({
-      text: 'OK',
-      handler: data => {
-        this.platform.exitApp();
-      }
-      });
-
-      alert.present();
-    }
-  });
 
 
   try {
