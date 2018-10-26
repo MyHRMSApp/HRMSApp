@@ -314,6 +314,8 @@ ionViewCanEnter() {
       });
 
       alert.present();
+    }else{
+      this.navCtrl.pop();
     }
   });
 
@@ -525,7 +527,7 @@ uploadPhoto() {
   });
 }
 
-removePhoto(){
+removePhoto() {
   console.log("Removing picture");
   this.utilService.showLoader("Removing picture");
   this.photos = ("./assets/icon/avatar.png");
