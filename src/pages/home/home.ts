@@ -147,7 +147,7 @@ attendance() {
 }
 
 attendanceDataFetch(){
-  this.utilService.showLoaderProfile("Please wait...");
+  // this.utilService.showLoaderProfile("Please wait...");
   console.log("attendanceDataFetch Menthod Called-->>");
   var payloadData = {
     "IP_SMONTH": -1,

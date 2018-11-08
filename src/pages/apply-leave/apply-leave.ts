@@ -27,6 +27,7 @@ export class ApplyLeavePage {
   general: any;
   sick: any;
   casual: any;
+  public leaveDate4SingleDate:any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -36,6 +37,8 @@ export class ApplyLeavePage {
     public mainServices: MyApp, public service: ServiceProvider) {
      
     this.menu.swipeEnable(false);
+    if(this.navParams.get("LeaveData")) this.leaveDate4SingleDate =  this.navParams.get("LeaveData");
+
     }
 
   openMenu() {
@@ -48,16 +51,16 @@ export class ApplyLeavePage {
     this.navCtrl.setRoot("HomePage");
   }
   privilegeLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"PRIVILEGE LEAVE", userLeave: this.userPLLeave, leaveType: "0003"});
+    this.navCtrl.push("AllLeavesPage", {"titleName":"PRIVILEGE LEAVE", userLeave: this.userPLLeave, leaveType: "0003", "LeaveData": this.leaveDate4SingleDate});
   }
   sickLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"SICK LEAVE", userLeave: this.userSLLeave, leaveType: "0002"});
+    this.navCtrl.push("AllLeavesPage", {"titleName":"SICK LEAVE", userLeave: this.userSLLeave, leaveType: "0002", "LeaveData": this.leaveDate4SingleDate});
   }
   generalLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"GENERAL LEAVE", userLeave: this.userGLLeave, leaveType: "0034"});
+    this.navCtrl.push("AllLeavesPage", {"titleName":"GENERAL LEAVE", userLeave: this.userGLLeave, leaveType: "0034", "LeaveData": this.leaveDate4SingleDate});
   }
   casualLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"CASUAL LEAVE", userLeave: this.userCLLeave, leaveType: "0001"});
+    this.navCtrl.push("AllLeavesPage", {"titleName":"CASUAL LEAVE", userLeave: this.userCLLeave, leaveType: "0001", "LeaveData": this.leaveDate4SingleDate});
   }
   leaveEncashment() {
   

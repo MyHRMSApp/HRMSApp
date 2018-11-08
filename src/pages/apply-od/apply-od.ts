@@ -29,6 +29,7 @@ export class ApplyOdPage {
   public placeVisited:any;
   public OrgVisited:any;
   public reasonForOD:any;
+  public ODObject:any;
 
   public jsonData:any = {
   Hours: [
@@ -87,6 +88,16 @@ export class ApplyOdPage {
       this.placeVisited = "";
       this.OrgVisited = "";
       this.reasonForOD = "";
+
+      if(this.navParams.get("ODData")) this.ODObject =  this.navParams.get("ODData");
+
+      if(this.ODObject.LDATE !== undefined){
+        this.startDate = moment(this.ODObject.LDATE, "YYYY-MM-DD").format("DD-MM-YYYY").toString();
+        this.endDate = moment(this.ODObject.LDATE, "YYYY-MM-DD").format("DD-MM-YYYY").toString();
+      }else{
+        this.startDate = moment().format("DD-MM-YYYY");
+        this.endDate = moment().format("DD-MM-YYYY");
+      }
   }
   
   /**
@@ -111,13 +122,6 @@ export class ApplyOdPage {
     this.hamburger = ("./assets/homePageIcons/hamburger.svg");
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
 
-    if(this.mainService.selectedDateDataFromAttendance !== undefined && this.mainService.selectedDateDataFromAttendance.LDATE !== undefined){
-      this.startDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY").toString();
-      this.endDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY").toString();
-    }else{
-      this.startDate = moment().format("DD-MM-YYYY");
-      this.endDate = moment().format("DD-MM-YYYY");
-    }
   }
 
   inTimeSelection(){
