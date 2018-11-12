@@ -87,10 +87,10 @@
         <ion-col col-5 style="text-align: -webkit-left"><p>{{commonLeave.BEGDA | date :  "dd-MM-y"}}</p></ion-col>
         <ion-col col-1><p>-</p></ion-col>
         <ion-col col-6 style="text-align: -webkit-left"><p>{{commonLeave.ENGDDA | date :  "dd-MM-y"}}</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>IN</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-right"><p>OUT</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_OUT) | date :  "HH:mm"}}</p></ion-col>
+        <ion-col col-6 style="text-align: -webkit-left"><p>From : {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col>
+        <!-- <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col> -->
+        <ion-col col-6 style="text-align: -webkit-left"><p>To : {{getTimeValue(commonLeave.SFT_OUT) | date :  "HH:mm"}}</p></ion-col>
+        <!-- <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_OUT) | date :  "HH:mm"}}</p></ion-col> -->
         <ion-col col-6 style="text-align: -webkit-right" (click)="applySingleApprovedRequest(i)"><img class="button" [src]="acceptButton" /></ion-col>
         <ion-col col-6 style="text-align: -webkit-left"  (click)="applySingleRejectRequest(i)"><img class="button" [src]="rejectButton" /></ion-col>
       </ion-row>
@@ -120,10 +120,10 @@
       <ion-row *ngIf="isGroupShown(commonLeave) && commonLeave.type == 'FTP' " class="subCard">
         <ion-col col-12 style="text-align: -webkit-left"><p style="color: yellow !important; font-size: 0.7em">Applied on: {{commonLeave.CREON | date :  "dd-MM-y"}}</p></ion-col>
         <ion-col col-12 style="text-align: -webkit-left"><p>{{commonLeave.DATUM | date :  "dd-MM-y"}}</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>IN</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-right"><p>OUT</p></ion-col>
-        <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_OUT) | date :  "HH:mm"}}</p></ion-col>
+        <ion-col col-6 style="text-align: -webkit-left"><p>IN : {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col>
+        <!-- <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_IN) | date :  "HH:mm"}}</p></ion-col> -->
+        <ion-col col-6 style="text-align: -webkit-left"><p>OUT : {{getTimeValue(commonLeave.SFT_OUT) | date :  "HH:mm"}}</p></ion-col>
+        <!-- <ion-col col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.SFT_OUT) | date :  "HH:mm"}}</p></ion-col> -->
         <ion-col *ngIf="employeeLevel == 'E'" col-3 style="text-align: -webkit-left"><p>MID-IN</p></ion-col>
         <ion-col *ngIf="employeeLevel == 'E'" col-3 style="text-align: -webkit-left"><p>: {{getTimeValue(commonLeave.LUN_IN) | date :  "HH:mm"}}</p></ion-col>
         <ion-col *ngIf="employeeLevel == 'E'" col-3 style="text-align: -webkit-right"><p>MID-OUT</p></ion-col>

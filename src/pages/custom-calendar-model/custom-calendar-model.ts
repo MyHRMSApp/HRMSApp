@@ -43,14 +43,28 @@ export class CustomCalendarModelPage {
     
     this.menu.swipeEnable(false);
     this.calendarFor = this.navParams.get('Cal');
-    this.dateRange = (this.navParams.get('selectedDate') !== undefined)?new Date(moment(this.navParams.get('selectedDate').toString(), "DD-MM-YYYY").format("YYYY, MM, DD").toString()):new Date(moment().format("YYYY, MM, DD").toString());
-    this.leaveFromDate = this.dateRange;
-    this.leaveToDate = this.dateRange;
+    if(this.navParams.get('selectedDate') !== undefined){
+      var selectedDate = this.navParams.get('selectedDate');
+      this.selecedDate = selectedDate;
+      this.dateRange = this.createDateFunction(moment(selectedDate, "DD-MM-YYYY").format("YYYY, MM, DD"));
+      this.leaveFromDate = moment(selectedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+      this.leaveToDate = moment(selectedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+    }else{
+      this.dateRange = this.createDateFunction(moment().format("YYYY, MM, DD"));
+      this.leaveFromDate = moment().format("YYYY-MM-DD"); 
+      this.leaveToDate = moment().format("YYYY-MM-DD");
+    }
+    // this.dateRange = (this.navParams.get('selectedDate') !== undefined)?new Date(moment(, "DD-MM-YYYY").format("YYYY, MM, DD").toString()):new Date(moment().format("YYYY, MM, DD").toString());
+    // this.leaveFromDate = this.dateRange;
+    // this.leaveToDate = this.dateRange;
     if(this.calendarFor == "from"){
-
+      this.leaveFromDate = moment(selectedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
     }
     if(this.calendarFor == "to"){
-      this.leaveFromDate = this.navParams.get('leaveFromDate');
+      var fromDate = this.navParams.get('leaveFromDate');
+      var toDate = this.navParams.get('selectedDate');
+      this.leaveFromDate = moment(fromDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+      this.leaveToDate = moment(toDate, "DD-MM-YYYY").format("YYYY-MM-DD");
       this.leaveFromTime = this.navParams.get('leaveFromTime');
 
       console.log(this.navParams.get('leaveFromDate') +"---"+ this.navParams.get('leaveFromTime'));
@@ -60,27 +74,29 @@ export class CustomCalendarModelPage {
       // this.firstHalfFlag = true;
       // this.secHalfFlag = true;
 
-      if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ"){
-          this.quarterFlag = false;
-          this.fulldayFlag = true;
-          this.firstHalfFlag = true;
-          this.secHalfFlag = true;
-      }else if(this.leaveFromTime == "FD"){
-        this.quarterFlag = true;
-        this.fulldayFlag = false;
-        this.firstHalfFlag = false;
-        this.secHalfFlag = true;
-      }else if(this.leaveFromTime == "FH"){
-        this.quarterFlag = true;
-        this.fulldayFlag = true;
-        this.firstHalfFlag = false;
-        this.secHalfFlag = true;
-      }else if(this.leaveFromTime == "SH"){
-        this.quarterFlag = true;
-        this.fulldayFlag = false;
-        this.firstHalfFlag = false;
-        this.secHalfFlag = false;
-      }
+      // if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ"){
+      //     this.quarterFlag = false;
+      //     this.fulldayFlag = true;
+      //     this.firstHalfFlag = true;
+      //     this.secHalfFlag = true;
+      // }else if(this.leaveFromTime == "FD"){
+      //   this.quarterFlag = true;
+      //   this.fulldayFlag = false;
+      //   this.firstHalfFlag = true;
+      //   this.secHalfFlag = true;
+      // }else if(this.leaveFromTime == "FH"){
+      //   this.quarterFlag = true;
+      //   this.fulldayFlag = true;
+      //   this.firstHalfFlag = false;
+      //   this.secHalfFlag = true;
+      // }else if(this.leaveFromTime == "SH"){
+      //   this.quarterFlag = true;
+      //   this.fulldayFlag = true;
+      //   this.firstHalfFlag = true;
+      //   this.secHalfFlag = false;
+      // }
+
+      this.defaultPeriodSet();
     }
     if(this.navParams.get('quarterWiseSelectionFlag') == "false"){
       this.quarterWiseSelectionFlag = false;
@@ -93,6 +109,137 @@ export class CustomCalendarModelPage {
     }
     this.currentDate = moment().format("ddd,Do MMM");
     this.currentYear = moment().format("YYYY");
+  }
+
+  defaultPeriodSet(){
+    // if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ"){
+    //   this.quarterFlag = false;
+    //   this.fulldayFlag = true;
+    //   this.firstHalfFlag = true;
+    //   this.secHalfFlag = true;
+    // }else if(this.leaveFromTime == "FD"){
+    //   this.quarterFlag = true;
+    //   this.fulldayFlag = false;
+    //   this.firstHalfFlag = true;
+    //   this.secHalfFlag = true;
+    // }else if(this.leaveFromTime == "FH"){
+    //   this.quarterFlag = true;
+    //   this.fulldayFlag = true;
+    //   this.firstHalfFlag = false;
+    //   this.secHalfFlag = true;
+    // }else if(this.leaveFromTime == "SH"){
+    //   this.quarterFlag = true;
+    //   this.fulldayFlag = true;
+    //   this.firstHalfFlag = true;
+    //   this.secHalfFlag = false;
+    // }
+
+      var fromTempDate = moment(this.leaveFromDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+      var toTempDate = moment(this.leaveToDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+      console.log(fromTempDate+"---"+toTempDate);
+      console.log("---->>"+ moment(fromTempDate).diff(toTempDate, 'days'));
+      if(toTempDate == fromTempDate){
+        if(this.leaveFromTime == "FD"){
+          this.quarterFlag = true;
+          this.fulldayFlag = false;
+          this.firstHalfFlag = true;
+          this.secHalfFlag = true;
+          // this.ref.detectChanges();
+          // this.leaveToDate = moment(this.leaveFromDate).format("YYYY-MM-DD");
+        }else if(this.leaveFromTime == "FH"){
+          this.quarterFlag = true;
+          this.fulldayFlag = true;
+          this.firstHalfFlag = false;
+          this.secHalfFlag = true;
+          // this.ref.detectChanges();
+          // this.leaveToDate = moment(this.leaveFromDate).format("YYYY-MM-DD");
+        }else if(this.leaveFromTime == "SH"){
+          this.quarterFlag = true;
+          this.fulldayFlag = true;
+          this.firstHalfFlag = true;
+          this.secHalfFlag = false;
+          // this.ref.detectChanges();
+          // this.leaveToDate = moment(this.leaveFromDate).format("YYYY-MM-DD");
+        }else if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ"){
+
+          
+          this.quarterFlag = false;
+          this.fulldayFlag = true;
+          this.firstHalfFlag = true;
+          this.secHalfFlag = true;
+          // this.ref.detectChanges();
+          // this.leaveToDate = moment(this.leaveFromDate).format("YYYY-MM-DD");
+        }
+      }else if(moment(fromTempDate).diff(toTempDate, 'days') < 0 ){
+        if(this.leaveFromTime == "FD"){
+          this.quarterFlag = true;
+          this.fulldayFlag = false;
+          this.firstHalfFlag = false;
+          this.secHalfFlag = true;
+          // this.ref.detectChanges();
+          // this.leaveToDate = moment(this.leaveFromDate).format("YYYY-MM-DD");
+        }else if(this.leaveFromTime == "FH"){
+          this.quarterFlag = true;
+          this.fulldayFlag = true;
+          this.firstHalfFlag = true;
+          this.secHalfFlag = true;
+          // this.ref.detectChanges();
+          // this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+          // this.ref.detectChanges();
+          // this.dateRange = moment(this.leaveFromDate, "DD-MM-YYYY").format("YYYY, MM, DD").toString();
+          // this.leaveToDate = moment(this.dateRange, "YYYY, MM, DD").format("YYYY-MM-DD");
+          // this.defaultPeriodSet();
+        }else if(this.leaveFromTime == "SH"){
+          this.quarterFlag = true;
+          this.fulldayFlag = false;
+          this.firstHalfFlag = false;
+          this.secHalfFlag = true;
+          // this.ref.detectChanges();
+          // this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
+        }else if(this.leaveFromTime == "FQ"){
+          this.quarterFlag = true;
+          this.fulldayFlag = true;
+          this.firstHalfFlag = true;
+          this.secHalfFlag = true;
+          // this.ref.detectChanges();
+          // this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+          // this.ref.detectChanges();
+          // this.dateRange = moment(this.leaveFromDate, "DD-MM-YYYY").format("YYYY, MM, DD").toString();
+          // this.leaveToDate = moment(this.dateRange, "YYYY, MM, DD").format("YYYY-MM-DD");
+          // this.defaultPeriodSet();
+        }else if(this.leaveFromTime == "LQ"){
+          if(moment(this.leaveFromDate).diff(this.leaveToDate, 'days') == 0 || moment(this.leaveFromDate).diff(this.leaveToDate, 'days') == -1){
+            this.quarterFlag = false;
+            this.fulldayFlag = true;
+            this.firstHalfFlag = true;
+            this.secHalfFlag = true;
+            // this.ref.detectChanges();
+            // this.leaveToDate = moment(this.leaveToDate).format("YYYY-MM-DD");
+          }else{
+            this.quarterFlag = true;
+            this.fulldayFlag = true;
+            this.firstHalfFlag = true;
+            this.secHalfFlag = true;
+            // this.ref.detectChanges();
+            // this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+            // this.ref.detectChanges();
+            // this.dateRange = moment(this.leaveFromDate, "DD-MM-YYYY").format("YYYY, MM, DD").toString();
+            // this.leaveToDate = moment(this.dateRange, "YYYY, MM, DD").format("YYYY-MM-DD");
+            // this.defaultPeriodSet();
+          }
+          
+        }
+        
+      }
+      // else if(moment(fromTempDate).diff(toTempDate, 'days') > 0 ){
+
+      //   this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+      //   this.ref.detectChanges();
+      //   this.dateRange = moment(this.leaveFromDate, "DD-MM-YYYY").format("YYYY, MM, DD").toString();
+      //   this.leaveToDate = moment(this.dateRange, "YYYY, MM, DD").format("YYYY-MM-DD");
+        // this.defaultPeriodSet();
+
+      // }
   }
 
   ionViewDidLoad() {
@@ -141,39 +288,45 @@ export class CustomCalendarModelPage {
       var toTempDate = moment($event._d).format("YYYY-MM-DD");
       console.log(fromTempDate+"---"+toTempDate);
       console.log("---->>"+ moment(fromTempDate).diff(toTempDate, 'days'));
-      if(toTempDate == fromTempDate){
+      console.log(moment($event._d).format("YYYY-MM-DD")+"---"+this.leaveFromDate);
+      if(moment($event._d).format("YYYY-MM-DD") == this.leaveFromDate){
         if(this.leaveFromTime == "FD"){
           this.quarterFlag = true;
           this.fulldayFlag = false;
           this.firstHalfFlag = true;
           this.secHalfFlag = true;
           this.ref.detectChanges();
+          this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
         }else if(this.leaveFromTime == "FH"){
           this.quarterFlag = true;
           this.fulldayFlag = true;
           this.firstHalfFlag = false;
           this.secHalfFlag = true;
           this.ref.detectChanges();
+          this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
         }else if(this.leaveFromTime == "SH"){
           this.quarterFlag = true;
           this.fulldayFlag = true;
           this.firstHalfFlag = true;
           this.secHalfFlag = false;
           this.ref.detectChanges();
+          this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
         }else if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ"){
           this.quarterFlag = false;
           this.fulldayFlag = true;
           this.firstHalfFlag = true;
           this.secHalfFlag = true;
           this.ref.detectChanges();
+          this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
         }
-      }else if(moment(fromTempDate).diff(toTempDate, 'days') < 0 ){
+      }else if(moment(this.leaveFromDate).diff($event._d, 'days') < 0 ){
         if(this.leaveFromTime == "FD"){
           this.quarterFlag = true;
           this.fulldayFlag = false;
           this.firstHalfFlag = false;
           this.secHalfFlag = true;
           this.ref.detectChanges();
+          this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
         }else if(this.leaveFromTime == "FH"){
           this.quarterFlag = true;
           this.fulldayFlag = true;
@@ -181,12 +334,17 @@ export class CustomCalendarModelPage {
           this.secHalfFlag = true;
           this.ref.detectChanges();
           this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+          this.ref.detectChanges();
+          this.dateRange = this.createDateFunction(moment(this.selecedDate, "DD-MM-YYYY").format("YYYY, MM, DD"));
+          this.leaveToDate = moment(this.selecedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+          this.defaultPeriodSet();
         }else if(this.leaveFromTime == "SH"){
           this.quarterFlag = true;
           this.fulldayFlag = false;
           this.firstHalfFlag = false;
           this.secHalfFlag = true;
           this.ref.detectChanges();
+          this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
         }else if(this.leaveFromTime == "FQ"){
           this.quarterFlag = true;
           this.fulldayFlag = true;
@@ -194,6 +352,10 @@ export class CustomCalendarModelPage {
           this.secHalfFlag = true;
           this.ref.detectChanges();
           this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+          this.ref.detectChanges();
+          this.dateRange = this.createDateFunction(moment(this.selecedDate, "DD-MM-YYYY").format("YYYY, MM, DD"));
+          this.leaveToDate = moment(this.selecedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+          this.defaultPeriodSet();
         }else if(this.leaveFromTime == "LQ"){
           if(moment(this.leaveFromDate).diff($event._d, 'days') == 0 || moment(this.leaveFromDate).diff($event._d, 'days') == -1){
             this.quarterFlag = false;
@@ -201,6 +363,7 @@ export class CustomCalendarModelPage {
             this.firstHalfFlag = true;
             this.secHalfFlag = true;
             this.ref.detectChanges();
+            this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
           }else{
             this.quarterFlag = true;
             this.fulldayFlag = true;
@@ -208,11 +371,15 @@ export class CustomCalendarModelPage {
             this.secHalfFlag = true;
             this.ref.detectChanges();
             this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+            this.ref.detectChanges();
+            this.dateRange = this.createDateFunction(moment(this.selecedDate, "DD-MM-YYYY").format("YYYY, MM, DD"));
+          this.leaveToDate = moment(this.selecedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+            this.defaultPeriodSet();
           }
           
         }
         
-      }else if(moment(fromTempDate).diff(toTempDate, 'days') > 0 ){
+      }else if(moment(this.leaveFromDate).diff($event._d, 'days') > 0 ){
       //   if(moment(this.leaveFromDate).diff($event._d, 'days') == 29 || moment(this.leaveFromDate).diff($event._d, 'days') == 58){
       //   //this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
       //   console.log("29(need to check)");
@@ -220,10 +387,16 @@ export class CustomCalendarModelPage {
       // else
       // {
         this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+        this.ref.detectChanges();
+        this.dateRange = this.createDateFunction(moment(this.selecedDate, "DD-MM-YYYY").format("YYYY, MM, DD"));
+          this.leaveToDate = moment(this.selecedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+        this.defaultPeriodSet();
       // }
       }
-      this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
+      // this.leaveToDate = moment($event._d).format("YYYY-MM-DD");
     }
+
+    console.log("this.leaveToDate------->>"+ this.leaveToDate);
   
 
     var value = moment($event._d).format("MMYYYY").toString();
@@ -260,43 +433,95 @@ export class CustomCalendarModelPage {
   }
 
   setTimingFunction(timeStr){
-    console.log("Time Selected : "+ timeStr);
+    // console.log("Time Selected : "+ timeStr);
+    // if(this.calendarFor == "from"){
+    //   this.leaveFromTime = timeStr;
+    // }else if(this.calendarFor == "to"){
+    //   this.leaveToTime = timeStr;
+    //   console.log("this.leaveToTime--->>"+ this.leaveToTime+"<---------->" +"timeStr-------->>"+timeStr)
+    // }
+    // if(timeStr == "FD" || timeStr == "FH" || timeStr == "SH" ){
+    //     this.quarterFlag = true;
+    //     this.ref.detectChanges();
+    // }else if(timeStr == "FQ" || timeStr == "LQ"){
+    //   this.fulldayFlag = true;
+    //   this.firstHalfFlag = true;
+    //   this.secHalfFlag = true;
+    // }
+    // this.ref.detectChanges();
+
+
     if(this.calendarFor == "from"){
-      this.leaveFromTime = timeStr;
-    }else if(this.calendarFor == "to"){
-      this.leaveToTime = timeStr;
-    }
-    if(timeStr == "FD" || timeStr == "FH" || timeStr == "SH" ){
+      if(timeStr == "FD" && !this.fulldayFlag){
+        this.leaveFromTime = timeStr;
         this.quarterFlag = true;
         this.ref.detectChanges();
-    }else if(timeStr == "FQ" || timeStr == "LQ"){
-      this.fulldayFlag = true;
-      this.firstHalfFlag = true;
-      this.secHalfFlag = true;
+      }else if(timeStr == "FH" && !this.firstHalfFlag){
+        this.leaveFromTime = timeStr;
+        this.quarterFlag = true;
+        this.ref.detectChanges();
+      }else if(timeStr == "SH" && !this.secHalfFlag){
+        this.leaveFromTime = timeStr;
+        this.quarterFlag = true;
+        this.ref.detectChanges();
+      }else if((timeStr == "FQ" && !this.quarterFlag) || (timeStr == "FQ" && !this.quarterFlag)){
+        this.fulldayFlag = true;
+        this.firstHalfFlag = true;
+        this.secHalfFlag = true;
+      }
+    }else if(this.calendarFor == "to"){
+      if(timeStr == "FD" && !this.fulldayFlag){
+        this.leaveToTime = timeStr;
+        this.quarterFlag = true;
+        this.ref.detectChanges();
+      }else if(timeStr == "FH" && !this.firstHalfFlag){
+        this.leaveToTime = timeStr;
+        this.quarterFlag = true;
+        this.ref.detectChanges();
+      }else if(timeStr == "SH" && !this.secHalfFlag){
+        this.leaveToTime = timeStr;
+        this.quarterFlag = true;
+        this.ref.detectChanges();
+      }else if((timeStr == "FQ" && !this.quarterFlag) || (timeStr == "FQ" && !this.quarterFlag)){
+        this.fulldayFlag = true;
+        this.firstHalfFlag = true;
+        this.secHalfFlag = true;
+      }
     }
-    
+
+    this.ref.detectChanges();
+
   }
 
   getQuarterFunction(){
-    console.log("getQuarterFunction-->>"+moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days'));
+    console.log("getQuarterFunction-->>"+this.leaveFromDate +"===="+this.leaveToDate);
+    console.log("getQuarterFunction-->>"+moment(this.leaveFromDate).diff(this.leaveToDate, 'days'));
     if(this.leaveFromTime !== undefined && this.leaveFromTime == "FQ"){
       if(this.calendarFor == "to"){
-        if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') == 0){
+        if(moment(this.leaveFromDate).diff(this.leaveToDate, 'days') == 0){
           this.showCustomPopupWithCheckBox(true, false, true, true);
-        }else if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') < 0){
+        }else if(moment(this.leaveFromDate).diff(this.leaveToDate, 'days') < 0){
           this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+          this.ref.detectChanges();
+          this.dateRange = this.createDateFunction(moment(this.selecedDate, "DD-MM-YYYY").format("YYYY, MM, DD"));
+          this.leaveToDate = moment(this.selecedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+          this.defaultPeriodSet();
         }
       }else{
         this.showCustomPopupWithCheckBox((this.leaveFromTime == "FQ")? true:false , (this.leaveFromTime == "LQ")? true:false, false, false);
       }
     }else if(this.leaveFromTime !== undefined && this.leaveFromTime == "LQ"){
       if(this.calendarFor == "to"){
-        if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') == 0){
+        if(moment(this.leaveFromDate).diff(this.leaveToDate, 'days') == 0){
           this.showCustomPopupWithCheckBox(false, true, true, true);
-        }else if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') == -1){
+        }else if(moment(this.leaveFromDate).diff(this.leaveToDate, 'days') == -1){
           this.showCustomPopupWithCheckBox(true, false, true, true);
-        }else if(moment(this.leaveFromDate).diff(this.selectedDateFromCal, 'days') < -1){
+        }else if(moment(this.leaveFromDate).diff(this.leaveToDate, 'days') < -1){
           this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+          this.ref.detectChanges();
+          this.dateRange = this.createDateFunction(moment(this.selecedDate, "DD-MM-YYYY").format("YYYY, MM, DD"));
+          this.leaveToDate = moment(this.selecedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+          this.defaultPeriodSet();
         }
       }else{
         this.showCustomPopupWithCheckBox((this.leaveFromTime == "FQ")? true:false , (this.leaveFromTime == "LQ")? true:false, false, false);
@@ -307,6 +532,7 @@ export class CustomCalendarModelPage {
   }
 
   dismiss(val) {
+
     if(this.calendarFor == "from"){
         (this.leaveFromDate !== undefined && this.leaveFromDate !== "")?this.allLeaveApplyFlag=true:this.allLeaveApplyFlag=false;
     }
@@ -322,9 +548,9 @@ export class CustomCalendarModelPage {
           // if(this.leaveToDate === undefined){
           //   this.utilService.showCustomPopup4Error("Apply Leave", "Please select Date..", "FAILURE");
           // }else 
-          
+          console.log("leaveToTime---->" + this.leaveToTime);
           if(this.leaveToTime === undefined){
-            this.utilService.showCustomPopup4Error("Apply Leave", "please select the period", "FAILURE");
+            this.utilService.showCustomPopup4Error("Apply Leave", "Please select the period", "FAILURE");
           }else{
             let data = { leaveFromDate: this.leaveFromDate,
               leaveToDate: (this.leaveToDate !== undefined)?this.leaveToDate:this.dateRange,  
@@ -341,8 +567,9 @@ export class CustomCalendarModelPage {
           // }else 
           
           if(this.leaveFromTime === undefined && this.fromPage != "ODApply"){
-            this.utilService.showCustomPopup4Error("Apply Leave", "please select the period", "FAILURE");
+            this.utilService.showCustomPopup4Error("Apply Leave", "Please select the period", "FAILURE");
           }else{
+            console.log("this.leaveFromDate--->>>"+ this.leaveFromDate + "this.dateRange--->>"+this.dateRange._d);
             let data = { leaveFromDate: (this.leaveFromDate !== undefined)?this.leaveFromDate:this.dateRange,  
               leaveToDate: this.leaveToDate,  
               leaveFromTime: this.leaveFromTime, 
@@ -357,6 +584,10 @@ export class CustomCalendarModelPage {
       }
     }else{
       this.utilService.showCustomPopup4Error("Apply Leave", "Invalid Date Selection", "FAILURE");
+      this.ref.detectChanges();
+      this.dateRange = this.createDateFunction(moment(this.selecedDate, "DD-MM-YYYY").format("YYYY, MM, DD"));
+          this.leaveToDate = moment(this.selecedDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+      this.defaultPeriodSet();
     }
    
     
@@ -450,6 +681,18 @@ export class CustomCalendarModelPage {
       }
     }, 1000);
     
+  }
+
+  createDateFunction(DateFormat){
+    console.log("createDateFunction-------->>Entering with--->>"+ DateFormat);
+    var str_array:any = DateFormat.split(',');
+    var date = parseInt(str_array[2]);
+    var month = parseInt(str_array[1]);
+    var year = parseInt(str_array[0]);
+
+    console.log("createDateFunction-------->>aftre with--->>"+ year, month, date);
+
+    return new Date(year, month-1, date);
   }
 
 }

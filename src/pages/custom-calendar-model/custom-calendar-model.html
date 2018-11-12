@@ -19,24 +19,24 @@
   <ion-grid>
       <ion-row *ngIf="dayWiseSelectionFlag">
         <ion-col col-4>
-            <div class="pretty p-default p-curve">
-                <input type="radio" name="color" [disabled]="fulldayFlag" (click)="setTimingFunction('FD')" />
+            <div class="pretty p-default p-curve"  (tap)="setTimingFunction('FD')">
+                <input type="radio" name="color" [disabled]="fulldayFlag" (tap)="setTimingFunction('FD')" />
                 <span class="state p-info-o">
                     <label>Full Day</label>
                 </span>
             </div>
         </ion-col>
         <ion-col col-4>
-            <div class="pretty p-default p-curve">
-                <input type="radio" name="color" [disabled]="firstHalfFlag" (click)="setTimingFunction('FH')" />
+            <div class="pretty p-default p-curve" (tap)="setTimingFunction('FH')">
+                <input type="radio" name="color" [disabled]="firstHalfFlag" (tap)="setTimingFunction('FH')" />
                 <span class="state p-info-o">
                     <label>1st Half</label>
                 </span>
             </div>
         </ion-col>
         <ion-col col-4>
-            <div class="pretty p-default p-curve">
-                <input type="radio" name="color" [disabled]="secHalfFlag" (click)="setTimingFunction('SH')" />
+            <div class="pretty p-default p-curve" (tap)="setTimingFunction('SH')">
+                <input type="radio" name="color" [disabled]="secHalfFlag" (tap)="setTimingFunction('SH')" />
                 <span class="state p-info-o">
                     <label>2nd Half</label>
                 </span>

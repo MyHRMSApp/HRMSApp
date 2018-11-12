@@ -84,7 +84,12 @@ export class AttendanceViewPage {
   }
 
   onChange($event) {
-    console.log(moment($event._d).format("YYYY-MM-DD"));
+    var elements:any = document.getElementById("attendancePage").querySelectorAll(".switch-btn");
+    var currentMonth = moment(elements[0].innerText, "MMM YYYY").format("MMYYYY").toString();
+    var selectedMonth = moment($event._d).format("MMYYYY").toString();
+
+    if(currentMonth == selectedMonth){
+      console.log(moment($event._d).format("YYYY-MM-DD"));
     var currentDayData = this.mainService.attanancePageData.find(x=>x.LDATE == moment($event._d).format("YYYY-MM-DD"));
     this.mainService.selectedDateDataFromAttendance = currentDayData;
     if(currentDayData){
@@ -145,6 +150,8 @@ export class AttendanceViewPage {
           this.allLeaveApplyFlag = false;
         }
       }
+    }
+    
     
   }
 
@@ -199,11 +206,19 @@ export class AttendanceViewPage {
 
     console.log(this.mainService.attanancePageData.length);
     var jsonArr = [];
+    var tempCurrentDate4attendanceSingleDayData = "";
+    if(this.attendanceSingleDayData !== undefined){ 
+      tempCurrentDate4attendanceSingleDayData = this.attendanceSingleDayData.LDATE;
+      this.mainService.selectedDateDataFromAttendance = this.attendanceSingleDayData;
+      console.log("this.mainService.selectedDateDataFromAttendance--->>"+JSON.stringify(this.mainService.selectedDateDataFromAttendance));
+    }else{
+      tempCurrentDate4attendanceSingleDayData = moment().format("YYYY-MM-DD").toString();
+    }
     for (var i = 0; i < this.mainService.attanancePageData.length; i++) {
       console.log(moment().format("YYYY-MM-DD").toString()+"=="+this.mainService.attanancePageData[i].LDATE.toString());
-      if(this.mainService.attanancePageData[i].LDATE.toString() == moment().format("YYYY-MM-DD").toString()){
-        this.currentDate = moment().format("DD").toString();
-        this.currentMonth = moment().format("MMM").toString();
+      if(this.mainService.attanancePageData[i].LDATE.toString() == tempCurrentDate4attendanceSingleDayData){
+        this.currentDate = moment(tempCurrentDate4attendanceSingleDayData, "YYYY-MM-DD").format("DD").toString();
+        this.currentMonth = moment(tempCurrentDate4attendanceSingleDayData, "YYYY-MM-DD").format("MMM").toString();
         this.punchIN = this.mainService.attanancePageData[i].PUN_P10;
         this.punchOUT = this.mainService.attanancePageData[i].PUN_P20;
         this.midIN = this.mainService.attanancePageData[i].PUN_P25;
@@ -223,8 +238,8 @@ export class AttendanceViewPage {
   console.log(jsonArr);
     var tempoptionsRange : CalendarComponentOptions = {
       color : 'danger',
-      from: new Date(this.calEndDate),
-      to: new Date(this.calStartDate),
+      // from: new Date(this.calEndDate),
+      // to: new Date(this.calStartDate),
       daysConfig: jsonArr,
       showMonthPicker: false,
       weekStart: 1
@@ -251,7 +266,7 @@ export class AttendanceViewPage {
               this.mainService.userLeaveBalanceListData = resultData.data;
               console.log(JSON.stringify(this.mainService.userLeaveBalanceListData));
               this.utilService.dismissLoader();
-              this.navCtrl.push("ApplyLeavePage");
+              this.navCtrl.push("ApplyLeavePage", {"LeaveData": this.attendanceSingleDayData});
             }else{
               this.utilService.dismissLoader();
               this.utilService.showCustomPopup4Error("Apply Leave", resultData.message, "FAILURE");
@@ -276,7 +291,7 @@ export class AttendanceViewPage {
   }
   applyOD(){
     if( this.allLeaveApplyFlag){
-      this.navCtrl.push("ApplyOdPage");
+      this.navCtrl.push("ApplyOdPage",{"ODData": this.attendanceSingleDayData});
     }else{
       this.utilService.showCustomPopup4Error("Apply OD", "Invalid Date Selection", "FAILURE");
     }

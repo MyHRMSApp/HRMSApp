@@ -12,6 +12,7 @@ import { UtilsProvider } from '../../providers/utils/utils';
 import { ServiceProvider } from '../../providers/service/service';
 import moment from 'moment';
 import { MyApp } from '../../app/app.component';
+import { CommonStringsProvider } from '../../providers/common-strings/common-strings';
 
 @IonicPage()
 @Component({
@@ -37,6 +38,7 @@ export class AllLeavesPage {
   userInformation: any;
   employeeLevel: any;
   KTEXT: any;
+  public leaveData4SingleDate:any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -44,90 +46,91 @@ export class AllLeavesPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
     public utilService: UtilsProvider, public service: ServiceProvider, public mainService: MyApp,
-    public ref: ChangeDetectorRef) {
+    public ref: ChangeDetectorRef, public commonString: CommonStringsProvider) {
 
-      this.userInformation = JSON.parse(localStorage.getItem("userInfo"));
+      this.userInformation = JSON.parse(localStorage.getItem(this.commonString.commonStrings.AllLeavesPage.userInfo));
       this.employeeLevel = this.userInformation.EP_EGROUP;
       console.log(this.employeeLevel);
 
     this.menu.swipeEnable(false);
-    this.title = this.navParams.get("titleName");
+    this.title = this.navParams.get(this.commonString.commonStrings.AllLeavesPage.titleName);
     // this.leaveFromDate = " ";
     // this.leaveToDate = " ";
     this.resonForLeave = "";
-    this.leaveType = this.navParams.get("leaveType");
-    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    this.leaveType = this.navParams.get(this.commonString.commonStrings.AllLeavesPage.leaveType);
+    this.userInfo = JSON.parse(localStorage.getItem(this.commonString.commonStrings.AllLeavesPage.userInfo));
+    if(this.navParams.get(this.commonString.commonStrings.AllLeavesPage.LeaveData)) this.leaveData4SingleDate =  this.navParams.get(this.commonString.commonStrings.AllLeavesPage.LeaveData);
     
   }
 
   ionViewDidLoad() {
-    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
-    this.homeIcon = ("./assets/homePageIcons/Home.svg");
+    this.hamburger = (this.commonString.commonStrings.AllLeavesPage.hamburgerIcon);
+    this.homeIcon = (this.commonString.commonStrings.AllLeavesPage.homeIcon);
     console.log('ionViewDidLoad AllLeavesPage');
     
-    if(this.mainService.selectedDateDataFromAttendance.LDATE !== undefined && this.mainService.selectedDateDataFromAttendance.cssClass !== undefined){
-      this.leaveFromDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY");
-    this.leaveToDate = moment(this.mainService.selectedDateDataFromAttendance.LDATE).format("DD-MM-YYYY");
-    switch (this.mainService.selectedDateDataFromAttendance.cssClass) {
-      case "ATT1_Approved_ATT2_UA":
-        this.leaveFromTimeStr = "2nd half";
-        this.leaveToTimeStr = "2nd half";
-        this.leaveFromTime = "SH";
-        this.leaveToTime = "SH";
+    if(this.leaveData4SingleDate.LDATE !== undefined && this.leaveData4SingleDate.cssClass !== undefined){
+      this.leaveFromDate = moment(this.leaveData4SingleDate.LDATE).format(this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY);
+    this.leaveToDate = moment(this.leaveData4SingleDate.LDATE).format(this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY);
+    switch (this.leaveData4SingleDate.cssClass) {
+      case this.commonString.commonStrings.AllLeavesPage.ATT1_Approved_ATT2_UA:
+        this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+        this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+        this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.SH;
+        this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.SH;
         break;
-      case "ATT1_Pending_ATT2_UA":
-        this.leaveFromTimeStr = "2nd half";
-        this.leaveToTimeStr = "2nd half";
-        this.leaveFromTime = "SH";
-        this.leaveToTime = "SH";
+      case this.commonString.commonStrings.AllLeavesPage.ATT1_Pending_ATT2_UA:
+        this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+        this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+        this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.SH;
+        this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.SH;
         break;
-      case "ATT1_Holliday_ATT2_UA":
-        this.leaveFromTimeStr = "2nd half";
-        this.leaveToTimeStr = "2nd half";
-        this.leaveFromTime = "SH";
-        this.leaveToTime = "SH";
+      case this.commonString.commonStrings.AllLeavesPage.ATT1_Holliday_ATT2_UA:
+        this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+        this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+        this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.SH;
+        this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.SH;
         break;
-      case "ATT1_NormalPunch_ATT2_UA":
-        this.leaveFromTimeStr = "2nd half";
-        this.leaveToTimeStr = "2nd half";
-        this.leaveFromTime = "SH";
-        this.leaveToTime = "SH";
+      case this.commonString.commonStrings.AllLeavesPage.ATT1_NormalPunch_ATT2_UA:
+        this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+        this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+        this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.SH;
+        this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.SH;
         break;
-      case "ATT1_NomalPunch_ATT2_UA":
-        this.leaveFromTimeStr = "2nd half";
-        this.leaveToTimeStr = "2nd half";
-        this.leaveFromTime = "SH";
-        this.leaveToTime = "SH";
+      case this.commonString.commonStrings.AllLeavesPageATT1_NomalPunch_ATT2_UA:
+      this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+      this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+      this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.SH;
+      this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.SH;
         break;
-      case "ATT1_UA_ATT2_Holliday":
-        this.leaveFromTimeStr = "1st half";
-        this.leaveToTimeStr = "1st half";
-        this.leaveFromTime = "FH";
-        this.leaveToTime = "FH";
+      case this.commonString.commonStrings.AllLeavesPageATT1_UA_ATT2_Holliday:
+        this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+        this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+        this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.FH;
+        this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.FH;
         break;
-      case "ATT1_UA_ATT2_NormalPunch":
-        this.leaveFromTimeStr = "1st half";
-        this.leaveToTimeStr = "1st half";
-        this.leaveFromTime = "FH";
-        this.leaveToTime = "FH";
+      case this.commonString.commonStrings.AllLeavesPage.ATT1_UA_ATT2_NormalPunch:
+      this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+      this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+      this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.FH;
+      this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.FH;
         break;
-      case "ATT1_UA_ATT2_Approved":
-        this.leaveFromTimeStr = "1st half";
-        this.leaveToTimeStr = "1st half";
-        this.leaveFromTime = "FH";
-        this.leaveToTime = "FH";
+      case this.commonString.commonStrings.AllLeavesPage.ATT1_UA_ATT2_Approved:
+      this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+      this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+      this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.FH;
+      this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.FH;
         break;
-      case "ATT1_UA_ATT2_Pending":
-        this.leaveFromTimeStr = "1st half";
-        this.leaveToTimeStr = "1st half";
-        this.leaveFromTime = "FH";
-        this.leaveToTime = "FH";
+      case this.commonString.commonStrings.AllLeavesPage.ATT1_UA_ATT2_Pending:
+      this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+      this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+      this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.FH;
+      this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.FH;
         break;
       default :
-        this.leaveFromTimeStr = "full day";
-        this.leaveToTimeStr = "full day";
-        this.leaveFromTime = "FD";
-        this.leaveToTime = "FD";
+        this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.fullday;
+        this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.fullday;
+        this.leaveFromTime = this.commonString.commonStrings.AllLeavesPage.FD;
+        this.leaveToTime = this.commonString.commonStrings.AllLeavesPage.FD;
         break;
     }
       this.fromDateFlag = true;
@@ -146,46 +149,46 @@ export class AllLeavesPage {
     this.navCtrl.pop();
   }
   home() {
-    this.navCtrl.setRoot("HomePage");
+    this.navCtrl.setRoot(this.commonString.commonStrings.AllLeavesPage.HomePage);
   }
 
   ionViewCanEnter(){
-    this.allLeaveData = this.navParams.get("userLeave");
+    this.allLeaveData = this.navParams.get(this.commonString.commonStrings.AllLeavesPage.userLeave);
     this.KTEXT = this.allLeaveData.KTEXT;
   }
 
   fromDateCalendar(){
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "from", selectedDate: this.leaveFromDate, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP == "E" && this.leaveType == "0001")?"true":"false" });
+      let myCalendar = this.modalCtrl.create(this.commonString.commonStrings.AllLeavesPage.CustomCalendarModelPage, { "Cal": "from", selectedDate: this.leaveFromDate, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP == "E" && this.leaveType == "0001")?"true":"false" });
       myCalendar.present();
       myCalendar.onDidDismiss((data) => {
         console.log(data);
         if(data !== undefined && data.leaveFromDate !== undefined && data.leaveFromTime !== undefined){
-          this.leaveFromDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
-          this.leaveToDate = moment(data.leaveFromDate).format("DD-MM-YYYY");
+          this.leaveFromDate = moment(data.leaveFromDate, this.commonString.commonStrings.AllLeavesPage.YYYY_MM_DD).format(this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY);
+          this.leaveToDate = moment(data.leaveFromDate, this.commonString.commonStrings.AllLeavesPage.YYYY_MM_DD).format(this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY);
           this.leaveFromTime = data.leaveFromTime;
           this.leaveToTime = data.leaveFromTime;
           this.fromDateFlag = true;
           this.toDateFlag = true;
           switch (this.leaveFromTime) {
-            case "FD":
-              this.leaveFromTimeStr = "full day";
-              this.leaveToTimeStr = "full day";
+            case this.commonString.commonStrings.AllLeavesPage.FD:
+              this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.fullday;
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.fullday;
               break;
-            case "FH":
-              this.leaveFromTimeStr = "1st half";
-              this.leaveToTimeStr = "1st half";
+            case this.commonString.commonStrings.AllLeavesPage.FH:
+              this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
             break;
-            case "SH":
-              this.leaveFromTimeStr = "2nd half";
-              this.leaveToTimeStr = "2nd half";
+            case this.commonString.commonStrings.AllLeavesPage.SH:
+              this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
             break;
-            case "FQ":
-              this.leaveFromTimeStr = "1st Quarter";
-              this.leaveToTimeStr = "1st Quarter";
+            case this.commonString.commonStrings.AllLeavesPage.FQ:
+              this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.firstQuarter;
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.firstQuarter;
               break;
-            case "LQ":
-              this.leaveFromTimeStr = "2nd Quarter";
-              this.leaveToTimeStr = "2nd Quarter";
+            case this.commonString.commonStrings.AllLeavesPage.LQ:
+              this.leaveFromTimeStr = this.commonString.commonStrings.AllLeavesPage.secQuarter;
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.secQuarter;
               break;
           }
         }else if(this.leaveFromDate !== undefined){
@@ -199,29 +202,29 @@ export class AllLeavesPage {
 
   toDateCalendar(){
     if(this.leaveFromDate !== undefined && this.leaveFromTime !== undefined ){
-      let myCalendar = this.modalCtrl.create("CustomCalendarModelPage", { "Cal": "to", selectedDate: this.leaveToDate, "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP == "E" && this.leaveType == "0001")?"true":"false" });
+      let myCalendar = this.modalCtrl.create(this.commonString.commonStrings.AllLeavesPage.CustomCalendarModelPage, { "Cal": "to", selectedDate: this.leaveToDate, "leaveFromDate": this.leaveFromDate, "leaveFromTime": this.leaveFromTime, quarterWiseSelectionFlag: (this.userInfo.EP_EGROUP == "E" && this.leaveType == "0001")?"true":"false" });
       myCalendar.present();
       myCalendar.onDidDismiss((data) => {
         console.log(data);
         if(data !== undefined && data.leaveToDate !== undefined && data.leaveToTime !== undefined){
-          this.leaveToDate = moment(data.leaveToDate).format("DD-MM-YYYY");
+          this.leaveToDate = moment(data.leaveToDate).format(this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY);
           this.leaveToTime = data.leaveToTime;
           this.toDateFlag = true;
           switch (this.leaveToTime) {
-            case "FD":
-              this.leaveToTimeStr = "full day";
+            case this.commonString.commonStrings.AllLeavesPage.FD:
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.fullday;
               break;
-            case "FH":
-              this.leaveToTimeStr = "1st half";
+            case this.commonString.commonStrings.AllLeavesPage.FH:
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.firsthalf;
             break;
-            case "SH":
-              this.leaveToTimeStr = "2nd half";
+            case this.commonString.commonStrings.AllLeavesPage.SH:
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.sechalf;
             break;
-            case "FQ":
-              this.leaveToTimeStr = "1st Quarter";
+            case this.commonString.commonStrings.AllLeavesPage.FQ:
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.firstQuarter;
               break;
-            case "LQ":
-              this.leaveToTimeStr = "2nd Quarter";
+            case this.commonString.commonStrings.AllLeavesPage.LQ:
+              this.leaveToTimeStr = this.commonString.commonStrings.AllLeavesPage.secQuarter;
               break;
           }
         }else if(this.leaveToDate !== undefined){
@@ -231,7 +234,7 @@ export class AllLeavesPage {
         }
       });
     }else{
-      this.utilService.showCustomPopup4Error(this.title, "Please select From Date", "FAILURE");
+      this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.fromDateValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }
     
   }
@@ -239,26 +242,26 @@ export class AllLeavesPage {
   calLeaveApplyValidation(){
     // if(this.mainService.internetConnectionCheck){
       if(this.leaveFromTime === undefined || this.leaveFromDate === undefined){
-        this.utilService.showCustomPopup4Error(this.title, "Please select the From Date and Period", "FAILURE");
+        this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.fromDateandPeriodValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
       }else if(this.leaveToTime === undefined ||  this.leaveToDate === undefined){
-        this.utilService.showCustomPopup4Error(this.title, "Please select the To Date and Period", "FAILURE");
+        this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.toDateandPeriodValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
       }else if(this.resonForLeave === undefined || this.resonForLeave == ""){
-        this.utilService.showCustomPopup4Error("Apply Leave", "Please enter the Reason field", "FAILURE");
+        this.utilService.showCustomPopup4Error(this.commonString.commonStrings.AllLeavesPage.ApplyLeave, this.commonString.commonStrings.AllLeavesPage.reasonValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
       }else{
-        this.utilService.showLoader("Please wait...");
+        this.utilService.showLoader(this.commonString.commonStrings.AllLeavesPage.pleaseWait);
         var leavetypeData = this.leaveType;
-    if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ" || this.leaveToTime == "FQ" || this.leaveToTime == "LQ"){
+    if(this.leaveFromTime == this.commonString.commonStrings.AllLeavesPage.FQ || this.leaveFromTime == this.commonString.commonStrings.AllLeavesPage.LQ || this.leaveToTime == this.commonString.commonStrings.AllLeavesPage.FQ || this.leaveToTime == this.commonString.commonStrings.AllLeavesPage.LQ){
       leavetypeData = "0011";
     }
     console.log(this.leaveFromDate+""+this.leaveToDate);
     var payloadData = {
       "IP_LTYP": leavetypeData,
-      "IP_FDATE": moment(this.leaveFromDate, "DD-MM-YYYY").format("YYYYMMDD"),
-      "IP_TDATE": moment(this.leaveToDate, "DD-MM-YYYY").format("YYYYMMDD"),
-      "IP_FHALF": (this.leaveFromTime == "LQ")? "SQ": this.leaveFromTime,
-      "IP_THALF": (this.leaveToTime == "LQ")? "SQ": this.leaveToTime
+      "IP_FDATE": moment(this.leaveFromDate, this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY).format(this.commonString.commonStrings.AllLeavesPage.YYYYMMDD),
+      "IP_TDATE": moment(this.leaveToDate, this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY).format(this.commonString.commonStrings.AllLeavesPage.YYYYMMDD),
+      "IP_FHALF": (this.leaveFromTime == this.commonString.commonStrings.AllLeavesPage.LQ)? this.commonString.commonStrings.AllLeavesPage.SQ: this.leaveFromTime,
+      "IP_THALF": (this.leaveToTime == this.commonString.commonStrings.AllLeavesPage.LQ)? this.commonString.commonStrings.AllLeavesPage.SQ: this.leaveToTime
     };
-      this.service.invokeAdapterCall('commonAdapterServices', 'validateLeaveBalance', 'post', {payload : true, length:5, payloadData: payloadData}).then((resultData:any)=>{
+      this.service.invokeAdapterCall(this.commonString.commonStrings.AllLeavesPage.commonAdapterServices, this.commonString.commonStrings.AllLeavesPage.validateLeaveBalance, 'post', {payload : true, length:5, payloadData: payloadData}).then((resultData:any)=>{
         if(resultData){
           if(resultData.status_code == 0){
             this.utilService.dismissLoader();
@@ -266,53 +269,53 @@ export class AllLeavesPage {
             if(resultData.data.ET_VBAL.FLAG == "S"){
               var tempLeaveFromTime, tempLeaveToTime = "";
               switch (this.leaveFromTime) {
-                case "FD":
-                  tempLeaveFromTime = "full day";
+                case this.commonString.commonStrings.AllLeavesPage.FD:
+                  tempLeaveFromTime = this.commonString.commonStrings.AllLeavesPage.fullday;
                   break;
-                case "FH":
-                  tempLeaveFromTime = "first half";
+                case this.commonString.commonStrings.AllLeavesPage.FH:
+                  tempLeaveFromTime = this.commonString.commonStrings.AllLeavesPage.firsthalf;
                   break;
-                case "SH":
-                  tempLeaveFromTime = "secont half";
+                case this.commonString.commonStrings.AllLeavesPage.SH:
+                  tempLeaveFromTime = this.commonString.commonStrings.AllLeavesPage.sechalf;
                   break;
-                case "FQ":
-                  tempLeaveFromTime = "first quarter";
+                case this.commonString.commonStrings.AllLeavesPage.FQ:
+                  tempLeaveFromTime = this.commonString.commonStrings.AllLeavesPage.firstQuarter;
                   break;
-                case "LQ":
-                  tempLeaveFromTime = "last quarter";
+                case this.commonString.commonStrings.AllLeavesPage.LQ:
+                  tempLeaveFromTime = this.commonString.commonStrings.AllLeavesPage.secQuarter;
                   break;
               }
               switch (this.leaveToTime) {
-                case "FD":
-                  tempLeaveToTime = "full day";
+                case this.commonString.commonStrings.AllLeavesPage.FD:
+                  tempLeaveToTime = this.commonString.commonStrings.AllLeavesPage.fullday;
                   break;
-                case "FH":
-                  tempLeaveToTime = "first half";
+                case this.commonString.commonStrings.AllLeavesPage.FH:
+                  tempLeaveToTime = this.commonString.commonStrings.AllLeavesPage.firsthalf;
                   break;
-                case "SH":
-                  tempLeaveToTime = "secont half";
+                case this.commonString.commonStrings.AllLeavesPage.SH:
+                  tempLeaveToTime = this.commonString.commonStrings.AllLeavesPage.sechalf;
                   break;
-                case "FQ":
-                  tempLeaveToTime = "first quarter";
+                case this.commonString.commonStrings.AllLeavesPage.FQ:
+                  tempLeaveToTime = this.commonString.commonStrings.AllLeavesPage.firstQuarter;
                   break;
-                case "LQ":
-                  tempLeaveToTime = "last quarter";
+                case this.commonString.commonStrings.AllLeavesPage.LQ:
+                  tempLeaveToTime = this.commonString.commonStrings.AllLeavesPage.secQuarter;
                   break;
               }
               this.showCustomPopup4List(resultData.data.ET_VBAL.NO_DAY, this.leaveFromDate, this.leaveToDate, tempLeaveFromTime, tempLeaveToTime);
             }else if(resultData.data.ET_VBAL.FLAG == "E"){
-              this.utilService.showCustomPopup4Error(this.title, resultData.data.ET_VBAL.REASON, "FAILURE");
+              this.utilService.showCustomPopup4Error(this.title, resultData.data.ET_VBAL.REASON, this.commonString.commonStrings.AllLeavesPage.FAILURE);
             }
           }else{
             this.utilService.dismissLoader();
-            this.utilService.showCustomPopup4Error(this.title, resultData.message, "FAILURE");
+            this.utilService.showCustomPopup4Error(this.title, resultData.message, this.commonString.commonStrings.AllLeavesPage.FAILURE);
           }
     
         };
       }, (error)=> {
         console.log("Data readed from jsonstore error", error);
         this.utilService.dismissLoader();
-        this.utilService.showCustomPopup4Error(this.title, error, "FAILURE");
+        this.utilService.showCustomPopup4Error(this.title, error, this.commonString.commonStrings.AllLeavesPage.FAILURE);
       });
       }
     
@@ -340,23 +343,23 @@ export class AllLeavesPage {
       handler: data => {
        console.log("Apply clicked");
        var leavetypeData = this.leaveType;
-    if(this.leaveFromTime == "FQ" || this.leaveFromTime == "LQ" || this.leaveToTime == "FQ" || this.leaveToTime == "LQ"){
+    if(this.leaveFromTime == this.commonString.commonStrings.AllLeavesPage.FQ || this.leaveFromTime == this.commonString.commonStrings.AllLeavesPage.LQ || this.leaveToTime == this.commonString.commonStrings.AllLeavesPage.FQ || this.leaveToTime == this.commonString.commonStrings.AllLeavesPage.LQ){
       leavetypeData = "0011";
     }
        var payloadData = {
                           "IP_LTYP": leavetypeData,
-                          "IP_FDATE": moment(leaveFromDate, "DD-MM-YYYY").format("YYYYMMDD"),
-                          "IP_TDATE": moment(leaveToDate, "DD-MM-YYYY").format("YYYYMMDD"),
-                          "IP_FHALF": (this.leaveFromTime == "LQ")? "SQ": this.leaveFromTime,
-                          "IP_THALF": (this.leaveToTime == "LQ")? "SQ": this.leaveToTime,
+                          "IP_FDATE": moment(leaveFromDate, this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY).format(this.commonString.commonStrings.AllLeavesPage.YYYYMMDD),
+                          "IP_TDATE": moment(leaveToDate, this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY).format(this.commonString.commonStrings.AllLeavesPage.YYYYMMDD),
+                          "IP_FHALF": (this.leaveFromTime == this.commonString.commonStrings.AllLeavesPage.LQ)? this.commonString.commonStrings.AllLeavesPage.SQ: this.leaveFromTime,
+                          "IP_THALF": (this.leaveToTime == this.commonString.commonStrings.AllLeavesPage.LQ)? this.commonString.commonStrings.AllLeavesPage.SQ: this.leaveToTime,
                           "IP_DAY": noDays,
                           "R_LEAVE": this.resonForLeave,
-                          "IP_REQ_TYPE": "NEW",
-                          "IP_WF_STATUS": "Submitted"
+                          "IP_REQ_TYPE": this.commonString.commonStrings.AllLeavesPage.NEW,
+                          "IP_WF_STATUS": this.commonString.commonStrings.AllLeavesPage.Submitted
                         }
       // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please wait...");
-        this.service.invokeAdapterCall('commonAdapterServices', 'employeeApplyLeave', 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
+        this.service.invokeAdapterCall(this.commonString.commonStrings.AllLeavesPage.commonAdapterServices, this.commonString.commonStrings.AllLeavesPage.employeeApplyLeave, 'post', {payload : true, length:9, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
               console.log(JSON.stringify(resultData.data));
               if(resultData.status_code == 0){
@@ -377,22 +380,22 @@ export class AllLeavesPage {
                      this.mainService.attendanceNA1_DataFlag = true;
                      this.mainService.attendanceNA2_DataFlag = true;
                      this.mainService.attendanceCallFlag = true;
-                     this.navCtrl.setRoot("HomePage");
+                     this.navCtrl.setRoot(this.commonString.commonStrings.AllLeavesPage.HomePage);
                    }
                  });
                  alert.present();
                }else if(resultData.data.EP_REASON.TYPE == "E"){
-                 this.utilService.showCustomPopup4Error(this.title, resultData.data.EP_REASON.MESSAGE, "FAILURE");
+                 this.utilService.showCustomPopup4Error(this.title, resultData.data.EP_REASON.MESSAGE, this.commonString.commonStrings.AllLeavesPage.FAILURE);
                }
              }else{
                this.utilService.dismissLoader();
-               this.utilService.showCustomPopup4Error(this.title, resultData.message, "FAILURE");
+               this.utilService.showCustomPopup4Error(this.title, resultData.message, this.commonString.commonStrings.AllLeavesPage.FAILURE);
              }
           }
         }, (error)=>{
           console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error(this.title, error, "FAILURE")
+          this.utilService.showCustomPopup4Error(this.title, error, this.commonString.commonStrings.AllLeavesPage.FAILURE)
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
