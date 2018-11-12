@@ -18,7 +18,7 @@ export class AlertPageFortextareaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AlertPageFortextareaPage');
+    console.log('ionViewDidLoad AlertPage FortextareaPage');
   }
 
   dismiss() {
