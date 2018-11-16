@@ -90,37 +90,6 @@ export class AuthHandlerProvider {
       this.loginSuccessCallback();
     }
 
-
-//      var tags = [this.userInfo.EP_EGROUP, this.userInfo.EP_USERTYPE];
-//     //  if(this.userInfo.EP_USERTYPE == "ESS"){
-//     //    tags = ['Employee'];
-//     //  }
-//  MFPPush.registerDevice(
-//    null,
-//    function(successResponse) {
-//      console.log("Successfully registered-->>"+successResponse);
-     
-//        MFPPush.subscribe(
-//          tags,
-//          function(tags) {
-//            console.log("Subscribed successfully-->>"+tags);
-//          },
-//          function(failureResponse) {
-//            console.log("Failed to subscribe-->>"+JSON.stringify(failureResponse));
-//          }
-//        );
-//    },
-//    function(failureResponse) {
-//        console.log("Failed to register-->>"+JSON.stringify(failureResponse));
-//    }
-// );
-
-    // this.isChallenged = false;
-    // if (this.loginSuccessCallback != null) {
-    //       this.loginSuccessCallback();  
-    // } else {
-    //   console.log('--> AuthHandler: loginSuccessCallback not set!');
-    // }
   }
 
   handleFailure(error) {
