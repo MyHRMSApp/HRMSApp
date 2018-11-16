@@ -171,7 +171,6 @@ export class LoginPage {
     // }else{
     //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
     // }
-
   }
 
   ionViewDidLoad() {
@@ -218,7 +217,7 @@ export class LoginPage {
             setTimeout(() => {
               this.authHandler.login(inputParams);
             }, 100);
-        }else{
+        }else {
           this.googlePlus.disconnect().then((res) => {
             this.utilService.showCustomPopup(this.commonString.commonStrings.loginPage.FAILURE, this.commonString.commonStrings.loginPage.gmailValidate);
           })

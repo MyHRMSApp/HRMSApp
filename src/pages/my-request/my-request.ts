@@ -302,7 +302,6 @@ export class MyRequestPage {
         periodRes = "2nd half";
         break;
     }
-
     return periodRes;
   }
 
@@ -317,9 +316,7 @@ export class MyRequestPage {
       timeData = timeData.toString().replace(/:/g, "");
       timeData = moment(timeData, "HHmmss").format();
       return timeData;
-    }
-
-    
+    }    
   }
 
   getTimeDetailsChange(timeData){

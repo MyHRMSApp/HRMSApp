@@ -147,8 +147,8 @@ attendance() {
 }
 
 attendanceDataFetch(){
-  // this.utilService.showLoaderProfile("Please wait...");
-  console.log("attendanceDataFetch Menthod Called-->>");
+  this.utilService.showLoaderProfile("Please wait...");
+  console.log("attendanceDataFetch Method Called-->>");
   var payloadData = {
     "IP_SMONTH": -1,
     "IP_EMONTH": 0
@@ -280,7 +280,6 @@ coupons() {
   // }else{
   //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
   // }
-  
 }
 
 ionViewCanEnter() {
