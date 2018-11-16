@@ -343,8 +343,8 @@ public class CommonAdapterServicesResource {
 				String[] temp_reqState_ATT_1 = RS_ATT1.isEmpty()?null:RS_ATT1.split(",");
 				String[] temp_reqState_ATT_2 = RS_ATT2.isEmpty()?null:RS_ATT2.split(",");
 
-					List ATT_1_Req = new ArrayList(); 
-					List ATT_2_Req = new ArrayList();
+					//List ATT_1_Req = new ArrayList(); 
+					//List ATT_2_Req = new ArrayList();
 					String cssClass = "";
 					boolean ATT1_CLR = true;
 					boolean ATT2_CLR = true;
@@ -355,7 +355,7 @@ public class CommonAdapterServicesResource {
 						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
 							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_Aprd != false) {
 								ATT1_Aprd = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
+								//ATT_1_Req.add(temp_reqState_ATT_1[ii]);
 							}
 							
 						}
@@ -365,7 +365,7 @@ public class CommonAdapterServicesResource {
 						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
 							if (Arrays.asList( APPROVED_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_Aprd != false) {
 								ATT2_Aprd = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
+								//ATT_2_Req.add(temp_reqState_ATT_2[ii]);
 							}
 							
 						}
@@ -375,7 +375,7 @@ public class CommonAdapterServicesResource {
 						for(int ii = 0; ii < temp_reqState_ATT_1.length; ii++){
 							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_1[ii].toString() ) && ATT1_CLR != false) {
 								ATT1_CLR = false;
-								ATT_1_Req.add(temp_reqState_ATT_1[ii]);
+								//ATT_1_Req.add(temp_reqState_ATT_1[ii]);
 							}
 							
 						}
@@ -385,7 +385,7 @@ public class CommonAdapterServicesResource {
 						for(int ii = 0; ii < temp_reqState_ATT_2.length; ii++){
 							if (Arrays.asList( PENDING_LEAVES ).contains( temp_reqState_ATT_2[ii].toString() ) && ATT2_CLR != false) {
 								ATT2_CLR = false;
-								ATT_2_Req.add(temp_reqState_ATT_2[ii]);
+								//ATT_2_Req.add(temp_reqState_ATT_2[ii]);
 							}
 							
 						}

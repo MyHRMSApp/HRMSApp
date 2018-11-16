@@ -90,12 +90,12 @@ export class ApplyFtpPage {
     public service: ServiceProvider, public utilService: UtilsProvider, public mainService: MyApp,
     public selector: WheelSelector, private ref: ChangeDetectorRef, public commonString: CommonStringsProvider) {
 
-      this.userInformation = JSON.parse(localStorage.getItem(this.commonString.commonStrings.ApplyFtpPage.userInfo));
+      this.userInformation = JSON.parse(localStorage.getItem(this.commonString.commonStrings.ApplyFtpPage.USERINFO_TEXT));
       this.employeeLevel = this.userInformation.EP_EGROUP;
       console.log(this.employeeLevel);
     
     this.menu.swipeEnable(false);  
-    if(this.navParams.get(this.commonString.commonStrings.ApplyFtpPage.ftpData)) this.ftpObject =  this.navParams.get(this.commonString.commonStrings.ApplyFtpPage.ftpData);
+    if(this.navParams.get(this.commonString.commonStrings.ApplyFtpPage.FTPDATA_TEXT)) this.ftpObject =  this.navParams.get(this.commonString.commonStrings.ApplyFtpPage.FTPDATA_TEXT);
     this.selectedDate = moment(this.ftpObject.LDATE, this.commonString.commonStrings.AllLeavesPage.YYYY_MM_DD).format(this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY);
     this.inPunch = this.ftpObject.PUN_P10;
     this.outPunch = this.ftpObject.PUN_P20;
@@ -221,7 +221,7 @@ export class ApplyFtpPage {
 
   requestType(){
     this.select = false;
-    this.requestTypeSelection = this.commonString.commonStrings.ApplyFtpPage.Forgottorecordmyattendance;
+    this.requestTypeSelection = this.commonString.commonStrings.ApplyFtpPage.FORGOTTORECORDMYATTENDANCE_ERROR_MSG;
     this.ref.detectChanges();
   }
 
@@ -246,23 +246,23 @@ export class ApplyFtpPage {
     }
 
     if(this.inPunch === undefined || this.inPunch == this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.inpunchValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.INPUNCHVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else if(this.outPunch === undefined || this.outPunch == this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.outpunchValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.OUTPUNCHVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else if(!beginningTimeInPunch.isBefore(endTimeOutPunch)){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.inandoutValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.INANDOUTVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else if(this.employeeLevel == "E" && this.midOutPunch !== undefined && this.midOutPunch !== this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S && this.midInPunch == undefined){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.midinpunchValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.MIDINPUNCHVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else if(this.employeeLevel == "E" && this.midOutPunch !== undefined && this.midOutPunch !== this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S && this.midInPunch == this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.midinpunchValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.MIDINPUNCHVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else if(this.employeeLevel == "E" && this.midInPunch !== undefined && this.midInPunch !== this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S && this.midOutPunch === undefined){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.midoutpunchValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.MIDOUTPUNCHVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else if(this.employeeLevel == "E" && this.midInPunch !== undefined && this.midInPunch !== this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S && this.midOutPunch == this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.midoutpunchValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.MIDOUTPUNCHVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else if(this.employeeLevel == "E" && this.midOutPunch !== undefined && this.midInPunch !== undefined && this.midOutPunch !== this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S && this.midInPunch !== this.commonString.commonStrings.ApplyFtpPage.ZERO_H_M_S && !endTimemidOutPunch.isBefore(beginningTimemidInPunch)){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.midinandoutpunchValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.MIDINANDOUTPUNCHVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else if(this.requestTypeSelection === undefined){
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, this.commonString.commonStrings.ApplyFtpPage.requestTypeValidate, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, this.commonString.commonStrings.ApplyFtpPage.REQUESTTYPEVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE);
     }else{
 
       var payloadData = {
@@ -281,12 +281,12 @@ export class ApplyFtpPage {
       console.log(payloadData);
       // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please wait...");
-        this.service.invokeAdapterCall(this.commonString.commonStrings.AllLeavesPage.commonAdapterServices, this.commonString.commonStrings.ApplyFtpPage.applyFTPRequest, 'post', {payload : true, length:10, payloadData: payloadData}).then((resultData:any)=>{
+        this.service.invokeAdapterCall(this.commonString.commonStrings.AllLeavesPage.commonAdapterServices, this.commonString.commonStrings.ApplyFtpPage.APPLYFTPREQUEST_TEXT, 'post', {payload : true, length:10, payloadData: payloadData}).then((resultData:any)=>{
           if(resultData){
             if(resultData.status_code == 0){
               if(resultData.data.ET_DATA.item.TYPE == "E"){
                 this.utilService.dismissLoader();
-                this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, resultData.data.ET_DATA.item.MESSAGE, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+                this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, resultData.data.ET_DATA.item.MESSAGE, this.commonString.commonStrings.AllLeavesPage.FAILURE);
               }else if(resultData.data.ET_DATA.item.TYPE == "S"){
                 const alert = this.alertCtrl.create({
                   title: "",
@@ -311,14 +311,14 @@ export class ApplyFtpPage {
               }
             }else{
               this.utilService.dismissLoader();
-              this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, resultData.message, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+              this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, resultData.message, this.commonString.commonStrings.AllLeavesPage.FAILURE);
             }
       
           };
         }, (error)=>{
           console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.ApplyFTP, error.statusText, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+          this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, error.statusText, this.commonString.commonStrings.AllLeavesPage.FAILURE);
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");

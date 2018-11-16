@@ -11,6 +11,7 @@ import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { MyApp } from '../../app/app.component';
 import { WheelSelector } from '@ionic-native/wheel-selector';
+import { CommonStringsProvider } from '../../providers/common-strings/common-strings';
 
 @IonicPage()
 @Component({
@@ -31,48 +32,7 @@ export class ApplyOdPage {
   public reasonForOD:any;
   public ODObject:any;
 
-  public jsonData:any = {
-  Hours: [
-    { description: "00" },
-    { description: "01" },
-    { description: "02" },
-    { description: "03" },
-    { description: "04" },
-    { description: "05" },
-    { description: "06" },
-    { description: "07" },
-    { description: "08" },
-    { description: "09" },
-    { description: "10" },
-    { description: "11" },
-    { description: "12" },
-    { description: "13" },
-    { description: "14" },
-    { description: "15" },
-    { description: "16" },
-    { description: "17" },
-    { description: "18" },
-    { description: "19" },
-    { description: "20" },
-    { description: "21" },
-    { description: "22" },
-    { description: "23" }
-  ],
-  Minutes: [
-    { description: "00" },
-    { description: "05" },
-    { description: "10" },
-    { description: "15" },
-    { description: "20" },
-    { description: "25" },
-    { description: "30" },
-    { description: "35" },
-    { description: "40" },
-    { description: "45" },
-    { description: "50" },
-    { description: "55" }
-  ]
-};
+  public jsonData:any;
 
   constructor(public menu: MenuController, public events: Events, private camera: Camera, 
     private http: Http, private toast: ToastController, private network: Network, 
@@ -80,7 +40,7 @@ export class ApplyOdPage {
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public modalCtrl: ModalController,
     public service: ServiceProvider, public utilService: UtilsProvider,  public mainService: MyApp,
-    public selector: WheelSelector, private ref: ChangeDetectorRef) {
+    public selector: WheelSelector, private ref: ChangeDetectorRef, public commonString: CommonStringsProvider) {
     
       this.menu.swipeEnable(false);
       this.inTime = "00:00";
@@ -122,6 +82,10 @@ export class ApplyOdPage {
     this.hamburger = ("./assets/homePageIcons/hamburger.svg");
     this.homeIcon = ("./assets/homePageIcons/Home.svg");
 
+  }
+
+  ionViewCanEnter(){
+    this.jsonData = this.commonString.commonStrings.ApplyOdPage.timeData;
   }
 
   inTimeSelection(){
