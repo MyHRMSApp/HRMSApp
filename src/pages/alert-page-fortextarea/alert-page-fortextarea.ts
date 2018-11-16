@@ -25,7 +25,7 @@ export class AlertPageFortextareaPage {
     if(this.deleteReason !== undefined || this.deleteReason == ""){
       this.viewCtrl.dismiss({deleteReason: this.deleteReason});
     }else{
-      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.AlertPageFortextareaPage.MyRequest, this.commonString.commonStrings.AlertPageFortextareaPage.reasonValidate, this.commonString.commonStrings.AlertPageFortextareaPage.FAILURE);
+      this.utilService.showCustomPopup4Error(this.commonString.commonStrings.AlertPageFortextareaPage.MYREQUEST_TEXT, this.commonString.commonStrings.AlertPageFortextareaPage.REASON_VALIDATE_ERROR_MSG, this.commonString.commonStrings.AlertPageFortextareaPage.FAILURE_TITLE_TEST);
     } 
   }
   cancel(){

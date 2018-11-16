@@ -9,6 +9,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { MyApp } from '../../app/app.component';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
+import { CommonStringsProvider } from '../../providers/common-strings/common-strings';
 
 @IonicPage()
 @Component({
@@ -34,10 +35,10 @@ export class ApplyLeavePage {
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public storage:StorageProvider, public utilService: UtilsProvider,
-    public mainServices: MyApp, public service: ServiceProvider) {
+    public mainServices: MyApp, public service: ServiceProvider, public commonString: CommonStringsProvider) {
      
     this.menu.swipeEnable(false);
-    if(this.navParams.get("LeaveData")) this.leaveDate4SingleDate =  this.navParams.get("LeaveData");
+    if(this.navParams.get(this.commonString.commonStrings.AllLeavesPage.LeaveData)) this.leaveDate4SingleDate =  this.navParams.get(this.commonString.commonStrings.AllLeavesPage.LeaveData);
 
     }
 
@@ -48,45 +49,45 @@ export class ApplyLeavePage {
     this.navCtrl.pop();
   }
   home() {
-    this.navCtrl.setRoot("HomePage");
+    this.navCtrl.setRoot(this.commonString.commonStrings.AllLeavesPage.HomePage);
   }
   privilegeLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"PRIVILEGE LEAVE", userLeave: this.userPLLeave, leaveType: "0003", "LeaveData": this.leaveDate4SingleDate});
+    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.AllLeavesPage, {"titleName": this.commonString.commonStrings.ApplyLeavePage.PRIVILEGELEAVE, userLeave: this.userPLLeave, leaveType: "0003", "LeaveData": this.leaveDate4SingleDate});
   }
   sickLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"SICK LEAVE", userLeave: this.userSLLeave, leaveType: "0002", "LeaveData": this.leaveDate4SingleDate});
+    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.AllLeavesPage, {"titleName": this.commonString.commonStrings.ApplyLeavePage.SICKLEAVE, userLeave: this.userSLLeave, leaveType: "0002", "LeaveData": this.leaveDate4SingleDate});
   }
   generalLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"GENERAL LEAVE", userLeave: this.userGLLeave, leaveType: "0034", "LeaveData": this.leaveDate4SingleDate});
+    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.AllLeavesPage, {"titleName": this.commonString.commonStrings.ApplyLeavePage.GENERALLEAVE, userLeave: this.userGLLeave, leaveType: "0034", "LeaveData": this.leaveDate4SingleDate});
   }
   casualLeave() {
-    this.navCtrl.push("AllLeavesPage", {"titleName":"CASUAL LEAVE", userLeave: this.userCLLeave, leaveType: "0001", "LeaveData": this.leaveDate4SingleDate});
+    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.AllLeavesPage, {"titleName": this.commonString.commonStrings.ApplyLeavePage.CASUALLEAVE, userLeave: this.userCLLeave, leaveType: "0001", "LeaveData": this.leaveDate4SingleDate});
   }
   leaveEncashment() {
   
       try {
         if(this.mainServices.internetConnectionCheck){
-          this.utilService.showLoader("Please wait...");
-        this.service.invokeAdapterCall('commonAdapterServices', 'getLeaveEncashBalance', 'get', {payload : false}).then((resultData:any)=>{
+          this.utilService.showLoader(this.commonString.commonStrings.AllLeavesPage.pleaseWait);
+        this.service.invokeAdapterCall(this.commonString.commonStrings.AllLeavesPage.commonAdapterServices, this.commonString.commonStrings.ApplyLeavePage.GETLEAVEENCASHBALANCE_TEXT, 'get', {payload : false}).then((resultData:any)=>{
           if(resultData){
             if(resultData.status_code == 0){
               this.mainServices.leaveEncashData = resultData.data;
               console.log(JSON.stringify(this.mainServices.userLeaveBalanceListData));
               this.utilService.dismissLoader();
-              this.navCtrl.push("EncashmentLeavePage", {"titleName":"LEAVE ENCASHMENT", userLeave: this.userLeaveEncashment, leaveType: "ENC"});
+              this.navCtrl.push(this.commonString.commonStrings.ApplyLeavePage.ENCASHMENTLEAVEPAGE_TEXT, {"titleName":this.commonString.commonStrings.ApplyLeavePage.LEAVEENCASHMENT, userLeave: this.userLeaveEncashment, leaveType: "ENC"});
             }else{
               this.utilService.dismissLoader();
-              this.utilService.showCustomPopup("FAILURE",resultData.message);
+              this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE,resultData.message);
             }
 
           };
         }, (error)=>{
           console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup("FAILURE",error.statusText);
+          this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE,error.statusText);
         });
         }else{
-          this.utilService.showCustomPopup("FAILURE", "You are in offline, please check you internet");
+          this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE, this.commonString.commonStrings.ApplyLeavePage.internetVlidate);
         }        
       } catch (error) {
         console.log("catch-->>",error);
@@ -94,8 +95,8 @@ export class ApplyLeavePage {
   }
 
   ionViewDidLoad() {
-    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
-    this.homeIcon = ("./assets/homePageIcons/Home.svg");
+    this.hamburger = (this.commonString.commonStrings.AllLeavesPage.hamburgerIcon);
+    this.homeIcon = (this.commonString.commonStrings.AllLeavesPage.homeIcon);
     console.log('ionViewDidLoad ApplyLeavePage');
     this.utilService.dismissLoader();
   }
@@ -105,22 +106,22 @@ export class ApplyLeavePage {
     if(this.mainServices.userLeaveBalanceListData.ET_EMPBAL !== ""){
       if(this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.length === undefined && this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT !== undefined) {
         switch (this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT) {
-          case "CL":
+          case this.commonString.commonStrings.ApplyLeavePage.CL:
             this.userCLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item;
             this.casual = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT;
             console.log(this.casual);
             break;
-          case "SL":
+          case this.commonString.commonStrings.ApplyLeavePage.SL:
             this.userSLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item;
             this.sick = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT;
             console.log(this.sick);
             break;
-          case "GL":
+          case this.commonString.commonStrings.ApplyLeavePage.GL:
             this.userGLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item;
             this.general = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT;
             console.log(this.general);
             break;
-          case "PL":
+          case this.commonString.commonStrings.ApplyLeavePage.PL:
             this.userPLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item;
             this.privelage = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.KTEXT;
             console.log(this.privelage);
@@ -129,22 +130,22 @@ export class ApplyLeavePage {
       }else {
         for(var i = 0; i < this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item.length; i++){
           switch (this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT) {
-            case "CL":
+            case this.commonString.commonStrings.ApplyLeavePage.CL:
               this.userCLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
               this.casual = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
               console.log(this.casual);
               break;
-            case "SL":
+            case this.commonString.commonStrings.ApplyLeavePage.SL:
               this.userSLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
               this.sick = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
               console.log(this.sick);
               break;
-            case "GL":
+            case this.commonString.commonStrings.ApplyLeavePage.GL:
               this.userGLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
               this.general = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
               console.log(this.general);
               break;
-            case "PL":
+            case this.commonString.commonStrings.ApplyLeavePage.PL:
               this.userPLLeave = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i];
               this.privelage = this.mainServices.userLeaveBalanceListData.ET_EMPBAL.item[i].KTEXT;
               console.log(this.privelage);
