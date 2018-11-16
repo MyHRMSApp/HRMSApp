@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { CommonStringsProvider } from '../../providers/common-strings/common-strings';
 
 @IonicPage()
 @Component({
@@ -19,15 +20,14 @@ export class HrHelplinePage {
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams, public commonString: CommonStringsProvider) {
     
     this.menu.swipeEnable(false);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HrHelplinePage');
-    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
-    this.homeIcon = ("./assets/homePageIcons/Home.svg");
+    this.hamburger = (this.commonString.commonStrings.HRHelplinePage.HAMBURGERICON_IMG);
+    this.homeIcon = (this.commonString.commonStrings.HRHelplinePage.HOMEICON_IMG);
   }
   openMenu() {
     this.menu.toggle();
@@ -36,7 +36,7 @@ export class HrHelplinePage {
     this.navCtrl.pop();
   }
   home() {
-    this.navCtrl.setRoot("HomePage");
+    this.navCtrl.setRoot(this.commonString.commonStrings.HRHelplinePage.HOMEPAGE_NAV);
   }
 
 }

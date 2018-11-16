@@ -7,6 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ServiceProvider } from '../../providers/service/service';
 import { UtilsProvider } from '../../providers/utils/utils';
+import { CommonStringsProvider } from '../../providers/common-strings/common-strings';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,7 @@ public profileDetails:any;
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
     public navParams: NavParams, public service: ServiceProvider,
-    public utilService: UtilsProvider) {
+    public utilService: UtilsProvider, public commonString: CommonStringsProvider) {
     
     this.menu.swipeEnable(false);
 
@@ -32,9 +33,8 @@ public profileDetails:any;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
-    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
-    this.homeIcon = ("./assets/homePageIcons/Home.svg");
+    this.hamburger = (this.commonString.commonStrings.ProfilePage.HAMBURGERICON_IMG);
+    this.homeIcon = (this.commonString.commonStrings.ProfilePage.HOMEICON_IMG);
   }
 
   openMenu() {
@@ -44,59 +44,8 @@ public profileDetails:any;
     this.navCtrl.pop();
   }
   home() {
-    this.navCtrl.setRoot("HomePage");
+    this.navCtrl.setRoot(this.commonString.commonStrings.ProfilePage.HOMEPAGE_NAV);
   }
-
-  // ionViewCanEnter(){
-  //   // if(this.mainService.internetConnectionCheck){
-  //     this.utilService.showLoaderProfile("Please wait...");
-  //     // if(this.mainService.globalProfileData !== undefined){
-  //     //   this.profileDetails = this.mainService.globalProfileData;
-  //     //   this.utilService.dismissLoader();
-  //     // }else{
-  //       this.profileDetails = {
-  //             "ENAME": "",
-  //             "EMP_HR": "",
-  //             "BTRTL_TXT": "",
-  //             "PERSK": "",
-  //             "ORGEH_TXT": "",
-  //             "PERSG_TXT": "",
-  //             "EP_MANAGER": "",
-  //             "EMPCODE": "",
-  //         };
-  //       this.service.invokeAdapterCall('commonAdapterServices', 'GetMyProfileDetails', 'get', {payload : false}).then((resultData:any)=>{
-  //         if(resultData){
-  //           if(resultData.status_code == 0){
-  //             console.log(resultData.data.ET_DATA);
-  //             // this.profileDetails = resultData.data.ET_DATA;
-  //             this.profileDetails = {
-  //               "ENAME": resultData.data.ET_DATA.ENAME,
-  //               "EMP_HR": resultData.data.ET_DATA.EMP_HR,
-  //               "BTRTL_TXT": resultData.data.ET_DATA.BTRTL_TXT,
-  //               "PERSK": resultData.data.ET_DATA.PERSK,
-  //               "ORGEH_TXT": resultData.data.ET_DATA.ORGEH_TXT,
-  //               "PERSG_TXT": resultData.data.ET_DATA.PERSG_TXT,
-  //               "EP_MANAGER": resultData.data.ET_DATA.EP_MANAGER,
-  //               "EMPCODE": resultData.data.ET_DATA.EMPCODE,
-  //           };
-  //             // setTimeout(() => {
-  //               this.utilService.dismissLoader();
-  //             // }, 2000);
-  //           }else{
-  //             this.utilService.dismissLoader();
-  //             // this.utilService.showCustomPopup4Error("Profile", resultData.message, "FAILURE");
-  //             this.showErrorAlertWindow(resultData.message);
-  //           }
-  //         };
-  //       }, (error)=>{
-  //         console.log("Error",error);
-  //         this.utilService.dismissLoader();
-  //         this.utilService.showCustomPopup4Error("Profile", "Oops! Something went wrong, Please try again", "FAILURE");
-  //         this.showErrorAlertWindow("Oops! Something went wrong, Please try again");
-  //       });
-  //     // }
-
-  // }
 
   getProfileValue(profileValue){
     if(profileValue !== undefined){

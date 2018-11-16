@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { CommonStringsProvider } from '../../providers/common-strings/common-strings';
 
 @IonicPage()
 @Component({
@@ -19,15 +20,14 @@ export class NeedHelpPage {
     private http: Http, private toast: ToastController, private network: Network, 
     public loadingCtrl: LoadingController, public platform: Platform, 
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController, 
-    public navParams: NavParams, public ref: ChangeDetectorRef) {
+    public navParams: NavParams, public ref: ChangeDetectorRef, public commonString: CommonStringsProvider) {
 
     this.menu.swipeEnable(false);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad NeedHelpPage');
-    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
-    this.homeIcon = ("./assets/homePageIcons/Home.svg");
+    this.hamburger = (this.commonString.commonStrings.NeedHelpPage.HAMBURGERICON_IMG);
+    this.homeIcon = (this.commonString.commonStrings.NeedHelpPage.HOMEICON_IMG);
   }
 
 /*Accordion function for SAP*/ 
