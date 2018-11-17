@@ -115,7 +115,7 @@ export class HomePage {
   }
 
   attendanceDataFetch() {
-    this.utilService.showLoaderProfile(this.commonString.commonStrings.HomePage.PLEASE_WAIT);
+    // this.utilService.showLoaderProfile(this.commonString.commonStrings.HomePage.PLEASE_WAIT);
     var payloadData = {
       "IP_SMONTH": -1,
       "IP_EMONTH": 0
