@@ -243,6 +243,7 @@ export class HomePage {
             });
 
           } else {
+            this.utilService.dismissLoader();
             this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_COUPONS, resultData.message,
                this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
           }
