@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlertController ,ToastController,LoadingController} from 'ionic-angular';
+import { AlertController,ToastController,LoadingController} from 'ionic-angular';
 
 
 @Injectable()
@@ -62,7 +62,7 @@ export class UtilsProvider {
    * Method for showing loader
    * @param message
    */
-  showLoaderProfile(message){
+  showLoaderProfile(message) {
     this.loader = this.loading.create({
       content: (message) ? message : this.commonValues.loadingMsg,
       dismissOnPageChange: false
@@ -74,7 +74,7 @@ export class UtilsProvider {
   /**
    * Method for dismissing the loader
    */
-  dismissLoader(){
+  dismissLoader() {
     this.loader.dismiss();
   }
 
@@ -101,7 +101,7 @@ export class UtilsProvider {
   /**
    * Method for showing popups
    * @param title
-   * @param message
+   * @param message <span>"+errorCode+"</span>
    */
   showCustomPopup4Error(alertType, message, cssClass){
     const alert = this.alert.create({

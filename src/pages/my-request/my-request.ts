@@ -209,7 +209,7 @@ export class MyRequestPage {
       };
     }, (error) => {
       this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error("My Request", error.statusText, this.commonString.commonStrings.ProfilePage.FAILURE_TITLE_TEXT);
+      this.utilService.showCustomPopup4Error("My Request", "102: Oops! Something went wrong, Please try again", this.commonString.commonStrings.ProfilePage.FAILURE_TITLE_TEXT);
     });
 
   }

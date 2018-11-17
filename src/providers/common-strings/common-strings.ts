@@ -61,7 +61,7 @@ export class CommonStringsProvider {
         "TITLENAME_TEXT": "titleName",
         "LEAVETYPE_TEXT": "leaveType",
         "LEAVEDATE_TEXT": "LeaveData",
-        "HAMBERGERICON_IMG": "./assets/homePageIcons/hamburger.svg",
+        "HAMBURGERICON_IMG": "./assets/homePageIcons/hamburger.svg",
         "HOMEICON_IMG": "./assets/homePageIcons/Home.svg",
         "ATTANDENCEICON_IMG": "./assets/homePageIcons/attendance.svg",
         "DD_MM_YYYY": "DD-MM-YYYY",
@@ -104,7 +104,8 @@ export class CommonStringsProvider {
         "EMPLOYEEAPPLYLEAVE_TEXT": "employeeApplyLeave",
         "NEW": "NEW",
         "SUBMITTED_TEXT": "Submitted",
-        "ALLLEAVESPAGE_TEXT": "AllLeavesPage"
+        "ALLEAVESPAGE_TEXT": "AllLeavesPage",
+        "FAILURE_TITLE_TEXT": "FAILURE"
       },
       "ApplyFtpPage": {
         "USERINFO_TEXT": "userInfo",
@@ -344,7 +345,7 @@ export class CommonStringsProvider {
         "FAILURE_TITLE_FTP": "Apply FTP",
         "FAILURE_TITLE_TEXT": "FAILURE",
         "FAILURE_MSG_ONE": "Invalid Date Selection", 
-        "FAILURE_MSG_TWO": "Oops! Something went wrong, Please try again",
+        "FAILURE_MSG_TWO": "102: Oops! Something went wrong, Please try again",
         "FAILURE_MSG_THREE": "Please select date",
       },
       "HomePage" : {
@@ -354,11 +355,11 @@ export class CommonStringsProvider {
         "MYREQUEST_IMG": "./assets/homePageIcons/my_request.svg",
         "MYTASK_IMG": "./assets/homePageIcons/my_task.svg",
         "AVATAR_IMG": "./assets/icon/avatar.png",
-        "HAMBURGERICON_IMG": "./assets/homePageIcons/hamburger.svg",
+        "HAMBURGERICON_IMG": "./assets/homePageIcons/hamburger-01.svg",
         "PLEASE_WAIT": "Please Wait...",
         "FAILURE_TITLE_TEXT": "FAILURE",
-        "FAILURE_MSG_ONE": "Oops! Something went wrong, Please try again",
-        "FAILURE_MSG_TWO": "No tasks found",
+        "FAILURE_MSG_ONE": "102: Oops! Something went wrong, Please try again",
+        "FAILURE_MSG_TWO": "101: No tasks found",
         "MYTASKS_NAV": "MyTasksPage",
         "MYREQUEST_NAV": "MyRequestPage",
         "APPLYLEAVE_NAV": "ApplyLeavePage",

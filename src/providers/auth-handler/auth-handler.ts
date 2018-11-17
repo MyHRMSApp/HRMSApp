@@ -140,9 +140,6 @@ export class AuthHandlerProvider {
               }
            );
           }
-          
-
-      
           this.loginSuccessCallback();
         },
         (error) => {

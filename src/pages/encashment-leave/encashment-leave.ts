@@ -118,7 +118,7 @@ export class EncashmentLeavePage {
         };
       }, (error) => {
         this.utilService.dismissLoader();
-        this.utilService.showCustomPopup4Error(this.commonString.commonStrings.EncashmentLeavePage.FAILURE_TITLE, error.statusText, this.commonString.commonStrings.EncashmentLeavePage.FAILURE_TITLE_TEXT);
+        this.utilService.showCustomPopup4Error(this.commonString.commonStrings.EncashmentLeavePage.FAILURE_TITLE, "102: Oops! Something went wrong, Please try again", this.commonString.commonStrings.EncashmentLeavePage.FAILURE_TITLE_TEXT);
       });
     }
   }

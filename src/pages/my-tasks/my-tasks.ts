@@ -321,9 +321,9 @@ export class MyTasksPage {
 
       };
     }, (error) => {
-      console.log("Data readed from jsonstore error", error);
+      console.log(error);
       this.utilService.dismissLoader();
-      this.utilService.showCustomPopup4Error("My Task", error.statusText, this.commonString.commonStrings.MyTasksPage.FAILURE_TITLE_TEXT);
+      this.utilService.showCustomPopup4Error("My Task", "102: Oops! Something went wrong, Please try again", this.commonString.commonStrings.MyTasksPage.FAILURE_TITLE_TEXT);
     });
     // }else{
     //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");

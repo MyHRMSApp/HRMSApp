@@ -55,7 +55,7 @@ export class HomePage {
   public exitAlertFlag: boolean = false;
 
 
-  constructor(public menu: MenuController, public events: Events, private camera: Camera,
+  constructor (public menu: MenuController, public events: Events, private camera: Camera,
     private http: Http, private toast: ToastController, private network: Network,
     public loadingCtrl: LoadingController, public platform: Platform,
     public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController,
@@ -136,7 +136,7 @@ export class HomePage {
           this.navCtrl.push(this.commonString.commonStrings.HomePage.ATTENDANCE_NAV);
         } else {
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_ATT, this.commonString.commonStrings.HomePage.FAILURE_MSG_ONE, this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
+          this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_ATT, resultData.message, this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
         }
       };
     }, (error) => {
@@ -243,15 +243,14 @@ export class HomePage {
             });
 
           } else {
-            // this.utilService.showPopup(this.commonString.commonStrings.HomePage.FAILURE_TITLE_COUPONS, resultData.message);
-            this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_COUPONS, this.commonString.commonStrings.HomePage.FAILURE_MSG_ONE, this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
+            this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_COUPONS, resultData.message,
+               this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
           }
         };
       },
       (error) => {
         console.log(error);
         this.utilService.dismissLoader();
-        // this.utilService.showPopup(this.commonString.commonStrings.HomePage.FAILURE_TITLE_ATT,error.statusText);
         this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_COUPONS, this.commonString.commonStrings.HomePage.FAILURE_MSG_ONE, this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
 
       });
@@ -530,14 +529,12 @@ export class HomePage {
             this.navCtrl.push(this.commonString.commonStrings.HomePage.APPLYLEAVE_NAV);
           } else {
             this.utilService.dismissLoader();
-            // this.utilService.showCustomPopup(this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT,resultData.message);
             this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_LEAVES, resultData.message, this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
           }
         };
       }, (error) => {
         console.log(error);
         this.utilService.dismissLoader();
-        // this.utilService.showCustomPopup(this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT,error.statusText);
         this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_LEAVES, this.commonString.commonStrings.HomePage.FAILURE_MSG_ONE, this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
       });
       // }else{
@@ -565,14 +562,12 @@ export class HomePage {
             this.navCtrl.push(this.commonString.commonStrings.HomePage.MYREQUEST_NAV);
           } else {
             this.utilService.dismissLoader();
-            // this.utilService.showCustomPopup(this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT,resultData.message);
             this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_MYREQUEST, resultData.message, this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
           }
         };
       }, (error) => {
-        console.log("Data readed from jsonstore error", error);
+        console.log(error);
         this.utilService.dismissLoader();
-        // this.utilService.showCustomPopup(this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT,error.statusText);
         this.utilService.showCustomPopup4Error(this.commonString.commonStrings.HomePage.FAILURE_TITLE_MYREQUEST, this.commonString.commonStrings.HomePage.FAILURE_MSG_ONE, this.commonString.commonStrings.HomePage.FAILURE_TITLE_TEXT);
       });
       // }else{

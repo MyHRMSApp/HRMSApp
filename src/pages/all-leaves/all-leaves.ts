@@ -64,9 +64,8 @@ export class AllLeavesPage {
   }
 
   ionViewDidLoad() {
-    this.hamburger = (this.commonString.commonStrings.AllLeavesPage.HAMBERGERICON_IMG);
+    this.hamburger = (this.commonString.commonStrings.AllLeavesPage.HAMBURGERICON_IMG);
     this.homeIcon = (this.commonString.commonStrings.AllLeavesPage.HOMEICON_IMG);
-    console.log('ionViewDidLoad AllLeavesPage');
     
     if(this.leaveData4SingleDate.LDATE !== undefined && this.leaveData4SingleDate.cssClass !== undefined){
       this.leaveFromDate = moment(this.leaveData4SingleDate.LDATE).format(this.commonString.commonStrings.AllLeavesPage.DD_MM_YYYY);
@@ -234,7 +233,7 @@ export class AllLeavesPage {
         }
       });
     }else{
-      this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.FROMDATEVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+      this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.FROMDATEVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
     }
     
   }
@@ -242,11 +241,11 @@ export class AllLeavesPage {
   calLeaveApplyValidation(){
     // if(this.mainService.internetConnectionCheck){
       if(this.leaveFromTime === undefined || this.leaveFromDate === undefined){
-        this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.FROMDATEANDPERIODVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+        this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.FROMDATEANDPERIODVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
       }else if(this.leaveToTime === undefined ||  this.leaveToDate === undefined){
-        this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.TODATEANDPERIODVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+        this.utilService.showCustomPopup4Error(this.title, this.commonString.commonStrings.AllLeavesPage.TODATEANDPERIODVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
       }else if(this.resonForLeave === undefined || this.resonForLeave == ""){
-        this.utilService.showCustomPopup4Error(this.commonString.commonStrings.AllLeavesPage.APPLYLEAVE_TEXT, this.commonString.commonStrings.AllLeavesPage.REASONVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+        this.utilService.showCustomPopup4Error(this.commonString.commonStrings.AllLeavesPage.APPLYLEAVE_TEXT, this.commonString.commonStrings.AllLeavesPage.REASONVALIDATE_TEXT, this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
       }else{
         this.utilService.showLoader(this.commonString.commonStrings.AllLeavesPage.PLEASEWAIT_TEXT);
         var leavetypeData = this.leaveType;
@@ -304,23 +303,23 @@ export class AllLeavesPage {
               }
               this.showCustomPopup4List(resultData.data.ET_VBAL.NO_DAY, this.leaveFromDate, this.leaveToDate, tempLeaveFromTime, tempLeaveToTime);
             }else if(resultData.data.ET_VBAL.FLAG == "E"){
-              this.utilService.showCustomPopup4Error(this.title, resultData.data.ET_VBAL.REASON, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+              this.utilService.showCustomPopup4Error(this.title, resultData.data.ET_VBAL.REASON, this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
             }
           }else{
             this.utilService.dismissLoader();
-            this.utilService.showCustomPopup4Error(this.title, resultData.message, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+            this.utilService.showCustomPopup4Error(this.title, resultData.message, this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
           }
     
         };
       }, (error)=> {
-        console.log("Data readed from jsonstore error", error);
+        console.log(error);
         this.utilService.dismissLoader();
-        this.utilService.showCustomPopup4Error(this.title, error, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+        this.utilService.showCustomPopup4Error(this.title, "102: Oops! Something went wrong, Please try again", this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
       });
       }
     
     // }else{
-    //   this.utilService.showCustomPopup("FAILURE_TEXT", "You are in offline, Please check you internet..");
+    //   this.utilService.showCustomPopup("FAILURE_TITLE_TEXT", "You are in offline, Please check you internet..");
     // }
     
   }
@@ -385,20 +384,20 @@ export class AllLeavesPage {
                  });
                  alert.present();
                }else if(resultData.data.EP_REASON.TYPE == "E"){
-                 this.utilService.showCustomPopup4Error(this.title, resultData.data.EP_REASON.MESSAGE, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+                 this.utilService.showCustomPopup4Error(this.title, resultData.data.EP_REASON.MESSAGE, this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
                }
              }else{
                this.utilService.dismissLoader();
-               this.utilService.showCustomPopup4Error(this.title, resultData.message, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT);
+               this.utilService.showCustomPopup4Error(this.title, resultData.message, this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT);
              }
           }
         }, (error)=>{
-          console.log("Data readed from jsonstore error",error);
+          console.log(error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error(this.title, error, this.commonString.commonStrings.AllLeavesPage.FAILURE_TEXT)
+          this.utilService.showCustomPopup4Error(this.title, "102: Oops! Something went wrong, Please try again", this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT)
         });
       // }else{
-      //   this.utilService.showCustomPopup("FAILURE_TEXT", "You are in offline, Please check you internet..");
+      //   this.utilService.showCustomPopup("FAILURE_TITLE_TEXT", "You are in offline, Please check you internet..");
       // }
       }
     });

@@ -316,9 +316,9 @@ export class ApplyFtpPage {
       
           };
         }, (error)=>{
-          console.log("Data readed from jsonstore error",error);
+          console.log(error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, error.statusText, this.commonString.commonStrings.AllLeavesPage.FAILURE);
+          this.utilService.showCustomPopup4Error(this.commonString.commonStrings.ApplyFtpPage.APPLYFTP_TEXT, "102: Oops! Something went wrong, Please try again", this.commonString.commonStrings.AllLeavesPage.FAILURE);
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");
