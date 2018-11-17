@@ -86,18 +86,11 @@ export class MyApp {
     // else{
     //   this.rootPage = "LoginPage";
     // }
-<<<<<<< HEAD
     console.log("localStorage.getItem(rememberMe)-------------->>"+localStorage.getItem("rememberMe"));
       if(localStorage.getItem("rememberMe") === null){
         localStorage.clear();
         localStorage.setItem("rememberMe", "enabled");
       }
-=======
-    console.log("localStorage.getItem(rememberMe)-------------->>" + localStorage.getItem("rememberMe"));
-    if (localStorage.getItem("rememberMe") === null) {
-      localStorage.setItem("rememberMe", "enabled");
-    }
->>>>>>> 63eb6bfabd48ae151f611e24fc30dcf8614926c6
 
   }
 
@@ -229,7 +222,7 @@ export class MyApp {
         }
       }, (error) => {
         this.utilService.dismissLoader();
-        this.utilService.showCustomPopup4Error("Profile", "Oops! Something went wrong, Please try again", "FAILURE");
+        this.utilService.showCustomPopup4Error("Profile", "102: Oops! Something went wrong, Please try again", "FAILURE");
       });
     }
 
