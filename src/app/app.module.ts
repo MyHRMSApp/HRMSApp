@@ -10,12 +10,9 @@ import { Network } from '@ionic-native/network';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { StorageProvider } from '../providers/storage/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
-
 import { CalendarModule } from 'ion2-calendar';
 import { GooglePlus } from '@ionic-native/google-plus';
-//import { AngularFireModule } from 'angularfire2';
 import * as firebase from 'firebase';
-
 import { MyApp } from './app.component';
 import { UtilsProvider } from '../providers/utils/utils';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
@@ -46,7 +43,9 @@ firebase.initializeApp(firebaseConfig)
     BrowserModule,
     HttpClientModule,
     HttpModule,
-    IonicModule.forRoot(MyApp, { scrollAssist: false }),
+    IonicModule.forRoot(MyApp, {
+      scrollAssist: false
+    }),
     CalendarModule,
     //AngularFireModule.initializeApp(firebaseConfig)
   ],
@@ -60,7 +59,10 @@ firebase.initializeApp(firebaseConfig)
     Camera,
     Network,
     GooglePlus,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {
+      provide: ErrorHandler,
+      useClass: IonicErrorHandler
+    },
     ServiceProvider,
     StorageProvider,
     UtilsProvider,

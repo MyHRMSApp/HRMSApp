@@ -4,12 +4,11 @@ import { Injectable } from '@angular/core';
 declare var WLResourceRequest;
 @Injectable()
 export class ServiceProvider {
+ 
 
   constructor(public http: HttpClient) {
     console.log('Hello ServiceProvider Provider');
   }
-
-
   /**
    * Method for calling mfp adapters
    * @param adaptername
@@ -17,6 +16,7 @@ export class ServiceProvider {
    * @param payload
    * @param method
    */
+
   invokeAdapterCall(adaptername, adaptermethodname, method, payload){
     console.log("Input Payload==>>"+ JSON.stringify(payload));
     var methodVal = (method == 'get')?WLResourceRequest.GET : WLResourceRequest.POST;
@@ -33,7 +33,7 @@ export class ServiceProvider {
       }
     }
     resourceRequest.setHeaders("Content-Type","application/json");
-    resourceRequest.setTimeout
+    resourceRequest.setTimeout(30000)
     return new Promise((resolve,reject)=>{
       console.log("Requesting Service to Server : " +"Method -> "+method +"Payload ->"+ payload);
       resourceRequest.send().then((responseData:any)=>{

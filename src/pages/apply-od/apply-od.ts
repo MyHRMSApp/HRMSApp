@@ -231,9 +231,8 @@ export class ApplyOdPage {
       
           };
         }, (error)=>{
-          console.log("Data readed from jsonstore error",error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup4Error("Apply OD", error.statusText, "FAILURE");
+          this.utilService.showCustomPopup4Error("Apply OD", "102: Oops! Something went wrong, Please try again", "FAILURE");
         });
       // }else{
       //   this.utilService.showCustomPopup("FAILURE", "You are in offline, Please check you internet..");

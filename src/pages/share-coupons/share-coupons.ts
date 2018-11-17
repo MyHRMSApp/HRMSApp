@@ -7,7 +7,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { MyApp } from '../../app/app.component';
 import { UtilsProvider } from '../../providers/utils/utils';
-
+import { CommonStringsProvider } from '../../providers/common-strings/common-strings';
 
 @IonicPage()
 @Component({
@@ -41,14 +41,14 @@ export class ShareCouponsPage {
     private toast: ToastController, private network: Network, public loadingCtrl: LoadingController, public platform: Platform,
     private http: Http, public alertCtrl: AlertController, public statusBar: StatusBar, public navCtrl: NavController,
     public navParams: NavParams, public mainService: MyApp, public socialSharing: SocialSharing, private ref: ChangeDetectorRef,
-    public utilService: UtilsProvider) {
-    
+    public utilService: UtilsProvider, public commonString: CommonStringsProvider) {
+
     this.menu.swipeEnable(false);
     this.selectedCoupons = [];
     this.specificCoupons = [];
     this.title = this.navParams.get("titleName");
     this.specificCoupons = this.navParams.get("coupons");
-    for(var i=0; i<this.specificCoupons.length; i++){
+    for (var i = 0; i < this.specificCoupons.length; i++) {
       this.specificCoupons[i].checked = false;
     }
     this.couponCounts = this.navParams.get("length");
@@ -58,15 +58,14 @@ export class ShareCouponsPage {
     this.employeeName = this.userInformation.EP_ENAME;
     this.employeeCode = this.userInformation.EP_PERNR;
     console.log(this.employeeName, this.employeeCode);
-    
+
   }
 
   ionViewDidLoad() {
-    this.hamburger = ("./assets/homePageIcons/hamburger.svg");
-    this.homeIcon = ("./assets/homePageIcons/Home.svg");
-    this.share = ("./assets/couponsImages/share.svg");
-    this.cardBg = ("./assets/couponsImages/coupons-BG.svg");
-    console.log('ionViewDidLoad ShareCouponsPage');
+    this.hamburger = (this.commonString.commonStrings.ShareCouponsPage.HAMBURGERICON_IMG);
+    this.homeIcon = (this.commonString.commonStrings.ShareCouponsPage.HOMEICON_IMG);
+    this.share = (this.commonString.commonStrings.ShareCouponsPage.SHAREICON_IMG);
+    this.cardBg = (this.commonString.commonStrings.ShareCouponsPage.COUPONSBG_IMG);
     this.ref.detectChanges();
   }
 
@@ -77,7 +76,7 @@ export class ShareCouponsPage {
     this.navCtrl.pop();
   }
   home() {
-    this.navCtrl.setRoot("HomePage");
+    this.navCtrl.setRoot(this.commonString.commonStrings.ShareCouponsPage.HOMEPAGE_NAV);
   }
   shareCoupon() {
     this.shareWhatsapp = true;
@@ -86,44 +85,36 @@ export class ShareCouponsPage {
   }
   gmail() {
     var msg = this.str;
-    var mailToLink = "mailto:?cc=&subject=TITAN%20DISCOUNT%20COUPONS&body=" + encodeURIComponent(msg);
+    var mailToLink = this.commonString.commonStrings.ShareCouponsPage.MAIL_SUBJECT + encodeURIComponent(msg);
     window.location.href = mailToLink;
   }
   whatsapp() {
     var msg = this.str;
 
-    if (this.platform.is('android')) {    
-      this.socialSharing.shareViaWhatsApp(msg, null, null).then(() => {
-        console.log("It works");
-      }).catch(() => {
-        console.log("It doesn't works");
-        this.utilService.showCustomPopup("FAILURE", "Whatsapp is not installed");
+    if (this.platform.is('android')) {
+      this.socialSharing.shareViaWhatsApp(msg, null, null).then(() => {}).catch(() => {
+        this.utilService.showCustomPopup(this.commonString.commonStrings.ShareCouponsPage.FAILURE_TITLE_TEXT, this.commonString.commonStrings.ShareCouponsPage.FAILURE_ANDROID);
       });
-    }
-
-    else if (this.platform.is('ios')) {
+    } else if (this.platform.is('ios')) {
       this.socialSharing.shareViaWhatsApp(msg, null, null);
-      document.addEventListener('pause', ()=> {
-        console.log('App going to background');
+      document.addEventListener('pause', () => {
         this.checkWhatsapp = true;
       });
-    
-      setTimeout(()=> {
-        if(this.checkWhatsapp == false){
-          this.utilService.showCustomPopup("FAILURE", "Sorry! Unable to open whatsapp");
+
+      setTimeout(() => {
+        if (this.checkWhatsapp == false) {
+          this.utilService.showCustomPopup(this.commonString.commonStrings.ShareCouponsPage.FAILURE_TITLE_TEXT, this.commonString.commonStrings.ShareCouponsPage.FAILURE_IOS);
         }
       }, 2000);
 
-  }
+    }
 
   }
   sms() {
     var msg = this.str;
     this.socialSharing.shareViaSMS(msg, null).then(() => {
-      console.log("Success");
     }).catch(() => {
-      console.log("Failure");
-      this.utilService.showCustomPopup("FAILURE", "Messaging is not installed");
+      this.utilService.showCustomPopup(this.commonString.commonStrings.ShareCouponsPage.FAILURE_TITLE_TEXT, this.commonString.commonStrings.ShareCouponsPage.FAILURE_MSG);
     });
   }
   cancel() {
@@ -132,10 +123,9 @@ export class ShareCouponsPage {
     this.ref.detectChanges();
   }
   shareMe(data) {
-      console.log(data);
+    console.log(data);
     if (data.checked == true) {
       this.shareIcon = true;
-      console.log("Checked == true");
       this.ref.detectChanges();
       data = {
         Category: data.CCTGRY,
@@ -172,10 +162,8 @@ export class ShareCouponsPage {
         this.str += "\n" + "Coupon Number:" + this.selectedCoupons[i].Coupon_Number;
         console.log(this.str);
       }
-        this.str += "\n" + "\n" + "Regards," + "\n" + this.employeeName;
+      this.str += "\n" + "\n" + "Regards," + "\n" + this.employeeName;
     }
 
   }
-
-
 }

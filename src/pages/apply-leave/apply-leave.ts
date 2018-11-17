@@ -38,7 +38,7 @@ export class ApplyLeavePage {
     public mainServices: MyApp, public service: ServiceProvider, public commonString: CommonStringsProvider) {
      
     this.menu.swipeEnable(false);
-    if(this.navParams.get(this.commonString.commonStrings.AllLeavesPage.LeaveData)) this.leaveDate4SingleDate =  this.navParams.get(this.commonString.commonStrings.AllLeavesPage.LeaveData);
+    if(this.navParams.get(this.commonString.commonStrings.AllLeavesPage.LEAVEDATE_TEXT)) this.leaveDate4SingleDate =  this.navParams.get(this.commonString.commonStrings.AllLeavesPage.LEAVEDATE_TEXT);
 
     }
 
@@ -49,26 +49,26 @@ export class ApplyLeavePage {
     this.navCtrl.pop();
   }
   home() {
-    this.navCtrl.setRoot(this.commonString.commonStrings.AllLeavesPage.HomePage);
+    this.navCtrl.setRoot(this.commonString.commonStrings.AllLeavesPage.HOMEPAGE_TEXT);
   }
   privilegeLeave() {
-    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.AllLeavesPage, {"titleName": this.commonString.commonStrings.ApplyLeavePage.PRIVILEGELEAVE, userLeave: this.userPLLeave, leaveType: "0003", "LeaveData": this.leaveDate4SingleDate});
+    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.ALLEAVESPAGE_TEXT, {"titleName": this.commonString.commonStrings.ApplyLeavePage.PRIVILEGELEAVE, userLeave: this.userPLLeave, leaveType: "0003", "LeaveData": this.leaveDate4SingleDate});
   }
   sickLeave() {
-    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.AllLeavesPage, {"titleName": this.commonString.commonStrings.ApplyLeavePage.SICKLEAVE, userLeave: this.userSLLeave, leaveType: "0002", "LeaveData": this.leaveDate4SingleDate});
+    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.ALLEAVESPAGE_TEXT, {"titleName": this.commonString.commonStrings.ApplyLeavePage.SICKLEAVE, userLeave: this.userSLLeave, leaveType: "0002", "LeaveData": this.leaveDate4SingleDate});
   }
   generalLeave() {
-    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.AllLeavesPage, {"titleName": this.commonString.commonStrings.ApplyLeavePage.GENERALLEAVE, userLeave: this.userGLLeave, leaveType: "0034", "LeaveData": this.leaveDate4SingleDate});
+    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.ALLEAVESPAGE_TEXT, {"titleName": this.commonString.commonStrings.ApplyLeavePage.GENERALLEAVE, userLeave: this.userGLLeave, leaveType: "0034", "LeaveData": this.leaveDate4SingleDate});
   }
   casualLeave() {
-    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.AllLeavesPage, {"titleName": this.commonString.commonStrings.ApplyLeavePage.CASUALLEAVE, userLeave: this.userCLLeave, leaveType: "0001", "LeaveData": this.leaveDate4SingleDate});
+    this.navCtrl.push(this.commonString.commonStrings.AllLeavesPage.ALLEAVESPAGE_TEXT, {"titleName": this.commonString.commonStrings.ApplyLeavePage.CASUALLEAVE, userLeave: this.userCLLeave, leaveType: "0001", "LeaveData": this.leaveDate4SingleDate});
   }
   leaveEncashment() {
   
       try {
         if(this.mainServices.internetConnectionCheck){
-          this.utilService.showLoader(this.commonString.commonStrings.AllLeavesPage.pleaseWait);
-        this.service.invokeAdapterCall(this.commonString.commonStrings.AllLeavesPage.commonAdapterServices, this.commonString.commonStrings.ApplyLeavePage.GETLEAVEENCASHBALANCE_TEXT, 'get', {payload : false}).then((resultData:any)=>{
+          this.utilService.showLoader(this.commonString.commonStrings.AllLeavesPage.PLEASEWAIT_TEXT);
+        this.service.invokeAdapterCall(this.commonString.commonStrings.AllLeavesPage.COMMONADAPTERSERVICES_TEXT, this.commonString.commonStrings.ApplyLeavePage.GETLEAVEENCASHBALANCE_TEXT, 'get', {payload : false}).then((resultData:any)=>{
           if(resultData){
             if(resultData.status_code == 0){
               this.mainServices.leaveEncashData = resultData.data;
@@ -77,17 +77,21 @@ export class ApplyLeavePage {
               this.navCtrl.push(this.commonString.commonStrings.ApplyLeavePage.ENCASHMENTLEAVEPAGE_TEXT, {"titleName":this.commonString.commonStrings.ApplyLeavePage.LEAVEENCASHMENT, userLeave: this.userLeaveEncashment, leaveType: "ENC"});
             }else{
               this.utilService.dismissLoader();
-              this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE,resultData.message);
+              this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT,resultData.message);
             }
 
           };
         }, (error)=>{
-          console.log("Data readed from jsonstore error",error);
+          console.log(error);
           this.utilService.dismissLoader();
-          this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE,error.statusText);
+          this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT,"102: Oops! Something went wrong, Please try again",);
         });
         }else{
+<<<<<<< HEAD
           this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE, this.commonString.commonStrings.ApplyLeavePage.INTERNETVLIDATE_TEXT);
+=======
+          this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT, this.commonString.commonStrings.ApplyLeavePage.internetVlidate);
+>>>>>>> 63eb6bfabd48ae151f611e24fc30dcf8614926c6
         }        
       } catch (error) {
         console.log("catch-->>",error);
@@ -95,9 +99,8 @@ export class ApplyLeavePage {
   }
 
   ionViewDidLoad() {
-    this.hamburger = (this.commonString.commonStrings.AllLeavesPage.hamburgerIcon);
-    this.homeIcon = (this.commonString.commonStrings.AllLeavesPage.homeIcon);
-    console.log('ionViewDidLoad ApplyLeavePage');
+    this.hamburger = (this.commonString.commonStrings.AllLeavesPage.HAMBURGERICON_IMG);
+    this.homeIcon = (this.commonString.commonStrings.AllLeavesPage.HOMEICON_IMG);
     this.utilService.dismissLoader();
   }
 
