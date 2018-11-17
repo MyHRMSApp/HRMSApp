@@ -49,7 +49,7 @@ export class ApplyOdPage {
       this.OrgVisited = "";
       this.reasonForOD = "";
 
-      if(this.navParams.get("ODData")) this.ODObject =  this.navParams.get("ODData");
+      if(this.navParams.get("ODDATA_TEXT")) this.ODObject =  this.navParams.get("ODDATA_TEXT");
 
       if(this.ODObject.LDATE !== undefined){
         this.startDate = moment(this.ODObject.LDATE, "YYYY-MM-DD").format("DD-MM-YYYY").toString();
@@ -131,7 +131,7 @@ export class ApplyOdPage {
   }
 
   fromDateSelection(){
-    let fromDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", selectedDate: this.startDate, quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
+    let fromDatePicker = this.modalCtrl.create("CUSTOMCALENDARMODELPAGE_TEXT", {dayWiseSelectionFlag: "false", selectedDate: this.startDate, quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
     fromDatePicker.present();
     fromDatePicker.onDidDismiss((data) => {
       console.log(data);
@@ -141,7 +141,7 @@ export class ApplyOdPage {
   }
 
   toDateSelection(){
-    let toDatePicker = this.modalCtrl.create("CustomCalendarModelPage", {dayWiseSelectionFlag: "false", selectedDate: this.endDate, quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
+    let toDatePicker = this.modalCtrl.create("CUSTOMCALENDARMODELPAGE_TEXT", {dayWiseSelectionFlag: "false", selectedDate: this.endDate, quarterWiseSelectionFlag: "false", Cal: "from", fromPage:"ODApply"});
     toDatePicker.present();
     toDatePicker.onDidDismiss((data) => {
       console.log(data);

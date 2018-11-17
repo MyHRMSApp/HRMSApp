@@ -238,6 +238,7 @@ export class AuthHandlerProvider {
     .then(
       (success) => {
         console.log('--> AuthHandler: logout success');
+        localStorage.clear();
         localStorage.setItem("rememberMe", "enabled");
         // this.utilService.dismissLoader();
         this.checkIsLoggedIn();

@@ -41,6 +41,8 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
     private static final String PRODServer_URL_CONFIG_PROPERTY = "ProdServer";
     private static final String GMAILAUTH_URL_CONFIG_PROPERTY = "GMAILAUTH_URL";
     private static final String ErrorMessage_CONFIG_PROPERTY = "ErrorMessage";
+    private static final String SAP_ErrorMessage_CONFIG_PROPERTY = "SAPErrorMessage";
+    private static final String SAP_DOWN_CONFIG_PROPERTY = "SAPSystem";
 
     private boolean keepOriginalToken;
     private String userCustomMessage;
@@ -49,6 +51,8 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
     private String prodServerURL;
     private String gmailAuthURL;
     private String ErrorMessage;
+    private String SAPErrorMessage;
+    private String SAPSystem;
     private Map<String, LoginVendor> vendors;
     private SSLSocketFactory sslSocketFactory;
 
@@ -68,6 +72,8 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
         prodServerURL = getStringProperty(PRODServer_URL_CONFIG_PROPERTY, properties, null);
         gmailAuthURL = getStringProperty(GMAILAUTH_URL_CONFIG_PROPERTY, properties, null);
         ErrorMessage = getStringProperty(ErrorMessage_CONFIG_PROPERTY, properties, null);
+        SAPErrorMessage = getStringProperty(SAP_ErrorMessage_CONFIG_PROPERTY, properties, null);
+        SAPSystem = getStringProperty(SAP_DOWN_CONFIG_PROPERTY, properties, null);
 
         try {
             TrustManagerFactory factory = TrustManagerFactory.getInstance("PKIX");
@@ -153,6 +159,14 @@ public class SocialLoginConfiguration extends UserAuthenticationSecurityCheckCon
 
     public String getProdServerURL() {
         return prodServerURL;
+    }
+
+    public String getSAPSystemDownProp() {
+        return SAPSystem;
+    }
+
+    public String getSAPSystemErrorMSG() {
+        return SAPErrorMessage;
     }
 
     private void createVendors() {

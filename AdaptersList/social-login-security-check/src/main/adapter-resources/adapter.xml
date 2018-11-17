@@ -43,6 +43,8 @@
         <property name="ProdServer" defaultValue="https://pirprd.titan.co.in:50401/RESTAdapter/" displayName="PROD Server URL"/>
         <property name="ErrorMessage" defaultValue="Oops! Something went wrong, Please try again" displayName="Error Message"/>
         <property name="GMAILAUTH_URL" defaultValue="https://script.google.com/macros/s/AKfycbz8ORIE4cyT3TJ9drTSIOoA-EyQdoBSq2wmz-M6ttuPMcx_hvY/exec?email=" displayName="GMAIL Authentication URL [get Employee Number]"/>
+        <property name="SAPSystem" defaultValue="false" displayName="Is SAP system is down?"/>
+        <property name="SAPErrorMessage" defaultValue="Application is not available, Please try again" displayName="SAP Error Message"/>
     </securityCheckDefinition>
 
 </mfp:adapter>

@@ -251,6 +251,37 @@ export class AttendanceViewPage {
       this.mainService.selectedDateDataFromAttendance = undefined;
       this.utilService.dismissLoader();
       this.calenderVIew = true;
+      setTimeout(() => {
+        var elements:any = document.getElementById("attendancePage").querySelectorAll(".switch-btn");
+        var backArrow:any = document.getElementById("attendancePage").querySelector("#backArrow");
+        var frontArrow:any = document.getElementById("attendancePage").querySelector("#frontArrow");
+        frontArrow.className = "forward disable-btn";
+        backArrow.className = "back disable-btn";
+
+        var value = moment(elements[0].innerText, "MMM YYYY").format("MMYYYY").toString();
+        var monthDifferCheck = moment().diff(moment(value, "MMYYYY"), 'months', true);
+        if(monthDifferCheck >= 0 && monthDifferCheck < 1){
+          console.log("monthDifferCheck-->> "+"Current Month");
+          backArrow.className = "back";
+          frontArrow.className = "forward";
+        }else if(monthDifferCheck < 0 && monthDifferCheck > -1){
+          console.log("monthDifferCheck-->> "+"Next Month");
+          backArrow.className = "back";
+          frontArrow.className = "forward";
+        }else if(monthDifferCheck < -1 && monthDifferCheck > -2){
+          console.log("monthDifferCheck-->> "+"Next after Month");
+          backArrow.className = "back";
+          frontArrow.className = "forward disable-btn";
+        }else if(monthDifferCheck >= 1 && monthDifferCheck < 2){
+          console.log("monthDifferCheck-->> "+"Privious Month");
+          backArrow.className = "back";
+          frontArrow.className = "forward";
+        }else if(monthDifferCheck >= 2 && monthDifferCheck < 3){
+          console.log("monthDifferCheck-->> "+"Privious before Month");
+          backArrow.className = "back disable-btn";
+          frontArrow.className = "forward";
+        }
+      }, 100);
     }, 100);
   }
   
@@ -321,7 +352,7 @@ export class AttendanceViewPage {
 
       // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please Wait...");
-        // this.calenderVIew = false;
+        this.calenderVIew = false;
         if(this.mainService.attendanceNA1_DataFlag){
           var payloadData = {
             "IP_SMONTH": 1,
@@ -363,7 +394,7 @@ export class AttendanceViewPage {
   loadCalendarForNextAfterMonth(){
       // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please Wait...");
-        // this.calenderVIew = false;
+        this.calenderVIew = false;
         if(this.mainService.attendanceNA2_DataFlag){
           var payloadData = {
             "IP_SMONTH": 2,
@@ -407,7 +438,7 @@ export class AttendanceViewPage {
   
       // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please Wait...");
-        // this.calenderVIew = false;
+        this.calenderVIew = false;
         if(this.mainService.attendanceN_NP1_DataFlag){
           var payloadData = {
             "IP_SMONTH": -1,
@@ -451,7 +482,7 @@ export class AttendanceViewPage {
   loadCalendarForPriviousBeforeMonth(){
       // if(this.mainService.internetConnectionCheck){
         this.utilService.showLoader("Please Wait...");
-        // this.calenderVIew = false;
+        this.calenderVIew = false;
         if(this.mainService.attendanceNP2_DataFlag){
           var payloadData = {
             "IP_SMONTH": -2,
@@ -491,6 +522,8 @@ export class AttendanceViewPage {
   }
 
   loadCalendarForPriviousMonths(){
+      this.utilService.showLoader("Please Wait...");
+      this.calenderVIew = false;
       console.log(JSON.stringify(this.mainService.attendanceN_NP1_Data));
       this.mainService.attanancePageData = this.mainService.attendanceN_NP1_Data;
       this.dateRange = moment(moment().format("YYYY-MM-DD")).add(-1, 'M');

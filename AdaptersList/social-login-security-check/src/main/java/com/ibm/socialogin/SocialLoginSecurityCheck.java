@@ -56,6 +56,8 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     private static final String ORIGINAL_TOKEN_ATTRIBUTE = "originalToken";
     private static final String GMAIL_ID = "GMAIL_ID"; 
     private static final String DEVICE_PLATFORM = "platform"; 
+    private static final String FALSE_STR = "false"; 
+	private static final String SAPErrorMessage = "SAPErrorMessage"; 
     public JSONObject employeeNO = new JSONObject();
 
     private transient String vendorName;
@@ -104,6 +106,8 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
     protected boolean validateCredentials(Map<String, Object> credentials) {
         JSONObject jsonObject = new JSONObject();
         AuthenticatedUser user = new AuthenticatedUser();
+        String tempSAPSystem = this.getConfiguration().getSAPSystemDownProp().toString();
+        if(tempSAPSystem.equals(FALSE_STR)){
         if(credentials!=null){
             switch (credentials.get(SECURITY_TYPE).toString()) {
                 case SAP_LOGIN:
@@ -122,7 +126,10 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                     this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                     return true;
                                 }else if(jsonObject.getInt("EP_RESULT") == 1234510){
-                                    errorMsg = this.getConfiguration().getErrorMessage();
+                                    errorMsg = "202 : " + this.getConfiguration().getErrorMessage();
+                                    return false;
+                                }else if(jsonObject.getInt("EP_RESULT") == 201){
+                                    errorMsg = "201 : " + this.getConfiguration().getErrorMessage();
                                     return false;
                                 }else{
                                     errorMsg = "Please provide valid Username or Password";
@@ -167,7 +174,10 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                                                 this.user = new AuthenticatedUser(userId, displayName, this.getName());
                                                 return true;
                                             }else if(jsonObject.getInt("EP_RESULT") == 1234510){
-                                                errorMsg = this.getConfiguration().getErrorMessage();
+                                                errorMsg = "202 : " + this.getConfiguration().getErrorMessage();
+                                                return false;
+                                            }else if(jsonObject.getInt("EP_RESULT") == 201){
+                                                errorMsg = "201 : " + this.getConfiguration().getErrorMessage();
                                                 return false;
                                             }else{
                                                 errorMsg = "Please try with valid Titan Mail ID";
@@ -207,6 +217,9 @@ public class SocialLoginSecurityCheck extends UserAuthenticationSecurityCheck {
                 break;
             }
         }
+    }else{
+        errorMsg = this.getConfiguration().getSAPSystemErrorMSG();
+    }
         
 
         return false;

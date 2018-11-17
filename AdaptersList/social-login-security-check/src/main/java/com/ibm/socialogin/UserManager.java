@@ -109,6 +109,10 @@ public class UserManager {
                                 loggerStatus = STATUS_CODE_SUCCESS;
                                 HttpEntity entity = response.getEntity();
                                 return entity != null ? EntityUtils.toString(entity) : null;
+                            } else if (status == 500){
+                                loggerStatus = STATUS_CODE_FAILURE;
+                                jsonObject.put("EP_RESULT", 201);
+                                return null;
                             } else {
                                 loggerStatus = STATUS_CODE_FAILURE;
                                 jsonObject.put("EP_RESULT", 1234510);

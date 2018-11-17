@@ -87,7 +87,7 @@ export class ApplyLeavePage {
           this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE,error.statusText);
         });
         }else{
-          this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE, this.commonString.commonStrings.ApplyLeavePage.internetVlidate);
+          this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE, this.commonString.commonStrings.ApplyLeavePage.INTERNETVLIDATE_TEXT);
         }        
       } catch (error) {
         console.log("catch-->>",error);

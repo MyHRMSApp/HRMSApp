@@ -156,14 +156,17 @@ public class CommonAdapterServicesResource {
 	private static final String data = "data";
 	private static final String ET_DATA_STR = "ET_DATA";
 	private static final String item = "item";
-
+	private static final String SAPSystem = "SAPSystem";
+	private static final String FALSE_STR = "false"; 
+	private static final String SAPErrorMessage = "SAPErrorMessage"; 
+	private static final String error_code = "error_code"; 
 	//public Variable declration PART
 	public String authorizationStringEncrypted = null;
 	public int STATUS_CODE_SUCCESS = 0;
 	public int STATUS_CODE_FAILURE = 1;
 	public long startTime;
 	public int loggerStatus = STATUS_CODE_FAILURE;
-	public String commonResponceStr = "{\"message\": \"\",\"status_code\": "+STATUS_CODE_FAILURE+",\"data\": \"\"}";
+	public String commonResponceStr = "{\"message\": \"\",\"status_code\": "+STATUS_CODE_FAILURE+",\"data\": \"\",\"error_code\": \"\"}";
 	public JSONObject commonServerResponce;
 	public CloseableHttpClient httpclient = null;
 	/* *
@@ -818,72 +821,88 @@ public class CommonAdapterServicesResource {
 	public JSONObject postService(String inputString, String contextPathName, String methodName, String pernrNumber){
 		JSONObject resultJSON = new JSONObject();
 		commonServerResponce = new JSONObject(commonResponceStr);
+		String tempSAPSystem = configurationAPI.getPropertyValue(SAPSystem).toString();
 		LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Name : " + methodName + "\n");
 	    LOGGER.log(Level.INFO, "\n SAP Request Sending from URL : " + configurationAPI.getPropertyValue(PRODServer)+contextPathName + "\n");
 		LOGGER.log(Level.INFO, "\n SAP Request Sending from Procedure Inputs : " + inputString + "\n");
 		// LOGGER.log(Level.INFO, "PernrNo : | ProcedureName : | StatusCode : | ResponceTime : ");
 		
-		try {
-			startTime = System.currentTimeMillis();
-			loggerStatus = STATUS_CODE_FAILURE;
-			StringEntity params = new StringEntity(inputString);
-			CredentialsProvider credsProvider = new BasicCredentialsProvider();
-			credsProvider.setCredentials(new AuthScope(AUTH_SCOPE_URL, AUTH_SCOPE_PORT),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
-			httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
-			HttpPost httpPost = new HttpPost(configurationAPI.getPropertyValue(PRODServer)+contextPathName);
-			// httpPost.addHeader("User-Agent", "Mozilla/5.0");
-			httpPost.setEntity(params);
-			RequestConfig requestConfig = RequestConfig.custom()
-				.setSocketTimeout(SocketTimeout)
-				.setConnectTimeout(ConnectTimeout)
-				.setConnectionRequestTimeout(ConnectionRequestTimeout)
-				.build();
-			httpPost.setConfig(requestConfig);
-			 
-			ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-	
-			 @Override
-				public String handleResponse(
-						final HttpResponse response) throws ClientProtocolException, IOException {
-					int status = response.getStatusLine().getStatusCode();
-					if (status >= 200 && status < 300) {
-						HttpEntity entity = response.getEntity();
-						loggerStatus = STATUS_CODE_SUCCESS;
-						return entity != null ? EntityUtils.toString(entity) : null;
-					} else if (status == 500){
-						loggerStatus = STATUS_CODE_FAILURE;
-						LOGGER.log(Level.SEVERE, "\n Unexpected response status: " + status + "\n");
-						commonServerResponce.put(message, configurationAPI.getPropertyValue(ErrorMessage));
-						//throw new ClientProtocolException("EXCEPTION : Unexpected response status: " + status);
-						return null;
-					}else{
-						loggerStatus = STATUS_CODE_FAILURE;
-						LOGGER.log(Level.SEVERE, "\n Unexpected response status: " + status + "\n");
-						commonServerResponce.put(message, configurationAPI.getPropertyValue(ErrorMessage));
-						//throw new ClientProtocolException("EXCEPTION : Unexpected response status: " + status);
-						return null;
-					}
-				}
-	 
-			};
-			String responseBody = httpclient.execute(httpPost, responseHandler);
-			resultJSON = new JSONObject(responseBody);
-			commonServerResponce.put(status_code, STATUS_CODE_SUCCESS);
-			commonServerResponce.put(data, resultJSON);
+		if(tempSAPSystem.equals(FALSE_STR)){
 
+			try {
+				startTime = System.currentTimeMillis();
+				loggerStatus = STATUS_CODE_FAILURE;
+				StringEntity params = new StringEntity(inputString);
+				CredentialsProvider credsProvider = new BasicCredentialsProvider();
+				credsProvider.setCredentials(new AuthScope(AUTH_SCOPE_URL, AUTH_SCOPE_PORT),new UsernamePasswordCredentials("HCM_SERV_USR", "HCM_SERV_USR@123"));
+				httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
+				HttpPost httpPost = new HttpPost(configurationAPI.getPropertyValue(PRODServer)+contextPathName);
+				// httpPost.addHeader("User-Agent", "Mozilla/5.0");
+				httpPost.setEntity(params);
+				RequestConfig requestConfig = RequestConfig.custom()
+					.setSocketTimeout(SocketTimeout)
+					.setConnectTimeout(ConnectTimeout)
+					.setConnectionRequestTimeout(ConnectionRequestTimeout)
+					.build();
+				httpPost.setConfig(requestConfig);
+				 
+				ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+		
+				 @Override
+					public String handleResponse(
+							final HttpResponse response) throws ClientProtocolException, IOException {
+						int status = response.getStatusLine().getStatusCode();
+						if (status >= 200 && status < 300) {
+							HttpEntity entity = response.getEntity();
+							loggerStatus = STATUS_CODE_SUCCESS;
+							return entity != null ? EntityUtils.toString(entity) : null;
+						} else if (status == 500){
+							loggerStatus = STATUS_CODE_FAILURE;
+							LOGGER.log(Level.SEVERE, "\n Unexpected response status: " + status + "\n");
+							commonServerResponce.put(message, "201 : " + configurationAPI.getPropertyValue(ErrorMessage));
+							// commonServerResponce.put(error_code, "201");
+							//throw new ClientProtocolException("EXCEPTION : Unexpected response status: " + status);
+							return null;
+						}else{
+							loggerStatus = STATUS_CODE_FAILURE;
+							LOGGER.log(Level.SEVERE, "\n Unexpected response status: " + status + "\n");
+							commonServerResponce.put(message, "202 : " + configurationAPI.getPropertyValue(ErrorMessage));
+							// commonServerResponce.put(error_code, "202");
+							//throw new ClientProtocolException("EXCEPTION : Unexpected response status: " + status);
+							return null;
+						}
+					}
+		 
+				};
+				String responseBody = httpclient.execute(httpPost, responseHandler);
+				resultJSON = new JSONObject(responseBody);
+				commonServerResponce.put(status_code, STATUS_CODE_SUCCESS);
+				commonServerResponce.put(data, resultJSON);
+	
 			}catch(IOException ioException){
 				LOGGER.log(Level.SEVERE, "EXCEPTION : PernrNo : "+pernrNumber+" | ProcedureName : "+methodName+" |"+ ioException.toString());
-				commonServerResponce.put(message, configurationAPI.getPropertyValue(ErrorMessage));
-			}finally {
-				try {
-					httpclient.close();
-					long elapsedTime = System.currentTimeMillis() - startTime;
-					LOGGER.log(Level.INFO, "PernrNo : "+pernrNumber+" | ProcedureName : "+methodName+"| StatusCode : "+loggerStatus+"| ResponceTime : "+elapsedTime);
-					LOGGER.log(Level.INFO, "SAP Responce outPuts : " + resultJSON.toString() + "\n");
-				} catch (IOException ioException) {
-					LOGGER.log(Level.SEVERE, "[ IOException httpclient Close]  : "+ioException.toString());
-				}
+				commonServerResponce.put(message, "102 : " + configurationAPI.getPropertyValue(ErrorMessage));
+				// commonServerResponce.put(error_code, "102");
 			}
+			catch(Exception exception){
+				LOGGER.log(Level.SEVERE, "EXCEPTION : PernrNo : "+pernrNumber+" | ProcedureName : "+methodName+" |"+ exception.toString());
+				commonServerResponce.put(message, "102 : " + configurationAPI.getPropertyValue(ErrorMessage));
+				// commonServerResponce.put(error_code, "102");
+			}finally {
+					try {
+						httpclient.close();
+						long elapsedTime = System.currentTimeMillis() - startTime;
+						LOGGER.log(Level.INFO, "PernrNo : "+pernrNumber+" | ProcedureName : "+methodName+"| StatusCode : "+loggerStatus+"| ResponceTime : "+elapsedTime);
+						LOGGER.log(Level.INFO, "SAP Responce outPuts : " + resultJSON.toString() + "\n");
+					} catch (IOException ioException) {
+						LOGGER.log(Level.SEVERE, "[ IOException httpclient Close]  : "+ioException.toString());
+					}
+				}
+				
+		}else{
+			commonServerResponce.put(message, configurationAPI.getPropertyValue(SAPErrorMessage));
+		}
+		
 
 
 		return commonServerResponce;

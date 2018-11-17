@@ -16,9 +16,11 @@
 	<JAXRSApplicationClass>com.ibm.commonServices.CommonAdapterServicesApplication</JAXRSApplicationClass>
 
 	<property name="UserCustomMessage" defaultValue="false" displayName="User Custom Message"/>
+	<property name="SAPSystem" defaultValue="false" displayName="Is SAP system is down?"/>
 	<property name="DEVServer" defaultValue="https://pirdev.titan.co.in:50401/RESTAdapter/" displayName="Development Server URL"/>
 	<property name="UATServer" defaultValue="https://pirqa.titan.co.in:50401/RESTAdapter/" displayName="UAT Server URL"/>
-	 <property name="PRODServer" defaultValue="https://pirprd.titan.co.in:50401/RESTAdapter/" displayName="PROD Server URL"/>
+	<property name="PRODServer" defaultValue="https://pirprd.titan.co.in:50401/RESTAdapter/" displayName="PROD Server URL"/>
 	<property name="ErrorMessage" defaultValue="Oops! Something went wrong, Please try again" displayName="Error Message"/>
+	<property name="SAPErrorMessage" defaultValue="Application is not available, Please try again" displayName="SAP Error Message"/>
 
 </mfp:adapter>

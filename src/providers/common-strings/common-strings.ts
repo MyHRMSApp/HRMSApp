@@ -134,7 +134,7 @@ export class CommonStringsProvider {
         "GETLEAVEENCASHBALANCE_TEXT" : "getLeaveEncashBalance",
         "ENCASHMENTLEAVEPAGE_TEXT" : "EncashmentLeavePage",
         "LEAVEENCASHMENT" : "LEAVE ENCASHMENT",
-        "internetVlidate" : "You are in offline, please check you internet",
+        "INTERNETVLIDATE_TEXT" : "You are in offline, please check you internet",
         "CL" : "CL",
         "SL" : "SL",
         "GL" : "GL",
@@ -184,10 +184,10 @@ export class CommonStringsProvider {
           ]
         },
         "twoZero" : "00:00",
-        "ODData" : "ODData",
+        "ODDATA_TEXT" : "ODData",
         "STARTTIME" : "START TIME",
         "ENDTIME" : "END TIME",
-        "CustomCalendarModelPage" : "CustomCalendarModelPage",
+        "CUSTOMCALENDARMODELPAGE_TEXT" : "CustomCalendarModelPage",
         
       }
 
