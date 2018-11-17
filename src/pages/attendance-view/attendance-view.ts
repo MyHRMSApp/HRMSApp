@@ -309,7 +309,7 @@ export class AttendanceViewPage {
         var value = moment(this.dateRange, "YYYY-MM-DD").format("YYYY-MM-DD").toString();
         var monthDifferCheck = moment().diff(moment(value, "YYYY-MM-DD"), 'months', true);
         if (monthDifferCheck < 0) {
-          this.utilService.showCustomPopup4Error(this.commonString.commonStrings.AttendanceViewPage.FAILURE_TITLE_FTP, this.commonString.commonStrings.AttendanceViewPage.FAILURE_MSG_TWO, this.commonString.commonStrings.AttendanceViewPage.FAILURE_TITLE_TEXT);
+          this.utilService.showCustomPopup4Error(this.commonString.commonStrings.AttendanceViewPage.FAILURE_TITLE_FTP, this.commonString.commonStrings.AttendanceViewPage.FAILURE_MSG_ONE, this.commonString.commonStrings.AttendanceViewPage.FAILURE_TITLE_TEXT);
         } else {
           this.navCtrl.push(this.commonString.commonStrings.AttendanceViewPage.APPLYFTP_NAV, {
             "ftpData": this.attendanceSingleDayData
