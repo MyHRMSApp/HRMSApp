@@ -80,67 +80,6 @@ export class CommonStringsProvider {
         "ATT1_UA_ATT2_Pending_TEXT": "ATT1_UA_ATT2_Pending",
         "FULLDAY_TEXT": "full day",
         "FD_TEXT": "FD",
-<<<<<<< HEAD
-        "HOMEPAGE_TEXT" : "HomePage",
-        "USERLEAVE_TEXT" : "userLeave",
-        "CUSTOMCALENDAEMODELPAGE_TEXT" : "CustomCalendarModelPage",
-        "YYYY_MM_DD" : "YYYY-MM-DD",
-        "FQ_TEXT" : "FQ",
-        "LQ_TEXT" : "LQ",
-        "SQ_TEXT" : "SQ",
-        "FIRSTQUARTER_TEXT" : "1st Quarter",
-        "SECQUARTER_TEXT" : "2nd Quarter",
-        "FROMDATEVALIDATE_TEXT" : "Please select From Date",
-        "FAILURE_TEXT" : "FAILURE",
-        "FROMDATEANDPERIODVALIDATE_TEXT" : "Please select the From Date and Period",
-        "TODATEANDPERIODVALIDATE_TEXT" : "Please select the To Date and Period",
-        "REASONVALIDATE_TEXT" : "Please enter the Reason field",
-        "APPLYLEAVE_TEXT" : "Apply Leave",
-        "PLEASEWAIT_TEXT" : "Please Wait...",
-        "YYYYMMDD" : "YYYYMMDD",
-        "COMMONADAPTERSERVICES_TEXT" : "commonAdapterServices",
-        "VALIDATELEAVEBALANCE_TEXT" : "validateLeaveBalance",
-        "firstquarter" : "first quarter",
-        "lastquarter" : "last quarter",
-        "EMPLOYEEAPPLYLEAVE_TEXT" : "employeeApplyLeave",
-        "NEW" : "NEW",
-        "SUBMITTED_TEXT" : "Submitted",
-        "ALLLEAVESPAGE_TEXT" : "AllLeavesPage"
-      },
-      "ApplyFtpPage" : {
-        "USERINFO_TEXT" : "userInfo",
-        "FTPDATA_TEXT" : "ftpData",
-        "PUNCHIN" : "PUNCH IN",
-        "PUNCHOUT" : "PUNCH OUT",
-        "MIDIN" : "MID IN",
-        "MIDOUT" : "MID OUT",
-        "FORGOTTORECORDMYATTENDANCE_ERROR_MSG" : "Forgot to record my attendance",
-        "HH_mm" : "HH:mm",
-        "ZERO_H_M_S" : "00:00:00",
-        "APPLYFTP_TEXT" : "Apply FTP",
-        "INPUNCHVALIDATE_TEXT" : "Please select proper In Punch",
-        "OUTPUNCHVALIDATE_TEXT" : "Please select proper Out Punch",
-        "INANDOUTVALIDATE_TEXT" : "Please enter the valid In & Out Time",
-        "MIDINPUNCHVALIDATE_TEXT" : "Please select proper Mid In Punch",
-        "MIDOUTPUNCHVALIDATE_TEXT" : "Please select proper Mid Out Punch",
-        "MIDINANDOUTPUNCHVALIDATE_TEXT" : "Please enter the valid MidIn & MidOut Time",
-        "REQUESTTYPEVALIDATE_TEXT" : "Please select Request Type",
-        "APPLYFTPREQUEST_TEXT" : "applyFTPRequest",
-      },
-      "ApplyLeavePage" : {
-        "PRIVILEGELEAVE" : "PRIVILEGE LEAVE",
-        "SICKLEAVE" : "SICK LEAVE",
-        "GENERALLEAVE" : "GENERAL LEAVE",
-        "CASUALLEAVE" : "CASUAL LEAVE",
-        "GETLEAVEENCASHBALANCE_TEXT" : "getLeaveEncashBalance",
-        "ENCASHMENTLEAVEPAGE_TEXT" : "EncashmentLeavePage",
-        "LEAVEENCASHMENT" : "LEAVE ENCASHMENT",
-        "INTERNETVLIDATE_TEXT" : "You are in offline, please check you internet",
-        "CL" : "CL",
-        "SL" : "SL",
-        "GL" : "GL",
-        "PL" : "PL"
-=======
         "HOMEPAGE_TEXT": "HomePage",
         "USERLEAVE_TEXT": "userLeave",
         "CUSTOMCALENDAEMODELPAGE_TEXT": "CustomCalendarModelPage",
@@ -201,7 +140,6 @@ export class CommonStringsProvider {
         "SL": "SL",
         "GL": "GL",
         "PL": "PL"
->>>>>>> 63eb6bfabd48ae151f611e24fc30dcf8614926c6
       },
       "ApplyOdPage": {
         "timeData": {
@@ -316,14 +254,6 @@ export class CommonStringsProvider {
             }
           ]
         },
-<<<<<<< HEAD
-        "twoZero" : "00:00",
-        "ODDATA_TEXT" : "ODData",
-        "STARTTIME" : "START TIME",
-        "ENDTIME" : "END TIME",
-        "CUSTOMCALENDARMODELPAGE_TEXT" : "CustomCalendarModelPage",
-        
-=======
         "twoZero": "00:00",
         "ODData": "ODData",
         "STARTTIME": "START TIME",
@@ -442,7 +372,6 @@ export class CommonStringsProvider {
         "FAILURE_TITLE_MYTASKS": "My Task",
         "UPDATING_PIC" : "Updating picture",
         "REMOVING_PIC" : "Removing picture"
->>>>>>> 63eb6bfabd48ae151f611e24fc30dcf8614926c6
       }
     }
   }

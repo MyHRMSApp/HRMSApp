@@ -87,11 +87,7 @@ export class ApplyLeavePage {
           this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT,"102: Oops! Something went wrong, Please try again",);
         });
         }else{
-<<<<<<< HEAD
-          this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE, this.commonString.commonStrings.ApplyLeavePage.INTERNETVLIDATE_TEXT);
-=======
           this.utilService.showCustomPopup(this.commonString.commonStrings.AllLeavesPage.FAILURE_TITLE_TEXT, this.commonString.commonStrings.ApplyLeavePage.internetVlidate);
->>>>>>> 63eb6bfabd48ae151f611e24fc30dcf8614926c6
         }        
       } catch (error) {
         console.log("catch-->>",error);
